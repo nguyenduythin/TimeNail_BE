@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\api\admin\UserController as AdminUserController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,9 +16,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/user', function (){
-    return 'hello word';
+Route::prefix('admin')->group(function () {
+
+    Route::prefix('user')->group(function () {
+        Route::get('/', [AdminUserController::class, 'index'])->name('user.list.api');
+        Route::get('/show/{id}', [AdminUserController::class, 'show']);
+        Route::post('/', [AdminUserController::class, 'store'])->name('user.add.api');
+        Route::patch('edit/{id}', [AdminUserController::class, 'update'])->name('user.update.api');
+        Route::delete('{id}', [AdminUserController::class, 'destroy']);
+    });
+ 
+
+    
+
 });
+
+
+
+
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
