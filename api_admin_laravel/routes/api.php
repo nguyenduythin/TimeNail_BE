@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\admin\ContactController;
 use App\Http\Controllers\api\admin\UserController as AdminUserController;
 
 use Illuminate\Http\Request;
@@ -24,6 +25,12 @@ Route::prefix('admin')->group(function () {
         Route::post('/', [AdminUserController::class, 'store'])->name('user.add.api');
         Route::patch('edit/{id}', [AdminUserController::class, 'update'])->name('user.update.api');
         Route::delete('{id}', [AdminUserController::class, 'destroy']);
+    });
+
+
+    // contact
+    Route::prefix('contact')->group(function(){
+        Route::get('/',[ContactController::class,'index'])->name('contact.list.api');
     });
  
 
