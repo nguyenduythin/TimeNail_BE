@@ -83,7 +83,7 @@
                                 <tr>
 
                                     <th>Họ & Tên</th>
-                                    <th>Message</th>
+                                    <th>Tin Nhắn</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -350,14 +350,14 @@
                         text:
                             feather.icons["external-link"].toSvg({
                                 class: "font-small-4 me-50",
-                            }) + "EXPORT",
+                            }) + "Export",
                         buttons: [
                             {
                                 extend: "print",
                                 text:
                                     feather.icons.printer.toSvg({
                                         class: "font-small-4 me-50",
-                                    }) + "PRINT", //nên để tên thao tác full in hoa nhìn đẹp hơn
+                                    }) + "Print", //nên để tên thao tác full in hoa nhìn đẹp hơn
                                 className: "dropdown-item",
                            exportOptions: { columns: [0,1 ] },
                             },
@@ -366,7 +366,7 @@
                                 text:
                                     feather.icons["file-text"].toSvg({
                                         class: "font-small-4 me-50",
-                                    }) + "CSV",
+                                    }) + "Csv",
                                 className: "dropdown-item",
                             exportOptions: { columns: [0,1 ] },
                             },
@@ -375,7 +375,7 @@
                                 text:
                                     feather.icons.file.toSvg({
                                         class: "font-small-4 me-50",
-                                    }) + "EXCEL",
+                                    }) + "Excel",
                                 className: "dropdown-item",
                                exportOptions: { columns: [0,1 ] },
                             },
@@ -384,7 +384,7 @@
                                 text:
                                     feather.icons.clipboard.toSvg({
                                         class: "font-small-4 me-50",
-                                    }) + "PDF",
+                                    }) + "Pdf",
                                 className: "dropdown-item",
                              exportOptions: { columns: [0,1 ] },
                             },
@@ -393,7 +393,7 @@
                                 text:
                                     feather.icons.copy.toSvg({
                                         class: "font-small-4 me-50",
-                                    }) + "COPY", 
+                                    }) + "Copy", 
                                 className: "dropdown-item",
                                 exportOptions: { columns: [0,1] },
                             },
