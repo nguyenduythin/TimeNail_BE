@@ -17,6 +17,7 @@ class ContactController extends Controller
     {
         //
         $model = Contact::all();
+        $model->load('user');
         return response()->json($model);
     }
 

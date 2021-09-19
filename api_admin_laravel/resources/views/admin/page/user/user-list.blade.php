@@ -392,14 +392,14 @@
                         text:
                             feather.icons["external-link"].toSvg({
                                 class: "font-small-4 me-50",
-                            }) + "Export",
+                            }) + "EXPORT",
                         buttons: [
                             {
                                 extend: "print",
                                 text:
                                     feather.icons.printer.toSvg({
                                         class: "font-small-4 me-50",
-                                    }) + "Print",
+                                    }) + "PRINT",
                                 className: "dropdown-item",
                            exportOptions: { columns: [0,1, 2, 3,4 ] },
                             },
@@ -408,7 +408,7 @@
                                 text:
                                     feather.icons["file-text"].toSvg({
                                         class: "font-small-4 me-50",
-                                    }) + "Csv",
+                                    }) + "CSV",
                                 className: "dropdown-item",
                             exportOptions: { columns: [0,1, 2, 3,4 ] },
                             },
@@ -417,7 +417,7 @@
                                 text:
                                     feather.icons.file.toSvg({
                                         class: "font-small-4 me-50",
-                                    }) + "Excel",
+                                    }) + "EXCEL",
                                 className: "dropdown-item",
                                exportOptions: { columns: [0,1, 2, 3,4 ] },
                             },
@@ -426,7 +426,7 @@
                                 text:
                                     feather.icons.clipboard.toSvg({
                                         class: "font-small-4 me-50",
-                                    }) + "Pdf",
+                                    }) + "PDF",
                                 className: "dropdown-item",
                              exportOptions: { columns: [0,1, 2, 3,4 ] },
                             },
