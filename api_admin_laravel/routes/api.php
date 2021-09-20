@@ -31,6 +31,7 @@ Route::prefix('admin')->group(function () {
     // contact
     Route::prefix('contact')->group(function(){
         Route::get('/',[ContactController::class,'index'])->name('contact.list.api');
+        Route::delete('{id}',[ContactController::class,'destroy']);
     });
  
 

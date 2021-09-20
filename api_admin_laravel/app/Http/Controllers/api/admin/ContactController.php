@@ -63,6 +63,7 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Contact::destroy($id);
+        return response()->json(['success'=>'xóa thành công']);
     }
 }

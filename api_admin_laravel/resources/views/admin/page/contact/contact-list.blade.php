@@ -94,111 +94,7 @@
 
                     </div>
                     <!-- Modal to add new user starts-->
-                    <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
-                        <div class="modal-dialog">
-                            <form method="POST" action="" class="add-new-user modal-content pt-0" enctype="multipart/form-data">
-                                @csrf
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close">×</button>
-                                <div class="modal-header mb-1">
-                                    <h5 class="modal-title" id="exampleModalLabel">Thêm tài khoản</h5>
-                                </div>
-                                <div class="modal-body flex-grow-1">
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-fullname">Họ & Tên</label>
-                                        <input type="text" class="form-control dt-full-name"
-                                            id="basic-icon-default-fullname" placeholder="John Doe" name="full_name" />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-email">Email</label>
-                                        <input type="text" id="basic-icon-default-email" class="form-control dt-email"
-                                            placeholder="john.doe@example.com" name="email" />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basic-default-password1">Mật khẩu</label>
-                                        <input type="password" id="basic-default-password1" class="form-control"
-                                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                            name="password" required />
-                                        <div class="valid-feedback">Looks good!</div>
-                                        <div class="invalid-feedback">Please enter your password.</div>
-                                    </div>
-                                    {{-- <div class="mb-1">
-                                        <label class="form-label" for="basic-default-password">Password</label>
-                                        <input
-                                          type="password"
-                                          id="basic-icon-default-password"
-                                          name="basic-default-password"
-                                          class="form-control dt-password"
-                                          placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        />
-                                      </div>
-                                      <div class="mb-1">
-                                        <label class="form-label" for="confirm-password">Confirm Password</label>
-                                        <input
-                                          type="password"
-                                          id="confirm-password"
-                                          name="confirm-password"
-                                          class="form-control"
-                                          placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        />
-                                      </div> --}}
-
-
-                                    <div class="mb-1">
-                                        <label class="form-label" for="bsDob">Ngày sinh</label>
-                                        <input type="date" class="form-control picker" name="date_birth" id="bsDob"
-                                            required />
-
-                                        <div class="valid-feedback">Looks good!</div>
-                                        <div class="invalid-feedback">Please enter your date of birth.</div>
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-contact">Số điện thoại</label>
-                                        <input type="text" id="basic-icon-default-contact" class="form-control "
-                                            placeholder="0336-933-4479" name="phone" />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-company">Địa chỉ</label>
-                                        <input type="text" id="basic-icon-default-company" class="form-control "
-                                            placeholder="địa chỉ" name="address" />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label for="customFile1" class="form-label">Ảnh đại diện</label>
-                                        <input class="form-control" type="file" id="customFile1" name="avatar"
-                                             />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" class="d-block">Giới tính</label>
-                                        <div class="form-check my-50">
-                                            <input type="radio" id="validationRadio3" name="gender"
-                                                class="form-check-input" value="1" required />
-                                            <label class="form-check-label" for="validationRadio3">Nam</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" id="validationRadio4" name="gender"
-                                                class="form-check-input" value="2" required />
-                                            <label class="form-check-label" for="validationRadio4">Nữ</label>
-                                        </div>
-                                    </div>
-                                    {{--                                    
-                                    <div class="mb-1">
-                                        <label class="form-label" for="user-role">User Role</label>
-                                        <select id="user-role" class="select2 form-select">
-                                            <option value="subscriber">Subscriber</option>
-                                            <option value="editor">Editor</option>
-                                            <option value="maintainer">Maintainer</option>
-                                            <option value="author">Author</option>
-                                            <option value="admin">Admin</option>
-                                        </select>
-                                    </div> --}}
-
-                                    <button type="submit" class="btn btn-primary me-1 data-submit">Lưu</button>
-                                    <button type="reset" class="btn btn-outline-secondary"
-                                        data-bs-dismiss="modal">Cancel</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                    
                     <!-- Modal to add new user Ends-->
                 </div>
                 <!-- list and filter end -->
@@ -313,23 +209,11 @@
                                 feather.icons["more-vertical"].toSvg({
                                     class: "font-small-4",
                                 }) +
-                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="' +
-                                r +
-                                '" class="dropdown-item">' +
-                                feather.icons["file-text"].toSvg({
-                                    class: "font-small-4 me-50",
-                                }) +
-                                'Details</a><a href="' +
-                                r +
-                                '" id="editUser" data-id="'+a.id+'" class="dropdown-item">' +
-                                feather.icons["edit"].toSvg({
-                                    class: "font-small-4 me-50",
-                                }) +
-                                'Edit</a><a href="#" id="deleteUser" data-id="'+a.id+'" class="dropdown-item delete-record">' +
+                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="#" id="deleteUser" data-id="'+a.id+'" class="dropdown-item delete-record">' +
                                 feather.icons["trash-2"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
-                                "Delete</a></div></div></div>"
+                                "Delete</a></div></div>"
                             );
 
                         },
@@ -409,17 +293,7 @@
                                 }, 50);
                         },
                     },
-                    {
-                        text: "Thêm Mới Tài Khoản",
-                        className: "add-new btn btn-primary",
-                        attr: {
-                            "data-bs-toggle": "modal",
-                            "data-bs-target": "#modals-slide-in",
-                        },
-                        init: function (e, t, a) {
-                            $(t).removeClass("btn-secondary");
-                        },
-                    },
+                    
                 ],
                 responsive: {
                     details: {
@@ -488,11 +362,11 @@ a.length &&
 
        
 $('body').on('click' ,'#deleteUser' , function(){
-    var user_id = $(this).data("id");
-     if ( confirm("Bạn có chắc chắn muốn xóa Tài khoản này không ?")) {
+    var contact_id = $(this).data("id");
+     if ( confirm("Bạn có chắc chắn muốn xóa Nội dung này không ?")) {
     $.ajax({
         type:"DELETE",
-        url:"{{ route('user.list.api') }}"+"/"+user_id,
+        url:"{{ route('contact.list.api') }}"+"/"+contact_id,
         success: function(){
             table.ajax.reload();
         },
@@ -503,20 +377,6 @@ $('body').on('click' ,'#deleteUser' , function(){
      }
 });
 
-$('body').on('click' ,'#editUser' , function(){
-    var user_id = $(this).data("id");
-    $.ajax({
-        type:"PATCH",
-        url:"{{ route('user.list.api') }}"+"edit/"+user_id,
-        success: function(){
-
-            table.ajax.reload();
-        },
-        error:function () {
-            console.log("xóa thất bại");
-        }
-    })
-});
 
 });
 
