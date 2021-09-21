@@ -188,15 +188,16 @@
                             );
                         },
                     },
-                    {
-                        // targets: 1,
-                        render: function (e, t, a, s) {
-                            var n = a.message;
-                            if (n) {
-                                return  ('<span class="badge rounded-pill badge-light-warning" text-capitalized>'+ n +'</span>')
-                            }
-                        },
-                    },
+                    //target đoạn này đang có lỗi khiến nó không nhận css của class
+                    // {
+                    //     // targets: 1,
+                    //     render: function (e, t, a, s) {
+                    //         var n = a.message;
+                    //         if (n) {
+                    //             return  ('<span class="badge rounded-pill badge-light-warning" text-capitalized>'+ n +'</span>')
+                    //         }
+                    //     },
+                    // },
                     
                     {
                         targets: 2,
