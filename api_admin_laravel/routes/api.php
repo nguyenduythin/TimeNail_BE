@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\admin\ContactController;
+use App\Http\Controllers\api\admin\DiscountController;
 use App\Http\Controllers\api\admin\UserController as AdminUserController;
 
 use Illuminate\Http\Request;
@@ -32,6 +33,12 @@ Route::prefix('admin')->group(function () {
     Route::prefix('contact')->group(function(){
         Route::get('/',[ContactController::class,'index'])->name('contact.list.api');
         Route::delete('{id}',[ContactController::class,'destroy']);
+    });
+
+
+    //discount
+    Route::prefix('discount')->group(function(){
+        Route::get('/',[DiscountController::class,'index'])->name('discount.list.api');
     });
  
 
