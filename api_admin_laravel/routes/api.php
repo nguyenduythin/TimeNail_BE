@@ -22,7 +22,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [AdminUserController::class, 'index'])->name('user.list.api');
         Route::get('/show/{id}', [AdminUserController::class, 'show']);
         Route::post('/', [AdminUserController::class, 'store'])->name('user.add.api');
-        Route::patch('edit/{id}', [AdminUserController::class, 'update'])->name('user.update.api');
+        Route::post('edit', [AdminUserController::class, 'update'])->name('user.update.api');
         Route::delete('{id}', [AdminUserController::class, 'destroy']);
     });
  
