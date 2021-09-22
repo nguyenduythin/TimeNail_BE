@@ -75,14 +75,14 @@
                 </div>
                 <!-- list and filter start -->
                 <div class="card">
-                    <div class="card-body border-bottom">
+                    <!-- <div class="card-body border-bottom">
                         <h4 class="card-title">Tìm kiếm & Lọc</h4>
                         <div class="row">
                             <div class="col-md-4 user_role"></div>
                             <div class="col-md-4 user_plan"></div>
                             <div class="col-md-4 user_status"></div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="card-datatable table-responsive pt-0">
                         <table class="user-list-table table" id="DataTables_Table_User">
                             <thead class="table-light">
@@ -104,7 +104,7 @@
                     <!-- Modal to add new user starts-->
                     <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
                         <div class="modal-dialog">
-                            <form method="POST" action="" class="add-new-user modal-content pt-0" enctype="multipart/form-data">
+                            <form method="POST" action="{{route('discount.add.api')}}" class="add-new-user modal-content pt-0" enctype="multipart/form-data">
                                 @csrf
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close">×</button>
@@ -113,11 +113,11 @@
                                 </div>
                                 <div class="modal-body flex-grow-1">
                                     <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-fullname">Họ & Tên</label>
-                                        <input type="text" class="form-control dt-full-name"
-                                            id="basic-icon-default-fullname" placeholder="John Doe" name="full_name" />
+                                        <label class="form-label" for="basic-icon-default-fullname">Mã Giảm Giá</label>
+                                        <input type="text" class="form-control dt-full-name code1" 
+                                            id="basic-icon-default-fullname" placeholder="MKX34OP" name="code_discount" />
                                     </div>
-                                    <div class="mb-1">
+                                    <!-- <div class="mb-1">
                                         <label class="form-label" for="basic-icon-default-email">Email</label>
                                         <input type="text" id="basic-icon-default-email" class="form-control dt-email"
                                             placeholder="john.doe@example.com" name="email" />
@@ -169,13 +169,23 @@
                                         <label class="form-label" for="basic-icon-default-company">Địa chỉ</label>
                                         <input type="text" id="basic-icon-default-company" class="form-control "
                                             placeholder="địa chỉ" name="address" />
-                                    </div>
+                                    </div> -->
                                     <div class="mb-1">
-                                        <label for="customFile1" class="form-label">Ảnh đại diện</label>
-                                        <input class="form-control" type="file" id="customFile1" name="avatar"
+                                        <label for="customFile1" class="form-label">Ảnh Chương Trình</label>
+                                        <input class="form-control" type="file" id="customFile1" name="image"
                                              />
                                     </div>
                                     <div class="mb-1">
+                                        <label class="form-label" for="basic-icon-default-fullname">Phần Trăm Giảm</label>
+                                        <input type="number" class="form-control dt-full-name"
+                                            id="basic-icon-default-fullname" placeholder="25%" name="percent" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="basic-icon-default-fullname">Số Lượng</label>
+                                        <input type="number" class="form-control dt-full-name"
+                                            id="basic-icon-default-fullname" placeholder="10" name="quantity" />
+                                    </div>
+                                    <!-- <div class="mb-1">
                                         <label class="form-label" class="d-block">Giới tính</label>
                                         <div class="form-check my-50">
                                             <input type="radio" id="validationRadio3" name="gender"
@@ -187,8 +197,8 @@
                                                 class="form-check-input" value="2" required />
                                             <label class="form-check-label" for="validationRadio4">Nữ</label>
                                         </div>
-                                    </div>
-                                    {{--                                    
+                                    </div> -->
+<!--                                                                         
                                     <div class="mb-1">
                                         <label class="form-label" for="user-role">User Role</label>
                                         <select id="user-role" class="select2 form-select">
@@ -198,7 +208,7 @@
                                             <option value="author">Author</option>
                                             <option value="admin">Admin</option>
                                         </select>
-                                    </div> --}}
+                                    </div>  -->
 
                                     <button type="submit" class="btn btn-primary me-1 data-submit">Lưu</button>
                                     <button type="reset" class="btn btn-outline-secondary"
@@ -219,6 +229,11 @@
 @endsection
 @section('script')
 <script>
+    $(function() {
+    $('.code1').keyup(function() {
+        this.value = this.value.toLocaleUpperCase();
+    });
+});
     $(function () {
     var e = $("#DataTables_Table_User");
     var t = $(".new-user-modal"),
@@ -298,19 +313,7 @@
                                 feather.icons["more-vertical"].toSvg({
                                     class: "font-small-4",
                                 }) +
-                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="' +
-                                r +
-                                '" class="dropdown-item">' +
-                                feather.icons["file-text"].toSvg({
-                                    class: "font-small-4 me-50",
-                                }) +
-                                'Details</a><a href="' +
-                                r +
-                                '" id="editUser" data-id="'+a.id+'" class="dropdown-item">' +
-                                feather.icons["edit"].toSvg({
-                                    class: "font-small-4 me-50",
-                                }) +
-                                'Edit</a><a href="#" id="deleteUser" data-id="'+a.id+'" class="dropdown-item delete-record">' +
+                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="#" id="deleteUser" data-id="'+a.id+'" class="dropdown-item delete-record">' +
                                 feather.icons["trash-2"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
@@ -395,7 +398,7 @@
                         },
                     },
                     {
-                        text: "Thêm Mới Tài Khoản",
+                        text: "Thêm Mới Mã Giảm Giá",
                         className: "add-new btn btn-primary",
                         attr: {
                             "data-bs-toggle": "modal",
@@ -406,149 +409,149 @@
                         },
                     },
                 ],
-                responsive: {
-                    details: {
-                        display: $.fn.dataTable.Responsive.display.modal({
-                            header: function (e) {
-                                return "Details of " + e.data().full_name;
-                            },
-                        }),
-                        type: "column",
-                        renderer: function (e, t, a) {
-                            var s = $.map(a, function (e, t) {
-                                return 6 !== e.columnIndex
-                                    ? '<tr data-dt-row="' +
-                                          e.rowIdx +
-                                          '" data-dt-column="' +
-                                          e.columnIndex +
-                                          '"><td>' +
-                                          e.title +
-                                          ":</td> <td>" +
-                                          e.data +
-                                          "</td></tr>"
-                                    : "";
-                            }).join("");
-                            return (
-                                !!s &&
-                                $('<table class="table"/>').append(
-                                    "<tbody>" + s + "</tbody>"
-                                )
-                            );
-                        },
-                    },
-                },
-                language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } },
-                initComplete: function () {
-                    this.api()
-                        .columns(3)
-                        .every(function () {
-                            var e = this,
-                                t =
-                                    ($(
-                                        '<label class="form-label" for="UserRole">Chức vụ</label>'
-                                    ).appendTo(".user_role"),
-                                    $(
-                                        '<select id="UserRole" class="form-select text-capitalize mb-md-0 mb-2"><option value=""> Lựa chọn chức vụ </option></select>'
-                                    )
-                                        .appendTo(".user_role")
-                                        .on("change", function () {
-                                            var t =
-                                                $.fn.dataTable.util.escapeRegex(
-                                                    $(this).val()
-                                                );
-                                            e.search(
-                                                t ? "^" + t + "$" : "",
-                                                !0,
-                                                !1
-                                            ).draw();
-                                        }));
-                            e.data()
-                                .unique()
-                                .sort()
-                                .each(function (e, a) {
-                                    t.append(
-                                        '<option value="' +
-                                            e +
-                                            '" class="text-capitalize">' +
-                                            e +
-                                            "</option>"
-                                    );
-                                });
-                        }),
-                    this.api()
-                            .columns(2)
-                            .every(function () {
-                                var e = this,
-                                    t =
-                                        ($(
-                                            '<label class="form-label" for="UserPlan">Số điện thoại</label>'
-                                        ).appendTo(".user_plan"),
-                                        $(
-                                            '<select id="UserPlan" class="form-select text-capitalize mb-md-0 mb-2"><option value=""> Lựa chọn SĐT </option></select>'
-                                        )
-                                            .appendTo(".user_plan")
-                                            .on("change", function () {
-                                                var t =
-                                                    $.fn.dataTable.util.escapeRegex(
-                                                        $(this).val()
-                                                    );
-                                                e.search(
-                                                    t ? "^" + t + "$" : "",
-                                                    !0,
-                                                    !1
-                                                ).draw();
-                                            }));
-                                e.data()
-                                    .unique()
-                                    .sort()
-                                    .each(function (e, a) {
-                                        t.append(
-                                            '<option value="' +
-                                                e +
-                                                '" class="text-capitalize">' +
-                                                e +
-                                                "</option>"
-                                        );
-                                    });
-                            }),
-                    this.api()
-                            .columns(1)
-                            .every(function () {
-                                var e = this,
-                                    t =
-                                        ($(
-                                            '<label class="form-label" for="FilterTransaction">Giới Tính</label>'
-                                        ).appendTo(".user_status"),
-                                        $(
-                                            '<select id="FilterTransaction" class="form-select text-capitalize mb-md-0 mb-2xx"><option value=""> Lựa chọn giới tính </option></select>'
-                                        )
-                                            .appendTo(".user_status")
-                                            .on("change", function () {
-                                                var t = $.fn.dataTable.util.escapeRegex(
-                                                            $(this).val()
-                                                        );
-                                                e.search(
-                                                    t ? "^" + t + "$" : "",
-                                                    !0,
-                                                    !1
-                                                ).draw();
-                                            }));
-                                e.data()
-                                    .unique()
-                                    .sort()
-                                    .each(function (e, a) {
-                                        t.append(
-                                            '<option value="' +
-                                                //  l[e].title +
-                                                e  +
-                                                '" class="text-capitalize">' +
-                                                // l[e].title +
-                                                 (e==1 ? "Nam" : "Nữ") +
-                                                "</option>"
-                                        );
-                                    });
-                            });
-                },
+                // responsive: {
+                //     details: {
+                //         display: $.fn.dataTable.Responsive.display.modal({
+                //             header: function (e) {
+                //                 return "Details of " + e.data().full_name;
+                //             },
+                //         }),
+                //         type: "column",
+                //         renderer: function (e, t, a) {
+                //             var s = $.map(a, function (e, t) {
+                //                 return 6 !== e.columnIndex
+                //                     ? '<tr data-dt-row="' +
+                //                           e.rowIdx +
+                //                           '" data-dt-column="' +
+                //                           e.columnIndex +
+                //                           '"><td>' +
+                //                           e.title +
+                //                           ":</td> <td>" +
+                //                           e.data +
+                //                           "</td></tr>"
+                //                     : "";
+                //             }).join("");
+                //             return (
+                //                 !!s &&
+                //                 $('<table class="table"/>').append(
+                //                     "<tbody>" + s + "</tbody>"
+                //                 )
+                //             );
+                //         },
+                //     },
+                // },
+                // language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } },
+                // initComplete: function () {
+                //     this.api()
+                //         .columns(3)
+                //         .every(function () {
+                //             var e = this,
+                //                 t =
+                //                     ($(
+                //                         '<label class="form-label" for="UserRole">Chức vụ</label>'
+                //                     ).appendTo(".user_role"),
+                //                     $(
+                //                         '<select id="UserRole" class="form-select text-capitalize mb-md-0 mb-2"><option value=""> Lựa chọn chức vụ </option></select>'
+                //                     )
+                //                         .appendTo(".user_role")
+                //                         .on("change", function () {
+                //                             var t =
+                //                                 $.fn.dataTable.util.escapeRegex(
+                //                                     $(this).val()
+                //                                 );
+                //                             e.search(
+                //                                 t ? "^" + t + "$" : "",
+                //                                 !0,
+                //                                 !1
+                //                             ).draw();
+                //                         }));
+                //             e.data()
+                //                 .unique()
+                //                 .sort()
+                //                 .each(function (e, a) {
+                //                     t.append(
+                //                         '<option value="' +
+                //                             e +
+                //                             '" class="text-capitalize">' +
+                //                             e +
+                //                             "</option>"
+                //                     );
+                //                 });
+                //         }),
+                //     this.api()
+                //             .columns(2)
+                //             .every(function () {
+                //                 var e = this,
+                //                     t =
+                //                         ($(
+                //                             '<label class="form-label" for="UserPlan">Số điện thoại</label>'
+                //                         ).appendTo(".user_plan"),
+                //                         $(
+                //                             '<select id="UserPlan" class="form-select text-capitalize mb-md-0 mb-2"><option value=""> Lựa chọn SĐT </option></select>'
+                //                         )
+                //                             .appendTo(".user_plan")
+                //                             .on("change", function () {
+                //                                 var t =
+                //                                     $.fn.dataTable.util.escapeRegex(
+                //                                         $(this).val()
+                //                                     );
+                //                                 e.search(
+                //                                     t ? "^" + t + "$" : "",
+                //                                     !0,
+                //                                     !1
+                //                                 ).draw();
+                //                             }));
+                //                 e.data()
+                //                     .unique()
+                //                     .sort()
+                //                     .each(function (e, a) {
+                //                         t.append(
+                //                             '<option value="' +
+                //                                 e +
+                //                                 '" class="text-capitalize">' +
+                //                                 e +
+                //                                 "</option>"
+                //                         );
+                //                     });
+                //             }),
+                //     this.api()
+                //             .columns(1)
+                //             .every(function () {
+                //                 var e = this,
+                //                     t =
+                //                         ($(
+                //                             '<label class="form-label" for="FilterTransaction">Giới Tính</label>'
+                //                         ).appendTo(".user_status"),
+                //                         $(
+                //                             '<select id="FilterTransaction" class="form-select text-capitalize mb-md-0 mb-2xx"><option value=""> Lựa chọn giới tính </option></select>'
+                //                         )
+                //                             .appendTo(".user_status")
+                //                             .on("change", function () {
+                //                                 var t = $.fn.dataTable.util.escapeRegex(
+                //                                             $(this).val()
+                //                                         );
+                //                                 e.search(
+                //                                     t ? "^" + t + "$" : "",
+                //                                     !0,
+                //                                     !1
+                //                                 ).draw();
+                //                             }));
+                //                 e.data()
+                //                     .unique()
+                //                     .sort()
+                //                     .each(function (e, a) {
+                //                         t.append(
+                //                             '<option value="' +
+                //                                 //  l[e].title +
+                //                                 e  +
+                //                                 '" class="text-capitalize">' +
+                //                                 // l[e].title +
+                //                                  (e==1 ? "Nam" : "Nữ") +
+                //                                 "</option>"
+                //                         );
+                //                     });
+                //             });
+                // },
             });
         s.each(function () {
             var e = $(this);
@@ -564,11 +567,10 @@ a.length &&
             (a.validate({
                 errorClass: "error",
                 rules: {
-                    "full_name": { required: !0 },
-                    "email": { required: !0 },
-                    "phone": { required: !0 },
-                    "address": { required: !0 },
-                    "avatar": { required: !0 },
+                    "discount_code": { required: !0 },
+                    "image": { required: !0 },
+                    "percent": { required: !0 , min: 1 },
+                    "quantity": { required: !0,min:1 },
                 },
             }),
             a.on("submit", function (e) {
@@ -584,10 +586,10 @@ a.length &&
        
 $('body').on('click' ,'#deleteUser' , function(){
     var user_id = $(this).data("id");
-     if ( confirm("Bạn có chắc chắn muốn xóa Tài khoản này không ?")) {
+     if ( confirm("Bạn có chắc chắn muốn xóa Mã giảm giá này không ?")) {
     $.ajax({
         type:"DELETE",
-        url:"{{ route('user.list.api') }}"+"/"+user_id,
+        url:"{{ route('discount.list.api') }}"+"/"+user_id,
         success: function(){
             table.ajax.reload();
         },
@@ -598,20 +600,6 @@ $('body').on('click' ,'#deleteUser' , function(){
      }
 });
 
-$('body').on('click' ,'#editUser' , function(){
-    var user_id = $(this).data("id");
-    $.ajax({
-        type:"PATCH",
-        url:"{{ route('user.list.api') }}"+"edit/"+user_id,
-        success: function(){
-
-            table.ajax.reload();
-        },
-        error:function () {
-            console.log("xóa thất bại");
-        }
-    })
-});
 
 });
 

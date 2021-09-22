@@ -39,6 +39,8 @@ Route::prefix('admin')->group(function () {
     //discount
     Route::prefix('discount')->group(function(){
         Route::get('/',[DiscountController::class,'index'])->name('discount.list.api');
+        Route::post('/', [DiscountController::class, 'store'])->name('discount.add.api');
+        Route::delete('{id}',[DiscountController::class,'destroy']);
     });
  
 

@@ -29,6 +29,13 @@ class DiscountController extends Controller
     public function store(Request $request)
     {
         //
+        $model = new Discount();
+        $model->fill($request->all());
+        if ($request->hasFile('image')) {
+            $model->image = $request->file('image')->storeAs('/images/discount avatar', uniqid() . '-' . $request->image->getClientOriginalName());
+        }
+        $model->save();
+        return redirect(route('discount.list'));
     }
 
     /**
@@ -63,5 +70,7 @@ class DiscountController extends Controller
     public function destroy($id)
     {
         //
+        Discount::destroy($id);
+        return response()->json(['success'=>'xóa thành công']);
     }
 }
