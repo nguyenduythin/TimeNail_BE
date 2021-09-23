@@ -26,6 +26,8 @@
                                     <th>Ảnh</th>
                                     <th>Sao</th>
                                     <th>Người phục vụ</th>
+                                    <th>Tên dịch vụ</th>
+                                    <th>Tên combo dịch vụ</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -57,17 +59,19 @@
                         "dataSrc": ""
                         },
                 columns: [
-                    { data: "description"  },
+                    { data: "comment"  },
                     { data: "image" }, 
-                    { data: "star_feedback" },
+                    { data: "number_star" },
                     { data: "full_name" },
+                    { data: "name_service" },
+                    { data: "name_combo" },
                 ],
                 columnDefs: [
                     {
                         targets: 0,
                         responsivePriority: 2,
                         render: function (e, t, a, s) {
-                            var n = a.description;
+                            var n = a.comment;
                             return (
                                 '<div class="d-flex justify-content-left align-items-center"><div class="d-flex flex-column"><a href="' +
                                 r +
@@ -92,7 +96,7 @@
                         },
                     },
                     {
-                        targets: 4,
+                        targets: 6,
                         title: "Actions",
                         orderable: !1,
                         render: function (e, t, a, s) {

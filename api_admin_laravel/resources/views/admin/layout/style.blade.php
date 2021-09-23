@@ -10,7 +10,8 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('admin/vendors/css/vendors.min.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ asset('admin/vendors/css/charts/apexcharts.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ asset('admin/vendors/css/extensions/toastr.min.css')}}">
-
+  <link rel="stylesheet" type="text/css"  href="{{ asset('vendors/css/animate/animate.min.css')}}">
+  <link rel="stylesheet" type="text/css"  href="{{ asset('vendors/css/extensions/sweetalert2.min.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ asset('admin/vendors/css/forms/select/select2.min.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ asset('admin/vendors/css/tables/datatable/dataTables.bootstrap5.min.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ asset('admin/vendors/css/tables/datatable/responsive.bootstrap5.min.css')}}">
@@ -34,7 +35,7 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/pages/dashboard-ecommerce.min.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/plugins/charts/chart-apex.min.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/plugins/extensions/ext-component-toastr.min.css')}}">
-
+  <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/plugins/extensions/ext-component-sweet-alerts.min.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/plugins/forms/form-validation.css')}}">
   <!-- END: Page CSS-->
 

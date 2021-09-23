@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\admin\ContactController;
+use App\Http\Controllers\admin\DiscountController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\FeedbackController;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +33,12 @@ Route::get('feedback',[FeedbackController::class,'index'])->name('feedback.list'
 Route::get('feedback/{id}',[FeedbackController::class,'remove'])->name('feedback.remove');
 Route::post('feedback',[FeedbackController::class,'add'])->name('feedback.add');
 //feedback end thuan
+//contact page
+Route::get('contact',[ContactController::class,'index'])->name('contact.list');
+
+//discount_code page
+Route::get('discount',[DiscountController::class,'index'])->name('discount.list');
+
 
 
 Route::get('/error', function () {

@@ -16,8 +16,13 @@ class FeedbackController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $feedback = DB::select('select feedback.id, image, description, star_feedback, full_name from feedback inner join users on feedback.user_id = users.id');
+    {   
+        $feedback =DB::table('feedback')
+                    ->join('users', 'feedback.user_id', '=', 'users.id')
+                    ->join('services', 'feedback.service_id', '=', 'services.id')
+                    ->join('combo', 'feedback.combo_id', '=', 'combo.id')
+                    ->select('feedback.id', 'feedback.image', 'comment', 'number_star', 'full_name', 'name_service', 'name_combo')
+                    ->get();
         return response()->json($feedback);
     }
 
