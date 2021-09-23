@@ -32,7 +32,7 @@ class DiscountController extends Controller
         $model = new Discount();
         $model->fill($request->all());
         if ($request->hasFile('image')) {
-            $model->image = $request->file('image')->storeAs('/images/discount avatar', uniqid() . '-' . $request->image->getClientOriginalName());
+            $model->image = $request->file('image')->storeAs('/images/discount_avatar', uniqid() . '-' . $request->image->getClientOriginalName());
         }
         $model->save();
         return redirect(route('discount.list'));
