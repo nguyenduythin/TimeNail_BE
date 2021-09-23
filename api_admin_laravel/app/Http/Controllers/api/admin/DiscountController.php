@@ -71,6 +71,6 @@ class DiscountController extends Controller
     {
         //
         Discount::destroy($id);
-        return response()->json(['success'=>'xóa thành công']);
+        return response()->json(['success'=>'Xóa thành công !']);
     }
 }
