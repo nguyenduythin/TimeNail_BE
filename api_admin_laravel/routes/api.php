@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\api\admin\ContactController;
+use App\Http\Controllers\api\admin\DiscountController;
 use App\Http\Controllers\api\admin\UserController as AdminUserController;
 
 use Illuminate\Http\Request;
@@ -24,6 +26,21 @@ Route::prefix('admin')->group(function () {
         Route::post('/', [AdminUserController::class, 'store'])->name('user.add.api');
         Route::post('edit', [AdminUserController::class, 'update'])->name('user.update.api');
         Route::delete('{id}', [AdminUserController::class, 'destroy']);
+    });
+
+
+    // contact
+    Route::prefix('contact')->group(function(){
+        Route::get('/',[ContactController::class,'index'])->name('contact.list.api');
+        Route::delete('{id}',[ContactController::class,'destroy']);
+    });
+
+
+    //discount
+    Route::prefix('discount')->group(function(){
+        Route::get('/',[DiscountController::class,'index'])->name('discount.list.api');
+        Route::post('/', [DiscountController::class, 'store'])->name('discount.add.api');
+        Route::delete('{id}',[DiscountController::class,'destroy']);
     });
  
 

@@ -97,7 +97,7 @@
                                     data-i18n="combo">Combo dịch vụ</span></a>
                   
                   </li>
-                  <li class=" nav-item{{ request()->is('discount*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="ui-typography.html"><i
+                  <li class=" nav-item{{ request()->is('discount*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{route('discount.list')}}"><i
                                     data-feather='percent'></i><span class="menu-title text-truncate"
                                     data-i18n="giảm giá">Mã giảm giá</span></a>
                   
