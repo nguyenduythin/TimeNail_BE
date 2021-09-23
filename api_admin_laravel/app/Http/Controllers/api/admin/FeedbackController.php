@@ -38,7 +38,7 @@ class FeedbackController extends Controller
         $feedback = new Feedback();
         $feedback->fill($request->all());
         if ($request->hasFile('image')) {
-            $feedback->image = $request->file('image')->storeAs('/images/avatar_users', uniqid() . '-' . $request->image->getClientOriginalName());
+            $feedback->image = $request->file('image')->storeAs('/images/feedbacks', uniqid() . '-' . $request->image->getClientOriginalName());
         }
         $feedback->save();
         return   $feedback;
