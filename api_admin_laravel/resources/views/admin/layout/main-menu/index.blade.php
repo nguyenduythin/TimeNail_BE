@@ -85,7 +85,7 @@
                                     data-i18n="Dịch vụ lẻ">Dịch vụ lẻ</span></a>
                    
                   </li>
-                  <li class=" nav-item{{ request()->is('cate-service*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="ui-typography.html"><i
+                  <li class=" nav-item {{ request()->is('cate-service*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="ui-typography.html"><i
                                     data-feather="list"></i><span class="menu-title text-truncate"
                                     data-i18n="Dịch vụ lẻ">Danh mục Dịch vụ</span></a>
             
@@ -97,7 +97,7 @@
                                     data-i18n="combo">Combo dịch vụ</span></a>
                   
                   </li>
-                  <li class=" nav-item{{ request()->is('discount*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{route('discount.list')}}"><i
+                  <li class=" nav-item {{ request()->is('discount*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{route('discount.list')}}"><i
                                     data-feather='percent'></i><span class="menu-title text-truncate"
                                     data-i18n="giảm giá">Mã giảm giá</span></a>
                   
@@ -120,7 +120,7 @@
                                     data-i18n="Feedback">Danh mục bài viết</span></a>
                     
                   </li>
-                  <li class=" nav-item{{ request()->is('tags*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="ui-typography.html"><i
+                  <li class=" nav-item {{ request()->is('tags*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="ui-typography.html"><i
                                     data-feather='tag'></i><span class="menu-title text-truncate"
                                     data-i18n="Feedback">Tags</span></a>
                   
@@ -132,7 +132,7 @@
                                     class="menu-title text-truncate" data-i18n="Feedback">Feedback</span></a>
 
                   </li>
-                  <li class=" nav-item{{ request()->is('gallery*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="#"><i data-feather='image'></i><span
+                  <li class=" nav-item {{ request()->is('gallery*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="#"><i data-feather='image'></i><span
                                     class="menu-title text-truncate" data-i18n="Review">Thư Viện Dịch Vụ</span></a>
 
                   </li>
@@ -148,7 +148,7 @@
                                     class="menu-title text-truncate" data-i18n="Slider">Slider</span></a>
 
                   </li>
-                  <li class=" nav-item{{ request()->is('setting*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="#"><i
+                  <li class=" nav-item {{ request()->is('setting*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="#"><i
                                     data-feather='settings'></i><span class="menu-title text-truncate"
                                     data-i18n="Settings">Time Nails</span></a>
 
