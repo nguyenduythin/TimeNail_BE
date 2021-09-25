@@ -329,12 +329,35 @@ a.length &&
                 },
             }),
             a.on("submit", function (e) {
+                e.preventDefault();
                 var s = a.valid();
-                
-            //    var name = $('#basic-icon-default-fullname').val()
-            //     e.preventDefault(), s && t.modal("hide");
-            //     console.log(name,'ewwewwe');
+                var form = this;
+                $.ajax({
+                    type:"POST",
+                    url:$(form).attr('action'),
+                    data: new FormData(form),
+                    processData: false,
+                    dataType:'json',
+                    contentType: false,
+                    success: function(data){
+                        if (data.code==0) {
+                            $.each(data.error,function (prefix,val) {
+                                $(form).find('span'+prefix+'_error').text(val[0]);
+                            });
+                        }else{
+                            $(form)[0].reset();
+                            t.modal("hide");
+                            table.ajax.reload();
+                            toastr.success(data.msg)
+                        }
+                    },
+                    error:function (error) {
+                        console.log("Thêm không thành công",error);
+                    }
+                })
 
+
+      
             }))
      
 

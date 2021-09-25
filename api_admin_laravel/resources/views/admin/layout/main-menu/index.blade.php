@@ -136,7 +136,7 @@
                                     class="menu-title text-truncate" data-i18n="Review">Thư Viện Dịch Vụ</span></a>
 
                   </li>
-                  <li class=" nav-item {{ request()->is('contact*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="#"><i data-feather='phone'></i><span
+                  <li class=" nav-item {{ request()->is('contact*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{route('contact.list')}}"><i data-feather='phone'></i><span
                                     class="menu-title text-truncate" data-i18n="contact">Liên Hệ</span></a>
 
                   </li>

@@ -35,7 +35,11 @@ class DiscountController extends Controller
             $model->image = $request->file('image')->storeAs('/images/discount_avatar', uniqid() . '-' . $request->image->getClientOriginalName());
         }
         $model->save();
-        return redirect(route('discount.list'));
+        if (!$model) {
+            return response()->json(['code' => 0, 'msg' => 'Thêm mới không thành công !']);
+        } else {
+            return response()->json(['code' => 1, 'msg' => 'Thêm mới thành công !']);
+        }
     }
 
     /**
