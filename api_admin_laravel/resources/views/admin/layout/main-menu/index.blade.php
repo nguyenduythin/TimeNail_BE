@@ -157,8 +157,7 @@
                   <li class=" navigation-header"><span data-i18n="Dịch vụ">Tương tác & Hỗ trợ</span><i
                               data-feather="more-horizontal"></i>
                   </li>
-                  <li class=" nav-item {{ request()->is('feedback*') ? 'active' : '' }}"><a
-                              class="d-flex align-items-center" href="#"><i data-feather='mail'></i><span
+                  <li class=" nav-item {{ request()->is('feedback*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('feedback.list')}}"><i data-feather='mail'></i><span
                                     class="menu-title text-truncate" data-i18n="Feedback">Feedback</span></a>
 
                   </li>
@@ -187,9 +186,9 @@
                                     class="menu-title text-truncate" data-i18n="Slider">Slider</span></a>
 
                   </li>
-                  <li class=" nav-item {{ request()->is('setting*') ? 'active' : '' }}"><a
-                              class="d-flex align-items-center" href="#"><i data-feather='settings'></i><span
-                                    class="menu-title text-truncate" data-i18n="Settings">Time Nails</span></a>
+                  <li class=" nav-item {{ request()->is('setting*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('setting.list')}}"><i
+                                    data-feather='settings'></i><span class="menu-title text-truncate"
+                                    data-i18n="Settings">Time Nails</span></a>
 
                   </li>
             </ul>
