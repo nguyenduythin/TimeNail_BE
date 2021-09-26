@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\admin\ContactController;
 use App\Http\Controllers\admin\DiscountController;
+use App\Http\Controllers\admin\PermissionController;
+use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,8 +26,13 @@ Route::get('/', function () {
 
 
 Route::get('user',[UserController::class,'index'])->name('user.list');
-Route::get('user/{id}',[UserController::class,'remove'])->name('user.remove');
-Route::post('user',[UserController::class,'add'])->name('user.add');
+
+//staff list
+Route::get('staff',[UserController::class,'staff'])->name('staff.list');
+//role list
+Route::get('role',[RoleController::class,'index'])->name('role.list');
+//permission list
+Route::get('permission',[PermissionController::class,'index'])->name('permission.list');
 
 //contact page
 Route::get('contact',[ContactController::class,'index'])->name('contact.list');
