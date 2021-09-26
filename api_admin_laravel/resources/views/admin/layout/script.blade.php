@@ -21,6 +21,10 @@
 <script src="{{ asset('admin/vendors/js/forms/cleave/cleave.min.js')}}"></script>
 <script src="{{ asset('admin/vendors/js/forms/cleave/addons/cleave-phone.us.js')}}"></script>
 <script src="{{ asset('admin/vendors/js/pickers/flatpickr/flatpickr.min.js')}}"></script>
+{{-- roles page --}}
+<script src="{{ asset('admin/vendors/js/tables/datatable/datatables.checkboxes.min.js')}}"></script>
+{{-- roles page-end --}}
+
 <!-- END: Page Vendor JS-->
 
 <!-- BEGIN: Theme JS-->
@@ -33,7 +37,9 @@
 <!-- BEGIN: Page JS-->
 <script src="{{ asset('admin/js/scripts/pages/dashboard-ecommerce.min.js')}}"></script>
 <!-- END: Page JS-->
-{{-- <script src="{{ asset('admin/js/scripts/pages/app-user-list.min.js')}}"></script> --}}
+
+
+
 
 @yield('script')
 <script>

@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function () {
 
+    // user
     Route::prefix('user')->group(function () {
         Route::get('/', [AdminUserController::class, 'index'])->name('user.list.api');
         Route::get('/show/{id}', [AdminUserController::class, 'show']);
