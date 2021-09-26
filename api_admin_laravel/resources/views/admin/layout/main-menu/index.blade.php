@@ -148,7 +148,7 @@
                                     class="menu-title text-truncate" data-i18n="Slider">Slider</span></a>
 
                   </li>
-                  <li class=" nav-item {{ request()->is('setting*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="#"><i
+                  <li class=" nav-item {{ request()->is('setting*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('setting.list')}}"><i
                                     data-feather='settings'></i><span class="menu-title text-truncate"
                                     data-i18n="Settings">Time Nails</span></a>
 

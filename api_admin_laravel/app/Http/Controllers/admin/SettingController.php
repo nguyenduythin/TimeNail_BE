@@ -3,23 +3,21 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Feedback;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Setting;
 
-class FeedbackController extends Controller
+class SettingController extends Controller
 {
-
     public function index(Request $request)
     {
-        return view('admin.page.feedback.feedback-list');
+        return view('admin.page.setting.setting-list');
     }
     
     public function remove($id)
     {
-        $feedback = Feedback::find($id);
+        $setting = Setting::find($id);
         //Storage::delete($feedback->image);
-        $feedback->destroy($id);
+        $setting->destroy($id);
         return redirect()->back();
     }
 }

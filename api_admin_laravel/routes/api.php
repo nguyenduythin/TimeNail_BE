@@ -4,6 +4,7 @@ use App\Http\Controllers\api\admin\ContactController;
 use App\Http\Controllers\api\admin\DiscountController;
 use App\Http\Controllers\api\admin\UserController as AdminUserController;
 use App\Http\Controllers\api\admin\FeedbackController as AdminFeedbackController;
+use App\Http\Controllers\api\admin\SettingController as AdminSettingController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,16 @@ Route::prefix('admin')->group(function () {
         Route::delete('{id}', [AdminFeedbackController::class, 'destroy']);
     });
     //feedback-end thuan
+
+    //setting thuan
+    Route::prefix('setting')->group(function () {
+        Route::get('/', [AdminSettingController::class, 'index'])->name('setting.list.api');
+        Route::get('/show/{id}', [AdminSettingController::class, 'show']);
+        Route::post('/', [AdminSettingController::class, 'store'])->name('setting.add.api');
+        Route::patch('edit/{id}', [AdminSettingController::class, 'update'])->name('setting.update.api');
+        Route::delete('{id}', [AdminSettingController::class, 'destroy']);
+    });
+    //setting-end thuan
 
 
     // contact
