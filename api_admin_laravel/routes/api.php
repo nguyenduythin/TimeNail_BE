@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\admin\CategoryServiceController;
 use App\Http\Controllers\api\admin\ContactController;
 use App\Http\Controllers\api\admin\DiscountController;
 use App\Http\Controllers\api\admin\UserController as AdminUserController;
@@ -41,6 +42,15 @@ Route::prefix('admin')->group(function () {
         Route::get('/',[DiscountController::class,'index'])->name('discount.list.api');
         Route::post('/', [DiscountController::class, 'store'])->name('discount.add.api');
         Route::delete('{id}',[DiscountController::class,'destroy']);
+    });
+
+
+    //category service
+    Route::prefix('cate-service')->group(function(){
+        Route::get('/',[CategoryServiceController::class,'index'])->name('cate-service.list.api');
+        Route::get('/show/{id}', [CategoryServiceController::class, 'show']);
+        Route::post('/', [CategoryServiceController::class, 'store'])->name('cate-service.add.api');
+        Route::delete('{id}',[CategoryServiceController::class,'destroy']);
     });
  
 

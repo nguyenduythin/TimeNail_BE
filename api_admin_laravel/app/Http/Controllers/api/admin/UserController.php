@@ -78,7 +78,7 @@ class UserController extends Controller
         }
         $query =  $user->save();
         if (!$query) {
-            return response()->json(['code' => 0, 'msg' => 'Sửa không eeeeê thành công !']);
+            return response()->json(['code' => 0, 'msg' => 'Sửa không thành công !']);
         } else {
             return response()->json(['code' => 1, 'msg' => 'Sửa mới thành công !']);
         }

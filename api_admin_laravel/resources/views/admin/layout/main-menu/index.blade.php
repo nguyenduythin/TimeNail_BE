@@ -85,7 +85,7 @@
                                     data-i18n="Dịch vụ lẻ">Dịch vụ lẻ</span></a>
                    
                   </li>
-                  <li class=" nav-item {{ request()->is('cate-service*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="ui-typography.html"><i
+                  <li class=" nav-item {{ request()->is('cate-service*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{route('cate-service.list')}}"><i
                                     data-feather="list"></i><span class="menu-title text-truncate"
                                     data-i18n="Dịch vụ lẻ">Danh mục Dịch vụ</span></a>
             

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CategoryService;
 use App\Models\Contact;
 use App\Models\Discount;
 use App\Models\User;
@@ -17,5 +18,8 @@ class DatabaseSeeder extends Seeder
   public function run()
   {
     // Discount::factory(25)->create();
+    // Contact::factory(50)->create();
+    // User::factory(100)->create();
+    // CategoryService::factory(10)->create();
   }
 }

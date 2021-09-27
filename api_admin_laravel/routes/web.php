@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\CategoryServiceController;
 use App\Http\Controllers\admin\ContactController;
 use App\Http\Controllers\admin\DiscountController;
 use App\Http\Controllers\admin\UserController;
@@ -32,6 +33,9 @@ Route::get('contact',[ContactController::class,'index'])->name('contact.list');
 
 //discount_code page
 Route::get('discount',[DiscountController::class,'index'])->name('discount.list');
+
+//categories service
+Route::get('cate-service',[CategoryServiceController::class,'index'])->name('cate-service.list');
 
 
 
