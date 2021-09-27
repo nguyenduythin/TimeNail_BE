@@ -324,7 +324,7 @@ a.length &&
                 rules: {
                     "discount_code": { required: !0 },
                     "image": { required: !0 },
-                    "percent": { required: !0 , min: 1 },
+                    "percent": { required: !0 , min: 1, max: 100 },
                     "quantity": { required: !0,min:1 },
                 },
             }),
