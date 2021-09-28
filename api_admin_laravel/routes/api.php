@@ -58,6 +58,10 @@ Route::prefix('admin')->group(function () {
     //service
     Route::prefix('service')->group(function(){
         Route::get('/',[ServiceController::class,'index'])->name('service.list.api');
+        Route::get('/show/{id}', [ServiceController::class, 'show']);
+        Route::post('/', [ServiceController::class, 'store'])->name('service.add.api');
+        Route::post('edit', [ServiceController::class, 'update'])->name('service.update.api');
+        Route::delete('{id}',[ServiceController::class,'destroy']);
     });
  
 

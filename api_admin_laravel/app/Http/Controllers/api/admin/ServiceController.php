@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\CategoryService;
 use App\Models\Service;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,8 @@ class ServiceController extends Controller
         //
         $model = Service::all();
         $model->load('cate_service');
-        return response()->json($model);
+        $cate = CategoryService::all();
+        return response()->json(['service'=>$model,'cate'=>$cate]);
     }
 
     /**
@@ -30,6 +32,14 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         //
+        $model = new Service();
+        $model->fill($request->all());
+        $query =  $model->save();
+        if (!$query) {
+            return response()->json(['code' => 0, 'msg' => 'Thêm mới không thành công !']);
+        } else {
+            return response()->json(['code' => 1, 'msg' => 'Thêm mới thành công !']);
+        }
     }
 
     /**
@@ -41,6 +51,7 @@ class ServiceController extends Controller
     public function show($id)
     {
         //
+        return Service::find($id);
     }
 
     /**
@@ -50,9 +61,17 @@ class ServiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $model = Service::find($request->id);
+        $model->fill($request->all());
+        $query =  $model->save();
+        if (!$query) {
+            return response()->json(['code' => 0, 'msg' => 'Sửa không thành công !']);
+        } else {
+            return response()->json(['code' => 1, 'msg' => 'Sửa mới thành công !']);
+        }
     }
 
     /**
@@ -64,5 +83,7 @@ class ServiceController extends Controller
     public function destroy($id)
     {
         //
+        Service::destroy($id);
+        return  response()->json(['success' => 'Xóa thành công!']);
     }
 }

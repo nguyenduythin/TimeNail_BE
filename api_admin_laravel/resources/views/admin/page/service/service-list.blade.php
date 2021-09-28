@@ -97,100 +97,40 @@
                     <!-- Modal to add new user starts-->
                     <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
                         <div class="modal-dialog">
-                            <form method="POST" action="{{ route('user.add.api') }}"
+                            <form method="POST" action="{{route('service.add.api')}}"
                                 class="add-new-user modal-content pt-0" enctype="multipart/form-data">
                                 @csrf
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close">×</button>
                                 <div class="modal-header mb-1">
-                                    <h5 class="modal-title" id="exampleModalLabel">Thêm tài khoản</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Thêm Dịch Vụ</h5>
                                 </div>
                                 <div class="modal-body flex-grow-1">
                                     <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-fullname">Họ & Tên</label>
+                                        <label class="form-label" for="basic-icon-default-fullname">Tên Dịch Vụ</label>
                                         <input type="text" class="form-control dt-full-name"
-                                            id="basic-icon-default-fullname" placeholder="John Doe" name="full_name" />
+                                            id="basic-icon-default-fullname" placeholder="Sơn Móng Tay" name="name_service" />
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-email">Email</label>
-                                        <input type="text" id="basic-icon-default-email" class="form-control dt-email"
-                                            placeholder="john.doe@example.com" name="email" />
+                                        <label class="form-label" for="basic-icon-default-price">Giá Dịch Vụ</label>
+                                        <input type="text" class="form-control dt-full-name"
+                                            id="basic-icon-default-price" placeholder="₫100,000" name="price" />
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" for="basic-default-password1">Mật khẩu</label>
-                                        <input type="password" id="basic-default-password1" class="form-control"
-                                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                            name="password" required />
-                                        <div class="valid-feedback">Looks good!</div>
-                                        <div class="invalid-feedback">Please enter your password.</div>
-                                    </div>
-                                    {{-- <div class="mb-1">
-                                        <label class="form-label" for="basic-default-password">Password</label>
-                                        <input
-                                          type="password"
-                                          id="basic-icon-default-password"
-                                          name="basic-default-password"
-                                          class="form-control dt-password"
-                                          placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        />
-                                      </div>
-                                      <div class="mb-1">
-                                        <label class="form-label" for="confirm-password">Confirm Password</label>
-                                        <input
-                                          type="password"
-                                          id="confirm-password"
-                                          name="confirm-password"
-                                          class="form-control"
-                                          placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        />
-                                      </div> --}}
-                                    <div class="mb-1">
-                                        <label class="form-label" for="bsDob">Ngày sinh</label>
-                                        <input type="date" class="form-control picker" name="date_birth" id="bsDob"
-                                            required />
-
-                                        <div class="valid-feedback">Looks good!</div>
-                                        <div class="invalid-feedback">Please enter your date of birth.</div>
+                                        <label class="form-label" for="basic-icon-default-time">Tổng Thời Gian (phút)</label>
+                                        <input type="text" class="form-control dt-full-name"
+                                            id="basic-icon-default-time" name="total_time_work" />
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-contact">Số điện thoại</label>
-                                        <input type="text" id="basic-icon-default-contact" class="form-control "
-                                            placeholder="0336-933-4479" name="phone" />
+                                        <label class="form-label" for="basic-icon-default-desc">Mô Tả</label>
+                                        <textarea type="text" class="form-control dt-full-name"
+                                            id="basic-icon-default-desc" rows="3" placeholder="Những dịch vụ chuyên nghiệp hứa hẹn sẽ đem lại trải nghiệm tuyệt vời cho quý khách !" name="short_description" ></textarea>
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-company">Địa chỉ</label>
-                                        <input type="text" id="basic-icon-default-company" class="form-control "
-                                            placeholder="địa chỉ" name="address" />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label for="customFile1" class="form-label">Ảnh đại diện</label>
-                                        <input class="form-control" type="file" id="customFile1" name="avatar" />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" class="d-block">Giới tính</label>
-                                        <div class="form-check my-50">
-                                            <input type="radio" id="validationRadio3" name="gender"
-                                                class="form-check-input" value="1" required />
-                                            <label class="form-check-label" for="validationRadio3">Nam</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" id="validationRadio4" name="gender"
-                                                class="form-check-input" value="2" required />
-                                            <label class="form-check-label" for="validationRadio4">Nữ</label>
-                                        </div>
-                                    </div>
-                                    {{--                                    
-                                    <div class="mb-1">
-                                        <label class="form-label" for="user-role">User Role</label>
-                                        <select id="user-role" class="select2 form-select">
-                                            <option value="subscriber">Subscriber</option>
-                                            <option value="editor">Editor</option>
-                                            <option value="maintainer">Maintainer</option>
-                                            <option value="author">Author</option>
-                                            <option value="admin">Admin</option>
+                                        <label class="form-label" for="basic-icon-default-fullname11">Danh Mục Dịch Vụ</label>
+                                        <select class="form-control dt-full-name" name="cate_service_id" id="basic-icon-default-fullname11">
                                         </select>
-                                    </div> --}}
-
+                                    </div>
                                     <button type="submit" class="btn btn-primary me-1 data-submit">Lưu</button>
                                     <button type="reset" class="btn btn-outline-secondary"
                                         data-bs-dismiss="modal">Cancel</button>
@@ -220,92 +160,37 @@
             </div>
             <div class="modal-body pb-5 px-sm-5 pt-50">
                 <div class="text-center mb-2">
-                    <h1 class="mb-1">Cập nhật mới tài khoản</h1>
-                    <p>Cập nhập chi tiết tài khoản mới !</p>
+                    <h1 class="mb-1">Cập nhật mới danh mục</h1>
+                    <p>Cập nhập chi tiết danh mục mới !</p>
                 </div>
-                <form id="editUserForm" action="{{ route('user.update.api') }}" method="POST" class="row gy-1 pt-75"
+                <form id="editUserForm" action="{{ route('service.update.api') }}" method="POST" class="row gy-1 pt-75"
                     enctype="multipart/form-data">
                     @csrf
                     <input type="text" name="id" hidden>
-                    <div class="d-flex center">
-                        <a href="#" class="me-25">
-                            <img src="" id="account-upload-img" class="uploadedAvatar rounded me-50" alt="profile image"
-                                height="100" width="100" name="avatar" />
-                        </a>
-                        <!-- upload and reset button -->
-                        <div class="d-flex align-items-end mt-75 ms-1">
-                            <div>
-                                <label for="account-upload" class="btn btn-sm btn-primary mb-75 me-75">Upload</label>
-                                <input type="file" id="account-upload" name="avatar" hidden accept="image/*" />
-                                <button type="button" id="account-reset"
-                                    class="btn btn-sm btn-outline-secondary mb-75">Reset</button>
-                                <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
-                            </div>
-                        </div>
-                        <!--/ upload and reset button -->
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="modalEditUserFirstName">Tên Dịch Vụ</label>
+                        <input type="text" id="modalEditUserFirstName full_name" name="name_service" class="form-control"
+                            placeholder="Sơn Móng Tay" />
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserFirstName">Họ và tên</label>
-                        <input type="text" id="modalEditUserFirstName full_name" name="full_name" class="form-control"
-                            placeholder="tên của bạn" data-msg="Please enter your first name" />
+                        <label class="form-label" for="modalEditUserFirstName">Giá Dịch Vụ</label>
+                        <input type="text" id="modalEditUserFirstName full_name" name="price" class="form-control"
+                            placeholder="₫100,000" />
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserEmail">Email:</label>
-                        <input type="text" id="modalEditUserEmail email" name="email" class="form-control"
-                            placeholder="example@domain.com" />
-
+                        <label class="form-label" for="modalEditUserFirstName">Tổng Thời Gian (phút)</label>
+                        <input type="text" id="modalEditUserFirstName full_name" name="total_time_work" class="form-control"
+                             />
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserLastName">Ngày Sinh</label>
-                        <input type="date" class="form-control picker" name="date_birth" id="date_birth" required />
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserStatus">Chức vụ</label>
-                        <select id="modalEditUserStatus" name="modalEditUserStatus" class="form-select"
-                            aria-label="Default select example">
-                            <option selected>Lựa chọn</option>
-                            <option value="1">Admin</option>
-                            <option value="2">Auth</option>
-                            <option value="3">Subject</option>
-                        </select>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditTaxID">Mật khẩu</label>
-                        <input type="password" id="modalEditTaxID password" name="password"
-                            class="form-control modal-edit-tax-id" placeholder="password" />
-                    </div>
-
-
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserPhone">Số điện thoại</label>
-                        <input type="text" id="modalEditUserPhone phone" name="phone"
-                            class="form-control phone-number-mask" placeholder="+1 (609) 933-44-22"
-                            value="+1 (609) 933-44-22" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditTaxID">Nhập lại mật khẩu</label>
-                        <input type="password" id="modalEditTaxID password_confirm" name="password_confirm"
-                            class="form-control modal-edit-tax-id" placeholder="Tax-8894" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserCountry">Giới Tính</label>
-                        <div class="d-flex">
-                            <div class="form-check form-check-inline">
-                                <input type="radio" id="gender1" name="gender" class="form-check-input" value="1"
-                                    required />
-                                <label class="form-check-label" for="gender1">Nam</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input type="radio" id="gender2" name="gender" class="form-check-input" value="2"
-                                    required />
-                                <label class="form-check-label" for="gender2">Nữ</label>
-                            </div>
-                        </div>
-
+                        <label class="form-label" for="modalEditUserFirstName">Danh Mục Dịch Vụ</label>
+                        <select class="form-control dt-full-name" name="cate_service_id" id="basic-icon-default-fullname12">
+                                        </select>
                     </div>
                     <div class="col-12 ">
-                        <label class="form-label" for="modalEditUserCountry">Địa chỉ</label>
-                        <textarea class="form-control" name="address" id="address" cols="30" rows="1"></textarea>
+                        <label class="form-label" for="modalEditUserCountry">Mô Tả</label>
+                        <textarea class="form-control" name="short_description" placeholder="Những dịch vụ chuyên nghiệp hứa hẹn sẽ đem lại trải nghiệm tuyệt vời cho quý khách !"
+                             id="address" cols="30" rows="4"></textarea>
                     </div>
 
 
@@ -326,8 +211,12 @@
 @endsection
 @section('script')
 <script>
+    $.get('<?= route("service.list.api") ?>' , function (data) {
+        data.cate.map(function(x){
+            document.getElementById('basic-icon-default-fullname11').insertAdjacentHTML('beforeend', '<option value="'+x.id+'">'+x.name_cate_service+'</option>');
+        })
+    })
     $(function () {
-
     var e = $("#DataTables_Table_User");
     var t = $(".new-user-modal"),
         a = $(".add-new-user"),
@@ -339,10 +228,9 @@
                 "ajax" : {
                         "url" : "{{ route('service.list.api') }}",
                         "type" : "GET",
-                        "dataSrc": ""
+                        "dataSrc": "service"
                         },
                 columns: [
-                    // { data: "" }, 
                     { data: "name_service"  },
                     { data: "price" }, 
                     { data: "total_time_work" },
@@ -528,11 +416,10 @@
 a.length && (a.validate({
                 errorClass: "error",
                 rules: {
-                    "full_name": { required: !0 },
-                    "email": { required: !0 },
-                    "phone": { required: !0 },
-                    "address": { required: !0 },
-                    "avatar": { required: !0 },
+                    "name_service": { required: !0 },
+                    "price": { required: !0, min:1,digits:true },
+                    "total_time_work": { required: !0,min:1,digits:true },
+                    "short_description":{ required: !0 },
                 },
             }),
             a.on("submit", function (e) {
@@ -569,10 +456,10 @@ a.length && (a.validate({
 
 $('body').on('click' ,'#deleteUser' , function(){
     var user_id = $(this).data("id");
-     if ( confirm("Bạn có chắc chắn muốn xóa Tài khoản này không ?")) {
+     if ( confirm("Bạn có chắc chắn muốn xóa Dịch vụ này không ?")) {
     $.ajax({
         type:"DELETE",
-        url:"{{ route('user.list.api') }}"+"/"+user_id,
+        url:"{{ route('service.list.api') }}"+"/"+user_id,
         success: function(){
             table.ajax.reload();
             toastr.success("Xóa Thành Công");
@@ -586,43 +473,25 @@ $('body').on('click' ,'#deleteUser' , function(){
 // get detail edit
 $('body').on('click' ,'#editUser' , function(){
     var user_id = $(this).data("id");
-    $.get('<?= route("user.list.api") ?>'+"/show/"+user_id , function (data) {
-var accountUploadImg = $("#account-upload-img"),
-    accountUpload = $("#account-upload"),
-    uploadedAvatar = $(".uploadedAvatar"),
-    accountReset = $("#account-reset");
-    if (uploadedAvatar) {
-    // var src = uploadedAvatar.attr("src");
-    accountUpload.on("change", function (ch) {
-        
-        var n = new FileReader(),
-        uploadedAvatar = ch.target.files;
-        (n.onload = function () {
-        accountUploadImg && accountUploadImg.attr("src", n.result);
-        }),
-        n.readAsDataURL(uploadedAvatar[0]);
-    }),
-    accountReset.on("click", function () {
-        uploadedAvatar.attr("src", data.avatar ? "/storage/"+ data.avatar 
-        : "{{ asset('admin/images/portrait/small/avatar-none.png') }}" );
-        });
-    };
+    var cate = null;
+    $.get('<?= route("service.list.api") ?>'+"/show/"+user_id , function (data) {
         var form = $('#editUserForm');
-        $("#account-upload-img").attr("src", data.avatar ? "/storage/"+ data.avatar 
-        : "{{ asset('admin/images/portrait/small/avatar-none.png') }}" );
         form.find('input[name="id"]').val(data.id); 
-        form.find('input[name="full_name"]').val(data.full_name);    
-        form.find('input[name="email"]').val(data.email);  
-        form.find('input[name="phone"]').val(data.phone);
-        form.find('input[name="date_birth"]').val(data.date_birth);   
-        form.find('input[name="password"]').val(data.password);  
-        form.find('#address').val(data.address);  
-        if (data.gender == 1) {
-            $('#gender1').attr('checked',true);
-        }else{
-            $('#gender2').attr('checked',true);
-        }
+        form.find('input[name="name_service"]').val(data.name_service);    
+        form.find('input[name="price"]').val(data.price);  
+        form.find('input[name="total_time_work"]').val(data.total_time_work); 
+        form.find('#address').val(data.short_description);  
+        cate = data.cate_service_id;
     },'json')
+    $.get('<?= route("service.list.api") ?>' , function (data) {
+        data.cate.map(function(x){
+            var html = '<option value="'+x.id+'">'+x.name_cate_service+'</option>';
+            if(cate==x.id){
+                html = '<option selected value="'+x.id+'">'+x.name_cate_service+'</option>';
+            }
+            document.getElementById('basic-icon-default-fullname12').insertAdjacentHTML('beforeend', html);
+        })
+    })
 });
 // submit edit in db
 $('#editUserForm').on('submit', function(e){
