@@ -80,7 +80,7 @@
                   <li class=" navigation-header"><span data-i18n="Dịch vụ">Dịch vụ</span><i
                               data-feather="more-horizontal"></i>
                   </li>
-                  <li class=" nav-item {{ request()->is('service*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="ui-typography.html"><i
+                  <li class=" nav-item {{ request()->is('service*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{route('service.list')}}"><i
                                     data-feather='shopping-bag'></i><span class="menu-title text-truncate"
                                     data-i18n="Dịch vụ lẻ">Dịch vụ lẻ</span></a>
                    

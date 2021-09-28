@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\admin\CategoryServiceController;
 use App\Http\Controllers\api\admin\ContactController;
 use App\Http\Controllers\api\admin\DiscountController;
+use App\Http\Controllers\api\admin\ServiceController;
 use App\Http\Controllers\api\admin\UserController as AdminUserController;
 
 use Illuminate\Http\Request;
@@ -52,6 +53,11 @@ Route::prefix('admin')->group(function () {
         Route::post('/', [CategoryServiceController::class, 'store'])->name('cate-service.add.api');
         Route::post('edit', [CategoryServiceController::class, 'update'])->name('cate-service.update.api');
         Route::delete('{id}',[CategoryServiceController::class,'destroy']);
+    });
+
+    //service
+    Route::prefix('service')->group(function(){
+        Route::get('/',[ServiceController::class,'index'])->name('service.list.api');
     });
  
 
