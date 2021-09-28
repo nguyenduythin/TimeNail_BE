@@ -61,9 +61,20 @@ class CategoryServiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $model = CategoryService::find($request->id);
+        $model->fill($request->all());
+        if ($request->hasFile('image')) {
+            $model->image = $request->file('image')->storeAs('/images/categories_service', uniqid() . '-' . $request->image->getClientOriginalName());
+        }
+        $query =  $model->save();
+        if (!$query) {
+            return response()->json(['code' => 0, 'msg' => 'Sửa không thành công !']);
+        } else {
+            return response()->json(['code' => 1, 'msg' => 'Sửa thành công !']);
+        }
     }
 
     /**

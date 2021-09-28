@@ -50,6 +50,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/',[CategoryServiceController::class,'index'])->name('cate-service.list.api');
         Route::get('/show/{id}', [CategoryServiceController::class, 'show']);
         Route::post('/', [CategoryServiceController::class, 'store'])->name('cate-service.add.api');
+        Route::post('edit', [CategoryServiceController::class, 'update'])->name('cate-service.update.api');
         Route::delete('{id}',[CategoryServiceController::class,'destroy']);
     });
  

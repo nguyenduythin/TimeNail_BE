@@ -111,7 +111,7 @@
                                     </div>
                                     <div class="mb-1">
                                         <label for="customFile1" class="form-label">Ảnh Chương Trình</label>
-                                        <input class="form-control" type="file" id="customFile1" name="image"
+                                        <input class="form-control" type="file" id="customFile1" name="image" accept="image/*"
                                              />
                                     </div>
                                     <div class="mb-1">

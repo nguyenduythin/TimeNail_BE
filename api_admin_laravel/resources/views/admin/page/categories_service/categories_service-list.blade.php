@@ -111,7 +111,7 @@
                                     </div>
                                     <div class="mb-1">
                                         <label for="customFile1" class="form-label">Ảnh Danh Mục</label>
-                                        <input class="form-control" type="file" id="customFile1" name="image" />
+                                        <input class="form-control" type="file" id="customFile1" name="image" accept="image/*" />
                                     </div>
                                     <div class="mb-1">
                                         <label class="form-label" for="basic-icon-default-fullname">Ghi Chú</label>
@@ -148,23 +148,23 @@
             </div>
             <div class="modal-body pb-5 px-sm-5 pt-50">
                 <div class="text-center mb-2">
-                    <h1 class="mb-1">Cập nhật mới tài khoản</h1>
-                    <p>Cập nhập chi tiết tài khoản mới !</p>
+                    <h1 class="mb-1">Cập nhật mới danh mục</h1>
+                    <p>Cập nhập chi tiết danh mục mới !</p>
                 </div>
-                <form id="editUserForm" action="{{ route('user.update.api') }}" method="POST" class="row gy-1 pt-75"
+                <form id="editUserForm" action="{{ route('cate-service.update.api') }}" method="POST" class="row gy-1 pt-75"
                     enctype="multipart/form-data">
                     @csrf
                     <input type="text" name="id" hidden>
                     <div class="d-flex center">
                         <a href="#" class="me-25">
                             <img src="" id="account-upload-img" class="uploadedAvatar rounded me-50" alt="profile image"
-                                height="100" width="100" name="avatar" />
+                                height="100" width="100" name="image" />
                         </a>
                         <!-- upload and reset button -->
                         <div class="d-flex align-items-end mt-75 ms-1">
                             <div>
                                 <label for="account-upload" class="btn btn-sm btn-primary mb-75 me-75">Upload</label>
-                                <input type="file" id="account-upload" name="avatar" hidden accept="image/*" />
+                                <input type="file" id="account-upload" name="image" hidden accept="image/*" />
                                 <button type="button" id="account-reset"
                                     class="btn btn-sm btn-outline-secondary mb-75">Reset</button>
                                 <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
@@ -180,7 +180,7 @@
                     <!-- Mai làm tiếp phần sửa -->
                     <div class="col-12 ">
                         <label class="form-label" for="modalEditUserCountry">Ghi Chú</label>
-                        <textarea class="form-control" name="note" id="address" cols="30" rows="1"></textarea>
+                        <textarea class="form-control" name="note" id="note" cols="30" rows="4"></textarea>
                     </div>
 
 
@@ -197,6 +197,50 @@
     </div>
 </div>
 <!--/ Edit User Modal -->
+
+<!-- Detail Category Service -->
+<div class="modal fade show" id="detailUserModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user">
+        <div class="modal-content">
+            <div class="modal-header bg-transparent">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pb-5 px-sm-5 pt-50">
+                <div class="text-center mb-2">
+                    <h1 class="mb-1">Chi tiết danh mục</h1>
+                    <p>Chi tiết danh mục !</p>
+                </div>
+                <form id="detailUserForm" action="" method="POST" class="row gy-1 pt-75"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <input type="text" name="id" hidden>
+                    <div class="d-flex center">
+                        <a href="#" class="me-25">
+                            <img src="" id="account-upload-img1" class="uploadedAvatar rounded me-50" alt="profile image"
+                                height="100" width="100" name="image" />
+                        </a>
+                        <div class="d-flex align-items-end mt-75 ms-1">
+                            <div>
+                                <p class="mb-0">Ảnh danh mục</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="modalEditUserFirstName">Tên Danh Mục</label>
+                        <input type="text" disabled id="modalEditUserFirstName full_name" name="name_cate_service" class="form-control"
+                            placeholder="Mi - Móng" data-msg="Please enter your first name" />
+                    </div>
+                    <!-- Mai làm tiếp phần sửa -->
+                    <div class="col-12 ">
+                        <label class="form-label" for="modalEditUserCountry">Ghi Chú</label>
+                        <textarea class="form-control" disabled name="note" id="note" cols="30" rows="4"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Detail Category Service -->
 
 @endsection
 @section('script')
@@ -258,9 +302,7 @@
                                 feather.icons["more-vertical"].toSvg({
                                     class: "font-small-4",
                                 }) +
-                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="' +
-                                r +
-                                '" class="dropdown-item">' +
+                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="#" id="detailUser" data-id="'+a.id+'" data-bs-toggle="modal" data-bs-target="#detailUserModal" class="dropdown-item">' +
                                 feather.icons["file-text"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
@@ -430,6 +472,19 @@ $('body').on('click' ,'#deleteUser' , function(){
     })
      }
 });
+//detail
+$('body').on('click' ,'#detailUser' , function(){
+    var user_id = $(this).data("id");
+    $.get('<?= route("cate-service.list.api") ?>'+"/show/"+user_id , function (data) {
+        var form = $('#detailUserForm');
+        $("#account-upload-img1").attr("src", data.image ? "/storage/"+ data.image 
+        : "{{ asset('admin/images/portrait/small/avatar-none.png') }}" );
+        form.find('input[name="id"]').val(data.id); 
+        form.find('input[name="name_cate_service"]').val(data.name_cate_service);  
+        form.find('#note').val(data.note);  
+    },'json')
+});
+
 // get detail edit
 $('body').on('click' ,'#editUser' , function(){
     var user_id = $(this).data("id");
@@ -458,17 +513,8 @@ var accountUploadImg = $("#account-upload-img"),
         $("#account-upload-img").attr("src", data.image ? "/storage/"+ data.image 
         : "{{ asset('admin/images/portrait/small/avatar-none.png') }}" );
         form.find('input[name="id"]').val(data.id); 
-        form.find('input[name="full_name"]').val(data.full_name);    
-        form.find('input[name="email"]').val(data.email);  
-        form.find('input[name="phone"]').val(data.phone);
-        form.find('input[name="date_birth"]').val(data.date_birth);   
-        form.find('input[name="password"]').val(data.password);  
-        form.find('#address').val(data.address);  
-        if (data.gender == 1) {
-            $('#gender1').attr('checked',true);
-        }else{
-            $('#gender2').attr('checked',true);
-        }
+        form.find('input[name="name_cate_service"]').val(data.name_cate_service);    
+        form.find('#note').val(data.note);  
     },'json')
 });
 // submit edit in db
@@ -488,7 +534,7 @@ $('#editUserForm').on('submit', function(e){
                     $(form).find('span'+prefix+'_error').text(val[0]);
                 });
             }else{
-                console.log('fomr',data);
+                console.log('form',data);
                 $(form)[0].reset();
                 $('#editUserModal').modal("hide");
                 table.ajax.reload();
