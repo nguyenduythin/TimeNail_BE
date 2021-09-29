@@ -51,7 +51,9 @@ class ServiceController extends Controller
     public function show($id)
     {
         //
-        return Service::find($id);
+        $model = Service::find($id);
+        $model->load('cate_service');
+        return response()->json($model);
     }
 
     /**

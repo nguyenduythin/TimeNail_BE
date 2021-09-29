@@ -151,6 +151,54 @@
     </div>
 </div>
 
+<!-- Detail service -->
+<div class="modal fade show" id="detailUserModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user">
+        <div class="modal-content">
+            <div class="modal-header bg-transparent">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pb-5 px-sm-5 pt-50">
+                <div class="text-center mb-2">
+                    <h1 class="mb-1">Chi tiết dịch vụ</h1>
+                    <p>Chi tiết dịch vụ lẻ !</p>
+                </div>
+                <form id="detailUserForm" method="POST" class="row gy-1 pt-75"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <input type="text" name="id" hidden>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="modalEditUserFirstName">Tên Dịch Vụ</label>
+                        <input disabled type="text" id="modalEditUserFirstName full_name" name="name_service" class="form-control"
+                            placeholder="Sơn Móng Tay" />
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="modalEditUserFirstName">Giá Dịch Vụ</label>
+                        <input disabled type="text" id="modalEditUserFirstName full_name" name="price" class="form-control"
+                            placeholder="₫100,000" />
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="modalEditUserFirstName">Tổng Thời Gian (phút)</label>
+                        <input disabled type="text" id="modalEditUserFirstName full_name" name="total_time_work" class="form-control"
+                             />
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="modalEditUserFirstName">Danh Mục Dịch Vụ</label>
+                        <input disabled type="text" id="modalEditUserFirstName full_name" name="cate_name_service" class="form-control"
+                             />
+                    </div>
+                    <div class="col-12 ">
+                        <label class="form-label" for="modalEditUserCountry">Mô Tả</label>
+                        <textarea disabled class="form-control" name="short_description" placeholder="Những dịch vụ chuyên nghiệp hứa hẹn sẽ đem lại trải nghiệm tuyệt vời cho quý khách !"
+                             id="address" cols="30" rows="4"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/ Detail service -->
+
 <!-- Edit User Modal -->
 <div class="modal fade show" id="editUserModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user">
@@ -160,8 +208,8 @@
             </div>
             <div class="modal-body pb-5 px-sm-5 pt-50">
                 <div class="text-center mb-2">
-                    <h1 class="mb-1">Cập nhật mới danh mục</h1>
-                    <p>Cập nhập chi tiết danh mục mới !</p>
+                    <h1 class="mb-1">Cập nhật mới dịch vụ</h1>
+                    <p>Cập nhập chi tiết dịch vụ lẻ mới !</p>
                 </div>
                 <form id="editUserForm" action="{{ route('service.update.api') }}" method="POST" class="row gy-1 pt-75"
                     enctype="multipart/form-data">
@@ -211,6 +259,7 @@
 @endsection
 @section('script')
 <script>
+    //liệt kê cate cho thẻ select category service
     $.get('<?= route("service.list.api") ?>' , function (data) {
         data.cate.map(function(x){
             document.getElementById('basic-icon-default-fullname11').insertAdjacentHTML('beforeend', '<option value="'+x.id+'">'+x.name_cate_service+'</option>');
@@ -255,10 +304,7 @@
                         render: function (e, t, a, s) {
                             var n = a.price;
                             if (n) {
-                                return n.toLocaleString('ja-JP', {
-                                    style: 'currency',
-                                    currency: 'VND',
-                                });
+                                return n.toLocaleString() + '₫';
                             }
                         },
                     },
@@ -296,9 +342,7 @@
                                 feather.icons["more-vertical"].toSvg({
                                     class: "font-small-4",
                                 }) +
-                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="' +
-                                r +
-                                '" class="dropdown-item">' +
+                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="#" id="detailUser" data-id="'+a.id+'"  data-bs-toggle="modal" data-bs-target="#detailUserModal" class="dropdown-item">' +
                                 feather.icons["file-text"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
@@ -391,7 +435,7 @@
                         },
                     },
                     {
-                        text: "Thêm Mới Tài Khoản",
+                        text: "Thêm Mới Dịch Vụ",
                         className: "add-new btn btn-primary",
                         attr: {
                             "data-bs-toggle": "modal",
@@ -470,6 +514,21 @@ $('body').on('click' ,'#deleteUser' , function(){
     })
      }
 });
+//detail
+$('body').on('click' ,'#detailUser' , function(){
+    var user_id = $(this).data("id");
+    var cate = null;
+    $.get('<?= route("service.list.api") ?>'+"/show/"+user_id , function (data) {
+        var form = $('#detailUserForm');
+        form.find('input[name="id"]').val(data.id); 
+        form.find('input[name="name_service"]').val(data.name_service);    
+        form.find('input[name="price"]').val(data.price.toLocaleString()+'₫');  
+        form.find('input[name="total_time_work"]').val(data.total_time_work); 
+        form.find('input[name="cate_name_service"]').val(data.cate_service.name_cate_service); 
+        form.find('#address').val(data.short_description);  
+    },'json')
+});
+
 // get detail edit
 $('body').on('click' ,'#editUser' , function(){
     var user_id = $(this).data("id");
@@ -481,15 +540,15 @@ $('body').on('click' ,'#editUser' , function(){
         form.find('input[name="price"]').val(data.price);  
         form.find('input[name="total_time_work"]').val(data.total_time_work); 
         form.find('#address').val(data.short_description);  
-        cate = data.cate_service_id;
+        cate = data.cate_service_id; //lấy ra id cate đã chọn
     },'json')
     $.get('<?= route("service.list.api") ?>' , function (data) {
         data.cate.map(function(x){
-            var html = '<option value="'+x.id+'">'+x.name_cate_service+'</option>';
-            if(cate==x.id){
+            var html = '<option value="'+x.id+'">'+x.name_cate_service+'</option>';//định nghĩa thẻ option trong select
+            if(cate==x.id){ //check cate đã chọn
                 html = '<option selected value="'+x.id+'">'+x.name_cate_service+'</option>';
             }
-            document.getElementById('basic-icon-default-fullname12').insertAdjacentHTML('beforeend', html);
+            document.getElementById('basic-icon-default-fullname12').insertAdjacentHTML('beforeend', html);//render thẻ option vào select
         })
     })
 });
