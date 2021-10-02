@@ -26,7 +26,7 @@ class User extends Authenticatable
         'gender',
         'date_birth',
         'address',
-        'account_type',
+        'role_id',
         'description_staff',
         'experience_staff',
     ];

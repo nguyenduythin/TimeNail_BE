@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\FeedbackController;
+use App\Http\Controllers\admin\LoginController;
 use App\Http\Controllers\admin\SettingController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,11 +25,10 @@ Route::get('/', function () {
     return view('admin.page.dashboard.index');
 })->name('dashboard');
 
-
-
-
+//login
+Route::get('login',[LoginController::class,'index'])->name('login.list');
+//user
 Route::get('user',[UserController::class,'index'])->name('user.list');
-
 //staff list
 Route::get('staff',[UserController::class,'staff'])->name('staff.list');
 //role list
