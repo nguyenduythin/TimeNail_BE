@@ -10,6 +10,9 @@ use App\Http\Controllers\api\admin\FeedbackController as AdminFeedbackController
 use App\Http\Controllers\api\admin\PermissionController;
 use App\Http\Controllers\api\admin\RoleController;
 use App\Http\Controllers\api\admin\SettingController as AdminSettingController;
+use App\Http\Controllers\api\admin\BlogCategoryController as AdminBlogCategoryController;
+use App\Http\Controllers\api\admin\BlogController as AdminBlogController;
+use App\Http\Controllers\api\admin\TagController as AdminTagController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -57,7 +60,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [AdminFeedbackController::class, 'index'])->name('feedback.list.api');
         Route::get('/show/{id}', [AdminFeedbackController::class, 'show']);
         Route::post('/', [AdminFeedbackController::class, 'store'])->name('feedback.add.api');
-        Route::patch('edit/{id}', [AdminFeedbackController::class, 'update'])->name('feedback.update.api');
+        Route::post('edit', [AdminFeedbackController::class, 'update'])->name('feedback.update.api');
         Route::delete('{id}', [AdminFeedbackController::class, 'destroy']);
     });
     //feedback-end thuan
@@ -67,11 +70,40 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [AdminSettingController::class, 'index'])->name('setting.list.api');
         Route::get('/show/{id}', [AdminSettingController::class, 'show']);
         Route::post('/', [AdminSettingController::class, 'store'])->name('setting.add.api');
-        Route::patch('edit/{id}', [AdminSettingController::class, 'update'])->name('setting.update.api');
+        Route::post('edit', [AdminSettingController::class, 'update'])->name('setting.update.api');
         Route::delete('{id}', [AdminSettingController::class, 'destroy']);
     });
     //setting-end thuan
 
+    //setting thuan
+    Route::prefix('blog-category')->group(function () {
+        Route::get('/', [AdminBlogCategoryController::class, 'index'])->name('blog.category.list.api');
+        Route::get('/show/{id}', [AdminBlogCategoryController::class, 'show']);
+        Route::post('/', [AdminBlogCategoryController::class, 'store'])->name('blog.category.add.api');
+        Route::post('edit', [AdminBlogCategoryController::class, 'update'])->name('blog.category.update.api');
+        Route::delete('{id}', [AdminBlogCategoryController::class, 'destroy']);
+    });
+    //setting-end thuan
+
+    //setting thuan
+    Route::prefix('blog')->group(function () {
+        Route::get('/', [AdminBlogController::class, 'index'])->name('blog.list.api');
+        Route::get('/show/{id}', [AdminBlogController::class, 'show']);
+        Route::post('/', [AdminBlogController::class, 'store'])->name('blog.add.api');
+        Route::post('edit', [AdminBlogController::class, 'update'])->name('blog.update.api');
+        Route::delete('{id}', [AdminBlogController::class, 'destroy']);
+    });
+    //setting-end thuan
+
+    //setting thuan
+    Route::prefix('tag')->group(function () {
+        Route::get('/', [AdminTagController::class, 'index'])->name('tag.list.api');
+        Route::get('/show/{id}', [AdminTagController::class, 'show']);
+        Route::post('/', [AdminTagController::class, 'store'])->name('tag.add.api');
+        Route::post('edit', [AdminTagController::class, 'update'])->name('tag.update.api');
+        Route::delete('{id}', [AdminTagController::class, 'destroy']);
+    });
+    //setting-end thuan
 
     // contact
     Route::prefix('contact')->group(function () {

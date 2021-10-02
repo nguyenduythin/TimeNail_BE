@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\api\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Feedback;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
+use App\Models\Tag;
 
-class FeedbackController extends Controller
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,14 +14,9 @@ class FeedbackController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
-        $feedback =DB::table('feedback')
-                    ->join('users', 'feedback.user_id', '=', 'users.id')
-                    ->join('services', 'feedback.service_id', '=', 'services.id')
-                    ->join('combo', 'feedback.combo_id', '=', 'combo.id')
-                    ->select('feedback.id', 'feedback.image', 'comment', 'number_star', 'full_name', 'name_service', 'name_combo')
-                    ->get();
-        return response()->json($feedback);
+    {
+        $tag = Tag::all();
+        return response()->json($tag);
     }
 
     /**
@@ -34,13 +27,12 @@ class FeedbackController extends Controller
      */
     public function store(Request $request)
     {
-
-        $feedback = new Feedback();
-        $feedback->fill($request->all());
+        $tag = new Tag();
+        $tag->fill($request->all());
         if ($request->hasFile('image')) {
-            $feedback->image = $request->file('image')->storeAs('/images/image_feedbacks', uniqid() . '-' . $request->image->getClientOriginalName());
+            $tag->image = $request->file('image')->storeAs('/images/image_tag', uniqid() . '-' . $request->image->getClientOriginalName());
         }
-        $query = $feedback->save();
+        $query = $tag->save();
         if (!$query) {
             return response()->json(['code' => 0, 'msg' => 'Thêm mới không thành công !']);
         } else {
@@ -56,8 +48,7 @@ class FeedbackController extends Controller
      */
     public function show($id)
     {
-
-        return Feedback::find($id);
+        return Tag::find($id);
     }
 
     /**
@@ -67,13 +58,19 @@ class FeedbackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request )
     {
-        // $feedback = Feedback::find($id); 
-        // $feedback->fill($request->all());
-        // $feedback->save();
-        // return   $feedback;
-     
+        $tag = Tag::find($request->id);
+        $tag->fill($request->all());
+        if ($request->hasFile('image')) {
+            $tag->image = $request->file('image')->storeAs('/images/image_tags', uniqid() . '-' . $request->image->getClientOriginalName());
+        }
+        $query =  $tag->save();
+        if (!$query) {
+            return response()->json(['code' => 0, 'msg' => 'Sửa không thành công !']);
+        } else {
+            return response()->json(['code' => 1, 'msg' => 'Sửa mới thành công !']);
+        }
     }
 
     /**
@@ -84,8 +81,8 @@ class FeedbackController extends Controller
      */
     public function destroy($id)
     {
-        $feedback = Feedback::find($id)->delete();
-        //Storage::delete($feedback->image);
+        $tag = Tag::find($id)->delete();
+        // Storage::delete($setting->image);
         // $feedback->destroy($id);
         return  response()->json(['success' => 'Xóa thành công!']);
     }

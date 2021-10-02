@@ -10,7 +10,7 @@
         <div class="content-body">
 
             <!-- users list start -->
-            <section class="app-user-list">
+            <section class="app-feedback-list">
                 <div class="card">
                     <div class="card-body border-bottom">
                         <h4 class="card-title">Tìm kiếm & Lọc</h4>
@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div class="card-datatable table-responsive pt-0">
-                        <table class="user-list-table table" id="DataTables_Table_Feedback">
+                        <table class="feedback-list-table table" id="DataTables_Table_Feedback">
                             <thead class="table-light">
                                 <tr>
                                     <th>Phản hồi</th>

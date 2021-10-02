@@ -11,6 +11,9 @@ use App\Http\Controllers\admin\FeedbackController;
 use App\Http\Controllers\admin\LoginController;
 use App\Http\Controllers\admin\ServiceController;
 use App\Http\Controllers\admin\SettingController;
+use App\Http\Controllers\admin\BlogCategoryController;
+use App\Http\Controllers\admin\BlogController;
+use App\Http\Controllers\admin\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,15 +44,23 @@ Route::get('permission',[PermissionController::class,'index'])->name('permission
 
 //feedback thuan
 Route::get('feedback',[FeedbackController::class,'index'])->name('feedback.list');
-Route::get('feedback/{id}',[FeedbackController::class,'remove'])->name('feedback.remove');
-Route::post('feedback',[FeedbackController::class,'add'])->name('feedback.add');
 //feedback end thuan
 
 //setting thuan
 Route::get('setting',[SettingController::class,'index'])->name('setting.list');
-Route::get('setting/{id}',[SettingController::class,'remove'])->name('setting.remove');
-Route::post('setting',[SettingController::class,'add'])->name('setting.add');
 //setting end thuan
+
+//blog_category thuan
+Route::get('blog-category',[BlogCategoryController::class,'index'])->name('blog.category.list');
+//blog_category end thuan
+
+//blog thuan
+Route::get('blog',[BlogController::class,'index'])->name('blog.list');
+//blog end thuan
+
+//blog_category thuan
+Route::get('tag',[TagController::class,'index'])->name('tag.list');
+//blog_category end thuan
 
 //contact page
 Route::get('contact',[ContactController::class,'index'])->name('contact.list');

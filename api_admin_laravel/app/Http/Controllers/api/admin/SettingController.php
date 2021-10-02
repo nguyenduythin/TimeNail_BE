@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\admin;
 
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Setting;
@@ -30,10 +31,14 @@ class SettingController extends Controller
         $setting = new Setting();
         $setting->fill($request->all());
         if ($request->hasFile('logo')) {
-            $setting->logo = $request->file('logo')->storeAs('/images/settings', uniqid() . '-' . $request->logo->getClientOriginalName());
+            $setting->logo = $request->file('logo')->storeAs('/images/logo_settings', uniqid() . '-' . $request->logo->getClientOriginalName());
         }
-        $setting->save();
-        return   $setting;
+        $query = $setting->save();
+        if (!$query) {
+            return response()->json(['code' => 0, 'msg' => 'Thêm mới không thành công !']);
+        } else {
+            return response()->json(['code' => 1, 'msg' => 'Thêm mới thành công !']);
+        }
     }
 
     /**
@@ -54,9 +59,19 @@ class SettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request)
+    {   
+        $setting = Setting::find($request->id);
+        $setting->fill($request->all());
+        if ($request->hasFile('logo')) {
+            $setting->logo = $request->file('logo')->storeAs('/images/logo_settings', uniqid() . '-' . $request->logo->getClientOriginalName());
+        }
+        $query =  $setting->save();
+        if (!$query) {
+            return response()->json(['code' => 0, 'msg' => 'Sửa không thành công !']);
+        } else {
+            return response()->json(['code' => 1, 'msg' => 'Sửa mới thành công !']);
+        }
     }
 
     /**
@@ -68,7 +83,7 @@ class SettingController extends Controller
     public function destroy($id)
     {
         $setting = Setting::find($id)->delete();
-        //Storage::delete($feedback->image);
+        // Storage::delete($setting->image);
         // $feedback->destroy($id);
         return  response()->json(['success' => 'Xóa thành công!']);
     }

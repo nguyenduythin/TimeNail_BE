@@ -1,5 +1,5 @@
 @extends('admin.layout.main')
-@section('title', 'Setting')
+@section('title', 'Tag')
 @section('content')
 <div class="app-content content ">
     <div class="content-overlay"></div>
@@ -10,76 +10,47 @@
         <div class="content-body">
 
             <!-- users list start -->
-            <section class="app-setting-list">
+            <section class="app-tag-list">
                 
                 <div class="card">
                     <div class="card-datatable table-responsive pt-0">
-                        <table class="setting-list-table table" id="DataTables_Table_Setting">
+                        <table class="tag-list-table table" id="DataTables_Table_Tag">
                             <thead class="table-light">
                                 <tr>
 
-                                    <th>Khẩu hiệu</th>
-                                    <th>Logo</th>
-                                    <th>Địa chỉ</th>
-                                    <th>Email</th>
-                                    <th>Số điện thoại</th>
-                                    <th>Tên người quản lý</th>
-                                    <th>Tiêu đề sâu sắc</th>
+                                    <th>Tên nhãn</th>
+                                    <th>Ảnh</th>
+                                    <th>Ghi chú</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-
-
                         </table>
-
-
                     </div>
                     <!-- Modal to add new user starts-->
-                    <div class="modal modal-slide-in new-setting-modal fade" id="modals-slide-in">
+                    <div class="modal modal-slide-in new-tag-modal fade" id="modals-slide-in">
                         <div class="modal-dialog">
-                            <form method="POST" action="{{ route('setting.add.api') }}"
-                                class="add-new-setting modal-content pt-0" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('tag.add.api') }}"
+                                class="add-new-tag modal-content pt-0" enctype="multipart/form-data">
                                 @csrf
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close">×</button>
                                 <div class="modal-header mb-1">
-                                    <h5 class="modal-title" id="exampleModalLabel">Thêm Thông tin cửa hàng</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Thêm tên nhãn</h5>
                                 </div>
                                 <div class="modal-body flex-grow-1">
                                     <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-fullname">Khẩu hiệu</label>
-                                        <input type="text" class="form-control dt-slogan"
-                                            id="basic-icon-default-slogan" placeholder="slogan" name="slogan" />
+                                        <label class="form-label" for="basic-icon-default-name_tag">Tên nhãn</label>
+                                        <input type="text" class="form-control dt-name-tag"
+                                            id="basic-icon-default-name_tag" placeholder="name tag" name="name_tag" />
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-email">Email</label>
-                                        <input type="text" id="basic-icon-default-email" class="form-control dt-email"
-                                            placeholder="email" name="email" />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basic-default-address">Địa chỉ</label>
-                                        <input type="text" id="basic-default-address" class="form-control"
-                                            placeholder="địa chỉ"
-                                            name="address" required />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-contact">Số điện thoại</label>
+                                        <label class="form-label" for="basic-icon-default-contact">Ghi chú</label>
                                         <input type="text" id="basic-icon-default-contact" class="form-control "
-                                            placeholder="phone" name="phone" />
+                                            placeholder="note" name="note" />
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-contact">Tên người quản lý</label>
-                                        <input type="text" id="basic-icon-default-contact" class="form-control "
-                                            placeholder="tên người quản lý" name="name_manage" />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-contact">Tên của hàng</label>
-                                        <input type="text" id="basic-icon-default-contact" class="form-control "
-                                            placeholder="tên cửa hàng" name="title_deep" />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label for="customFile1" class="form-label">Lô gô</label>
-                                        <input class="form-control" type="file" id="customFile1" name="logo" />
+                                        <label for="customFile1" class="form-label">Ảnh</label>
+                                        <input class="form-control" type="file" id="customFile1" name="image" />
                                     </div>
                                     <button type="submit" class="btn btn-primary me-1 data-submit">Lưu</button>
                                     <button type="reset" class="btn btn-outline-secondary"
@@ -102,32 +73,32 @@
 </div>
 
 <!-- Edit User Modal -->
-<div class="modal fade show" id="editSettingModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-setting">
+<div class="modal fade show" id="editTagModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-tag">
         <div class="modal-content">
             <div class="modal-header bg-transparent">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body pb-5 px-sm-5 pt-50">
                 <div class="text-center mb-2">
-                    <h1 class="mb-1">Cập nhật mới cài đặt</h1>
-                    <p>Cập nhập chi tiết cài đặt !</p>
+                    <h1 class="mb-1">Cập nhật mới nhãn</h1>
+                    <p>Cập nhập chi tiết nhãn !</p>
                 </div>
-                <form id="editSettingForm" action="{{ route('setting.update.api') }}" method="POST" class="row gy-1 pt-75"
+                <form id="editTagForm" action="{{ route('tag.update.api') }}" method="POST" class="row gy-1 pt-75"
                     enctype="multipart/form-data">
                     @csrf
                     <input type="text" name="id" hidden>
                     <div class="d-flex center">
                         <a href="#" class="me-25">
-                            <img src="" id="setting-upload-img" class="uploadedLogo rounded me-50" alt="profile image"
-                                height="250" width="400" name="logo" />
+                            <img src="" id="tag-upload-img" class="uploadedImage rounded me-50" alt="profile image"
+                                height="250" width="400" name="image" />
                         </a>
                         <!-- upload and reset button -->
                         <div class="d-flex align-items-end mt-75 ms-1">
                             <div>
-                                <label for="setting-upload" class="btn btn-sm btn-primary mb-75 me-75">Upload logo</label>
-                                <input type="file" id="setting-upload" name="logo"  hidden accept="image/*" />
-                                <button type="button" id="setting-reset"
+                                <label for="tag-upload" class="btn btn-sm btn-primary mb-75 me-75">Ảnh</label>
+                                <input type="file" id="tag-upload" name="image"  hidden accept="image/*" />
+                                <button type="button" id="tag-reset"
                                     class="btn btn-sm btn-outline-secondary mb-75">Reset</button>
                                 <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
                             </div>
@@ -135,43 +106,15 @@
                         <!--/ upload and reset button -->
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditSlogan">Khẩu hiệu</label>
-                        <input type="text" id="modalEditSettingSlogan slogan" name="slogan" class="form-control"
-                            placeholder="slogan" data-msg="Please enter your slogan" />
+                        <label class="form-label" for="modalEditSlogan">Tên nhãn</label>
+                        <input type="text" id="modalEditTag name_tag" name="name_tag" class="form-control"
+                            placeholder="name tag" data-msg="Please enter your name_tag" />
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserEmail">Email:</label>
-                        <input type="text" id="modalEditSettingEmail email" name="email" class="form-control"
-                            placeholder="example@domain.com" />
-
+                        <label class="form-label" for="modalEditTagNote">Ghi chú</label>
+                        <input type="text" id="modalEditTagNote note" name="note" class="form-control"
+                            placeholder="note" data-msg="Please enter your note" />
                     </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditAddress">Địa chỉ</label>
-                        <input type="text" id="modalEditAddress address" name="address"
-                            class="form-control modal-edit-tax-id" placeholder="address" />
-                    </div>
-
-
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditStorePhone">Số điện thoại</label>
-                        <input type="text" id="modalEditStorePhone phone" name="phone"
-                            class="form-control phone-number-mask" placeholder="+1 (609) 933-44-22"
-                            value="+1 (609) 933-44-22" />
-                    </div>
-
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditManage">Địa chỉ</label>
-                        <input type="text" id="modalEditManage name_manage" name="name_manage"
-                            class="form-control modal-edit-tax-id" placeholder="name_manage" />
-                    </div>
-
-
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditTitle">Tên cửa hàng</label>
-                        <input type="text" id="modalEditTitle title_deep" name="title_deep"
-                            class="form-control phone-number-mask" placeholder="title_deep"  />
-                    </div>
-
                     <div class="col-12 text-center mt-2 pt-50">
                         <button type="submit" class="btn btn-primary me-1">Submit</button>
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal"
@@ -191,34 +134,30 @@
 <script>
     $(function () {
 
-    var e = $("#DataTables_Table_Setting");
-    var t = $(".new-setting-modal"),
-        a = $(".add-new-setting"),
+    var e = $("#DataTables_Table_Tag");
+    var t = $(".new-tag-modal"),
+        a = $(".add-new-tag"),
         s = $(".select2"),
         n = $(".dt-contact"),
-        o = "{{ route('setting.list') }}",
+        o = "{{ route('tag.list') }}",
         r = "app-user-view-account.html";
         var  table =   e.DataTable({
                 "ajax" : {
-                        "url" : "{{ route('setting.list.api') }}",
+                        "url" : "{{ route('tag.list.api') }}",
                         "type" : "GET",
                         "dataSrc": ""
                         },
                 columns: [
-                    { data: "slogan"  },
-                    { data: "logo" }, 
-                    { data: "address" },
-                    { data: "email" },
-                    { data: "phone"  },
-                    { data: "name_manage" },
-                    { data: "title_deep" },
+                    { data: "name_tag"  },
+                    { data: "image" }, 
+                    { data: "note" },
                 ],
                 columnDefs: [
                     {
                         targets: 0,
                         responsivePriority: 2,
                         render: function (e, t, a, s) {
-                            var n = a.slogan;
+                            var n = a.name_tag;
                             return (
                                 '<div class="d-flex justify-content-left align-items-center"><div class="d-flex flex-column"><a href="' +
                                 r +
@@ -231,7 +170,7 @@
                     {
                         targets: 1,
                         render: function (e, t, a, s) {
-                            var i = a.logo;
+                            var i = a.image;
                                 
                             if (i)
                                 var c =
@@ -243,7 +182,7 @@
                         },
                     },
                     {
-                        targets: 7,
+                        targets: 3,
                         title: "Actions",
                         orderable: !1,
                         render: function (e, t, a, s) {
@@ -258,11 +197,11 @@
                                 feather.icons["file-text"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
-                                'Details</a><a href="#" id="editSetting" data-id="'+a.id+'"  data-bs-toggle="modal" data-bs-target="#editSettingModal" class="dropdown-item">' +
+                                'Details</a><a href="#" id="editTag" data-id="'+a.id+'"  data-bs-toggle="modal" data-bs-target="#editTagModal" class="dropdown-item">' +
                                 feather.icons["edit"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
-                                'Edit</a><a href="#" id="deleteSetting" data-id="'+a.id+'" class="dropdown-item delete-record">' +
+                                'Edit</a><a href="#" id="deleteTag" data-id="'+a.id+'" class="dropdown-item delete-record">' +
                                 feather.icons["trash-2"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
@@ -347,7 +286,7 @@
                         },
                     },
                     {
-                        text: "Thêm Mới cài đặt",
+                        text: "Thêm mới nhãn",
                         className: "add-new btn btn-primary",
                         attr: {
                             "data-bs-toggle": "modal",
@@ -362,7 +301,7 @@
                     details: {
                         display: $.fn.dataTable.Responsive.display.modal({
                             header: function (e) {
-                                return "Details of " + e.data().name_manage;
+                                return "Details of " + e.data().name_tag;
                             },
                         }),
                         type: "column",
@@ -404,13 +343,9 @@
 a.length && (a.validate({
                 errorClass: "error",
                 rules: {
-                    "slogan": { required: !0 },
-                    "email": { required: !0 },
-                    "address": { required: !0 },
-                    "phone": { required: !0 },
-                    "name_manage": { required: !0 },
-                    "title_deep": { required: !0 },
-                    "logo": { required: !0 },
+                    "name_tag": { required: !0 },
+                    "note": { required: !0 },
+                    "image": { required: !0 },
                 },
             }),
             a.on("submit", function (e) {
@@ -445,12 +380,12 @@ a.length && (a.validate({
       
             }))
 
-$('body').on('click' ,'#deleteSetting' , function(){
-    var setting_id = $(this).data("id");
-     if ( confirm("Bạn có chắc chắn muốn xóa cài đặt này không ?")) {
+$('body').on('click' ,'#deleteTag' , function(){
+    var tag_id = $(this).data("id");
+     if ( confirm("Bạn có chắc chắn muốn xóa nhãn này không ?")) {
     $.ajax({
         type:"DELETE",
-        url:"{{ route('setting.list.api') }}"+"/"+setting_id,
+        url:"{{ route('tag.list.api') }}"+"/"+tag_id,
         success: function(){
             table.ajax.reload();
             toastr.success("Xóa Thành Công");
@@ -462,43 +397,40 @@ $('body').on('click' ,'#deleteSetting' , function(){
      }
 });
 // get detail edit
-$('body').on('click' ,'#editSetting' , function(){
-    var setting_id = $(this).data("id");
-    $.get('<?= route("setting.list.api") ?>'+"/show/"+setting_id , function (data) {
-var settingtUploadImg = $("#setting-upload-img"),
-    settingUpload = $("#setting-upload"),
-    uploadedLogo = $(".uploadedLogo"),
-    settingtReset = $("#setting-reset");
-    if (uploadedLogo) {
-    // var src = uploadedLogo.attr("src");
-    settingUpload.on("change", function (ch) {
+$('body').on('click' ,'#editTag' , function(){
+    var tag_id = $(this).data("id");
+    $.get('<?= route("tag.list.api") ?>'+"/show/"+tag_id , function (data) {
+var tagtUploadImg = $("#tag-upload-img"),
+    tagUpload = $("#tag-upload"),
+    uploadedImage = $(".uploadedImage"),
+    tagReset = $("#tag-reset");
+    if (uploadedImage) {
+    // var src = uploadedImage.attr("src");
+    tagUpload.on("change", function (ch) {
         
         var n = new FileReader(),
-        uploadedLogo = ch.target.files;
+        uploadedImage = ch.target.files;
         (n.onload = function () {
-            settingtUploadImg && settingtUploadImg.attr("src", n.result);
+            tagtUploadImg && tagtUploadImg.attr("src", n.result);
         }),
-        n.readAsDataURL(uploadedLogo[0]);
+        n.readAsDataURL(uploadedImage[0]);
     }),
-    settingtReset.on("click", function () {
-        uploadedLogo.attr("src", data.logo ? "/storage/"+ data.logo 
-        : "{{ asset('admin/images/portrait/small/logo-none.png') }}" );
+    tagReset.on("click", function () {
+        uploadedImage.attr("src", data.image ? "/storage/"+ data.image 
+        : "{{ asset('admin/images/portrait/small/image-none.png') }}" );
         });
     };
-        var form = $('#editSettingForm');
-        $("#setting-upload-img").attr("src", data.logo ? "/storage/"+ data.logo 
-        : "{{ asset('admin/images/portrait/small/logo-none.png') }}" );
+        var form = $('#editTagForm');
+        $("#tag-upload-img").attr("src", data.image ? "/storage/"+ data.image 
+        : "{{ asset('admin/images/portrait/small/image-none.png') }}" );
         form.find('input[name="id"]').val(data.id); 
-        form.find('input[name="slogan"]').val(data.slogan);    
-        form.find('input[name="email"]').val(data.email);  
-        form.find('input[name="address"]').val(data.address); 
-        form.find('input[name="phone"]').val(data.phone);
-        form.find('input[name="name_manage"]').val(data.name_manage);   
-        form.find('input[name="title_deep"]').val(data.title_deep);
+        form.find('input[name="name_tag"]').val(data.name_tag);    
+        form.find('input[name="note"]').val(data.note);
     },'json')
 });
 // submit edit in db
-$('#editSettingForm').on('submit', function(e){
+
+$('#editTagForm').on('submit', function(e){
     e.preventDefault();
     var form = this;
     $.ajax({
@@ -516,7 +448,7 @@ $('#editSettingForm').on('submit', function(e){
             }else{
                 console.log('fomr',data);
                 $(form)[0].reset();
-                $('#editSettingModal').modal("hide");
+                $('#editTagModal').modal("hide");
                 table.ajax.reload();
                 toastr.success(data.msg)
             }
