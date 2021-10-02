@@ -92,7 +92,7 @@
                   </li>
 
 
-                  <li class=" nav-item {{ request()->is('combo*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="ui-typography.html"><i
+                  <li class=" nav-item {{ request()->is('combo*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{route('combo.list')}}"><i
                                     data-feather='refresh-cw'></i><span class="menu-title text-truncate"
                                     data-i18n="combo">Combo dịch vụ</span></a>
                   

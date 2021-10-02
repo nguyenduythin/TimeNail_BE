@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\CategoryServiceController;
+use App\Http\Controllers\admin\ComboController;
 use App\Http\Controllers\admin\ContactController;
 use App\Http\Controllers\admin\DiscountController;
 use App\Http\Controllers\admin\ServiceController;
@@ -41,6 +42,9 @@ Route::get('cate-service',[CategoryServiceController::class,'index'])->name('cat
 //service
 
 Route::get('service',[ServiceController::class,'index'])->name('service.list');
+
+//combo
+Route::get('combo',[ComboController::class,'index'])->name('combo.list');
 
 
 

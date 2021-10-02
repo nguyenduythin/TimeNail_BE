@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\admin\CategoryServiceController;
+use App\Http\Controllers\api\admin\ComboController;
 use App\Http\Controllers\api\admin\ContactController;
 use App\Http\Controllers\api\admin\DiscountController;
 use App\Http\Controllers\api\admin\ServiceController;
@@ -62,6 +63,13 @@ Route::prefix('admin')->group(function () {
         Route::post('/', [ServiceController::class, 'store'])->name('service.add.api');
         Route::post('edit', [ServiceController::class, 'update'])->name('service.update.api');
         Route::delete('{id}',[ServiceController::class,'destroy']);
+    });
+
+
+    //combo
+    Route::prefix('combo')->group(function(){
+        Route::get('/',[ComboController::class,'index'])->name('combo.list.api');
+        Route::post('/', [ComboController::class, 'store'])->name('combo.add.api');
     });
  
 

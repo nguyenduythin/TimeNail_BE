@@ -80,11 +80,12 @@
                             <thead class="table-light">
                                 <tr>
 
-                                    <th>Tên Dịch Vụ</th>
-                                    <th>Giá Dịch Vụ</th>
+                                    <th>Tên Combo</th>
+                                    <th>Giá Combo</th>
+                                    <th>Ảnh Combo</th>
                                     <th>Tổng Thời Gian</th>
                                     <th>Mô Tả</th>
-                                    <th>Danh Mục</th>
+                                    <!-- <th>Mô Tả Chi Tiết</th> -->
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -97,33 +98,58 @@
                     <!-- Modal to add new user starts-->
                     <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
                         <div class="modal-dialog">
-                            <form method="POST" action="{{route('service.add.api')}}" class="add-new-user modal-content pt-0" enctype="multipart/form-data">
+                            <form method="POST" action="{{route('combo.add.api')}}" class="add-new-user modal-content pt-0" enctype="multipart/form-data">
                                 @csrf
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                                 <div class="modal-header mb-1">
-                                    <h5 class="modal-title" id="exampleModalLabel">Thêm Dịch Vụ</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Thêm Combo</h5>
                                 </div>
                                 <div class="modal-body flex-grow-1">
                                     <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-fullname">Tên Dịch Vụ</label>
-                                        <input type="text" class="form-control dt-full-name" id="basic-icon-default-fullname" placeholder="Sơn Móng Tay" name="name_service" />
+                                        <label class="form-label" for="basic-icon-default-fullname">Tên Combo</label>
+                                        <input type="text" class="form-control dt-full-name" id="basic-icon-default-fullname" placeholder="Khuyến Mãi Hè" name="name_combo" />
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-price">Giá Dịch Vụ (₫)</label>
-                                        <input type="number" data-type="currency" class="form-control dt-full-name" id="basic-icon-default-price" placeholder="100,000₫" name="price" />
+                                        <label class="form-label" for="basic-icon-default-price">Giá Combo (₫)</label>
+                                        <input type="number" data-type="currency" class="form-control dt-full-name" id="basic-icon-default-price" placeholder="100,000₫" name="total_price" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="customFile1" class="form-label">Ảnh Combo</label>
+                                        <input class="form-control" type="file" id="customFile1" accept="image/*" name="image" />
                                     </div>
                                     <div class="mb-1">
                                         <label class="form-label" for="basic-icon-default-time">Tổng Thời Gian (phút)</label>
                                         <input type="number" class="form-control dt-full-name" id="basic-icon-default-time" name="total_time_work" />
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-desc">Mô Tả</label>
-                                        <textarea type="text" class="form-control dt-full-name" id="basic-icon-default-desc" rows="3" placeholder="Những dịch vụ chuyên nghiệp hứa hẹn sẽ đem lại trải nghiệm tuyệt vời cho quý khách !" name="short_description"></textarea>
+                                        <div class="table-responsive">
+                                            <table class="table table-flush-spacing">
+                                                <tbody id="service-list">
+                                                    <tr>
+                                                        <td class="text-nowrap fw-bolder">
+                                                            Dịch Vụ Trong Combo
+                                                            <!-- <span data-bs-toggle="tooltip" data-bs-placement="top" title="Allows a full access to the system">
+                                                                <i data-feather="info"></i>
+                                                            </span> -->
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" id="selectAll" />
+                                                                <label class="form-check-label" for="selectAll"> Tất Cả </label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-fullname11">Danh Mục Dịch Vụ</label>
-                                        <select class="form-control dt-full-name" name="cate_service_id" id="basic-icon-default-fullname11">
-                                        </select>
+                                        <label class="form-label" for="basic-icon-default-desc">Mô Tả</label>
+                                        <textarea type="text" class="form-control dt-full-name" id="basic-icon-default-desc" rows="3" placeholder="Mô tả ngắn gọn combo" name="short_description"></textarea>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" for="basic-icon-default-desc">Mô Tả Chi Tiết</label>
+                                        <textarea type="text" class="form-control dt-full-name" id="basic-icon-default-desc" rows="3" placeholder="Mô tả chi tiết combo" name="description"></textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary me-1 data-submit">Lưu</button>
                                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -165,11 +191,11 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserFirstName">Giá Dịch Vụ (₫)</label>
-                        <input disabled type="number" id="modalEditUserFirstName full_name" name="price" class="form-control" placeholder="₫100,000" />
+                        <input disabled type="text" id="modalEditUserFirstName full_name" name="price" class="form-control" placeholder="₫100,000" />
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserFirstName">Tổng Thời Gian (phút)</label>
-                        <input disabled type="number" id="modalEditUserFirstName full_name" name="total_time_work" class="form-control" />
+                        <input disabled type="text" id="modalEditUserFirstName full_name" name="total_time_work" class="form-control" />
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserFirstName">Danh Mục Dịch Vụ</label>
@@ -245,8 +271,10 @@
 
     //liệt kê cate cho thẻ select category service
     $.get('<?= route("service.list.api") ?>', function(data) {
-        data.cate.map(function(x) {
-            document.getElementById('basic-icon-default-fullname11').insertAdjacentHTML('beforeend', '<option value="' + x.id + '">' + x.name_cate_service + '</option>');
+        data.service.map(function(x) {
+            document.getElementById('service-list').insertAdjacentHTML('beforeend', 
+                '<tr><td class="text-nowrap fw-bolder">'+x.name_service+'</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="service_id" value="'+x.id+'" type="checkbox" id="dbManagementRead" /></div></div></td></tr>'
+            );
         })
     })
     $(function() {
@@ -259,15 +287,18 @@
             r = "app-user-view-account.html";
         var table = e.DataTable({
             "ajax": {
-                "url": "{{ route('service.list.api') }}",
+                "url": "{{ route('combo.list.api') }}",
                 "type": "GET",
-                "dataSrc": "service"
+                "dataSrc": ""
             },
             columns: [{
-                    data: "name_service"
+                    data: "name_combo"
                 },
                 {
-                    data: "price"
+                    data: "total_price"
+                },
+                {
+                    data: "image"
                 },
                 {
                     data: "total_time_work"
@@ -275,19 +306,19 @@
                 {
                     data: "short_description"
                 },
-                {
-                    data: "cate_service_id"
-                },
+                // {
+                //     data: "description"
+                // },
             ],
             columnDefs: [{
                     "width": "25%",
-                    "targets": 3
+                    "targets": 4
                 },
                 {
                     targets: 0,
                     responsivePriority: 2,
                     render: function(e, t, a, s) {
-                        var n = a.name_service;
+                        var n = a.name_combo;
                         if (n) {
                             return ('<span class="fw-bolder">' + n + '</span>')
                         }
@@ -297,14 +328,14 @@
                     targets: 1,
                     responsivePriority: 2,
                     render: function(e, t, a, s) {
-                        var n = a.price;
+                        var n = a.total_price;
                         if (n) {
                             return n.toLocaleString() + '₫';
                         }
                     },
                 },
                 {
-                    targets: 2,
+                    targets: 3,
                     responsivePriority: 2,
                     render: function(e, t, a, s) {
                         var n = Math.floor(a.total_time_work / 60);
@@ -319,10 +350,12 @@
                     },
                 },
                 {
-                    targets: 4,
+                    targets: 2,
                     render: function(e, t, a, s) {
-                        var n = a.cate_service.name_cate_service;
-                        return ('<span class="badge rounded-pill badge-light-warning" text-capitalized>' + n + '</span>')
+                        var n = a.image;
+                        if (n) {
+                            return ('<img src="/storage/' + n + '" class="me-75" height="60" width="60" alt="combo_avt"/>')
+                        }
                     },
                 },
                 {
@@ -461,10 +494,13 @@
         a.length && (a.validate({
                 errorClass: "error",
                 rules: {
-                    "name_service": {
+                    "name_combo": {
                         required: !0
                     },
-                    "price": {
+                    "image": {
+                        required: !0
+                    },
+                    "total_price": {
                         required: !0,
                         min: 1,
                         digits: true
@@ -550,7 +586,7 @@
                 var form = $('#editUserForm');
                 form.find('input[name="id"]').val(data.id);
                 form.find('input[name="name_service"]').val(data.name_service);
-                form.find('input[name="price"]').val(data.price);
+                form.find('input[name="price"]').val(data.price.toLocaleString());
                 form.find('input[name="total_time_work"]').val(data.total_time_work);
                 form.find('#address').val(data.short_description);
                 cate = data.cate_service_id; //lấy ra id cate đã chọn

@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\CategoryService;
+use App\Models\Combo;
+use App\Models\ComboService;
 use App\Models\Contact;
 use App\Models\Discount;
 use App\Models\Service;
@@ -23,5 +25,7 @@ class DatabaseSeeder extends Seeder
     // User::factory(100)->create();
     // CategoryService::factory(10)->create();
     // Service::factory(20)->create();
+    // Combo::factory(15)->create();
+    // ComboService::factory(15)->create();
   }
 }
