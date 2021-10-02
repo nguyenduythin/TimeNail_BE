@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\api\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 
-class UserController extends Controller
+use Spatie\Permission\Models\Permission;
+use Illuminate\Http\Request;
+
+class PermissionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return response()->json($users);
+        $permission = Permission::all();
+        return response()->json($permission);
     }
 
     /**
@@ -29,17 +28,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $permission = Permission::create(['name' => $request->name]);
 
-        $user = new User();
-        $user->fill($request->all());
-        $user->fill([
-            'password' => Hash::make($request->password)
-        ]);
-        if ($request->hasFile('avatar')) {
-            $user->avatar = $request->file('avatar')->storeAs('/images/avatar_users', uniqid() . '-' . $request->avatar->getClientOriginalName());
-        }
-        $query =  $user->save();
-        if (!$query) {
+        if (!$permission) {
             return response()->json(['code' => 0, 'msg' => 'Thêm mới không thành công !']);
         } else {
             return response()->json(['code' => 1, 'msg' => 'Thêm mới thành công !']);
@@ -54,30 +45,22 @@ class UserController extends Controller
      */
     public function show($id)
     {
-
-        return User::find($id);
+        return Permission::find($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $idS
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
-
-        $user = User::find($request->id);
-        $user->fill($request->all());
-        $user->fill([
-            'password' => Hash::make($request->password)
-        ]);
-        if ($request->hasFile('avatar')) {
-            $user->avatar = $request->file('avatar')->storeAs('/images/avatar_users', uniqid() . '-' . $request->avatar->getClientOriginalName());
-        }
-        $query =  $user->save();
-        if (!$query) {
+        $permission = Permission::find($request->id);
+        $permission->name = $request->name;
+        $permission->save();
+        if (!$permission) {
             return response()->json(['code' => 0, 'msg' => 'Sửa không thành công !']);
         } else {
             return response()->json(['code' => 1, 'msg' => 'Sửa mới thành công !']);
@@ -92,12 +75,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-
-        $user = User::find($id);
-        Storage::delete($user->avatar);
-        $user->delete();
-        //Storage::delete($user->avatar);
-        // $user->destroy($id);
+        $permission = Permission::find($id);
+        $permission->delete();
         return  response()->json(['success' => 'Xóa thành công!']);
     }
 }

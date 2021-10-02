@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\api\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 
-class UserController extends Controller
+use Spatie\Permission\Models\Role;
+use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
+
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return response()->json($users);
+        $get = Role::all();
+
+        return response()->json($get);
     }
 
     /**
@@ -30,19 +31,15 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        $user = new User();
-        $user->fill($request->all());
-        $user->fill([
-            'password' => Hash::make($request->password)
-        ]);
-        if ($request->hasFile('avatar')) {
-            $user->avatar = $request->file('avatar')->storeAs('/images/avatar_users', uniqid() . '-' . $request->avatar->getClientOriginalName());
+        $get = Role::create(['name' => $request->name]);
+
+        if ($request->has("permissions")) {
+            $get->givePermissionTo($request->permissions);
         }
-        $query =  $user->save();
-        if (!$query) {
+        if (!$get) {
             return response()->json(['code' => 0, 'msg' => 'Thêm mới không thành công !']);
         } else {
-            return response()->json(['code' => 1, 'msg' => 'Thêm mới thành công !']);
+            return response()->json(['code' => 1, 'msg' => 'Thêm mới thành công !'], 200);
         }
     }
 
@@ -54,30 +51,22 @@ class UserController extends Controller
      */
     public function show($id)
     {
-
-        return User::find($id);
+        return Role::find($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $idS
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
-
-        $user = User::find($request->id);
-        $user->fill($request->all());
-        $user->fill([
-            'password' => Hash::make($request->password)
-        ]);
-        if ($request->hasFile('avatar')) {
-            $user->avatar = $request->file('avatar')->storeAs('/images/avatar_users', uniqid() . '-' . $request->avatar->getClientOriginalName());
-        }
-        $query =  $user->save();
-        if (!$query) {
+        $get = Role::find($request->id);
+        $get->name = $request->name;
+        $get->save();
+        if (!$get) {
             return response()->json(['code' => 0, 'msg' => 'Sửa không thành công !']);
         } else {
             return response()->json(['code' => 1, 'msg' => 'Sửa mới thành công !']);
@@ -92,12 +81,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-
-        $user = User::find($id);
-        Storage::delete($user->avatar);
-        $user->delete();
-        //Storage::delete($user->avatar);
-        // $user->destroy($id);
+        $get = Role::find($id);
+        $get->delete();
         return  response()->json(['success' => 'Xóa thành công!']);
     }
 }

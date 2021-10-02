@@ -1,9 +1,12 @@
 <?php
 
+
 use App\Http\Controllers\api\admin\ContactController;
 use App\Http\Controllers\api\admin\DiscountController;
 use App\Http\Controllers\api\admin\UserController as AdminUserController;
 use App\Http\Controllers\api\admin\FeedbackController as AdminFeedbackController;
+use App\Http\Controllers\api\admin\PermissionController;
+use App\Http\Controllers\api\admin\RoleController;
 use App\Http\Controllers\api\admin\SettingController as AdminSettingController;
 use App\Http\Controllers\api\admin\BlogCategoryController as AdminBlogCategoryController;
 use App\Http\Controllers\api\admin\BlogController as AdminBlogController;
@@ -24,7 +27,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('admin')->group(function () {
-
     // user
     Route::prefix('user')->group(function () {
         Route::get('/', [AdminUserController::class, 'index'])->name('user.list.api');
@@ -33,7 +35,24 @@ Route::prefix('admin')->group(function () {
         Route::post('edit', [AdminUserController::class, 'update'])->name('user.update.api');
         Route::delete('{id}', [AdminUserController::class, 'destroy']);
     });
-    
+
+    // permission
+    Route::prefix('permission')->group(function () {
+        Route::get('/', [PermissionController::class, 'index'])->name('permission.list.api');
+        Route::get('/show/{id}', [PermissionController::class, 'show']);
+        Route::post('/', [PermissionController::class, 'store'])->name('permission.add.api');
+        Route::post('edit', [PermissionController::class, 'update'])->name('permission.update.api');
+        Route::delete('{id}', [PermissionController::class, 'destroy']);
+    });
+      // role
+      Route::prefix('role')->group(function () {
+        Route::get('/', [RoleController::class, 'index'])->name('role.list.api');
+        Route::get('/show/{id}', [RoleController::class, 'show']);
+        Route::post('/', [RoleController::class, 'store'])->name('role.add.api');
+        Route::post('edit', [RoleController::class, 'update'])->name('role.update.api');
+        Route::delete('{id}', [RoleController::class, 'destroy']);
+    });
+
     //feedback thuan
     Route::prefix('feedback')->group(function () {
         Route::get('/', [AdminFeedbackController::class, 'index'])->name('feedback.list.api');
@@ -85,22 +104,18 @@ Route::prefix('admin')->group(function () {
     //setting-end thuan
 
     // contact
-    Route::prefix('contact')->group(function(){
-        Route::get('/',[ContactController::class,'index'])->name('contact.list.api');
-        Route::delete('{id}',[ContactController::class,'destroy']);
+    Route::prefix('contact')->group(function () {
+        Route::get('/', [ContactController::class, 'index'])->name('contact.list.api');
+        Route::delete('{id}', [ContactController::class, 'destroy']);
     });
 
 
     //discount
-    Route::prefix('discount')->group(function(){
-        Route::get('/',[DiscountController::class,'index'])->name('discount.list.api');
+    Route::prefix('discount')->group(function () {
+        Route::get('/', [DiscountController::class, 'index'])->name('discount.list.api');
         Route::post('/', [DiscountController::class, 'store'])->name('discount.add.api');
-        Route::delete('{id}',[DiscountController::class,'destroy']);
+        Route::delete('{id}', [DiscountController::class, 'destroy']);
     });
- 
-
-    
-
 });
 
 

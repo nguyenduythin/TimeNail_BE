@@ -116,6 +116,17 @@
                                     <h5 class="modal-title" id="exampleModalLabel">Thêm tài khoản</h5>
                                 </div>
                                 <div class="modal-body flex-grow-1">
+                                                                          
+                                    <div class="mb-1">
+                                        <label class="form-label" for="user-role">Vai trò</label>
+                                        <select id="user-role" class="select2 form-select">
+                                            <option value="subscriber">Subscriber</option>
+                                            <option value="editor">Editor</option>
+                                            <option value="maintainer">Maintainer</option>
+                                            <option value="author">Author</option>
+                                            <option value="admin">Admin</option>
+                                        </select>
+                                    </div>
                                     <div class="mb-1">
                                         <label class="form-label" for="basic-icon-default-fullname">Họ & Tên</label>
                                         <input type="text" class="form-control dt-full-name"
@@ -189,17 +200,7 @@
                                             <label class="form-check-label" for="validationRadio4">Nữ</label>
                                         </div>
                                     </div>
-                                    {{--                                    
-                                    <div class="mb-1">
-                                        <label class="form-label" for="user-role">User Role</label>
-                                        <select id="user-role" class="select2 form-select">
-                                            <option value="subscriber">Subscriber</option>
-                                            <option value="editor">Editor</option>
-                                            <option value="maintainer">Maintainer</option>
-                                            <option value="author">Author</option>
-                                            <option value="admin">Admin</option>
-                                        </select>
-                                    </div> --}}
+                                
 
                                     <button type="submit" class="btn btn-primary me-1 data-submit">Lưu</button>
                                     <button type="reset" class="btn btn-outline-secondary"
@@ -270,6 +271,7 @@
                         <input type="date" class="form-control picker" name="date_birth" id="date_birth" required />
                     </div>
                     <div class="col-12 col-md-6">
+                        <i data-feather='lock'></i>
                         <label class="form-label" for="modalEditUserStatus">Chức vụ</label>
                         <select id="modalEditUserStatus" name="modalEditUserStatus" class="form-select"
                             aria-label="Default select example">
@@ -317,7 +319,7 @@
                         <label class="form-label" for="modalEditUserCountry">Địa chỉ</label>
                         <textarea class="form-control" name="address" id="address" cols="30" rows="1"></textarea>
                     </div>
-
+                 
 
                     <div class="col-12 text-center mt-2 pt-50">
                         <button type="submit" class="btn btn-primary me-1">Submit</button>
