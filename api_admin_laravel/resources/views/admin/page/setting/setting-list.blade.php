@@ -1,5 +1,5 @@
 @extends('admin.layout.main')
-@section('title', 'User')
+@section('title', 'Setting')
 @section('content')
 <div class="app-content content ">
     <div class="content-overlay"></div>
@@ -11,72 +11,10 @@
 
             <!-- users list start -->
             <section class="app-user-list">
-                <div class="row">
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                                <div>
-                                    <h3 class="fw-bolder mb-75">21,459</h3>
-                                    <span>Total Users</span>
-                                </div>
-                                <div class="avatar bg-light-primary p-50">
-                                    <span class="avatar-content">
-                                        <i data-feather="user" class="font-medium-4"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                                <div>
-                                    <h3 class="fw-bolder mb-75">4,567</h3>
-                                    <span>Paid Users</span>
-                                </div>
-                                <div class="avatar bg-light-danger p-50">
-                                    <span class="avatar-content">
-                                        <i data-feather="user-plus" class="font-medium-4"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                                <div>
-                                    <h3 class="fw-bolder mb-75">19,860</h3>
-                                    <span>Active Users</span>
-                                </div>
-                                <div class="avatar bg-light-success p-50">
-                                    <span class="avatar-content">
-                                        <i data-feather="user-check" class="font-medium-4"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                                <div>
-                                    <h3 class="fw-bolder mb-75">237</h3>
-                                    <span>Pending Users</span>
-                                </div>
-                                <div class="avatar bg-light-warning p-50">
-                                    <span class="avatar-content">
-                                        <i data-feather="user-x" class="font-medium-4"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- list and filter start -->
+                
                 <div class="card">
                     <div class="card-body border-bottom">
-                        <h4 class="card-title">Tài Khoản</h4>
+                        <h4 class="card-title">Tìm kiếm & Lọc</h4>
                         <div class="row">
                             <div class="col-md-4 user_role"></div>
                             <div class="col-md-4 user_plan"></div>
@@ -88,14 +26,14 @@
                             <thead class="table-light">
                                 <tr>
 
-                                    <th>Họ & Tên</th>
-                                    {{-- <th>Email</th> --}}
-                                    <th>Giới tính</th>
-                                    <th>Số điện thoại</th>
+                                    <th>Khẩu hiệu</th>
+                                    <th>Logo</th>
                                     <th>Địa chỉ</th>
-
-                                    <th>Vai trò</th>
-                                    <th>Hành động</th>
+                                    <th>Email</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Tên người quản lý</th>
+                                    <th>Tiêu đề sâu sắc</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
 
@@ -105,45 +43,32 @@
 
                     </div>
                     <!-- Modal to add new user starts-->
-                    <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
+                    <div class="modal modal-slide-in new-setting-modal fade" id="modals-slide-in">
                         <div class="modal-dialog">
-                            <form method="POST" action="{{ route('user.add.api') }}"
-                                class="add-new-user modal-content pt-0" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('setting.add.api') }}"
+                                class="add-new-setting modal-content pt-0" enctype="multipart/form-data">
                                 @csrf
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close">×</button>
                                 <div class="modal-header mb-1">
-                                    <h5 class="modal-title" id="exampleModalLabel">Thêm tài khoản</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Thêm Thông tin cửa hàng</h5>
                                 </div>
                                 <div class="modal-body flex-grow-1">
-                                                                          
                                     <div class="mb-1">
-                                        <label class="form-label" for="user-role">Vai trò</label>
-                                        <select id="user-role" class="select2 form-select">
-                                            <option value="subscriber">Subscriber</option>
-                                            <option value="editor">Editor</option>
-                                            <option value="maintainer">Maintainer</option>
-                                            <option value="author">Author</option>
-                                            <option value="admin">Admin</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-fullname">Họ & Tên</label>
+                                        <label class="form-label" for="basic-icon-default-fullname">Khẩu hiệu</label>
                                         <input type="text" class="form-control dt-full-name"
-                                            id="basic-icon-default-fullname" placeholder="John Doe" name="full_name" />
+                                            id="basic-icon-default-fullname" placeholder="slogan" name="slogan" />
                                     </div>
                                     <div class="mb-1">
                                         <label class="form-label" for="basic-icon-default-email">Email</label>
                                         <input type="text" id="basic-icon-default-email" class="form-control dt-email"
-                                            placeholder="john.doe@example.com" name="email" />
+                                            placeholder="email" name="email" />
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" for="basic-default-password1">Mật khẩu</label>
-                                        <input type="password" id="basic-default-password1" class="form-control"
-                                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                            name="password" required />
-                                        <div class="valid-feedback">Looks good!</div>
-                                        <div class="invalid-feedback">Please enter your password.</div>
+                                        <label class="form-label" for="basic-default-password1">Địa chỉ</label>
+                                        <input type="text" id="basic-default-password1" class="form-control"
+                                            placeholder="địa chỉ"
+                                            name="address" required />
                                     </div>
                                     {{-- <div class="mb-1">
                                         <label class="form-label" for="basic-default-password">Password</label>
@@ -166,41 +91,35 @@
                                         />
                                       </div> --}}
                                     <div class="mb-1">
-                                        <label class="form-label" for="bsDob">Ngày sinh</label>
-                                        <input type="date" class="form-control picker" name="date_birth" id="bsDob"
-                                            required />
-
-                                        <div class="valid-feedback">Looks good!</div>
-                                        <div class="invalid-feedback">Please enter your date of birth.</div>
-                                    </div>
-                                    <div class="mb-1">
                                         <label class="form-label" for="basic-icon-default-contact">Số điện thoại</label>
                                         <input type="text" id="basic-icon-default-contact" class="form-control "
-                                            placeholder="0336-933-4479" name="phone" />
+                                            placeholder="phone" name="phone" />
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-company">Địa chỉ</label>
-                                        <input type="text" id="basic-icon-default-company" class="form-control "
-                                            placeholder="địa chỉ" name="address" />
+                                        <label class="form-label" for="basic-icon-default-contact">Tên người quản lý</label>
+                                        <input type="text" id="basic-icon-default-contact" class="form-control "
+                                            placeholder="tên người quản lý" name="name_manage" />
                                     </div>
                                     <div class="mb-1">
-                                        <label for="customFile1" class="form-label">Ảnh đại diện</label>
-                                        <input class="form-control" type="file" id="customFile1" name="avatar" />
+                                        <label class="form-label" for="basic-icon-default-contact">Tên của hàng</label>
+                                        <input type="text" id="basic-icon-default-contact" class="form-control "
+                                            placeholder="tên cửa hàng" name="title_deep" />
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" class="d-block">Giới tính</label>
-                                        <div class="form-check my-50">
-                                            <input type="radio" id="validationRadio3" name="gender"
-                                                class="form-check-input" value="1" required />
-                                            <label class="form-check-label" for="validationRadio3">Nam</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" id="validationRadio4" name="gender"
-                                                class="form-check-input" value="2" required />
-                                            <label class="form-check-label" for="validationRadio4">Nữ</label>
-                                        </div>
+                                        <label for="customFile1" class="form-label">Lô gô</label>
+                                        <input class="form-control" type="file" id="customFile1" name="logo" />
                                     </div>
-                                
+                                    {{--                                    
+                                    <div class="mb-1">
+                                        <label class="form-label" for="user-role">User Role</label>
+                                        <select id="user-role" class="select2 form-select">
+                                            <option value="subscriber">Subscriber</option>
+                                            <option value="editor">Editor</option>
+                                            <option value="maintainer">Maintainer</option>
+                                            <option value="author">Author</option>
+                                            <option value="admin">Admin</option>
+                                        </select>
+                                    </div> --}}
 
                                     <button type="submit" class="btn btn-primary me-1 data-submit">Lưu</button>
                                     <button type="reset" class="btn btn-outline-secondary"
@@ -223,8 +142,8 @@
 </div>
 
 <!-- Edit User Modal -->
-<div class="modal fade show" id="editUserModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user">
+<div class="modal fade show" id="editSettingModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-setting">
         <div class="modal-content">
             <div class="modal-header bg-transparent">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -271,7 +190,6 @@
                         <input type="date" class="form-control picker" name="date_birth" id="date_birth" required />
                     </div>
                     <div class="col-12 col-md-6">
-                        <i data-feather='lock'></i>
                         <label class="form-label" for="modalEditUserStatus">Chức vụ</label>
                         <select id="modalEditUserStatus" name="modalEditUserStatus" class="form-select"
                             aria-label="Default select example">
@@ -319,7 +237,7 @@
                         <label class="form-label" for="modalEditUserCountry">Địa chỉ</label>
                         <textarea class="form-control" name="address" id="address" cols="30" rows="1"></textarea>
                     </div>
-                 
+
 
                     <div class="col-12 text-center mt-2 pt-50">
                         <button type="submit" class="btn btn-primary me-1">Submit</button>
@@ -341,121 +259,58 @@
     $(function () {
 
     var e = $("#DataTables_Table_User");
-    var t = $(".new-user-modal"),
-        a = $(".add-new-user"),
+    var t = $(".new-setting-modal"),
+        a = $(".add-new-setting"),
         s = $(".select2"),
         n = $(".dt-contact"),
-        o = "{{ route('user.list') }}",
+        o = "{{ route('setting.list') }}",
         r = "app-user-view-account.html";
         var  table =   e.DataTable({
                 "ajax" : {
-                        "url" : "{{ route('user.list.api') }}",
+                        "url" : "{{ route('setting.list.api') }}",
                         "type" : "GET",
                         "dataSrc": ""
                         },
                 columns: [
-                    // { data: "" }, 
-                    { data: "full_name"  },
-                    // { data: "email" },
-                    { data: "gender" }, 
-                    { data: "phone" },
+                    { data: "slogan"  },
+                    { data: "logo" }, 
                     { data: "address" },
+                    { data: "email" },
+                    { data: "phone"  },
+                    { data: "name_manage" },
+                    { data: "title_deep" },
                 ],
                 columnDefs: [
-                    // {
-                    //     className: "control",
-                    //     orderable: !1,
-                    //     responsivePriority: 1,
-                    //     targets: 0,
-                  
-                    // },
                     {
                         targets: 0,
                         responsivePriority: 2,
                         render: function (e, t, a, s) {
-                            var n = a.full_name,
-                                l = a.email,
-                                i = a.avatar;
-                              
-                            if (i)
-                                var c =
-                                    '<img src="/storage/'+
-                                    i +
-                                    '" alt="Avatar" height="32" width="32">';
-                            else {
-                                var d = [
-                                        "success",
-                                        "danger",
-                                        "warning",
-                                        "info",
-                                        "dark",
-                                        "primary",
-                                        "secondary",
-                                    ][Math.floor(6 * Math.random()) + 1],
-                                    p = (n = a.full_name).match(/\b\w/g) || [];
-                                c =
-                                    '<span class="avatar-content">' +
-                                    (p = (
-                                        (p.shift() || "") + (p.pop() || "")
-                                    ).toUpperCase()) +
-                                    "</span>";
-                            }
+                            var n = a.slogan;
                             return (
-                                '<div class="d-flex justify-content-left align-items-center"><div class="avatar-wrapper"><div class="avatar ' +
-                                ("" === i ? " bg-light-" + d + " " : "") +
-                                ' me-1">' +
-                                c +
-                                '</div></div><div class="d-flex flex-column"><a href="' +
+                                '<div class="d-flex justify-content-left align-items-center"><div class="d-flex flex-column"><a href="' +
                                 r +
                                 '" class="user_name text-truncate text-body"><span class="fw-bolder">' +
                                 n +
-                                '</span></a><small class="emp_post text-muted">' +
-                                l +
-                                "</small></div></div>"
-                            );
-                        },
-                    },
-                    {
-                        targets: 4,
-                        render: function (e, t, a, s) {
-                            var n = a.role;
-                            return (
-                                "<span class='text-truncate align-middle'>" +
-                                {
-                                    Subscriber: feather.icons.user.toSvg({
-                                        class: "font-medium-3 text-primary me-50",
-                                    }),
-                                    Author: feather.icons.settings.toSvg({
-                                        class: "font-medium-3 text-warning me-50",
-                                    }),
-                                    Maintainer: feather.icons.database.toSvg({
-                                        class: "font-medium-3 text-success me-50",
-                                    }),
-                                    Editor: feather.icons["edit-2"].toSvg({
-                                        class: "font-medium-3 text-info me-50",
-                                    }),
-                                    Admin: feather.icons.slack.toSvg({
-                                        class: "font-medium-3 text-danger me-50",
-                                    }),
-                                }["Subscriber"]+
-                                "Thành viên" +
-                                "</span>"
+                                '</span></div></div>'
                             );
                         },
                     },
                     {
                         targets: 1,
                         render: function (e, t, a, s) {
-                            var n = a.gender;
-                            if (n==1) {
-                                return  ('<span class="badge rounded-pill badge-light-warning" text-capitalized>Nam</span>')
-                            } else {
-                                return  ('<span class="badge rounded-pill badge-light-success" text-capitalized>Nữ</span>')
-                            }
+                            var i = a.logo;
+                                
+                            if (i)
+                                var c =
+                                    '<div><img src="/storage/'+
+                                    i +
+                                    '" alt="Avatar" height="50" width="50"></div>';
+                            
+                                return c ;
                         },
                     },
                     {
-                        targets: 5,
+                        targets: 7,
                         title: "Actions",
                         orderable: !1,
                         render: function (e, t, a, s) {
@@ -470,11 +325,11 @@
                                 feather.icons["file-text"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
-                                'Details</a><a href="#" id="editUser" data-id="'+a.id+'"  data-bs-toggle="modal" data-bs-target="#editUserModal" class="dropdown-item">' +
+                                'Details</a><a href="#" id="editSetting" data-id="'+a.id+'"  data-bs-toggle="modal" data-bs-target="#editSettingModal" class="dropdown-item">' +
                                 feather.icons["edit"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
-                                'Edit</a><a href="#" id="deleteUser" data-id="'+a.id+'" class="dropdown-item delete-record">' +
+                                'Edit</a><a href="#" id="deleteSetting" data-id="'+a.id+'" class="dropdown-item delete-record">' +
                                 feather.icons["trash-2"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
@@ -559,7 +414,7 @@
                         },
                     },
                     {
-                        text: "Thêm Mới Tài Khoản",
+                        text: "Thêm Mới cài đặt",
                         className: "add-new btn btn-primary",
                         attr: {
                             "data-bs-toggle": "modal",
@@ -602,110 +457,7 @@
                     },
                 },
                 language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } },
-                initComplete: function () {
-                    this.api()
-                        .columns(3)
-                        .every(function () {
-                            var e = this,
-                                t =
-                                    ($(
-                                        '<label class="form-label" for="UserRole">Vai trò</label>'
-                                    ).appendTo(".user_role"),
-                                    $(
-                                        '<select id="UserRole" class="form-select text-capitalize mb-md-0 mb-2"><option value=""> Lựa chọn vai trò </option></select>'
-                                    )
-                                        .appendTo(".user_role")
-                                        .on("change", function () {
-                                            var t =
-                                                $.fn.dataTable.util.escapeRegex(
-                                                    $(this).val()
-                                                );
-                                            e.search(
-                                                t ? "^" + t + "$" : "",
-                                                !0,
-                                                !1
-                                            ).draw();
-                                        }));
-                            e.data()
-                                .unique()
-                                .sort()
-                                .each(function (e, a) {
-                                    t.append(
-                                        '<option value="' +
-                                            e +
-                                            '" class="text-capitalize">' +
-                                            e +
-                                            "</option>"
-                                    );
-                                });
-                        }),
-                    this.api()
-                            .columns(2)
-                            .every(function () {
-                                var e = this,
-                                    t =
-                                        ($(
-                                            '<label class="form-label" for="UserPlan">Số điện thoại</label>'
-                                        ).appendTo(".user_plan"),
-                                        $(
-                                            '<select id="UserPlan" class="form-select text-capitalize mb-md-0 mb-2"><option value=""> Lựa chọn SĐT </option></select>'
-                                        )
-                                            .appendTo(".user_plan")
-                                            .on("change", function () {
-                                                var t =
-                                                    $.fn.dataTable.util.escapeRegex(
-                                                        $(this).val()
-                                                    );
-                                                e.search(
-                                                    t ? "^" + t + "$" : "",
-                                                    !0,
-                                                    !1
-                                                ).draw();
-                                            }));
-                                e.data()
-                                    .unique()
-                                    .sort()
-                                    .each(function (e, a) {
-                                        t.append(
-                                            '<option value="' +
-                                                e +
-                                                '" class="text-capitalize">' +
-                                                e +
-                                                "</option>"
-                                        );
-                                    });
-                            }),
-                    this.api()
-                            .columns(1)
-                            .every(function () {
-                                var op = [{'vlue':1, 'name' : 'Nam'},{'vlue':2, 'name' : 'Nữ'}];
-                                var e = this,
-                                    t =
-                                        ($(
-                                            '<label class="form-label" for="FilterTransaction">Giới Tính</label>'
-                                        ).appendTo(".user_status"),
-                                        $(
-                                            '<select id="FilterTransaction" class="form-select text-capitalize mb-md-0 mb-2xx"><option value=""> Lựa chọn giới tính </option></select>'
-                                        )
-                                            .appendTo(".user_status")
-                                            .on("change", function () {
-                                                
-                                                var t = $.fn.dataTable.util.escapeRegex(
-                                                            $(this).val()
-                                                        );
-                                                e.search(
-                                                    t==1 ? "^" + 'Nam'  + "$" : "Nữ",
-                                                    !0,
-                                                    !1
-                                                ).draw();
-                                            }));
-                                op.map(function (e, a) {
-                                        t.append(
-                                            '<option value="'+e.vlue+'" class="text-capitalize"> '+e.name+' </option>'
-                                        );
-                                    });
-                            });
-                },
+                
             });
         s.each(function () {
             var e = $(this);
@@ -719,11 +471,13 @@
 a.length && (a.validate({
                 errorClass: "error",
                 rules: {
-                    "full_name": { required: !0 },
+                    "slogan": { required: !0 },
                     "email": { required: !0 },
-                    "phone": { required: !0 },
                     "address": { required: !0 },
-                    "avatar": { required: !0 },
+                    "phone": { required: !0 },
+                    "name_manage": { required: !0 },
+                    "title_deep": { required: !0 },
+                    "logo": { required: !0 },
                 },
             }),
             a.on("submit", function (e) {
@@ -758,12 +512,12 @@ a.length && (a.validate({
       
             }))
 
-$('body').on('click' ,'#deleteUser' , function(){
-    var user_id = $(this).data("id");
-     if ( confirm("Bạn có chắc chắn muốn xóa Tài khoản này không ?")) {
+$('body').on('click' ,'#deleteSetting' , function(){
+    var setting_id = $(this).data("id");
+     if ( confirm("Bạn có chắc chắn muốn xóa cài đặt này không ?")) {
     $.ajax({
         type:"DELETE",
-        url:"{{ route('user.list.api') }}"+"/"+user_id,
+        url:"{{ route('setting.list.api') }}"+"/"+setting_id,
         success: function(){
             table.ajax.reload();
             toastr.success("Xóa Thành Công");
@@ -775,9 +529,9 @@ $('body').on('click' ,'#deleteUser' , function(){
      }
 });
 // get detail edit
-$('body').on('click' ,'#editUser' , function(){
-    var user_id = $(this).data("id");
-    $.get('<?= route("user.list.api") ?>'+"/show/"+user_id , function (data) {
+$('body').on('click' ,'#editSetting' , function(){
+    var setting_id = $(this).data("id");
+    $.get('<?= route("setting.list.api") ?>'+"/show/"+setting_id , function (data) {
 var accountUploadImg = $("#account-upload-img"),
     accountUpload = $("#account-upload"),
     uploadedAvatar = $(".uploadedAvatar"),
@@ -794,25 +548,20 @@ var accountUploadImg = $("#account-upload-img"),
         n.readAsDataURL(uploadedAvatar[0]);
     }),
     accountReset.on("click", function () {
-        uploadedAvatar.attr("src", data.avatar ? "/storage/"+ data.avatar 
+        uploadedAvatar.attr("src", data.avatar ? "/storage/"+ data.logo 
         : "{{ asset('admin/images/portrait/small/avatar-none.png') }}" );
         });
     };
         var form = $('#editUserForm');
-        $("#account-upload-img").attr("src", data.avatar ? "/storage/"+ data.avatar 
+        $("#account-upload-img").attr("src", data.logo ? "/storage/"+ data.logo 
         : "{{ asset('admin/images/portrait/small/avatar-none.png') }}" );
         form.find('input[name="id"]').val(data.id); 
-        form.find('input[name="full_name"]').val(data.full_name);    
+        form.find('input[name="slogan"]').val(data.full_name);    
         form.find('input[name="email"]').val(data.email);  
+        form.find('input[name="address"]').val(data.address); 
         form.find('input[name="phone"]').val(data.phone);
-        form.find('input[name="date_birth"]').val(data.date_birth);   
-        form.find('input[name="password"]').val(data.password);  
-        form.find('#address').val(data.address);  
-        if (data.gender == 1) {
-            $('#gender1').attr('checked',true);
-        }else{
-            $('#gender2').attr('checked',true);
-        }
+        form.find('input[name="name_manage"]').val(data.name_manage);   
+        form.find('input[name="title_deep"]').val(data.title_deep);
     },'json')
 });
 // submit edit in db
@@ -834,7 +583,7 @@ $('#editUserForm').on('submit', function(e){
             }else{
                 console.log('fomr',data);
                 $(form)[0].reset();
-                $('#editUserModal').modal("hide");
+                $('#editSettingModal').modal("hide");
                 table.ajax.reload();
                 toastr.success(data.msg)
             }

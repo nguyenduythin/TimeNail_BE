@@ -11,72 +11,11 @@
 
             <!-- users list start -->
             <section class="app-user-list">
-                <div class="row">
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                                <div>
-                                    <h3 class="fw-bolder mb-75">21,459</h3>
-                                    <span>Total Users</span>
-                                </div>
-                                <div class="avatar bg-light-primary p-50">
-                                    <span class="avatar-content">
-                                        <i data-feather="user" class="font-medium-4"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                                <div>
-                                    <h3 class="fw-bolder mb-75">4,567</h3>
-                                    <span>Paid Users</span>
-                                </div>
-                                <div class="avatar bg-light-danger p-50">
-                                    <span class="avatar-content">
-                                        <i data-feather="user-plus" class="font-medium-4"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                                <div>
-                                    <h3 class="fw-bolder mb-75">19,860</h3>
-                                    <span>Active Users</span>
-                                </div>
-                                <div class="avatar bg-light-success p-50">
-                                    <span class="avatar-content">
-                                        <i data-feather="user-check" class="font-medium-4"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                                <div>
-                                    <h3 class="fw-bolder mb-75">237</h3>
-                                    <span>Pending Users</span>
-                                </div>
-                                <div class="avatar bg-light-warning p-50">
-                                    <span class="avatar-content">
-                                        <i data-feather="user-x" class="font-medium-4"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               
                 <!-- list and filter start -->
                 <div class="card">
                     <div class="card-body border-bottom">
-                        <h4 class="card-title">Tài Khoản</h4>
+                        <h4 class="card-title">Nhân viên</h4>
                         <div class="row">
                             <div class="col-md-4 user_role"></div>
                             <div class="col-md-4 user_plan"></div>
@@ -94,8 +33,8 @@
                                     <th>Số điện thoại</th>
                                     <th>Địa chỉ</th>
 
-                                    <th>Vai trò</th>
-                                    <th>Hành động</th>
+                                    <th>Chức vụ</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
 
@@ -116,17 +55,6 @@
                                     <h5 class="modal-title" id="exampleModalLabel">Thêm tài khoản</h5>
                                 </div>
                                 <div class="modal-body flex-grow-1">
-                                                                          
-                                    <div class="mb-1">
-                                        <label class="form-label" for="user-role">Vai trò</label>
-                                        <select id="user-role" class="select2 form-select">
-                                            <option value="subscriber">Subscriber</option>
-                                            <option value="editor">Editor</option>
-                                            <option value="maintainer">Maintainer</option>
-                                            <option value="author">Author</option>
-                                            <option value="admin">Admin</option>
-                                        </select>
-                                    </div>
                                     <div class="mb-1">
                                         <label class="form-label" for="basic-icon-default-fullname">Họ & Tên</label>
                                         <input type="text" class="form-control dt-full-name"
@@ -200,7 +128,17 @@
                                             <label class="form-check-label" for="validationRadio4">Nữ</label>
                                         </div>
                                     </div>
-                                
+                                    {{--                                    
+                                    <div class="mb-1">
+                                        <label class="form-label" for="user-role">User Role</label>
+                                        <select id="user-role" class="select2 form-select">
+                                            <option value="subscriber">Subscriber</option>
+                                            <option value="editor">Editor</option>
+                                            <option value="maintainer">Maintainer</option>
+                                            <option value="author">Author</option>
+                                            <option value="admin">Admin</option>
+                                        </select>
+                                    </div> --}}
 
                                     <button type="submit" class="btn btn-primary me-1 data-submit">Lưu</button>
                                     <button type="reset" class="btn btn-outline-secondary"
@@ -271,7 +209,6 @@
                         <input type="date" class="form-control picker" name="date_birth" id="date_birth" required />
                     </div>
                     <div class="col-12 col-md-6">
-                        <i data-feather='lock'></i>
                         <label class="form-label" for="modalEditUserStatus">Chức vụ</label>
                         <select id="modalEditUserStatus" name="modalEditUserStatus" class="form-select"
                             aria-label="Default select example">
@@ -319,7 +256,7 @@
                         <label class="form-label" for="modalEditUserCountry">Địa chỉ</label>
                         <textarea class="form-control" name="address" id="address" cols="30" rows="1"></textarea>
                     </div>
-                 
+
 
                     <div class="col-12 text-center mt-2 pt-50">
                         <button type="submit" class="btn btn-primary me-1">Submit</button>
@@ -609,10 +546,10 @@
                             var e = this,
                                 t =
                                     ($(
-                                        '<label class="form-label" for="UserRole">Vai trò</label>'
+                                        '<label class="form-label" for="UserRole">Chức vụ</label>'
                                     ).appendTo(".user_role"),
                                     $(
-                                        '<select id="UserRole" class="form-select text-capitalize mb-md-0 mb-2"><option value=""> Lựa chọn vai trò </option></select>'
+                                        '<select id="UserRole" class="form-select text-capitalize mb-md-0 mb-2"><option value=""> Lựa chọn chức vụ </option></select>'
                                     )
                                         .appendTo(".user_role")
                                         .on("change", function () {

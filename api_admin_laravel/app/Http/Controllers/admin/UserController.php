@@ -14,25 +14,9 @@ class UserController extends Controller
     {
         return view('admin.page.user.user-list');
     }
-
-    public function add(Request $request)
+    public function staff(Request $request)
     {
-        $model = new User();
-
-        $model->fill($request->all());
-        $model->fill([
-            'password' => Hash::make($request->password)
-        ]);
-
-        $model->save();
-        return redirect(route('user.list'));
+        return view('admin.page.user.staff-list');
     }
 
-    public function remove($id)
-    {
-        $user = User::find($id);
-        //Storage::delete($user->avatar);
-        $user->destroy($id);
-        return redirect()->back();
-    }
 }
