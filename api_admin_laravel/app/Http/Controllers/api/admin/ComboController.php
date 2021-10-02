@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\api\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Discount;
+use App\Models\Combo;
+use App\Models\Service;
 use Illuminate\Http\Request;
 
-class DiscountController extends Controller
+class ComboController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,7 @@ class DiscountController extends Controller
     public function index()
     {
         //
-        $model = Discount::all();
+        $model = Combo::all();
         return response()->json($model);
     }
 
@@ -29,13 +30,14 @@ class DiscountController extends Controller
     public function store(Request $request)
     {
         //
-        $model = new Discount();
+        dd($request->all());//tối làm tiếp
+        $model = new Combo();
         $model->fill($request->all());
         if ($request->hasFile('image')) {
-            $model->image = $request->file('image')->storeAs('/images/discount_avatar', uniqid() . '-' . $request->image->getClientOriginalName());
+            $model->image = $request->file('image')->storeAs('/images/combo_avatar', uniqid() . '-' . $request->image->getClientOriginalName());
         }
-        $model->save();
-        if (!$model) {
+        $query =  $model->save();
+        if (!$query) {
             return response()->json(['code' => 0, 'msg' => 'Thêm mới không thành công !']);
         } else {
             return response()->json(['code' => 1, 'msg' => 'Thêm mới thành công !']);
@@ -74,7 +76,5 @@ class DiscountController extends Controller
     public function destroy($id)
     {
         //
-        Discount::destroy($id);
-        return response()->json(['success'=>'Xóa thành công !']);
     }
 }

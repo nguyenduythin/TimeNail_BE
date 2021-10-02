@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\api\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Discount;
+use App\Models\CategoryService;
+use App\Models\Service;
 use Illuminate\Http\Request;
 
-class DiscountController extends Controller
+class ServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +17,10 @@ class DiscountController extends Controller
     public function index()
     {
         //
-        $model = Discount::all();
-        return response()->json($model);
+        $model = Service::all();
+        $model->load('cate_service');
+        $cate = CategoryService::all();
+        return response()->json(['service'=>$model,'cate'=>$cate]);
     }
 
     /**
@@ -29,13 +32,10 @@ class DiscountController extends Controller
     public function store(Request $request)
     {
         //
-        $model = new Discount();
+        $model = new Service();
         $model->fill($request->all());
-        if ($request->hasFile('image')) {
-            $model->image = $request->file('image')->storeAs('/images/discount_avatar', uniqid() . '-' . $request->image->getClientOriginalName());
-        }
-        $model->save();
-        if (!$model) {
+        $query =  $model->save();
+        if (!$query) {
             return response()->json(['code' => 0, 'msg' => 'Thêm mới không thành công !']);
         } else {
             return response()->json(['code' => 1, 'msg' => 'Thêm mới thành công !']);
@@ -51,6 +51,9 @@ class DiscountController extends Controller
     public function show($id)
     {
         //
+        $model = Service::find($id);
+        $model->load('cate_service');
+        return response()->json($model);
     }
 
     /**
@@ -60,9 +63,17 @@ class DiscountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $model = Service::find($request->id);
+        $model->fill($request->all());
+        $query =  $model->save();
+        if (!$query) {
+            return response()->json(['code' => 0, 'msg' => 'Sửa không thành công !']);
+        } else {
+            return response()->json(['code' => 1, 'msg' => 'Sửa mới thành công !']);
+        }
     }
 
     /**
@@ -74,7 +85,7 @@ class DiscountController extends Controller
     public function destroy($id)
     {
         //
-        Discount::destroy($id);
-        return response()->json(['success'=>'Xóa thành công !']);
+        Service::destroy($id);
+        return  response()->json(['success' => 'Xóa thành công!']);
     }
 }

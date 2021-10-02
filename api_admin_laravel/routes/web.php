@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\admin\CategoryServiceController;
+use App\Http\Controllers\admin\ComboController;
 use App\Http\Controllers\admin\ContactController;
 use App\Http\Controllers\admin\DiscountController;
 use App\Http\Controllers\admin\PermissionController;
@@ -7,6 +9,7 @@ use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\FeedbackController;
 use App\Http\Controllers\admin\LoginController;
+use App\Http\Controllers\admin\ServiceController;
 use App\Http\Controllers\admin\SettingController;
 use Illuminate\Support\Facades\Route;
 
@@ -53,6 +56,16 @@ Route::get('contact',[ContactController::class,'index'])->name('contact.list');
 
 //discount_code page
 Route::get('discount',[DiscountController::class,'index'])->name('discount.list');
+
+//categories service
+Route::get('cate-service',[CategoryServiceController::class,'index'])->name('cate-service.list');
+
+//service
+
+Route::get('service',[ServiceController::class,'index'])->name('service.list');
+
+//combo
+Route::get('combo',[ComboController::class,'index'])->name('combo.list');
 
 
 
