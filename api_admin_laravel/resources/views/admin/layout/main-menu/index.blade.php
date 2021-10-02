@@ -137,21 +137,21 @@
                               data-feather="more-horizontal"></i>
                   </li>
                   <li class=" nav-item {{ request()->is('blog*') ? 'active' : '' }}"><a
-                              class="d-flex align-items-center" href="ui-typography.html"><i
+                              class="d-flex align-items-center" href="{{ route('blog.list')}}"><i
                                     data-feather='edit'></i><span class="menu-title text-truncate"
-                                    data-i18n="Feedback">Bài viết</span></a>
+                                    data-i18n="blog">Bài viết</span></a>
 
                   </li>
-                  <li class=" nav-item {{ request()->is('cate-blog*') ? 'active' : '' }}"><a
-                              class="d-flex align-items-center" href="ui-typography.html"><i
-                                    data-feather='list'></i><span class="menu-title text-truncate"
-                                    data-i18n="Feedback">Danh mục bài viết</span></a>
+                  <li class=" nav-item {{ request()->is('blog-category*') ? 'active' : '' }}"><a
+                              class="d-flex align-items-center" href="{{ route('blog.category.list')}}"><i
+                                    data-feather='blog'></i><span class="menu-title text-truncate"
+                                    data-i18n="blog">Danh mục bài viết</span></a>
 
                   </li>
-                  <li class=" nav-item {{ request()->is('tags*') ? 'active' : '' }}"><a
-                              class="d-flex align-items-center" href="ui-typography.html"><i
+                  <li class=" nav-item {{ request()->is('tag*') ? 'active' : '' }}"><a
+                              class="d-flex align-items-center" href="{{ route('tag.list')}}"><i
                                     data-feather='tag'></i><span class="menu-title text-truncate"
-                                    data-i18n="Feedback">Tags</span></a>
+                                    data-i18n="tag">Tags</span></a>
 
                   </li>
                   <li class=" navigation-header"><span data-i18n="Dịch vụ">Tương tác & Hỗ trợ</span><i
