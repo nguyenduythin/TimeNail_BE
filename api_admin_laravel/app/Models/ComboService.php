@@ -10,4 +10,9 @@ class ComboService extends Model
     use HasFactory;
 
     protected $table = 'combo_service';
+
+    protected $fillable = [
+        'service_id',
+        'combo_id',
+    ];
 }

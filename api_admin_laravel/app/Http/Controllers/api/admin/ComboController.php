@@ -4,8 +4,10 @@ namespace App\Http\Controllers\api\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Combo;
+use App\Models\ComboService;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ComboController extends Controller
 {
@@ -30,13 +32,18 @@ class ComboController extends Controller
     public function store(Request $request)
     {
         //
-        dd($request->all());//tối làm tiếp
         $model = new Combo();
         $model->fill($request->all());
         if ($request->hasFile('image')) {
             $model->image = $request->file('image')->storeAs('/images/combo_avatar', uniqid() . '-' . $request->image->getClientOriginalName());
         }
         $query =  $model->save();
+        for($i=0;$i<count($request->service_id);$i++){
+            $many = new ComboService();
+            $many['combo_id'] = $model->id;
+            $many['service_id'] = $request->service_id[$i];
+            $many->save();
+        }
         if (!$query) {
             return response()->json(['code' => 0, 'msg' => 'Thêm mới không thành công !']);
         } else {
@@ -76,5 +83,9 @@ class ComboController extends Controller
     public function destroy($id)
     {
         //
+        $combo = Combo::find($id);
+        Storage::delete($combo->image);
+        $combo->delete();
+        return  response()->json(['success' => 'Xóa thành công!']);
     }
 }
