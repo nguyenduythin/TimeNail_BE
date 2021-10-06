@@ -25,9 +25,7 @@
                                     <th>Phản hồi</th>
                                     <th>Ảnh</th>
                                     <th>Sao</th>
-                                    <th>Người phục vụ</th>
-                                    <th>Tên dịch vụ</th>
-                                    <th>Tên combo dịch vụ</th>
+                                    <th>Tên người phản hồi</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -60,11 +58,8 @@
                         },
                 columns: [
                     { data: "comment"  },
-                    { data: "image" }, 
                     { data: "number_star" },
                     { data: "full_name" },
-                    { data: "name_service" },
-                    { data: "name_combo" },
                 ],
                 columnDefs: [
                     {
