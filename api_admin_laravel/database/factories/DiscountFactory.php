@@ -21,11 +21,11 @@ class DiscountFactory extends Factory
      */
     public function definition()
     {
-        $imgPath = $this->faker->image(storage_path('app/public/images/discount avatar'), $width = 640, $height = 480, 'cats', false);
+        $imgPath = $this->faker->image(storage_path('app/public/images/discount_avatar'), $width = 640, $height = 480, 'cats', false);
         return [
             //
             'code_discount' => $this->faker->bankAccountNumber(),
-            "image" => "images/discount avatar/" . $imgPath,
+            "image" => "images/discount_avatar/" . $imgPath,
             'percent' => $this->faker->numberBetween(20,40),
             'quantity'=> $this->faker->numberBetween(20,40),
 
