@@ -110,7 +110,9 @@ Route::prefix('admin')->group(function () {
     //combo
     Route::prefix('combo')->group(function(){
         Route::get('/',[ComboController::class,'index'])->name('combo.list.api');
+        Route::get('/show/{id}', [ComboController::class, 'show']);
         Route::post('/', [ComboController::class, 'store'])->name('combo.add.api');
+        Route::post('edit', [ComboController::class, 'update'])->name('combo.update.api');
         Route::delete('{id}',[ComboController::class,'destroy']);
     });
  

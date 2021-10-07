@@ -60,6 +60,9 @@ class ComboController extends Controller
     public function show($id)
     {
         //
+        $model = Combo::find($id);
+        $model->load('services');
+        return response()->json($model);
     }
 
     /**

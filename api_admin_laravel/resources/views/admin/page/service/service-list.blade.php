@@ -165,7 +165,7 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserFirstName">Giá Dịch Vụ (₫)</label>
-                        <input disabled type="number" id="modalEditUserFirstName full_name" name="price" class="form-control" placeholder="₫100,000" />
+                        <input disabled type="number" id="modalEditUserFirstName full_name" name="price" class="form-control" placeholder="100,000₫" />
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserFirstName">Tổng Thời Gian (phút)</label>
@@ -207,7 +207,7 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserFirstName">Giá Dịch Vụ (₫)</label>
-                        <input type="text" data-type="currency" id="modalEditUserFirstName full_name" name="price" class="form-control" placeholder="₫100,000" />
+                        <input type="text" data-type="currency" id="modalEditUserFirstName full_name" name="price" class="form-control" placeholder="100,000₫" />
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserFirstName">Tổng Thời Gian (phút)</label>
