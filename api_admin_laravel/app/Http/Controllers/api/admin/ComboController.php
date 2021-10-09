@@ -62,7 +62,8 @@ class ComboController extends Controller
         //
         $model = Combo::find($id);
         $model->load('services');
-        return response()->json($model);
+        $ser = Service::all();
+        return response()->json(['model'=>$model,'ser'=>$ser]);
     }
 
     /**
@@ -72,9 +73,27 @@ class ComboController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $model = Combo::find($request->id);
+        $model->fill($request->all());
+        if ($request->hasFile('image')) {
+            $model->image = $request->file('image')->storeAs('/images/combo_avatar', uniqid() . '-' . $request->image->getClientOriginalName());
+        }
+        $query =  $model->save();
+        ComboService::where('combo_id',$request->id)->delete();
+        for($i=0;$i<count($request->service_id);$i++){
+            $many = new ComboService();
+            $many['combo_id'] = $model->id;
+            $many['service_id'] = $request->service_id[$i];
+            $many->save();
+        }
+        if (!$query) {
+            return response()->json(['code' => 0, 'msg' => 'Sửa không thành công !']);
+        } else {
+            return response()->json(['code' => 1, 'msg' => 'Sửa mới thành công !']);
+        }
     }
 
     /**

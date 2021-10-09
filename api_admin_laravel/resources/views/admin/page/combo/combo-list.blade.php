@@ -1,5 +1,5 @@
 @extends('admin.layout.main')
-@section('title', 'Service')
+@section('title', 'Combo')
 @section('content')
 <div class="app-content content ">
     <div class="content-overlay"></div>
@@ -280,10 +280,10 @@
             </div>
             <div class="modal-body pb-5 px-sm-5 pt-50">
                 <div class="text-center mb-2">
-                    <h1 class="mb-1">Chi tiết combo</h1>
-                    <p>Chi tiết combo !</p>
+                    <h1 class="mb-1">Cập nhật combo</h1>
+                    <p>Cập nhật chi tiết combo !</p>
                 </div>
-                <form id="editUserForm" action="" method="POST" class="row gy-1 pt-75 add-new-user" enctype="multipart/form-data">
+                <form id="editUserForm" action="{{route('combo.update.api')}}" method="POST" class="row gy-1 pt-75 add-new-user" enctype="multipart/form-data">
                     @csrf
                     <input type="text" name="id" hidden>
                     <div class="d-flex center">
@@ -664,20 +664,20 @@
         $('body').on('click', '#detailUser', function() {
             var user_id = $(this).data("id");
             $.get('<?= route("combo.list.api") ?>' + "/show/" + user_id, function(data) {
-                data.services.map(function(x) {
+                data.model.services.map(function(x) {
                     document.getElementById('service-list1').insertAdjacentHTML('beforeend',
                         '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" checked disabled name="service_id[]" value="' + x.id + '" type="checkbox" id="dbManagementRead" /></div></div></td></tr>'
                     );
                 })
                 var form = $('#detailUserForm');
-                $("#account-upload-img").attr("src", data.image ? "/storage/" + data.image :
+                $("#account-upload-img").attr("src", data.model.image ? "/storage/" + data.model.image :
                     "{{ asset('admin/images/portrait/small/avatar-none.png') }}");
-                form.find('input[name="id"]').val(data.id);
-                form.find('input[name="name_combo"]').val(data.name_combo);
-                form.find('input[name="total_price"]').val(data.total_price.toLocaleString() + '₫');
-                form.find('input[name="total_time_work"]').val(data.total_time_work);
-                form.find('#address1').val(data.short_description);
-                form.find('#address2').val(data.description);
+                form.find('input[name="id"]').val(data.model.id);
+                form.find('input[name="name_combo"]').val(data.model.name_combo);
+                form.find('input[name="total_price"]').val(data.model.total_price.toLocaleString() + '₫');
+                form.find('input[name="total_time_work"]').val(data.model.total_time_work);
+                form.find('#address1').val(data.model.short_description);
+                form.find('#address2').val(data.model.description);
             }, 'json')
         });
 
@@ -686,25 +686,33 @@
             // mai làm tiếp phần list service
             var user_id = $(this).data("id");
             $.get('<?= route("combo.list.api") ?>' + "/show/" + user_id, function(data) {
-                $("#account-upload-img1").attr("src", data.image ? "/storage/" + data.image :
-                "{{ asset('admin/images/portrait/small/avatar-none.png') }}");
+                data.ser.map(function(x) {
+                    var number = null;
+                    data.model.services.map(function(y) {
+                        if (y.id == x.id) {
+                            document.getElementById('service-list2').insertAdjacentHTML('beforeend',
+                                '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" checked name="service_id[]" value="' + x.id + '" type="checkbox" id="dbManagementRead" /></div></div></td></tr>'
+                            );
+                            number = y.id
+                        }
+                    })
+                    if (number != x.id) {
+                        document.getElementById('service-list2').insertAdjacentHTML('beforeend',
+                            '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="service_id[]" value="' + x.id + '" type="checkbox" id="dbManagementRead" /></div></div></td></tr>'
+                        );
+                    }
+                })
+                $("#account-upload-img1").attr("src", data.model.image ? "/storage/" + data.model.image :
+                    "{{ asset('admin/images/portrait/small/avatar-none.png') }}");
                 var form = $('#editUserForm');
-                form.find('input[name="id"]').val(data.id);
-                form.find('input[name="name_combo"]').val(data.name_combo);
-                form.find('input[name="total_price"]').val(data.total_price.toLocaleString() + '₫');
-                form.find('input[name="total_time_work"]').val(data.total_time_work);
-                form.find('#address1').val(data.short_description);
-                form.find('#address2').val(data.description);
+                form.find('input[name="id"]').val(data.model.id);
+                form.find('input[name="name_combo"]').val(data.model.name_combo);
+                form.find('input[name="total_price"]').val(data.model.total_price);
+                form.find('input[name="total_time_work"]').val(data.model.total_time_work);
+                form.find('#address1').val(data.model.short_description);
+                form.find('#address2').val(data.model.description);
             }, 'json')
-            // $.get('<?= route("service.list.api") ?>', function(data) {
-            //     data.cate.map(function(x) {
-            //         var html = '<option value="' + x.id + '">' + x.name_cate_service + '</option>'; //định nghĩa thẻ option trong select
-            //         if (cate == x.id) { //check cate đã chọn
-            //             html = '<option selected value="' + x.id + '">' + x.name_cate_service + '</option>';
-            //         }
-            //         document.getElementById('basic-icon-default-fullname12').insertAdjacentHTML('beforeend', html); //render thẻ option vào select
-            //     })
-            // })
+
         });
         // submit edit in db
         $('#editUserForm').on('submit', function(e) {
