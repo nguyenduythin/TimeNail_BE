@@ -660,14 +660,21 @@
                 })
             }
         });
+        //list service for detail
+        $.get('<?= route("service.list.api") ?>', function(data) {
+            data.service.map(function(x) {
+                document.getElementById('service-list1').insertAdjacentHTML('beforeend',
+                    '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="service_id[]" disabled value="' + x.id + '" type="checkbox" id="' + x.id + '" /></div></div></td></tr>'
+                );
+            })
+        })
+        
         //detail
         $('body').on('click', '#detailUser', function() {
             var user_id = $(this).data("id");
             $.get('<?= route("combo.list.api") ?>' + "/show/" + user_id, function(data) {
                 data.model.services.map(function(x) {
-                    document.getElementById('service-list1').insertAdjacentHTML('beforeend',
-                        '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" checked disabled name="service_id[]" value="' + x.id + '" type="checkbox" id="dbManagementRead" /></div></div></td></tr>'
-                    );
+                    $("#service-list1").find("#"+x.id,"input").prop('checked', true);
                 })
                 var form = $('#detailUserForm');
                 $("#account-upload-img").attr("src", data.model.image ? "/storage/" + data.model.image :
@@ -680,27 +687,26 @@
                 form.find('#address2').val(data.model.description);
             }, 'json')
         });
+        //list service for edit
+        $.get('<?= route("service.list.api") ?>', function(data) {
+            data.service.map(function(x) {
+                document.getElementById('service-list2').insertAdjacentHTML('beforeend',
+                    '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="service_id[]" value="' + x.id + '" type="checkbox" id="' + x.id + '" /></div></div></td></tr>'
+                );
+            })
+        })
 
-        // get detail edit
+        // get detail edit và checked các service đã có
         $('body').on('click', '#editUser', function() {
             // mai làm tiếp phần list service
             var user_id = $(this).data("id");
             $.get('<?= route("combo.list.api") ?>' + "/show/" + user_id, function(data) {
                 data.ser.map(function(x) {
-                    var number = null;
                     data.model.services.map(function(y) {
                         if (y.id == x.id) {
-                            document.getElementById('service-list2').insertAdjacentHTML('beforeend',
-                                '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" checked name="service_id[]" value="' + x.id + '" type="checkbox" id="dbManagementRead" /></div></div></td></tr>'
-                            );
-                            number = y.id
+                            $("#service-list2").find("#"+y.id,"input").prop('checked', true);
                         }
                     })
-                    if (number != x.id) {
-                        document.getElementById('service-list2').insertAdjacentHTML('beforeend',
-                            '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="service_id[]" value="' + x.id + '" type="checkbox" id="dbManagementRead" /></div></div></td></tr>'
-                        );
-                    }
                 })
                 $("#account-upload-img1").attr("src", data.model.image ? "/storage/" + data.model.image :
                     "{{ asset('admin/images/portrait/small/avatar-none.png') }}");

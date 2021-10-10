@@ -222,8 +222,6 @@
                         <label class="form-label" for="modalEditUserCountry">Mô Tả</label>
                         <textarea class="form-control" name="short_description" placeholder="Những dịch vụ chuyên nghiệp hứa hẹn sẽ đem lại trải nghiệm tuyệt vời cho quý khách !" id="address" cols="30" rows="4"></textarea>
                     </div>
-
-
                     <div class="col-12 text-center mt-2 pt-50">
                         <button type="submit" class="btn btn-primary me-1">Submit</button>
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
@@ -240,9 +238,6 @@
 @endsection
 @section('script')
 <script>
-
-
-
     //liệt kê cate cho thẻ select category service
     $.get('<?= route("service.list.api") ?>', function(data) {
         data.cate.map(function(x) {
@@ -542,7 +537,14 @@
             }, 'json')
         });
 
-        // get detail edit
+        // list cate cho detailservice
+        $.get('<?= route("service.list.api") ?>', function(data) {
+            data.cate.map(function(x) {
+                document.getElementById('basic-icon-default-fullname12').insertAdjacentHTML('beforeend', '<option id="'+x.id+'" value="' + x.id + '">' + x.name_cate_service + '</option>');
+            })
+        })
+
+        // get detail edit và selected cate đã chọn
         $('body').on('click', '#editUser', function() {
             var user_id = $(this).data("id");
             var cate = null;
@@ -557,11 +559,9 @@
             }, 'json')
             $.get('<?= route("service.list.api") ?>', function(data) {
                 data.cate.map(function(x) {
-                    var html = '<option value="' + x.id + '">' + x.name_cate_service + '</option>'; //định nghĩa thẻ option trong select
                     if (cate == x.id) { //check cate đã chọn
-                        html = '<option selected value="' + x.id + '">' + x.name_cate_service + '</option>';
+                        $("#basic-icon-default-fullname12").find("#"+cate).prop('selected', true);
                     }
-                    document.getElementById('basic-icon-default-fullname12').insertAdjacentHTML('beforeend', html); //render thẻ option vào select
                 })
             })
         });
