@@ -146,8 +146,7 @@
         { data: '' },
         { data: 'id' },
         { data: 'name' },
-        { data: 'guard_name' },
-        // { data: 'assigned_to' },
+        { data: 'roles' },
         { data: 'created_at' },
         { data: '' }
       ],
@@ -171,33 +170,14 @@
           targets: 2,
           // orderable: false
         },
-        // {
-        //   // User Role
-        //   targets: 3,
-        //   orderable: false,
-        //   render: function (data, type, full, meta) {
-            
-        //     var $assignedTo = full['assigned_to'],
-        //       $output = '';
-        //     var roleBadgeObj = {
-        //       Admin:
-        //         '<a href="" class="me-50"><span class="badge rounded-pill badge-light-primary">Administrator</span></a>',
-        //       Manager:
-        //         '<a href="" class="me-50"><span class="badge rounded-pill badge-light-warning">Manager</span></a>',
-        //       Users:
-        //         '<a href="" class="me-50"><span class="badge rounded-pill badge-light-success">Users</span></a>',
-        //       Support:
-        //         '<a href="" class="me-50"><span class="badge rounded-pill badge-light-info">Support</span></a>',
-        //       Restricted:
-        //         '<a href="" class="me-50"><span class="badge rounded-pill badge-light-danger">Restricted User</span></a>'
-        //     };
-        //     for (var i = 0; i < $assignedTo.length; i++) {
-        //       var val = $assignedTo[i];
-        //       $output += roleBadgeObj[val];
-        //     }
-        //     return $output;
-        //   }
-        // },
+        {
+          targets: 3,
+          render: function (e, t, a, s) {
+              return  a.roles.map(data => 
+                  (`<span class="badge rounded-pill badge-light-dark " text-capitalized>${data.name}</span>`)
+                ).join(" ") ;
+          },
+        },
         {
           // Actions
           targets: -1,
@@ -306,6 +286,9 @@ a.length && (a.validate({
               processData: false,
               dataType:'json',
               contentType: false,
+              headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
               success: function(data){
                   if (data.code==0) {
                       $.each(data.error,function (prefix,val) {
@@ -333,6 +316,9 @@ a.length && (a.validate({
     $.ajax({
         type:"DELETE",
         url:"{{ route('permission.list.api') }}"+"/"+user_id,
+        headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
         success: function(){
             table.ajax.reload();
             toastr.success("Xóa Thành Công");
@@ -364,6 +350,9 @@ $('#editPermissionForm').on('submit', function(e){
         processData: false,
         dataType:'json',
         contentType: false,
+        headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
         success: function(data){
                 $(form)[0].reset();
                 $('#editPermissionModal').modal("hide");

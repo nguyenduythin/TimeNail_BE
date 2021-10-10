@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -18,7 +19,9 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return response()->json($users);
+        $users->load('roles');
+        $roles = Role::all();
+        return response()->json(['user' => $users, "role" => $roles]);
     }
 
     /**
@@ -67,8 +70,10 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-
         $user = User::find($request->id);
+        if ($request->has("role")) {
+            $user->syncRoles($request->role);
+        }
         $user->fill($request->all());
         $user->fill([
             'password' => Hash::make($request->password)

@@ -288,7 +288,10 @@
                 "ajax" : {
                         "url" : "{{ route('user.list.api') }}",
                         "type" : "GET",
-                        "dataSrc": ""
+                        "dataSrc": "",
+                        headers: {
+                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                           },
                         },
                 columns: [
                     // { data: "" }, 

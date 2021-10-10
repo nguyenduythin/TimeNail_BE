@@ -156,14 +156,14 @@
       ajax:  {
               "url" : "{{ route('role.list.api') }}",
               "type" : "GET",
-              "dataSrc": ""
+              "dataSrc": "",
               },  
       columns: [
         // columns according to JSON
         { data: '' },
         { data: 'id' },
         { data: 'name' },
-        { data: 'guard_name' },
+        { data: 'permissions' },
         { data: 'created_at' },
         { data: '' }
       ],
@@ -183,9 +183,12 @@
           visible: false
         },
         {
-          // remove ordering from Name
-          targets: 2,
-          // orderable: false
+          targets: 3,
+          render: function (e, t, a, s) {
+              return  a.permissions.map(data => 
+                  (`<span class="badge rounded-pill badge-light-dark " text-capitalized>${data.name}</span>`)
+                ).join(" ") ;
+          },
         },
         {
           // Actions
@@ -295,6 +298,9 @@ a.length && (a.validate({
               processData: false,
               dataType:'json',
               contentType: false,
+              headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
               success: function(data){
             
                       $(form)[0].reset();
@@ -310,29 +316,29 @@ a.length && (a.validate({
           })
       }))
 
-      // get all permission
+// get all permission
+
 $.ajax({
   "url" : "{{ route('permission.list.api') }}",
   "type" : "GET",
   dataType:'json',
+  headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
   success: function( result ) {
     result.map(data => {
-       $( "#getAllPermission ").append(`<div class="form-check me-3 me-lg-5">
-                                              <input class="form-check-input" type="checkbox" id="${data.id}" name="permissions[]" data-id="${data.id}" value="${data.id}" />
-                                              <label class="form-check-label" for="${data.id}"> ${data.name} </label>
-                                          </div>`);
-                      
-                                          
+      $( "#getAllPermission ").append(`<div class="form-check me-3 me-lg-5">
+                                          <input class="form-check-input" type="checkbox" id="${data.id}" name="permissions[]" data-id="${data.id}" value="${data.id}" />
+                                          <label class="form-check-label" for="${data.id}"> ${data.name} </label>
+                                      </div>`); 
+
       $( "#getAllPermissionEdit").append(`<div class="form-check me-3 me-lg-5">
-                                              <input class="form-check-input" type="checkbox" id="${data.id}" name="permissions[]" data-id="${data.id}" value="${data.id}" />
-                                              <label class="form-check-label" for="${data.id}"> ${data.name} </label>
-                                          </div>`);
-
-
-    })
+                                            <input class="form-check-input" type="checkbox"  id="list-permission-edit" name="permissions[]" data-id="${data.id}" value="${data.id}" />
+                                            <label class="form-check-label" for="${data.id}"> ${data.name} </label>
+                                        </div>`);
+  })
   }
 });
-    
 
 // Delete 
   $('body').on('click' ,'#deleteRole' , function(){
@@ -341,6 +347,9 @@ $.ajax({
     $.ajax({
         type:"DELETE",
         url:"{{ route('role.list.api') }}"+"/"+user_id,
+        headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
         success: function(){
             table.ajax.reload();
             toastr.success("Xóa Thành Công");
@@ -358,8 +367,29 @@ $('body').on('click' ,'#editRole' , function(){
         var form = $('#editRoleForm');
         form.find('input[name="id"]').val(data.id); 
         form.find('input[name="name"]').val(data.name); 
+        var permissions  =  data.permissions
+    
+    // $.get("{{ route('permission.list.api') }}" , function (result) {
+    //   result.map(dataR => {
+    //     var html = `<div class="form-check me-3 me-lg-5">
+    //                                         <input class="form-check-input" type="checkbox"  id="list-permission-edit" name="permissions[]" data-id="${data.id}" value="${data.id}" />
+    //                                         <label class="form-check-label" for="${dataR.id}"> ${dataR.name} </label>
+    //                                     </div>`; 
+    //                  console.log('ddd' ,permissions );
+    //      permissions.map(p => 
+    //      if (dataR.id == p.id) { //check cate đã chọn
+    //        html =  `<div class="form-check me-3 me-lg-5">
+    //                                         <input class="form-check-input" type="checkbox" checked  id="list-permission-edit" name="permissions[]" data-id="${data.id}" value="${data.id}" />
+    //                                         <label class="form-check-label" for="${dataR.id}"> ${dataR.name} </label>
+    //                                     </div>`;
+    //     }
+    //      )                         
+    //   $( "#getAllPermissionEdit").append(html);
+    //     })
+    // })
 
     },'json')
+    
 });
 // submit edit in db
 $('#editRoleForm').on('submit', function(e){
@@ -372,6 +402,9 @@ $('#editRoleForm').on('submit', function(e){
         processData: false,
         dataType:'json',
         contentType: false,
+        headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
         success: function(data){
                 $(form)[0].reset();
                 $('#editRoleModal').modal("hide");

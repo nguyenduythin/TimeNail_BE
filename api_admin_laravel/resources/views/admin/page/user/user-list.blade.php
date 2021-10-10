@@ -116,17 +116,6 @@
                                     <h5 class="modal-title" id="exampleModalLabel">Thêm tài khoản</h5>
                                 </div>
                                 <div class="modal-body flex-grow-1">
-                                                                          
-                                    <div class="mb-1">
-                                        <label class="form-label" for="user-role">Vai trò</label>
-                                        <select id="user-role" class="select2 form-select">
-                                            <option value="subscriber">Subscriber</option>
-                                            <option value="editor">Editor</option>
-                                            <option value="maintainer">Maintainer</option>
-                                            <option value="author">Author</option>
-                                            <option value="admin">Admin</option>
-                                        </select>
-                                    </div>
                                     <div class="mb-1">
                                         <label class="form-label" for="basic-icon-default-fullname">Họ & Tên</label>
                                         <input type="text" class="form-control dt-full-name"
@@ -200,7 +189,7 @@
                                             <label class="form-check-label" for="validationRadio4">Nữ</label>
                                         </div>
                                     </div>
-                                
+
 
                                     <button type="submit" class="btn btn-primary me-1 data-submit">Lưu</button>
                                     <button type="reset" class="btn btn-outline-secondary"
@@ -272,14 +261,11 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <i data-feather='lock'></i>
-                        <label class="form-label" for="modalEditUserStatus">Chức vụ</label>
-                        <select id="modalEditUserStatus" name="modalEditUserStatus" class="form-select"
-                            aria-label="Default select example">
-                            <option selected>Lựa chọn</option>
-                            <option value="1">Admin</option>
-                            <option value="2">Auth</option>
-                            <option value="3">Subject</option>
+                        <label class="form-label" for="role">Vai trò</label>
+                        <select id="user-role" class="select2 form-select" name="role">
+                            <option value=""> Thành viên </option>
                         </select>
+
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditTaxID">Mật khẩu</label>
@@ -319,7 +305,7 @@
                         <label class="form-label" for="modalEditUserCountry">Địa chỉ</label>
                         <textarea class="form-control" name="address" id="address" cols="30" rows="1"></textarea>
                     </div>
-                 
+
 
                     <div class="col-12 text-center mt-2 pt-50">
                         <button type="submit" class="btn btn-primary me-1">Submit</button>
@@ -340,6 +326,7 @@
 <script>
     $(function () {
 
+
     var e = $("#DataTables_Table_User");
     var t = $(".new-user-modal"),
         a = $(".add-new-user"),
@@ -351,7 +338,7 @@
                 "ajax" : {
                         "url" : "{{ route('user.list.api') }}",
                         "type" : "GET",
-                        "dataSrc": ""
+                        "dataSrc": "user"
                         },
                 columns: [
                     // { data: "" }, 
@@ -737,6 +724,9 @@ a.length && (a.validate({
                     processData: false,
                     dataType:'json',
                     contentType: false,
+                    headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
                     success: function(data){
                         if (data.code==0) {
                             $.each(data.error,function (prefix,val) {
@@ -757,6 +747,11 @@ a.length && (a.validate({
 
       
             }))
+ $.get('<?= route("user.list.api") ?>', function(data) {
+        data.role.map(function(x) {
+            $('#user-role').append(`<option value="${x.id}">${x.name}</option>`)
+        })
+})
 
 $('body').on('click' ,'#deleteUser' , function(){
     var user_id = $(this).data("id");
@@ -764,6 +759,9 @@ $('body').on('click' ,'#deleteUser' , function(){
     $.ajax({
         type:"DELETE",
         url:"{{ route('user.list.api') }}"+"/"+user_id,
+        headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
         success: function(){
             table.ajax.reload();
             toastr.success("Xóa Thành Công");
@@ -826,6 +824,9 @@ $('#editUserForm').on('submit', function(e){
         processData: false,
         dataType:'json',
         contentType: false,
+        headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
         success: function(data){
             if (data.code==0) {
                 $.each(data.error,function (prefix,val) {

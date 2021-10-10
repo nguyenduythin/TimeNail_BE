@@ -12,6 +12,7 @@ use App\Http\Controllers\api\admin\RoleController;
 use App\Http\Controllers\api\admin\SettingController as AdminSettingController;
 use App\Http\Controllers\api\admin\BlogCategoryController as AdminBlogCategoryController;
 use App\Http\Controllers\api\admin\BlogController as AdminBlogController;
+use App\Http\Controllers\api\admin\LoginController;
 use App\Http\Controllers\api\admin\TagController as AdminTagController;
 
 use Illuminate\Http\Request;
@@ -27,8 +28,12 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('/login', [LoginController::class, 'login'])->name('login.admin');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout.admin');
 
-Route::prefix('admin')->group(function () {
+
+
+Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
     // user
     Route::prefix('user')->group(function () {
         Route::get('/', [AdminUserController::class, 'index'])->name('user.list.api');

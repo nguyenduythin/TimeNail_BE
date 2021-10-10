@@ -93,12 +93,11 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <h4 class="card-title mb-1">Chào mừng bạn đến với quản lý TimeNail! 👋</h4>
                                 <p class="card-text mb-2">Hãy đăng nhập tài khoản Của bạn!</p>
 
-                                <form class="auth-login-form mt-2"
-                                    action=""
-                                    method="POST">
+                                <form class="auth-login-form mt-2" id="loginForm">
+                                    @csrf
                                     <div class="mb-1">
                                         <label for="login-email" class="form-label">Email</label>
-                                        <input type="text" class="form-control" id="login-email" name="login-email"
+                                        <input type="text" class="form-control" id="login-email" name="email"
                                             placeholder="john@example.com" aria-describedby="login-email" tabindex="1"
                                             autofocus />
                                     </div>
@@ -112,7 +111,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                         </div>
                                         <div class="input-group input-group-merge form-password-toggle">
                                             <input type="password" class="form-control form-control-merge"
-                                                id="login-password" name="login-password" tabindex="2"
+                                                id="login-password" name="password" tabindex="2"
                                                 placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                                 aria-describedby="login-password" />
                                             <span class="input-group-text cursor-pointer"><i
@@ -128,9 +127,6 @@ License: You must have a valid license purchased only from themeforest(the above
                                     </div>
                                     <button class="btn btn-primary w-100" tabindex="4">Đăng Nhập</button>
                                 </form>
-
-                             
-                               
                             </div>
                         </div>
                         <!-- /Login basic -->
@@ -145,11 +141,35 @@ License: You must have a valid license purchased only from themeforest(the above
 
     @include('admin.layout.script')
 
-    <script>
-        $(function () {
+<script>
+ $(function () {
   'use strict';
-
   var pageLoginForm = $('.auth-login-form');
+  $('#loginForm').on('submit', function(e){
+    e.preventDefault();
+   var form = this;
+    $.ajax({
+        type:"POST",
+        url:"{{ route('login.admin') }}",
+        data: new FormData(form),
+        processData: false,
+        dataType:'json',
+        contentType: false,
+        success: function(data){
+            if (data.error) {
+                toastr.error(data.error)
+            }
+            if (data.success) {
+                window.location.href = "/";
+                toastr.success(data.success);
+            }
+        },
+        error:function (error) {
+            toastr.warning("Có gì đó đang sảy ra !");
+            console.log("Đăng nhập không thành công !",error);
+        }
+    })
+});
 
   // jQuery Validation
   // --------------------------------------------------------------------

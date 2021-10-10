@@ -5,3 +5,4 @@
   content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
 <meta name="keywords" content="admin timenail, nail store">
 <meta name="author" content="TimeNail">
+<meta name="csrf-token" content="{{ csrf_token() }}">

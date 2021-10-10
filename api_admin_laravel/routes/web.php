@@ -27,59 +27,60 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('admin.page.dashboard.index');
-})->name('dashboard');
-
 //login
-Route::get('login',[LoginController::class,'index'])->name('login.list');
-//user
-Route::get('user',[UserController::class,'index'])->name('user.list');
-//staff list
-Route::get('staff',[UserController::class,'staff'])->name('staff.list');
-//role list
-Route::get('role',[RoleController::class,'index'])->name('role.list');
-//permission list
-Route::get('permission',[PermissionController::class,'index'])->name('permission.list');
-
-//feedback thuan
-Route::get('feedback',[FeedbackController::class,'index'])->name('feedback.list');
-//feedback end thuan
-
-//setting thuan
-Route::get('setting',[SettingController::class,'index'])->name('setting.list');
-//setting end thuan
-
-//blog_category thuan
-Route::get('blog-category',[BlogCategoryController::class,'index'])->name('blog.category.list');
-//blog_category end thuan
-
-//blog thuan
-Route::get('blog',[BlogController::class,'index'])->name('blog.list');
-//blog end thuan
-
-//blog_category thuan
-Route::get('tag',[TagController::class,'index'])->name('tag.list');
-//blog_category end thuan
-
-//contact page
-Route::get('contact',[ContactController::class,'index'])->name('contact.list');
-
-//discount_code page
-Route::get('discount',[DiscountController::class,'index'])->name('discount.list');
-
-//categories service
-Route::get('cate-service',[CategoryServiceController::class,'index'])->name('cate-service.list');
-
-//service
-
-Route::get('service',[ServiceController::class,'index'])->name('service.list');
-
-//combo
-Route::get('combo',[ComboController::class,'index'])->name('combo.list');
+Route::get('admin-login', [LoginController::class, 'index'])->name('login.index');
 
 
+Route::middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return view('admin.page.dashboard.index');
+    })->name('dashboard');
 
+    //user
+    Route::get('user', [UserController::class, 'index'])->name('user.list');
+    //staff list
+    Route::get('staff', [UserController::class, 'staff'])->name('staff.list');
+    //role list
+    Route::get('role', [RoleController::class, 'index'])->name('role.list');
+    //permission list
+    Route::get('permission', [PermissionController::class, 'index'])->name('permission.list');
+
+    //feedback thuan
+    Route::get('feedback', [FeedbackController::class, 'index'])->name('feedback.list');
+    //feedback end thuan
+
+    //setting thuan
+    Route::get('setting', [SettingController::class, 'index'])->name('setting.list');
+    //setting end thuan
+
+    //blog_category thuan
+    Route::get('blog-category', [BlogCategoryController::class, 'index'])->name('blog.category.list');
+    //blog_category end thuan
+
+    //blog thuan
+    Route::get('blog', [BlogController::class, 'index'])->name('blog.list');
+    //blog end thuan
+
+    //blog_category thuan
+    Route::get('tag', [TagController::class, 'index'])->name('tag.list');
+    //blog_category end thuan
+
+    //contact page
+    Route::get('contact', [ContactController::class, 'index'])->name('contact.list');
+
+    //discount_code page
+    Route::get('discount', [DiscountController::class, 'index'])->name('discount.list');
+
+    //categories service
+    Route::get('cate-service', [CategoryServiceController::class, 'index'])->name('cate-service.list');
+
+    //service
+
+    Route::get('service', [ServiceController::class, 'index'])->name('service.list');
+
+    //combo
+    Route::get('combo', [ComboController::class, 'index'])->name('combo.list');
+});
 Route::get('/error', function () {
     return view('admin.error.404-index');
 });

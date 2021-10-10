@@ -18,6 +18,7 @@ class RoleController extends Controller
     public function index()
     {
         $get = Role::all();
+        $get->load('permissions');
 
         return response()->json($get);
     }
@@ -51,7 +52,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        return Role::find($id);
+        return Role::find($id)->load('permissions');
     }
 
     /**
@@ -64,12 +65,14 @@ class RoleController extends Controller
     public function update(Request $request)
     {
         $get = Role::find($request->id);
-        $get->name = $request->name;
-        $get->save();
+
+        if ($request->has("permissions")) {
+            $get->syncPermissions($request->permissions);
+        }
         if (!$get) {
             return response()->json(['code' => 0, 'msg' => 'Sửa không thành công !']);
         } else {
-            return response()->json(['code' => 1, 'msg' => 'Sửa mới thành công !']);
+            return response()->json(['code' => 1, 'msg' => 'Sửa mới thành công !' , ]);
         }
     }
 

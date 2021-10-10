@@ -26,7 +26,6 @@ class User extends Authenticatable
         'gender',
         'date_birth',
         'address',
-        'role_id',
         'description_staff',
         'experience_staff',
     ];
@@ -36,10 +35,10 @@ class User extends Authenticatable
      *
      * @var array
      */
-    // protected $hidden = [
-    //     'password',
-    //     'remember_token',
-    // ];
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
     /**
      * The attributes that should be cast.
