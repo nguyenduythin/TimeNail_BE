@@ -126,7 +126,7 @@
 
                   </li>
                   <li class=" nav-item {{ request()->is('bill*') ? 'active' : '' }}"><a
-                              class="d-flex align-items-center" href="#"><i data-feather='file-text'></i><span
+                              class="d-flex align-items-center" href="{{route('bill.list')}}"><i data-feather='file-text'></i><span
                                     class="menu-title text-truncate" data-i18n="Invoice">Hóa đơn</span></a>
 
                   </li>

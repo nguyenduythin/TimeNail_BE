@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\admin\BillController;
 use App\Http\Controllers\api\admin\CategoryServiceController;
 use App\Http\Controllers\api\admin\ComboController;
 use App\Http\Controllers\api\admin\ContactController;
@@ -114,6 +115,16 @@ Route::prefix('admin')->group(function () {
         Route::post('/', [ComboController::class, 'store'])->name('combo.add.api');
         Route::post('edit', [ComboController::class, 'update'])->name('combo.update.api');
         Route::delete('{id}',[ComboController::class,'destroy']);
+    });
+
+
+    //bill
+    Route::prefix('bill')->group(function(){
+        Route::get('/',[BillController::class,'index'])->name('bill.list.api');
+        Route::get('/show/{id}', [BillController::class, 'show']);
+        Route::post('/', [BillController::class, 'store'])->name('bill.add.api');
+        Route::post('edit', [BillController::class, 'update'])->name('bill.update.api');
+        Route::delete('{id}',[BillController::class,'destroy']);
     });
  
 

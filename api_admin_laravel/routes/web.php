@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\BillController;
 use App\Http\Controllers\admin\CategoryServiceController;
 use App\Http\Controllers\admin\ComboController;
 use App\Http\Controllers\admin\ContactController;
@@ -59,6 +60,9 @@ Route::get('discount',[DiscountController::class,'index'])->name('discount.list'
 
 //categories service
 Route::get('cate-service',[CategoryServiceController::class,'index'])->name('cate-service.list');
+
+//bill
+Route::get('bill',[BillController::class,'index'])->name('bill.list');
 
 //service
 
