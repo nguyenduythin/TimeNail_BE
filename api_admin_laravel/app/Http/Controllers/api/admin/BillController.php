@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bill;
 use Illuminate\Http\Request;
 
 class BillController extends Controller
@@ -15,6 +16,9 @@ class BillController extends Controller
     public function index()
     {
         //
+        $model = Bill::all();
+        $model->load('user','staff');
+        return response()->json($model);
     }
 
     /**

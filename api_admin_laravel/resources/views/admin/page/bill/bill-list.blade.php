@@ -14,11 +14,6 @@
                 <div class="card">
                     <div class="card-body border-bottom">
                         <h4 class="card-title">Hóa Đơn</h4>
-                        <div class="row">
-                            <div class="col-md-4 user_role"></div>
-                            <div class="col-md-4 user_plan"></div>
-                            <div class="col-md-4 user_status"></div>
-                        </div>
                     </div>
                     <div class="card-datatable table-responsive pt-0">
                         <table class="user-list-table table" id="DataTables_Table_User">

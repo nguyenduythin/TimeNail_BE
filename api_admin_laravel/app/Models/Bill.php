@@ -11,5 +11,10 @@ class Bill extends Model
 
     protected $table = 'bills';
 
-    
+    public function user(){
+        return $this->belongsTo(User::class,'user_id');
+    }
+    public function staff(){
+        return $this->belongsTo(User::class,'user_staff_id');
+    }
 }
