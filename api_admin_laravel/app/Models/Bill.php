@@ -14,7 +14,15 @@ class Bill extends Model
     public function user(){
         return $this->belongsTo(User::class,'user_id');
     }
+
     public function staff(){
-        return $this->belongsTo(User::class,'user_staff_id');
+        return $this->belongsToMany(User::class,'bill_staff','bill_id','staff_id');
+    }
+
+    public function service(){
+        return $this->belongsToMany(Service::class);
+    }
+    public function combo(){
+        return $this->belongsToMany(Combo::class);
     }
 }
