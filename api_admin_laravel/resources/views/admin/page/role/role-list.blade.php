@@ -333,7 +333,7 @@ $.ajax({
                                       </div>`); 
 
       $( "#getAllPermissionEdit").append(`<div class="form-check me-3 me-lg-5">
-                                            <input class="form-check-input" type="checkbox"  id="list-permission-edit" name="permissions[]" data-id="${data.id}" value="${data.id}" />
+                                            <input class="form-check-input" type="checkbox"  id="${data.id}" name="permissions[]" data-id="${data.id}" value="${data.id}" />
                                             <label class="form-check-label" for="${data.id}"> ${data.name} </label>
                                         </div>`);
   })
@@ -369,24 +369,15 @@ $('body').on('click' ,'#editRole' , function(){
         form.find('input[name="name"]').val(data.name); 
         var permissions  =  data.permissions
     
-    // $.get("{{ route('permission.list.api') }}" , function (result) {
-    //   result.map(dataR => {
-    //     var html = `<div class="form-check me-3 me-lg-5">
-    //                                         <input class="form-check-input" type="checkbox"  id="list-permission-edit" name="permissions[]" data-id="${data.id}" value="${data.id}" />
-    //                                         <label class="form-check-label" for="${dataR.id}"> ${dataR.name} </label>
-    //                                     </div>`; 
-    //                  console.log('ddd' ,permissions );
-    //      permissions.map(p => 
-    //      if (dataR.id == p.id) { //check cate đã chọn
-    //        html =  `<div class="form-check me-3 me-lg-5">
-    //                                         <input class="form-check-input" type="checkbox" checked  id="list-permission-edit" name="permissions[]" data-id="${data.id}" value="${data.id}" />
-    //                                         <label class="form-check-label" for="${dataR.id}"> ${dataR.name} </label>
-    //                                     </div>`;
-    //     }
-    //      )                         
-    //   $( "#getAllPermissionEdit").append(html);
-    //     })
-    // })
+    $.get("{{ route('permission.list.api') }}" , function (result) {
+      result.map(x => {
+      data.permissions.map(function(y) {
+                      if (y.id == x.id) {
+                          $("#getAllPermissionEdit").find("#"+y.id,"input").prop('checked', true);
+                      }
+                  })
+        })
+    })
 
     },'json')
     

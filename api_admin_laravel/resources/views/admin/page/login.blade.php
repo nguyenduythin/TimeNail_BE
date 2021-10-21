@@ -87,7 +87,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                             </g>
                                         </g>
                                     </svg>
-                                    <h2 class="brand-text text-primary ms-1">Vuexy</h2>
+                                    <h2 class="brand-text text-primary ms-1">Timenail</h2>
                                 </a>
 
                                 <h4 class="card-title mb-1">Chào mừng bạn đến với quản lý TimeNail! 👋</h4>
@@ -160,6 +160,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 toastr.error(data.error)
             }
             if (data.success) {
+                console.log('daat',data);
                 window.location.href = "/";
                 toastr.success(data.success);
             }

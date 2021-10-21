@@ -35,6 +35,9 @@ class UserController extends Controller
 
         $user = new User();
         $user->fill($request->all());
+        // if ($request->has("role")) {
+        //     $user->syncRoles($request->role);
+        // }
         $user->fill([
             'password' => Hash::make($request->password)
         ]);
@@ -75,9 +78,12 @@ class UserController extends Controller
             $user->syncRoles($request->role);
         }
         $user->fill($request->all());
+        // if (!Hash::check($request->password)) {
         $user->fill([
             'password' => Hash::make($request->password)
         ]);
+
+        // }
         if ($request->hasFile('avatar')) {
             $user->avatar = $request->file('avatar')->storeAs('/images/avatar_users', uniqid() . '-' . $request->avatar->getClientOriginalName());
         }

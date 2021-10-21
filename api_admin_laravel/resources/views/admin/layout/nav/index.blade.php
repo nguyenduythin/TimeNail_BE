@@ -168,44 +168,5 @@
   </div>
 </nav>
 @section('script')
-<script>
-  $(function () {
-  'use strict';
-  $('#logout-admin').on('click', function(e){
-    e.preventDefault();
-    $.ajax({
-        type:"GET",
-        url:"{{ route('logout.admin') }}",
-        processData: false,
-        dataType:'json',
-        contentType: false,
-        success: function(data){
-            window.location.href = "/admin-login"; 
-        },
-        error:function (error) {
-            toastr.warning("Có gì đó đang sảy ra !");
-            console.log("Đăng xuất không thành công !",error);
-        }
-    })
-});
 
-  // jQuery Validation
-  // --------------------------------------------------------------------
-  if (pageLoginForm.length) {
-    pageLoginForm.validate({
-   
-      rules: {
-        'login-email': {
-          required: true,
-          email: true
-        },
-        'login-password': {
-          required: true
-        }
-      }
-    });
-  }
-});
-
-</script>
 @endsection

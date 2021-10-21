@@ -65,7 +65,8 @@ class RoleController extends Controller
     public function update(Request $request)
     {
         $get = Role::find($request->id);
-
+        $get->name = $request->name;
+        $get->save();
         if ($request->has("permissions")) {
             $get->syncPermissions($request->permissions);
         }

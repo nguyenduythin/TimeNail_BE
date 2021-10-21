@@ -154,6 +154,7 @@
                                           placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                         />
                                       </div> --}}
+                                      {{-- <input type="hidden" name="role" value="65"> --}}
                                     <div class="mb-1">
                                         <label class="form-label" for="bsDob">Ngày sinh</label>
                                         <input type="date" class="form-control picker" name="date_birth" id="bsDob"
@@ -269,7 +270,7 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditTaxID">Mật khẩu</label>
-                        <input type="password" id="modalEditTaxID password" name="password"
+                        <input type="password" id="modalEditTaxID " name="password"
                             class="form-control modal-edit-tax-id" placeholder="password" />
                     </div>
 
@@ -280,11 +281,11 @@
                             class="form-control phone-number-mask" placeholder="+1 (609) 933-44-22"
                             value="+1 (609) 933-44-22" />
                     </div>
-                    <div class="col-12 col-md-6">
+                    {{-- <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditTaxID">Nhập lại mật khẩu</label>
                         <input type="password" id="modalEditTaxID password_confirm" name="password_confirm"
                             class="form-control modal-edit-tax-id" placeholder="Tax-8894" />
-                    </div>
+                    </div> --}}
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserCountry">Giới Tính</label>
                         <div class="d-flex">
@@ -325,8 +326,6 @@
 @section('script')
 <script>
     $(function () {
-
-
     var e = $("#DataTables_Table_User");
     var t = $(".new-user-modal"),
         a = $(".add-new-user"),
@@ -334,7 +333,7 @@
         n = $(".dt-contact"),
         o = "{{ route('user.list') }}",
         r = "app-user-view-account.html";
-        var  table =   e.DataTable({
+        var  table = e.DataTable({
                 "ajax" : {
                         "url" : "{{ route('user.list.api') }}",
                         "type" : "GET",
@@ -405,7 +404,8 @@
                     {
                         targets: 4,
                         render: function (e, t, a, s) {
-                            var n = a.role;
+                            var n = a.roles.map(n=> n.name);
+                            // console.log('roles' , a.roles[0].name);
                             return (
                                 "<span class='text-truncate align-middle'>" +
                                 {
@@ -424,8 +424,8 @@
                                     Admin: feather.icons.slack.toSvg({
                                         class: "font-medium-3 text-danger me-50",
                                     }),
-                                }["Subscriber"]+
-                                "Thành viên" +
+                                }[n ? n : "Subscriber"]+
+                                n +
                                 "</span>"
                             );
                         },
@@ -589,9 +589,10 @@
                     },
                 },
                 language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } },
-                initComplete: function () {
+                initComplete: function (test,et) {
+                  
                     this.api()
-                        .columns(3)
+                        .columns(2)
                         .every(function () {
                             var e = this,
                                 t =
@@ -617,6 +618,7 @@
                                 .unique()
                                 .sort()
                                 .each(function (e, a) {
+                              
                                     t.append(
                                         '<option value="' +
                                             e +
@@ -776,14 +778,13 @@ $('body').on('click' ,'#deleteUser' , function(){
 $('body').on('click' ,'#editUser' , function(){
     var user_id = $(this).data("id");
     $.get('<?= route("user.list.api") ?>'+"/show/"+user_id , function (data) {
-var accountUploadImg = $("#account-upload-img"),
+    var accountUploadImg = $("#account-upload-img"),
     accountUpload = $("#account-upload"),
     uploadedAvatar = $(".uploadedAvatar"),
     accountReset = $("#account-reset");
     if (uploadedAvatar) {
     // var src = uploadedAvatar.attr("src");
     accountUpload.on("change", function (ch) {
-        
         var n = new FileReader(),
         uploadedAvatar = ch.target.files;
         (n.onload = function () {
@@ -804,8 +805,9 @@ var accountUploadImg = $("#account-upload-img"),
         form.find('input[name="email"]').val(data.email);  
         form.find('input[name="phone"]').val(data.phone);
         form.find('input[name="date_birth"]').val(data.date_birth);   
-        form.find('input[name="password"]').val(data.password);  
-        form.find('#address').val(data.address);  
+        form.find('input[name="password"]').val(data.password); 
+        form.find('#address').val(data.address); 
+
         if (data.gender == 1) {
             $('#gender1').attr('checked',true);
         }else{

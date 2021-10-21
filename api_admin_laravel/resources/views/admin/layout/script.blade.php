@@ -43,6 +43,22 @@
 
 @yield('script')
 <script>
+  $('#logout-admin').on('click', function(){
+    $.ajax({
+        type:"GET",
+        url:"{{ route('logout.admin') }}",
+        processData: false,
+        dataType:'json',
+        contentType: false,
+        success: function(data){
+            window.location.href = "/admin-login"; 
+        },
+        error:function (error) {
+            toastr.warning("Có gì đó đang sảy ra !");
+            console.log("Đăng xuất không thành công !",error);
+        }
+    })
+});
   $(window).on('load',  function(){
       if (feather) {
         feather.replace({ width: 14, height: 14 });
