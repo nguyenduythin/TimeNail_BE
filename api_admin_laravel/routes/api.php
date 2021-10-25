@@ -122,9 +122,10 @@ Route::prefix('admin')->group(function () {
     Route::prefix('bill')->group(function(){
         Route::get('/',[BillController::class,'index'])->name('bill.list.api');
         Route::get('/show/{id}', [BillController::class, 'show']);
-        Route::post('/', [BillController::class, 'store'])->name('bill.add.api');
+        // Route::post('/', [BillController::class, 'store'])->name('bill.add.api');
         Route::post('edit', [BillController::class, 'update'])->name('bill.update.api');
         Route::delete('{id}',[BillController::class,'destroy']);
+        Route::get('/staff',[BillController::class,'staff'])->name('bill-staff.list.api');
     });
  
 

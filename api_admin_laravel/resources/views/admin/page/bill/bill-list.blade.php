@@ -62,28 +62,30 @@
                     @csrf
                     <input type="text" name="id" hidden>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserFirstName">Tên Khách Hàng</label>
+                        <label class="form-label" for="">Tên Khách Hàng</label>
                         <input disabled type="text" name="full_name" class="form-control" />
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserFirstName">Tổng Thời Gian (phút)</label>
+                        <label class="form-label" for="">Tổng Thời Gian (phút)</label>
                         <input disabled type="number" name="total_time_execution" class="form-control" />
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserFirstName">Ngày Đặt</label>
-                        <input disabled type="time" name="date_work" class="form-control" />
+                        <label class="form-label" for="">Ngày Đặt</label>
+                        <input disabled type="text" name="date_work" class="form-control flatpickr-date-time flatpickr-input active" />
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserFirstName">Tổng Tiền</label>
+                        <label class="form-label" for="">Tổng Tiền</label>
                         <input disabled type="text" name="total_bill" class="form-control" />
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserFirstName">Trạng Thái</label>
+                        <label class="form-label" for="">Trạng Thái</label>
                         <input disabled type="text" name="status_bill" class="form-control" />
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserFirstName">Nhân Viên Thực Hiện</label>
-                        <input disabled type="text" name="user_staff_id" class="form-control" />
+                        <label class="form-label" for="">Nhân Viên Thực Hiện</label>
+                        <select class="select2 form-select" multiple="multiple" id="default-select-multi">
+                            <!-- list danh sách ở phần js -->
+                        </select>
                     </div>
                     <div class="col-12 ">
                         <label class="form-label" for="modalEditUserCountry">Ghi Chú Hóa Đơn</label>
@@ -105,92 +107,48 @@
             </div>
             <div class="modal-body pb-5 px-sm-5 pt-50">
                 <div class="text-center mb-2">
-                    <h1 class="mb-1">Cập nhật mới tài khoản</h1>
-                    <p>Cập nhập chi tiết tài khoản mới !</p>
+                    <h1 class="mb-1">Cập nhật mới hóa đơn</h1>
+                    <p>Cập nhập chi tiết hóa đơn mới !</p>
                 </div>
-                <form id="editUserForm" action="{{ route('user.update.api') }}" method="POST" class="row gy-1 pt-75" enctype="multipart/form-data">
+                <form id="editUserForm" action="{{route('bill.update.api')}}" method="POST" class="row gy-1 pt-75" enctype="multipart/form-data">
                     @csrf
                     <input type="text" name="id" hidden>
-                    <div class="d-flex center">
-                        <a href="#" class="me-25">
-                            <img src="" id="account-upload-img" class="uploadedAvatar rounded me-50" alt="profile image" height="100" width="100" name="avatar" />
-                        </a>
-                        <!-- upload and reset button -->
-                        <div class="d-flex align-items-end mt-75 ms-1">
-                            <div>
-                                <label for="account-upload" class="btn btn-sm btn-primary mb-75 me-75">Upload</label>
-                                <input type="file" id="account-upload" name="avatar" hidden accept="image/*" />
-                                <button type="button" id="account-reset" class="btn btn-sm btn-outline-secondary mb-75">Reset</button>
-                                <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
-                            </div>
-                        </div>
-                        <!--/ upload and reset button -->
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="">Ngày Đặt</label>
+                        <input type="text" name="date_work" class="form-control flatpickr-date-time flatpickr-input active" />
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserFirstName">Họ và tên</label>
-                        <input type="text" id="modalEditUserFirstName full_name" name="full_name" class="form-control" placeholder="tên của bạn" data-msg="Please enter your first name" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserEmail">Email:</label>
-                        <input type="text" id="modalEditUserEmail email" name="email" class="form-control" placeholder="example@domain.com" />
-
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserLastName">Ngày Sinh</label>
-                        <input type="date" class="form-control picker" name="date_birth" id="date_birth" required />
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <i data-feather='lock'></i>
-                        <label class="form-label" for="modalEditUserStatus">Chức vụ</label>
-                        <select id="modalEditUserStatus" name="modalEditUserStatus" class="form-select" aria-label="Default select example">
-                            <option selected>Lựa chọn</option>
-                            <option value="1">Admin</option>
-                            <option value="2">Auth</option>
-                            <option value="3">Subject</option>
+                        <label class="form-label" for="">Trạng Thái</label>
+                        <select class="select form-select" name="status_bill" id="select2-basic">
+                            <option id="1" value="1">Chờ xác nhận</option>
+                            <option id="2" value="2">Xác nhận thành công</option>
+                            <option id="3" value="3">Đang làm</option>
+                            <option id="4" value="4">Hoàn thành</option>
+                            <option id="5" value="5">Hủy</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditTaxID">Mật khẩu</label>
-                        <input type="password" id="modalEditTaxID password" name="password" class="form-control modal-edit-tax-id" placeholder="password" />
-                    </div>
-
-
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserPhone">Số điện thoại</label>
-                        <select class="select2 form-select" multiple="multiple" id="default-select-multi">
-                            <option value="square">Square</option>
-                            <option value="rectangle">Rectangle</option>
-                            <option value="rombo">Rombo</option>
-                            <option value="romboid">Romboid</option>
-                            <option value="trapeze">Trapeze</option>
-                            <option value="traible">Triangle</option>
-                            <option value="polygon" selected>Polygon</option>
+                        <label class="form-label" for="">Combo</label>
+                        <select class="select2 form-select" name="combo_id[]" multiple="multiple" id="default-select-multi3">
+                            <!-- list danh sách ở phần js -->
                         </select>
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditTaxID">Nhập lại mật khẩu</label>
-                        <input type="password" id="modalEditTaxID password_confirm" name="password_confirm" class="form-control modal-edit-tax-id" placeholder="Tax-8894" />
+                        <label class="form-label" for="">Dịch Vụ</label>
+                        <select class="select2 form-select" name="service_id[]" multiple="multiple" id="default-select-multi4">
+                            <!-- list danh sách ở phần js -->
+                        </select>
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserCountry">Giới Tính</label>
-                        <div class="d-flex">
-                            <div class="form-check form-check-inline">
-                                <input type="radio" id="gender1" name="gender" class="form-check-input" value="1" required />
-                                <label class="form-check-label" for="gender1">Nam</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input type="radio" id="gender2" name="gender" class="form-check-input" value="2" required />
-                                <label class="form-check-label" for="gender2">Nữ</label>
-                            </div>
-                        </div>
-
+                        <label class="form-label" for="">Nhân Viên Thực Hiện</label>
+                        <select class="select2 form-select" name="staff_id[]" multiple="multiple" id="default-select-multi2">
+                            <!-- list danh sách ở phần js -->
+                        </select>
                     </div>
                     <div class="col-12 ">
-                        <label class="form-label" for="modalEditUserCountry">Địa chỉ</label>
-                        <textarea class="form-control" name="address" id="address" cols="30" rows="1"></textarea>
+                        <label class="form-label" for="modalEditUserCountry">Ghi Chú Hóa Đơn</label>
+                        <textarea class="form-control" name="note_bill" id="note_bill" cols="30" rows="4"></textarea>
                     </div>
-
-
                     <div class="col-12 text-center mt-2 pt-50">
                         <button type="submit" class="btn btn-primary me-1">Submit</button>
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
@@ -469,18 +427,25 @@
                 })
             }
         });
-
+        $.get('<?= route("bill-staff.list.api") ?>', function(data) {
+            data.map(function(x) {
+                $('#default-select-multi').append(
+                    '<option id="' + x.id + '">' + x.full_name + '</option>'
+                );
+            })
+        })
         //detail
         $('body').on('click', '#detailUser', function() {
             var user_id = $(this).data("id");
             $.get('<?= route("bill.list.api") ?>' + "/show/" + user_id, function(data) {
-                console.log(data)
+                data.staff.map(function(x) {
+                    $("#default-select-multi").find("#" + x.id, "option").prop('selected', true);
+                })
                 var form = $('#detailUserForm');
                 form.find('input[name="full_name"]').val(data.user.full_name);
                 form.find('input[name="total_time_execution"]').val(data.total_time_execution);
                 form.find('input[name="date_work"]').val(data.date_work);
                 form.find('input[name="total_bill"]').val(data.total_bill.toLocaleString() + '₫');
-                form.find('input[name="user_staff_id"]').val(data.staff.full_name);
                 if (data.status_bill == 1) {
                     form.find('input[name="status_bill"]').val('Chờ xác nhận');
                 }
@@ -499,46 +464,35 @@
                 form.find('#note_bill').val(data.note_bill);
             }, 'json')
         });
-
+        $.get('<?= route("bill-staff.list.api") ?>', function(data) {
+            data.map(function(x) {
+                $('#default-select-multi2').append(
+                    '<option value = "' + x.id + '" id="' + x.id + '">' + x.full_name + '</option>'
+                );
+            })
+        })
+        $.get('<?= route("combo.list.api") ?>', function(data) {
+            data.map(function(x) {
+                $('#default-select-multi3').append(
+                    '<option value = "' + x.id + '" id="' + x.id + '">' + x.name_combo + '</option>'
+                );
+            })
+        })
+        $.get('<?= route("service.list.api") ?>', function(data) {
+            data.service.map(function(x) {
+                $('#default-select-multi4').append(
+                    '<option value = "' + x.id + '" id="' + x.id + '">' + x.name_service + '</option>'
+                );
+            })
+        })
         // get detail edit
         $('body').on('click', '#editUser', function() {
             var user_id = $(this).data("id");
-            $.get('<?= route("user.list.api") ?>' + "/show/" + user_id, function(data) {
-                var accountUploadImg = $("#account-upload-img"),
-                    accountUpload = $("#account-upload"),
-                    uploadedAvatar = $(".uploadedAvatar"),
-                    accountReset = $("#account-reset");
-                if (uploadedAvatar) {
-                    // var src = uploadedAvatar.attr("src");
-                    accountUpload.on("change", function(ch) {
-
-                            var n = new FileReader(),
-                                uploadedAvatar = ch.target.files;
-                            (n.onload = function() {
-                                accountUploadImg && accountUploadImg.attr("src", n.result);
-                            }),
-                            n.readAsDataURL(uploadedAvatar[0]);
-                        }),
-                        accountReset.on("click", function() {
-                            uploadedAvatar.attr("src", data.avatar ? "/storage/" + data.avatar :
-                                "{{ asset('admin/images/portrait/small/avatar-none.png') }}");
-                        });
-                };
+            $.get('<?= route("bill.list.api") ?>' + "/show/" + user_id, function(data) {
                 var form = $('#editUserForm');
-                $("#account-upload-img").attr("src", data.avatar ? "/storage/" + data.avatar :
-                    "{{ asset('admin/images/portrait/small/avatar-none.png') }}");
+                $("#select2-basic").find("#" + data.status_bill, "option").prop('selected', true);
                 form.find('input[name="id"]').val(data.id);
-                form.find('input[name="full_name"]').val(data.full_name);
-                form.find('input[name="email"]').val(data.email);
-                form.find('input[name="phone"]').val(data.phone);
-                form.find('input[name="date_birth"]').val(data.date_birth);
-                form.find('input[name="password"]').val(data.password);
-                form.find('#address').val(data.address);
-                if (data.gender == 1) {
-                    $('#gender1').attr('checked', true);
-                } else {
-                    $('#gender2').attr('checked', true);
-                }
+                form.find('input[name="date_work"]').val(data.date_work);
             }, 'json')
         });
         // submit edit in db

@@ -175,21 +175,7 @@
                         <div class="table-responsive">
                             <table class="table table-flush-spacing">
                                 <tbody id="service-list1">
-                                    <!-- nút chọn all sau này sửa js xong thì để lại -->
-                                    <!-- <tr>
-                                                                <td class="text-nowrap fw-bolder">
-                                                                    Administrator Access
-                                                                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="Allows a full access to the system">
-                                                                        <i data-feather="info"></i>
-                                                                    </span>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" id="selectAll" />
-                                                                        <label class="form-check-label" for="selectAll"> Select All </label>
-                                                                    </div>
-                                                                </td>
-                                                            </tr> -->
+
                                 </tbody>
                             </table>
                         </div>
