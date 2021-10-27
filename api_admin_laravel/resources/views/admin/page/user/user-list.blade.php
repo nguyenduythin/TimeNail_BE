@@ -117,6 +117,25 @@
                                 </div>
                                 <div class="modal-body flex-grow-1">
                                     <div class="mb-1">
+                                        <label for="customFile1" class="form-label">Ảnh đại diện</label>
+                                        <input class="form-control" type="file" id="customFile1" name="avatar" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" class="d-block">Giới tính</label>
+                                        <div class="d-flex">
+                                            <div class="form-check ">
+                                                <input type="radio" id="validationRadio3" name="gender"
+                                                    class="form-check-input" value="1" required />
+                                                <label class="form-check-label" for="validationRadio3">Nam</label>
+                                            </div>
+                                            <div class="form-check " style="margin-left: 10px">
+                                                <input type="radio" id="validationRadio4" name="gender"
+                                                    class="form-check-input" value="2" required />
+                                                <label class="form-check-label" for="validationRadio4">Nữ</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-1">
                                         <label class="form-label" for="basic-icon-default-fullname">Họ & Tên</label>
                                         <input type="text" class="form-control dt-full-name"
                                             id="basic-icon-default-fullname" placeholder="John Doe" name="full_name" />
@@ -136,25 +155,17 @@
                                     </div>
                                     {{-- <div class="mb-1">
                                         <label class="form-label" for="basic-default-password">Password</label>
-                                        <input
-                                          type="password"
-                                          id="basic-icon-default-password"
-                                          name="basic-default-password"
-                                          class="form-control dt-password"
-                                          placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        />
-                                      </div>
-                                      <div class="mb-1">
+                                        <input type="password" id="basic-icon-default-password"
+                                            name="basic-default-password" class="form-control dt-password"
+                                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                                    </div>
+                                    <div class="mb-1">
                                         <label class="form-label" for="confirm-password">Confirm Password</label>
-                                        <input
-                                          type="password"
-                                          id="confirm-password"
-                                          name="confirm-password"
-                                          class="form-control"
-                                          placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        />
-                                      </div> --}}
-                                      {{-- <input type="hidden" name="role" value="65"> --}}
+                                        <input type="password" id="confirm-password" name="confirm-password"
+                                            class="form-control"
+                                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                                    </div> --}}
+                                    {{-- <input type="hidden" name="role" value="65"> --}}
                                     <div class="mb-1">
                                         <label class="form-label" for="bsDob">Ngày sinh</label>
                                         <input type="date" class="form-control picker" name="date_birth" id="bsDob"
@@ -173,25 +184,6 @@
                                         <input type="text" id="basic-icon-default-company" class="form-control "
                                             placeholder="địa chỉ" name="address" />
                                     </div>
-                                    <div class="mb-1">
-                                        <label for="customFile1" class="form-label">Ảnh đại diện</label>
-                                        <input class="form-control" type="file" id="customFile1" name="avatar" />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" class="d-block">Giới tính</label>
-                                        <div class="form-check my-50">
-                                            <input type="radio" id="validationRadio3" name="gender"
-                                                class="form-check-input" value="1" required />
-                                            <label class="form-check-label" for="validationRadio3">Nam</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" id="validationRadio4" name="gender"
-                                                class="form-check-input" value="2" required />
-                                            <label class="form-check-label" for="validationRadio4">Nữ</label>
-                                        </div>
-                                    </div>
-
-
                                     <button type="submit" class="btn btn-primary me-1 data-submit">Lưu</button>
                                     <button type="reset" class="btn btn-outline-secondary"
                                         data-bs-dismiss="modal">Cancel</button>
@@ -264,7 +256,6 @@
                         <i data-feather='lock'></i>
                         <label class="form-label" for="role">Vai trò</label>
                         <select id="user-role" class="select2 form-select" name="role">
-                            <option value=""> Thành viên </option>
                         </select>
 
                     </div>
@@ -309,10 +300,10 @@
 
 
                     <div class="col-12 text-center mt-2 pt-50">
-                        <button type="submit" class="btn btn-primary me-1">Submit</button>
+                        <button type="submit" class="btn btn-primary me-1">Lưu</button>
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal"
                             aria-label="Close">
-                            Discard
+                            Quay lại
                         </button>
                     </div>
                 </form>
@@ -387,6 +378,7 @@
                                     "</span>";
                             }
                             return (
+                                
                                 '<div class="d-flex justify-content-left align-items-center"><div class="avatar-wrapper"><div class="avatar ' +
                                 ("" === i ? " bg-light-" + d + " " : "") +
                                 ' me-1">' +
@@ -405,17 +397,16 @@
                         targets: 4,
                         render: function (e, t, a, s) {
                             var n = a.roles.map(n=> n.name);
-                            // console.log('roles' , a.roles[0].name);
                             return (
                                 "<span class='text-truncate align-middle'>" +
                                 {
-                                    Subscriber: feather.icons.user.toSvg({
+                                    Member: feather.icons.user.toSvg({
                                         class: "font-medium-3 text-primary me-50",
                                     }),
                                     Author: feather.icons.settings.toSvg({
                                         class: "font-medium-3 text-warning me-50",
                                     }),
-                                    Maintainer: feather.icons.database.toSvg({
+                                    Staff: feather.icons["user-check"].toSvg({
                                         class: "font-medium-3 text-success me-50",
                                     }),
                                     Editor: feather.icons["edit-2"].toSvg({
@@ -424,8 +415,8 @@
                                     Admin: feather.icons.slack.toSvg({
                                         class: "font-medium-3 text-danger me-50",
                                     }),
-                                }[n ? n : "Subscriber"]+
-                                n +
+                                }[n[0]]+
+                                n[0] +
                                 "</span>"
                             );
                         },
@@ -749,11 +740,6 @@ a.length && (a.validate({
 
       
             }))
- $.get('<?= route("user.list.api") ?>', function(data) {
-        data.role.map(function(x) {
-            $('#user-role').append(`<option value="${x.id}">${x.name}</option>`)
-        })
-})
 
 $('body').on('click' ,'#deleteUser' , function(){
     var user_id = $(this).data("id");
@@ -774,6 +760,10 @@ $('body').on('click' ,'#deleteUser' , function(){
     })
      }
 });
+$.get('<?= route("user.list.api") ?>', function(dataR) {
+    dataR.role.map(function(x) {
+        $('#user-role').append(`<option value="${x.id}"  data-id="${x.id}">${x.name}</option>`)
+    })
 // get detail edit
 $('body').on('click' ,'#editUser' , function(){
     var user_id = $(this).data("id");
@@ -783,7 +773,6 @@ $('body').on('click' ,'#editUser' , function(){
     uploadedAvatar = $(".uploadedAvatar"),
     accountReset = $("#account-reset");
     if (uploadedAvatar) {
-    // var src = uploadedAvatar.attr("src");
     accountUpload.on("change", function (ch) {
         var n = new FileReader(),
         uploadedAvatar = ch.target.files;
@@ -797,23 +786,31 @@ $('body').on('click' ,'#editUser' , function(){
         : "{{ asset('admin/images/portrait/small/avatar-none.png') }}" );
         });
     };
-        var form = $('#editUserForm');
-        $("#account-upload-img").attr("src", data.avatar ? "/storage/"+ data.avatar 
-        : "{{ asset('admin/images/portrait/small/avatar-none.png') }}" );
-        form.find('input[name="id"]').val(data.id); 
-        form.find('input[name="full_name"]').val(data.full_name);    
-        form.find('input[name="email"]').val(data.email);  
-        form.find('input[name="phone"]').val(data.phone);
-        form.find('input[name="date_birth"]').val(data.date_birth);   
-        form.find('input[name="password"]').val(data.password); 
-        form.find('#address').val(data.address); 
-
-        if (data.gender == 1) {
-            $('#gender1').attr('checked',true);
-        }else{
-            $('#gender2').attr('checked',true);
-        }
+    var form = $('#editUserForm');
+    $("#account-upload-img").attr("src", data.avatar ? "/storage/"+ data.avatar 
+    : "{{ asset('admin/images/portrait/small/avatar-none.png') }}" );
+    form.find('input[name="id"]').val(data.id); 
+    form.find('input[name="full_name"]').val(data.full_name);    
+    form.find('input[name="email"]').val(data.email);  
+    form.find('input[name="phone"]').val(data.phone);
+    form.find('input[name="date_birth"]').val(data.date_birth);   
+    form.find('input[name="password"]').val(data.password); 
+    form.find('#address').val(data.address); 
+    if (data.gender == 1) {
+        $('#gender1').attr('checked',true);
+    }else{
+        $('#gender2').attr('checked',true);
+    }
+        $.get('<?= route("user.list.api") ?>', function(dataR) {
+            dataR.role.map(function(x) {
+                if (data.roles[0].id == x.id) {
+                    $("#user-role").find(`option[data-id="${x.id}"]`).prop('selected', true);
+                }
+            })
+        })
     },'json')
+    })
+
 });
 // submit edit in db
 $('#editUserForm').on('submit', function(e){
@@ -835,7 +832,6 @@ $('#editUserForm').on('submit', function(e){
                     $(form).find('span'+prefix+'_error').text(val[0]);
                 });
             }else{
-                console.log('fomr',data);
                 $(form)[0].reset();
                 $('#editUserModal').modal("hide");
                 table.ajax.reload();

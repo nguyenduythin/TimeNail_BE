@@ -1,24 +1,10 @@
 <!DOCTYPE html>
-<!--
-Template Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-Author: PixInvent
-Website: http://www.pixinvent.com/
-Contact: hello@pixinvent.com
-Follow: www.twitter.com/pixinvents
-Like: www.facebook.com/pixinvents
-Purchase: https://1.envato.market/vuexy_admin
-Renew Support: https://1.envato.market/vuexy_admin
-License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
 
--->
 <html class="loading" lang="en" data-textdirection="ltr">
 <!-- BEGIN: Head-->
-
-<!-- Mirrored from pixinvent.com/demo/vuexy-html-bootstrap-admin-template/html/ltr/vertical-menu-template/auth-login-basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 04 Sep 2021 07:35:10 GMT -->
-
 <head>
     @include('admin.layout.meta')
-    <title>Login Page - Vuexy - Bootstrap HTML admin template</title>
+    <title>Admin - TimeNails</title>
     <link rel="apple-touch-icon" href="{{ asset('admin/images/ico/apple-icon-120.html')}}">
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600"
@@ -113,7 +99,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                             <input type="password" class="form-control form-control-merge"
                                                 id="login-password" name="password" tabindex="2"
                                                 placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                                aria-describedby="login-password" />
+                                                aria-describedby="login-password" autocomplete />
                                             <span class="input-group-text cursor-pointer"><i
                                                     data-feather="eye"></i></span>
                                         </div>
@@ -139,10 +125,10 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- END: Content-->
 
 
-    @include('admin.layout.script')
+ @include('admin.layout.script')
 
 <script>
- $(function () {
+$(function () {
   'use strict';
   var pageLoginForm = $('.auth-login-form');
   $('#loginForm').on('submit', function(e){
@@ -160,7 +146,6 @@ License: You must have a valid license purchased only from themeforest(the above
                 toastr.error(data.error)
             }
             if (data.success) {
-                console.log('daat',data);
                 window.location.href = "/";
                 toastr.success(data.success);
             }
@@ -172,41 +157,13 @@ License: You must have a valid license purchased only from themeforest(the above
     })
 });
 
-  // jQuery Validation
-  // --------------------------------------------------------------------
-  if (pageLoginForm.length) {
-    pageLoginForm.validate({
-      /*
-      * ? To enable validation onkeyup
-      onkeyup: function (element) {
-        $(element).valid();
-      },*/
-      /*
-      * ? To enable validation on focusout
-      onfocusout: function (element) {
-        $(element).valid();
-      }, */
-      rules: {
-        'login-email': {
-          required: true,
-          email: true
-        },
-        'login-password': {
-          required: true
-        }
-      }
-    });
-  }
 });
-        $(window).on('load',  function(){
-        if (feather) {
-          feather.replace({ width: 14, height: 14 });
-        }
-      })
-    </script>
+ $(window).on('load',  function(){
+if (feather) {
+    feather.replace({ width: 14, height: 14 });
+}
+})
+</script>
 </body>
 <!-- END: Body-->
-
-<!-- Mirrored from pixinvent.com/demo/vuexy-html-bootstrap-admin-template/html/ltr/vertical-menu-template/auth-login-basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 04 Sep 2021 07:35:10 GMT -->
-
 </html>

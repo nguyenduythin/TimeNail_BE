@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 
-class UserController extends Controller
+class StaffController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +18,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        $users->load('roles');
+        $staff = User::role('Staff')->get();
+        $staff->load('roles');
         $roles = Role::all();
-        return response()->json(['user' => $users, "role" => $roles]);
+        return response()->json(['user' => $staff, "role" => $roles]);
     }
 
     /**
@@ -34,9 +34,7 @@ class UserController extends Controller
     {
         $user = new User();
         $user->fill($request->all());
-
-        $user->syncRoles("Member");
-
+        $user->syncRoles("Staff");
         $user->fill([
             'password' => Hash::make($request->password)
         ]);

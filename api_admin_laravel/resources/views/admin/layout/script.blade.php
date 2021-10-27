@@ -41,6 +41,7 @@
 
 
 
+
 @yield('script')
 <script>
   $('#logout-admin').on('click', function(){

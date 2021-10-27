@@ -13,6 +13,7 @@ use App\Http\Controllers\admin\ServiceController;
 use App\Http\Controllers\admin\SettingController;
 use App\Http\Controllers\admin\BlogCategoryController;
 use App\Http\Controllers\admin\BlogController;
+use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\TagController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,9 +33,7 @@ Route::get('admin-login', [LoginController::class, 'index'])->name('login.index'
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('admin.page.dashboard.index');
-    })->name('dashboard');
+    Route::get('/',  [DashboardController::class, 'index'])->name('dashboard');
 
     //user
     Route::get('user', [UserController::class, 'index'])->name('user.list');

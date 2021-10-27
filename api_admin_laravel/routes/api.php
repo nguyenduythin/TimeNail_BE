@@ -12,7 +12,9 @@ use App\Http\Controllers\api\admin\RoleController;
 use App\Http\Controllers\api\admin\SettingController as AdminSettingController;
 use App\Http\Controllers\api\admin\BlogCategoryController as AdminBlogCategoryController;
 use App\Http\Controllers\api\admin\BlogController as AdminBlogController;
+use App\Http\Controllers\api\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\api\admin\LoginController;
+use App\Http\Controllers\api\admin\StaffController as AdminStaffController;
 use App\Http\Controllers\api\admin\TagController as AdminTagController;
 
 use Illuminate\Http\Request;
@@ -35,6 +37,7 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout.admin');
 
 
 Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.api');
     // user
     Route::prefix('user')->group(function () {
         Route::get('/', [AdminUserController::class, 'index'])->name('user.list.api');
@@ -42,6 +45,14 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
         Route::post('/', [AdminUserController::class, 'store'])->name('user.add.api');
         Route::post('edit', [AdminUserController::class, 'update'])->name('user.update.api');
         Route::delete('{id}', [AdminUserController::class, 'destroy']);
+    });
+    //staff
+    Route::prefix('staff')->group(function () {
+        Route::get('/', [AdminStaffController::class, 'index'])->name('staff.list.api');
+        Route::get('/show/{id}', [AdminStaffController::class, 'show']);
+        Route::post('/', [AdminStaffController::class, 'store'])->name('staff.add.api');
+        Route::post('edit', [AdminStaffController::class, 'update'])->name('staff.update.api');
+        Route::delete('{id}', [AdminStaffController::class, 'destroy']);
     });
 
     // permission
@@ -117,14 +128,12 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
         Route::delete('{id}', [ContactController::class, 'destroy']);
     });
 
-
     //discount
     Route::prefix('discount')->group(function () {
         Route::get('/', [DiscountController::class, 'index'])->name('discount.list.api');
         Route::post('/', [DiscountController::class, 'store'])->name('discount.add.api');
         Route::delete('{id}', [DiscountController::class, 'destroy']);
     });
-
 
     //category service
     Route::prefix('cate-service')->group(function () {
@@ -143,7 +152,6 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
         Route::post('edit', [ServiceController::class, 'update'])->name('service.update.api');
         Route::delete('{id}', [ServiceController::class, 'destroy']);
     });
-
 
     //combo
     Route::prefix('combo')->group(function () {
