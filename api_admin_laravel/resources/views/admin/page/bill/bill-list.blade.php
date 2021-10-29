@@ -81,11 +81,41 @@
                         <label class="form-label" for="">Trạng Thái</label>
                         <input disabled type="text" name="status_bill" class="form-control" />
                     </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="">Nhân Viên Thực Hiện</label>
-                        <select class="select2 form-select" multiple="multiple" id="default-select-multi">
-                            <!-- list danh sách ở phần js -->
-                        </select>
+                    <div class="col-12">
+                        <h4 class="mt-2 pt-50">Combo Có Trong Hóa Đơn</h4>
+                        <!-- Permission table -->
+                        <div class="table-responsive">
+                            <table class="table table-flush-spacing">
+                                <tbody id="service-list4">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Permission table -->
+                    </div>
+                    <div class="col-12">
+                        <h4 class="mt-2 pt-50">Dịch Vụ Có Trong Hóa Đơn</h4>
+                        <!-- Permission table -->
+                        <div class="table-responsive">
+                            <table class="table table-flush-spacing">
+                                <tbody id="service-list5">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Permission table -->
+                    </div>
+                    <div class="col-12">
+                        <h4 class="mt-2 pt-50">Nhân Viên Thực Hiện</h4>
+                        <!-- Permission table -->
+                        <div class="table-responsive">
+                            <table class="table table-flush-spacing">
+                                <tbody id="service-list6">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Permission table -->
                     </div>
                     <div class="col-12 ">
                         <label class="form-label" for="modalEditUserCountry">Ghi Chú Hóa Đơn</label>
@@ -127,23 +157,41 @@
                             <option id="5" value="5">Hủy</option>
                         </select>
                     </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="">Combo</label>
-                        <select class="select2 form-select" name="combo_id[]" multiple="multiple" id="default-select-multi3">
-                            <!-- list danh sách ở phần js -->
-                        </select>
+                    <div class="col-12">
+                        <h4 class="mt-2 pt-50">Combo Có Trong Hóa Đơn</h4>
+                        <!-- Permission table -->
+                        <div class="table-responsive">
+                            <table class="table table-flush-spacing">
+                                <tbody id="service-list1">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Permission table -->
                     </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="">Dịch Vụ</label>
-                        <select class="select2 form-select" name="service_id[]" multiple="multiple" id="default-select-multi4">
-                            <!-- list danh sách ở phần js -->
-                        </select>
+                    <div class="col-12">
+                        <h4 class="mt-2 pt-50">Dịch Vụ Có Trong Hóa Đơn</h4>
+                        <!-- Permission table -->
+                        <div class="table-responsive">
+                            <table class="table table-flush-spacing">
+                                <tbody id="service-list2">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Permission table -->
                     </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="">Nhân Viên Thực Hiện</label>
-                        <select class="select2 form-select" name="staff_id[]" multiple="multiple" id="default-select-multi2">
-                            <!-- list danh sách ở phần js -->
-                        </select>
+                    <div class="col-12">
+                        <h4 class="mt-2 pt-50">Nhân Viên Thực Hiện</h4>
+                        <!-- Permission table -->
+                        <div class="table-responsive">
+                            <table class="table table-flush-spacing">
+                                <tbody id="service-list3">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Permission table -->
                     </div>
                     <div class="col-12 ">
                         <label class="form-label" for="modalEditUserCountry">Ghi Chú Hóa Đơn</label>
@@ -413,7 +461,7 @@
 
         $('body').on('click', '#deleteUser', function() {
             var user_id = $(this).data("id");
-            if (confirm("Bạn có chắc chắn muốn xóa Tài khoản này không ?")) {
+            if (confirm("Bạn có chắc chắn muốn xóa Hóa đơn này không ?")) {
                 $.ajax({
                     type: "DELETE",
                     url: "{{ route('bill.list.api') }}" + "/" + user_id,
@@ -427,10 +475,24 @@
                 })
             }
         });
+        $.get('<?= route("combo.list.api") ?>', function(data) {
+            data.map(function(x) {
+                $('#service-list4').append(
+                    '<tr><td class="text-nowrap fw-bolder">' + x.name_combo + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" disabled name="combo_id[]" value="' + x.id + '" type="checkbox" id="'+x.id+'" /></div></div></td></tr>'
+                );
+            })
+        })
+        $.get('<?= route("service.list.api") ?>', function(data) {
+            data.service.map(function(x) {
+                $('#service-list5').append(
+                    '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" disabled name="service_id[]" value="' + x.id + '" type="checkbox" id="'+x.id+'" /></div></div></td></tr>'
+                );
+            })
+        })
         $.get('<?= route("bill-staff.list.api") ?>', function(data) {
             data.map(function(x) {
-                $('#default-select-multi').append(
-                    '<option id="' + x.id + '">' + x.full_name + '</option>'
+                $('#service-list6').append(
+                    '<tr><td class="text-nowrap fw-bolder">' + x.full_name + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" disabled name="staff_id[]" value="' + x.id + '" type="checkbox" id="'+x.id+'" /></div></div></td></tr>'
                 );
             })
         })
@@ -438,9 +500,15 @@
         $('body').on('click', '#detailUser', function() {
             var user_id = $(this).data("id");
             $.get('<?= route("bill.list.api") ?>' + "/show/" + user_id, function(data) {
+                data.combo.map(function(x) {
+                    $("#service-list4").find("#" + x.id, "input").prop('checked', true);
+                });
+                data.service.map(function(x) {
+                    $("#service-list5").find("#" + x.id, "input").prop('checked', true);
+                });
                 data.staff.map(function(x) {
-                    $("#default-select-multi").find("#" + x.id, "option").prop('selected', true);
-                })
+                    $("#service-list6").find("#" + x.id, "input").prop('checked', true);
+                });
                 var form = $('#detailUserForm');
                 form.find('input[name="full_name"]').val(data.user.full_name);
                 form.find('input[name="total_time_execution"]').val(data.total_time_execution);
@@ -464,24 +532,24 @@
                 form.find('#note_bill').val(data.note_bill);
             }, 'json')
         });
-        $.get('<?= route("bill-staff.list.api") ?>', function(data) {
-            data.map(function(x) {
-                $('#default-select-multi2').append(
-                    '<option value = "' + x.id + '" id="' + x.id + '">' + x.full_name + '</option>'
-                );
-            })
-        })
         $.get('<?= route("combo.list.api") ?>', function(data) {
             data.map(function(x) {
-                $('#default-select-multi3').append(
-                    '<option value = "' + x.id + '" id="' + x.id + '">' + x.name_combo + '</option>'
+                $('#service-list1').append(
+                    '<tr><td class="text-nowrap fw-bolder">' + x.name_combo + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="combo_id[]" value="' + x.id + '" type="checkbox" id="'+x.id+'" /></div></div></td></tr>'
                 );
             })
         })
         $.get('<?= route("service.list.api") ?>', function(data) {
             data.service.map(function(x) {
-                $('#default-select-multi4').append(
-                    '<option value = "' + x.id + '" id="' + x.id + '">' + x.name_service + '</option>'
+                $('#service-list2').append(
+                    '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="service_id[]" value="' + x.id + '" type="checkbox" id="'+x.id+'" /></div></div></td></tr>'
+                );
+            })
+        })
+        $.get('<?= route("bill-staff.list.api") ?>', function(data) {
+            data.map(function(x) {
+                $('#service-list3').append(
+                    '<tr><td class="text-nowrap fw-bolder">' + x.full_name + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="staff_id[]" value="' + x.id + '" type="checkbox" id="'+x.id+'" /></div></div></td></tr>'
                 );
             })
         })
@@ -489,10 +557,20 @@
         $('body').on('click', '#editUser', function() {
             var user_id = $(this).data("id");
             $.get('<?= route("bill.list.api") ?>' + "/show/" + user_id, function(data) {
+                data.combo.map(function(x) {
+                    $("#service-list1").find("#" + x.id, "input").prop('checked', true);
+                });
+                data.service.map(function(x) {
+                    $("#service-list2").find("#" + x.id, "input").prop('checked', true);
+                });
+                data.staff.map(function(x) {
+                    $("#service-list3").find("#" + x.id, "input").prop('checked', true);
+                });
                 var form = $('#editUserForm');
-                $("#select2-basic").find("#" + data.status_bill, "option").prop('selected', true);
+                $("#select2-basic").find("#" + data.status_bill, "option").attr('selected', true);
                 form.find('input[name="id"]').val(data.id);
                 form.find('input[name="date_work"]').val(data.date_work);
+                form.find('#note_bill').val(data.note_bill);
             }, 'json')
         });
         // submit edit in db

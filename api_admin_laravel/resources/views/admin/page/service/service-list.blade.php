@@ -427,6 +427,9 @@
                     processData: false,
                     dataType: 'json',
                     contentType: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     success: function(data) {
                         if (data.code == 0) {
                             $.each(data.error, function(prefix, val) {
@@ -453,6 +456,9 @@
             if (confirm("Bạn có chắc chắn muốn xóa Dịch vụ này không ?")) {
                 $.ajax({
                     type: "DELETE",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     url: "{{ route('service.list.api') }}" + "/" + user_id,
                     success: function() {
                         table.ajax.reload();
@@ -518,6 +524,9 @@
                 processData: false,
                 dataType: 'json',
                 contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 success: function(data) {
                     if (data.code == 0) {
                         $.each(data.error, function(prefix, val) {

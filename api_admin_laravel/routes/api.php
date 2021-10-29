@@ -11,7 +11,10 @@ use App\Http\Controllers\api\admin\FeedbackController as AdminFeedbackController
 use App\Http\Controllers\api\admin\PermissionController;
 use App\Http\Controllers\api\admin\RoleController;
 use App\Http\Controllers\api\admin\SettingController as AdminSettingController;
-
+use App\Http\Controllers\api\client\CategoryServiceController as ClientCategoryServiceController;
+use App\Http\Controllers\api\client\ComboController as ClientComboController;
+use App\Http\Controllers\api\client\ServiceController as ClientServiceController;
+use App\Models\CategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +28,25 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+//client
+Route::prefix('client')->group(function(){
+    //combo
+    Route::prefix('combo')->group(function(){
+        Route::get('/', [ClientComboController::class, 'index'])->name('combo.list');
+        Route::get('/show/{id}', [ClientComboController::class, 'show']);
+    });
+    //cate service
+    Route::prefix('cate-service')->group(function(){
+        Route::get('/', [ClientCategoryServiceController::class, 'index'])->name('cate-service.list');
+        Route::get('/show/{id}', [ClientCategoryServiceController::class, 'show']);
+    });
+    //service
+    Route::prefix('service')->group(function(){
+        Route::get('/', [ClientServiceController::class, 'index'])->name('service.list');
+        Route::get('/show/{id}', [ClientServiceController::class, 'show']);
+    });
+});
+
 
 Route::prefix('admin')->group(function () {
     // user
