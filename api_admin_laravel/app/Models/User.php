@@ -29,6 +29,7 @@ class User extends Authenticatable
         'description_staff',
         'experience_staff',
     ];
+    protected $guard_name = 'sanctum';// có dòng này mới chạy đc lệnh user::role('tên role')
 
     /**
      * The attributes that should be hidden for serialization.

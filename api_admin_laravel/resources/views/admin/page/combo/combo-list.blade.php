@@ -1,5 +1,5 @@
 @extends('admin.layout.main')
-@section('title', 'Service')
+@section('title', 'Combo')
 @section('content')
 <div class="app-content content ">
     <div class="content-overlay"></div>
@@ -11,70 +11,12 @@
 
             <!-- users list start -->
             <section class="app-user-list">
-                <div class="row">
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                                <div>
-                                    <h3 class="fw-bolder mb-75">21,459</h3>
-                                    <span>Total Users</span>
-                                </div>
-                                <div class="avatar bg-light-primary p-50">
-                                    <span class="avatar-content">
-                                        <i data-feather="user" class="font-medium-4"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                                <div>
-                                    <h3 class="fw-bolder mb-75">4,567</h3>
-                                    <span>Paid Users</span>
-                                </div>
-                                <div class="avatar bg-light-danger p-50">
-                                    <span class="avatar-content">
-                                        <i data-feather="user-plus" class="font-medium-4"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                                <div>
-                                    <h3 class="fw-bolder mb-75">19,860</h3>
-                                    <span>Active Users</span>
-                                </div>
-                                <div class="avatar bg-light-success p-50">
-                                    <span class="avatar-content">
-                                        <i data-feather="user-check" class="font-medium-4"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                                <div>
-                                    <h3 class="fw-bolder mb-75">237</h3>
-                                    <span>Pending Users</span>
-                                </div>
-                                <div class="avatar bg-light-warning p-50">
-                                    <span class="avatar-content">
-                                        <i data-feather="user-x" class="font-medium-4"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
                 <!-- list and filter start -->
                 <div class="card">
+                    <div class="card-body border-bottom">
+                        <h4 class="card-title">Dịch Vụ</h4>
+                    </div>
                     <div class="card-datatable table-responsive pt-0">
                         <table class="user-list-table table" id="DataTables_Table_User">
                             <thead class="table-light">
@@ -95,70 +37,85 @@
 
 
                     </div>
-                    <!-- Modal to add new user starts-->
-                    <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
-                        <div class="modal-dialog">
-                            <form method="POST" action="{{route('combo.add.api')}}" class="add-new-user modal-content pt-0" enctype="multipart/form-data">
-                                @csrf
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
-                                <div class="modal-header mb-1">
-                                    <h5 class="modal-title" id="exampleModalLabel">Thêm Combo</h5>
+                    <div class="modal fade show" id="modals-slide-in" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user">
+                            <div class="modal-content">
+                                <div class="modal-header bg-transparent">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body flex-grow-1">
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-fullname">Tên Combo</label>
-                                        <input type="text" class="form-control dt-full-name" id="basic-icon-default-fullname" placeholder="Khuyến Mãi Hè" name="name_combo" />
+                                <div class="modal-body pb-5 px-sm-5 pt-50">
+                                    <div class="text-center mb-2">
+                                        <h1 class="mb-1">Thêm mới combo</h1>
+                                        <p>Thêm chi tiết combo mới !</p>
                                     </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-price">Giá Combo (₫)</label>
-                                        <input type="number" data-type="currency" class="form-control dt-full-name" id="basic-icon-default-price" placeholder="100,000₫" name="total_price" />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label for="customFile1" class="form-label">Ảnh Combo</label>
-                                        <input class="form-control" type="file" id="customFile1" accept="image/*" name="image" />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-time">Tổng Thời Gian (phút)</label>
-                                        <input type="number" class="form-control dt-full-name" id="basic-icon-default-time" name="total_time_work" />
-                                    </div>
-                                    <div class="mb-1">
-                                        <div class="table-responsive">
-                                            <table class="table table-flush-spacing">
-                                                <tbody id="service-list">
-                                                    <tr>
-                                                        <td class="text-nowrap fw-bolder">
-                                                            Dịch Vụ Trong Combo
-                                                            <!-- <span data-bs-toggle="tooltip" data-bs-placement="top" title="Allows a full access to the system">
-                                                                <i data-feather="info"></i>
-                                                            </span> -->
-                                                        </td>
-                                                        <td>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" id="selectAll" />
-                                                                <label class="form-check-label" for="selectAll"> Tất Cả </label>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                    <form id="addUserForm" action="{{ route('combo.add.api') }}" method="POST" class="row gy-1 pt-75 add-new-user" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="text" name="id" hidden>
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label" for="modalEditUserFirstName">Tên Combo</label>
+                                            <input type="text" id="modalEditUserFirstName full_name" name="name_combo" class="form-control" placeholder="Combo Hè" />
                                         </div>
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-desc">Mô Tả</label>
-                                        <textarea type="text" class="form-control dt-full-name" id="basic-icon-default-desc" rows="3" placeholder="Mô tả ngắn gọn combo" name="short_description"></textarea>
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-desc">Mô Tả Chi Tiết</label>
-                                        <textarea type="text" class="form-control dt-full-name" id="basic-icon-default-desc" rows="3" placeholder="Mô tả chi tiết combo" name="description"></textarea>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary me-1 data-submit">Lưu</button>
-                                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label" for="modalEditUserFirstName">Giá Combo (₫)</label>
+                                            <input type="text" data-type="currency" id="modalEditUserFirstName full_name" name="total_price" class="form-control" placeholder="100,000₫" />
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label" for="modalEditUserFirstName">Thời Gian (phút)</label>
+                                            <input type="text" data-type="currency" id="modalEditUserFirstName full_name" name="total_time_work" class="form-control" />
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label" for="modalEditUserFirstName">Ảnh Combo</label>
+                                            <input type="file" id="modalEditUserFirstName full_name" name="image" class="form-control" accept="image/*" />
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label" for="modalEditUserFirstName">Danh Mục Dịch Vụ</label>
+
+                                            <h4 class="mt-2 pt-50">Dịch Vụ Có Trong Combo</h4>
+                                            <!-- Permission table -->
+                                            <div class="table-responsive">
+                                                <table class="table table-flush-spacing">
+                                                    <tbody id="service-list">
+                                                        <!-- nút chọn all sau này sửa js xong thì để lại -->
+                                                        <!-- <tr>
+                                                                <td class="text-nowrap fw-bolder">
+                                                                    Administrator Access
+                                                                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="Allows a full access to the system">
+                                                                        <i data-feather="info"></i>
+                                                                    </span>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="checkbox" id="selectAll" />
+                                                                        <label class="form-check-label" for="selectAll"> Select All </label>
+                                                                    </div>
+                                                                </td>
+                                                            </tr> -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- Permission table -->
+                                        </div>
+                                        <div class="col-12 col-md-6 ">
+                                            <label class="form-label" for="modalEditUserCountry">Mô Tả</label>
+                                            <textarea class="form-control" name="short_description" placeholder="Những dịch vụ chuyên nghiệp hứa hẹn sẽ đem lại trải nghiệm tuyệt vời cho quý khách !" id="address" cols="30" rows="4"></textarea>
+                                        </div>
+                                        <div class="col-12 col-md-6 ">
+                                            <label class="form-label" for="modalEditUserCountry">Mô Tả Chi Tiết</label>
+                                            <textarea class="form-control" name="description" placeholder="Những dịch vụ chuyên nghiệp hứa hẹn sẽ đem lại trải nghiệm tuyệt vời cho quý khách !" id="address" cols="30" rows="4"></textarea>
+                                        </div>
+
+
+                                        <div class="col-12 text-center mt-2 pt-50">
+                                            <button type="submit" class="btn btn-primary me-1">Submit</button>
+                                            <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
+                                                Discard
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
-
-                    <!-- Modal to add new user Ends-->
 
 
                 </div>
@@ -179,32 +136,62 @@
             </div>
             <div class="modal-body pb-5 px-sm-5 pt-50">
                 <div class="text-center mb-2">
-                    <h1 class="mb-1">Chi tiết dịch vụ</h1>
-                    <p>Chi tiết dịch vụ lẻ !</p>
+                    <h1 class="mb-1">Chi tiết combo</h1>
+                    <p>Chi tiết combo !</p>
                 </div>
-                <form id="detailUserForm" method="POST" class="row gy-1 pt-75" enctype="multipart/form-data">
+                <form id="detailUserForm" action="" method="POST" class="row gy-1 pt-75 add-new-user" enctype="multipart/form-data">
                     @csrf
                     <input type="text" name="id" hidden>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserFirstName">Tên Dịch Vụ</label>
-                        <input disabled type="text" id="modalEditUserFirstName full_name" name="name_service" class="form-control" placeholder="Sơn Móng Tay" />
+                    <div class="d-flex center">
+                        <a href="#" class="me-25">
+                            <img src="" id="account-upload-img" class="uploadedAvatar rounded me-50" alt="combo image" height="100" width="100" name="image" />
+                        </a>
+                        <!-- upload and reset button -->
+                        <!-- <div class="d-flex align-items-end mt-75 ms-1">
+                            <div>
+                                <label for="account-upload" class="btn btn-sm btn-primary mb-75 me-75">Upload</label>
+                                <input type="file" id="account-upload" name="image" hidden accept="image/*" />
+                                <button type="button" id="account-reset" class="btn btn-sm btn-outline-secondary mb-75">Reset</button>
+                                <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
+                            </div>
+                        </div> -->
+                        <!--/ upload and reset button -->
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserFirstName">Giá Dịch Vụ (₫)</label>
-                        <input disabled type="text" id="modalEditUserFirstName full_name" name="price" class="form-control" placeholder="₫100,000" />
+                        <label class="form-label" for="modalEditUserFirstName">Tên Combo</label>
+                        <input type="text" disabled id="modalEditUserFirstName full_name" name="name_combo" class="form-control" placeholder="Combo Hè" />
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserFirstName">Tổng Thời Gian (phút)</label>
-                        <input disabled type="text" id="modalEditUserFirstName full_name" name="total_time_work" class="form-control" />
+                        <label class="form-label" for="modalEditUserFirstName">Giá Combo (₫)</label>
+                        <input type="text" disabled data-type="currency" id="modalEditUserFirstName full_name" name="total_price" class="form-control" />
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserFirstName">Danh Mục Dịch Vụ</label>
-                        <input disabled type="text" id="modalEditUserFirstName full_name" name="cate_name_service" class="form-control" />
+                        <label class="form-label" for="modalEditUserFirstName">Thời Gian (phút)</label>
+                        <input type="text" disabled data-type="currency" id="modalEditUserFirstName full_name" name="total_time_work" class="form-control" />
                     </div>
-                    <div class="col-12 ">
+                    <div class="col-12">
+                        <h4 class="mt-2 pt-50">Dịch Vụ Có Trong Combo</h4>
+                        <!-- Permission table -->
+                        <div class="table-responsive">
+                            <table class="table table-flush-spacing">
+                                <tbody id="service-list1">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Permission table -->
+                    </div>
+                    <div class="col-12 col-md-6 ">
                         <label class="form-label" for="modalEditUserCountry">Mô Tả</label>
-                        <textarea disabled class="form-control" name="short_description" placeholder="Những dịch vụ chuyên nghiệp hứa hẹn sẽ đem lại trải nghiệm tuyệt vời cho quý khách !" id="address" cols="30" rows="4"></textarea>
+                        <textarea class="form-control" disabled name="short_description" id="address1" cols="30" rows="4"></textarea>
                     </div>
+                    <div class="col-12 col-md-6 ">
+                        <label class="form-label" for="modalEditUserCountry">Mô Tả Chi Tiết</label>
+                        <textarea class="form-control" disabled name="description" id="address2" cols="30" rows="4"></textarea>
+                    </div>
+
+
+
                 </form>
             </div>
         </div>
@@ -221,41 +208,82 @@
             </div>
             <div class="modal-body pb-5 px-sm-5 pt-50">
                 <div class="text-center mb-2">
-                    <h1 class="mb-1">Cập nhật mới dịch vụ</h1>
-                    <p>Cập nhập chi tiết dịch vụ lẻ mới !</p>
+                    <h1 class="mb-1">Cập nhật combo</h1>
+                    <p>Cập nhật chi tiết combo !</p>
                 </div>
-                <form id="editUserForm" action="{{ route('service.update.api') }}" method="POST" class="row gy-1 pt-75" enctype="multipart/form-data">
+                <form id="editUserForm" action="{{route('combo.update.api')}}" method="POST" class="row gy-1 pt-75 add-new-user" enctype="multipart/form-data">
                     @csrf
                     <input type="text" name="id" hidden>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserFirstName">Tên Dịch Vụ</label>
-                        <input type="text" id="modalEditUserFirstName full_name" name="name_service" class="form-control" placeholder="Sơn Móng Tay" />
+                    <div class="d-flex center">
+                        <a href="#" class="me-25">
+                            <img src="" id="account-upload-img1" class="uploadedAvatar rounded me-50" alt="combo image" height="100" width="100" name="image" />
+                        </a>
+                        <!-- upload and reset button -->
+                        <div class="d-flex align-items-end mt-75 ms-1">
+                            <div>
+                                <label for="account-upload" class="btn btn-sm btn-primary mb-75 me-75">Upload</label>
+                                <input type="file" id="account-upload" name="image" hidden accept="image/*" />
+                                <button type="button" id="account-reset" class="btn btn-sm btn-outline-secondary mb-75">Reset</button>
+                                <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
+                            </div>
+                        </div>
+                        <!--/ upload and reset button -->
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserFirstName">Giá Dịch Vụ (₫)</label>
-                        <input type="text" data-type="currency" id="modalEditUserFirstName full_name" name="price" class="form-control" placeholder="₫100,000" />
+                        <label class="form-label" for="modalEditUserFirstName">Tên Combo</label>
+                        <input type="text" id="modalEditUserFirstName full_name" name="name_combo" class="form-control" placeholder="Combo Hè" />
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserFirstName">Tổng Thời Gian (phút)</label>
-                        <input type="text" id="modalEditUserFirstName full_name" name="total_time_work" class="form-control" />
+                        <label class="form-label" for="modalEditUserFirstName">Giá Combo (₫)</label>
+                        <input type="text" data-type="currency" id="modalEditUserFirstName full_name" name="total_price" class="form-control" />
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserFirstName">Danh Mục Dịch Vụ</label>
-                        <select class="form-control dt-full-name" name="cate_service_id" id="basic-icon-default-fullname12">
-                        </select>
+                        <label class="form-label" for="modalEditUserFirstName">Thời Gian (phút)</label>
+                        <input type="text" data-type="currency" id="modalEditUserFirstName full_name" name="total_time_work" class="form-control" />
                     </div>
-                    <div class="col-12 ">
+                    <div class="col-12">
+                        <h4 class="mt-2 pt-50">Dịch Vụ Có Trong Combo</h4>
+                        <!-- Permission table -->
+                        <div class="table-responsive">
+                            <table class="table table-flush-spacing">
+                                <tbody id="service-list2">
+                                    <!-- nút chọn all sau này sửa js xong thì để lại -->
+                                    <!-- <tr>
+                                                                <td class="text-nowrap fw-bolder">
+                                                                    Administrator Access
+                                                                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="Allows a full access to the system">
+                                                                        <i data-feather="info"></i>
+                                                                    </span>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="checkbox" id="selectAll" />
+                                                                        <label class="form-check-label" for="selectAll"> Select All </label>
+                                                                    </div>
+                                                                </td>
+                                                            </tr> -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Permission table -->
+                    </div>
+                    <div class="col-12 col-md-6 ">
                         <label class="form-label" for="modalEditUserCountry">Mô Tả</label>
-                        <textarea class="form-control" name="short_description" placeholder="Những dịch vụ chuyên nghiệp hứa hẹn sẽ đem lại trải nghiệm tuyệt vời cho quý khách !" id="address" cols="30" rows="4"></textarea>
+                        <textarea class="form-control" name="short_description" id="address1" cols="30" rows="4"></textarea>
                     </div>
-
-
+                    <div class="col-12 col-md-6 ">
+                        <label class="form-label" for="modalEditUserCountry">Mô Tả Chi Tiết</label>
+                        <textarea class="form-control" name="description" id="address2" cols="30" rows="4"></textarea>
+                    </div>
                     <div class="col-12 text-center mt-2 pt-50">
                         <button type="submit" class="btn btn-primary me-1">Submit</button>
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
                             Discard
                         </button>
                     </div>
+
+
+
                 </form>
             </div>
         </div>
@@ -266,20 +294,17 @@
 @endsection
 @section('script')
 <script>
-
-
-
-    //liệt kê cate cho thẻ select category service
+    // liệt kê cate cho thẻ select category service
     $.get('<?= route("service.list.api") ?>', function(data) {
         data.service.map(function(x) {
-            document.getElementById('service-list').insertAdjacentHTML('beforeend', 
-                '<tr><td class="text-nowrap fw-bolder">'+x.name_service+'</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="service_id" value="'+x.id+'" type="checkbox" id="dbManagementRead" /></div></div></td></tr>'
+            document.getElementById('service-list').insertAdjacentHTML('beforeend',
+                '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="service_id[]" value="' + x.id + '" type="checkbox" id="dbManagementRead" /></div></div></td></tr>'
             );
         })
     })
     $(function() {
         var e = $("#DataTables_Table_User");
-        var t = $(".new-user-modal"),
+        var t = $(".modal fade show"),
             a = $(".add-new-user"),
             s = $(".select2"),
             n = $(".dt-contact"),
@@ -464,7 +489,7 @@
                     },
                 },
                 {
-                    text: "Thêm Mới Dịch Vụ",
+                    text: "Thêm Mới Combo",
                     className: "add-new btn btn-primary",
                     attr: {
                         "data-bs-toggle": "modal",
@@ -526,6 +551,9 @@
                     processData: false,
                     dataType: 'json',
                     contentType: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     success: function(data) {
                         if (data.code == 0) {
                             $.each(data.error, function(prefix, val) {
@@ -533,7 +561,7 @@
                             });
                         } else {
                             $(form)[0].reset();
-                            t.modal("hide");
+                            $('#modals-slide-in').modal("hide");
                             table.ajax.reload();
                             toastr.success(data.msg)
                         }
@@ -549,10 +577,13 @@
 
         $('body').on('click', '#deleteUser', function() {
             var user_id = $(this).data("id");
-            if (confirm("Bạn có chắc chắn muốn xóa Dịch vụ này không ?")) {
+            if (confirm("Bạn có chắc chắn muốn xóa Combo này không ?")) {
                 $.ajax({
                     type: "DELETE",
-                    url: "{{ route('service.list.api') }}" + "/" + user_id,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ route('combo.list.api') }}" + "/" + user_id,
                     success: function() {
                         table.ajax.reload();
                         toastr.success("Xóa Thành Công");
@@ -563,43 +594,65 @@
                 })
             }
         });
+        //list service for detail
+        $.get('<?= route("service.list.api") ?>', function(data) {
+            data.service.map(function(x) {
+                document.getElementById('service-list1').insertAdjacentHTML('beforeend',
+                    '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="service_id[]" disabled value="' + x.id + '" type="checkbox" id="' + x.id + '" /></div></div></td></tr>'
+                );
+            })
+        })
+
         //detail
         $('body').on('click', '#detailUser', function() {
             var user_id = $(this).data("id");
-            var cate = null;
-            $.get('<?= route("service.list.api") ?>' + "/show/" + user_id, function(data) {
+            $.get('<?= route("combo.list.api") ?>' + "/show/" + user_id, function(data) {
+                data.model.services.map(function(x) {
+                    $("#service-list1").find("#" + x.id, "input").prop('checked', true);
+                })
                 var form = $('#detailUserForm');
-                form.find('input[name="id"]').val(data.id);
-                form.find('input[name="name_service"]').val(data.name_service);
-                form.find('input[name="price"]').val(data.price.toLocaleString() + '₫');
-                form.find('input[name="total_time_work"]').val(data.total_time_work);
-                form.find('input[name="cate_name_service"]').val(data.cate_service.name_cate_service);
-                form.find('#address').val(data.short_description);
+                $("#account-upload-img").attr("src", data.model.image ? "/storage/" + data.model.image :
+                    "{{ asset('admin/images/portrait/small/avatar-none.png') }}");
+                form.find('input[name="id"]').val(data.model.id);
+                form.find('input[name="name_combo"]').val(data.model.name_combo);
+                form.find('input[name="total_price"]').val(data.model.total_price.toLocaleString() + '₫');
+                form.find('input[name="total_time_work"]').val(data.model.total_time_work);
+                form.find('#address1').val(data.model.short_description);
+                form.find('#address2').val(data.model.description);
             }, 'json')
         });
-
-        // get detail edit
-        $('body').on('click', '#editUser', function() {
-            var user_id = $(this).data("id");
-            var cate = null;
-            $.get('<?= route("service.list.api") ?>' + "/show/" + user_id, function(data) {
-                var form = $('#editUserForm');
-                form.find('input[name="id"]').val(data.id);
-                form.find('input[name="name_service"]').val(data.name_service);
-                form.find('input[name="price"]').val(data.price.toLocaleString());
-                form.find('input[name="total_time_work"]').val(data.total_time_work);
-                form.find('#address').val(data.short_description);
-                cate = data.cate_service_id; //lấy ra id cate đã chọn
-            }, 'json')
-            $.get('<?= route("service.list.api") ?>', function(data) {
-                data.cate.map(function(x) {
-                    var html = '<option value="' + x.id + '">' + x.name_cate_service + '</option>'; //định nghĩa thẻ option trong select
-                    if (cate == x.id) { //check cate đã chọn
-                        html = '<option selected value="' + x.id + '">' + x.name_cate_service + '</option>';
-                    }
-                    document.getElementById('basic-icon-default-fullname12').insertAdjacentHTML('beforeend', html); //render thẻ option vào select
-                })
+        //list service for edit
+        $.get('<?= route("service.list.api") ?>', function(data) {
+            data.service.map(function(x) {
+                document.getElementById('service-list2').insertAdjacentHTML('beforeend',
+                    '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="service_id[]" value="' + x.id + '" type="checkbox" id="' + x.id + '" /></div></div></td></tr>'
+                );
             })
+        })
+
+        // get detail edit và checked các service đã có
+        $('body').on('click', '#editUser', function() {
+            // mai làm tiếp phần list service
+            var user_id = $(this).data("id");
+            $.get('<?= route("combo.list.api") ?>' + "/show/" + user_id, function(data) {
+                data.ser.map(function(x) {
+                    data.model.services.map(function(y) {
+                        if (y.id == x.id) {
+                            $("#service-list2").find("#" + y.id, "input").prop('checked', true);
+                        }
+                    })
+                })
+                $("#account-upload-img1").attr("src", data.model.image ? "/storage/" + data.model.image :
+                    "{{ asset('admin/images/portrait/small/avatar-none.png') }}");
+                var form = $('#editUserForm');
+                form.find('input[name="id"]').val(data.model.id);
+                form.find('input[name="name_combo"]').val(data.model.name_combo);
+                form.find('input[name="total_price"]').val(data.model.total_price);
+                form.find('input[name="total_time_work"]').val(data.model.total_time_work);
+                form.find('#address1').val(data.model.short_description);
+                form.find('#address2').val(data.model.description);
+            }, 'json')
+
         });
         // submit edit in db
         $('#editUserForm').on('submit', function(e) {
@@ -612,6 +665,9 @@
                 processData: false,
                 dataType: 'json',
                 contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 success: function(data) {
                     if (data.code == 0) {
                         $.each(data.error, function(prefix, val) {

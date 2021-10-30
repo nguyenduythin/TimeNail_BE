@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\BillController;
 use App\Http\Controllers\admin\CategoryServiceController;
 use App\Http\Controllers\admin\ComboController;
 use App\Http\Controllers\admin\ContactController;
@@ -64,6 +65,10 @@ Route::middleware('auth')->group(function () {
     Route::get('tag', [TagController::class, 'index'])->name('tag.list');
     //blog_category end thuan
 
+    //bill
+    Route::get('bill', [BillController::class, 'index'])->name('bill.list');
+
+    //service
     //contact page
     Route::get('contact', [ContactController::class, 'index'])->name('contact.list');
 
