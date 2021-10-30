@@ -23,7 +23,6 @@
                             <thead class="table-light">
                                 <tr>
                                     <th>Phản hồi</th>
-                                    <th>Ảnh</th>
                                     <th>Sao</th>
                                     <th>Tên người phản hồi</th>
                                     <th>Actions</th>
@@ -77,21 +76,7 @@
                         },
                     },
                     {
-                        targets: 1,
-                        render: function (e, t, a, s) {
-                            var i = a.image;
-                                
-                            if (i)
-                                var c =
-                                    '<div><img src="/storage/'+
-                                    i +
-                                    '" alt="Avatar" height="50" width="50"></div>';
-                            
-                                return c ;
-                        },
-                    },
-                    {
-                        targets: 6,
+                        targets: 3,
                         title: "Actions",
                         orderable: !1,
                         render: function (e, t, a, s) {
@@ -232,7 +217,7 @@
                 language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } },
                 initComplete: function () {
                     this.api()
-                            .columns(2)
+                            .columns(1)
                             .every(function () {
                                 var e = this,
                                     t =

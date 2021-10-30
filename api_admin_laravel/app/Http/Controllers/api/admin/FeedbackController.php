@@ -5,7 +5,6 @@ namespace App\Http\Controllers\api\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Feedback;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
 class FeedbackController extends Controller
@@ -19,9 +18,9 @@ class FeedbackController extends Controller
     {   
         $feedback =DB::table('feedback')
                     ->join('users', 'feedback.user_id', '=', 'users.id')
-                    ->join('services', 'feedback.service_id', '=', 'services.id')
-                    ->join('combo', 'feedback.combo_id', '=', 'combo.id')
-                    ->select('feedback.id', 'feedback.image', 'comment', 'number_star', 'full_name', 'name_service', 'name_combo')
+                    // ->join('services', 'feedback.service_id', '=', 'services.id')
+                    // ->join('combo', 'feedback.combo_id', '=', 'combo.id')
+                    ->select('feedback.id', 'comment', 'number_star', 'full_name' )
                     ->get();
         return response()->json($feedback);
     }
@@ -37,9 +36,6 @@ class FeedbackController extends Controller
 
         $feedback = new Feedback();
         $feedback->fill($request->all());
-        if ($request->hasFile('image')) {
-            $feedback->image = $request->file('image')->storeAs('/images/image_feedbacks', uniqid() . '-' . $request->image->getClientOriginalName());
-        }
         $query = $feedback->save();
         if (!$query) {
             return response()->json(['code' => 0, 'msg' => 'Thêm mới không thành công !']);
@@ -57,7 +53,12 @@ class FeedbackController extends Controller
     public function show($id)
     {
 
-        return Feedback::find($id);
+        $feedback =DB::table('feedback')
+                    ->join('users', 'feedback.user_id', '=', 'users.id')
+                    ->select('feedback.id', 'comment', 'number_star', 'full_name' )
+                    ->where('feedback.id', '=', $id)
+                    ->get();
+        return response()->json($feedback);
     }
 
     /**
@@ -85,8 +86,6 @@ class FeedbackController extends Controller
     public function destroy($id)
     {
         $feedback = Feedback::find($id)->delete();
-        //Storage::delete($feedback->image);
-        // $feedback->destroy($id);
         return  response()->json(['success' => 'Xóa thành công!']);
     }
 }

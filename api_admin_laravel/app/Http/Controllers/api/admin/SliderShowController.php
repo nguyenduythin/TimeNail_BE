@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\api\admin;
+namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Tag;
 
-class TagController extends Controller
+use App\Models\SliderShow;
+
+class SliderShowController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +17,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tag = Tag::all();
-        return response()->json($tag);
+        $sliderShow = SliderShow::all();
+        return response()->json($sliderShow);
     }
 
     /**
@@ -28,12 +29,12 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        $tag = new Tag();
-        $tag->fill($request->all());
+        $sliderShow = new SliderShow();
+        $sliderShow->fill($request->all());
         if ($request->hasFile('image')) {
-            $tag->image = $request->file('image')->storeAs('/images/image_tag', uniqid() . '-' . $request->image->getClientOriginalName());
+            $sliderShow->image = $request->file('image')->storeAs('/images/image_slider_show', uniqid() . '-' . $request->image->getClientOriginalName());
         }
-        $query = $tag->save();
+        $query = $sliderShow->save();
         if (!$query) {
             return response()->json(['code' => 0, 'msg' => 'Thêm mới không thành công !']);
         } else {
@@ -49,7 +50,7 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        return Tag::find($id);
+        return SliderShow::find($id);
     }
 
     /**
@@ -61,12 +62,12 @@ class TagController extends Controller
      */
     public function update(Request $request )
     {
-        $tag = Tag::find($request->id);
-        $tag->fill($request->all());
+        $sliderShow = SliderShow::find($request->id);
+        $sliderShow->fill($request->all());
         if ($request->hasFile('image')) {
-            $tag->image = $request->file('image')->storeAs('/images/image_tag', uniqid() . '-' . $request->image->getClientOriginalName());
+            $sliderShow->image = $request->file('image')->storeAs('/images/image_slider_show', uniqid() . '-' . $request->image->getClientOriginalName());
         }
-        $query =  $tag->save();
+        $query =  $sliderShow->save();
         if (!$query) {
             return response()->json(['code' => 0, 'msg' => 'Sửa không thành công !']);
         } else {
@@ -82,9 +83,9 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        $tag = Tag::find($id);
-        Storage::delete($tag->image);
-        $tag->delete();
+        $sliderShow = SliderShow::find($id);
+        Storage::delete($sliderShow->image);
+        $sliderShow->delete();
         return  response()->json(['success' => 'Xóa thành công!']);
     }
 }

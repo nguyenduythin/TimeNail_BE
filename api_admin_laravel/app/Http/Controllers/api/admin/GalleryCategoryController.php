@@ -5,9 +5,10 @@ namespace App\Http\Controllers\api\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Tag;
+use App\Models\GalleryCategory;
+use App\Models\Gallery;
 
-class TagController extends Controller
+class GalleryCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +17,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tag = Tag::all();
-        return response()->json($tag);
+        $galleryCategory = GalleryCategory::all();
+        return response()->json($galleryCategory);
     }
 
     /**
@@ -28,12 +29,12 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        $tag = new Tag();
-        $tag->fill($request->all());
-        if ($request->hasFile('image')) {
-            $tag->image = $request->file('image')->storeAs('/images/image_tag', uniqid() . '-' . $request->image->getClientOriginalName());
+        $galleryCategory = new GalleryCategory();
+        $galleryCategory->fill($request->all());
+        if ($request->hasFile('avatar')) {
+            $galleryCategory->avatar = $request->file('avatar')->storeAs('/images/avatar_gallery-category', uniqid() . '-' . $request->avatar->getClientOriginalName());
         }
-        $query = $tag->save();
+        $query = $galleryCategory->save();
         if (!$query) {
             return response()->json(['code' => 0, 'msg' => 'Thêm mới không thành công !']);
         } else {
@@ -49,7 +50,7 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        return Tag::find($id);
+        return GalleryCategory::find($id);
     }
 
     /**
@@ -59,19 +60,20 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request )
+    public function update(Request $request)
     {
-        $tag = Tag::find($request->id);
-        $tag->fill($request->all());
-        if ($request->hasFile('image')) {
-            $tag->image = $request->file('image')->storeAs('/images/image_tag', uniqid() . '-' . $request->image->getClientOriginalName());
+        $galleryCategory = GalleryCategory::find($request->id);
+        if ($request->hasFile('avatar')) {
+            $galleryCategory->avatar = $request->file('avatar')->storeAs('/images/avatar_gallery-category', uniqid() . '-' . $request->avatar->getClientOriginalName());
         }
-        $query =  $tag->save();
+        $galleryCategory->fill($request->all());
+        $query =  $galleryCategory->save();
         if (!$query) {
             return response()->json(['code' => 0, 'msg' => 'Sửa không thành công !']);
         } else {
             return response()->json(['code' => 1, 'msg' => 'Sửa mới thành công !']);
         }
+        
     }
 
     /**
@@ -82,9 +84,11 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        $tag = Tag::find($id);
-        Storage::delete($tag->image);
-        $tag->delete();
+        $galleryCategory = GalleryCategory::find($id);
+        Storage::delete($galleryCategory->avatar);
+        $gallery = Gallery::where('cate_gl_id', $id);
+        $gallery->delete();
+        $galleryCategory->delete();
         return  response()->json(['success' => 'Xóa thành công!']);
     }
 }

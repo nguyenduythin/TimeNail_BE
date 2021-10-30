@@ -33,12 +33,27 @@
 <script src="{{ asset('admin/js/scripts/customizer.min.js')}}"></script>
 
 <!-- END: Theme JS-->
-<script src="{{ asset('js/scripts/forms/form-validation.js')}}"></script>
+<script src="{{ asset('admin/js/scripts/forms/form-validation.js')}}"></script>
 <!-- BEGIN: Page JS-->
 <script src="{{ asset('admin/js/scripts/pages/dashboard-ecommerce.min.js')}}"></script>
 <!-- END: Page JS-->
 
 
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="{{asset('admin/vendors/js/editors/quill/katex.min.js')}}"></script>
+    <script src="{{asset('admin/vendors/js/editors/quill/highlight.min.js')}}"></script>
+    <script src="{{asset('admin/vendors/js/editors/quill/quill.min.js')}}"></script>
+    <!-- END: Page Vendor JS-->
+
+
+
+    <!-- BEGIN: Page JS-->
+    <script src="{{asset('admin/js/scripts/pages/page-blog-edit.min.js')}}"></script>
+    <!-- END: Page JS-->
+
+    
 
 
 @yield('script')

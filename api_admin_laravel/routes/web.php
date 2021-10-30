@@ -14,6 +14,9 @@ use App\Http\Controllers\admin\SettingController;
 use App\Http\Controllers\admin\BlogCategoryController;
 use App\Http\Controllers\admin\BlogController;
 use App\Http\Controllers\admin\TagController;
+use App\Http\Controllers\admin\GalleryCategoryController;
+use App\Http\Controllers\admin\GalleryController;
+use App\Http\Controllers\admin\SliderShowController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,7 +54,7 @@ Route::get('setting',[SettingController::class,'index'])->name('setting.list');
 //setting end thuan
 
 //blog_category thuan
-Route::get('blog-category',[BlogCategoryController::class,'index'])->name('blog.category.list');
+Route::get('category-blog',[BlogCategoryController::class,'index'])->name('category-blog.list');
 //blog_category end thuan
 
 //blog thuan
@@ -61,6 +64,19 @@ Route::get('blog',[BlogController::class,'index'])->name('blog.list');
 //blog_category thuan
 Route::get('tag',[TagController::class,'index'])->name('tag.list');
 //blog_category end thuan
+
+//gallery_category thuan
+Route::get('category-gallery',[GalleryCategoryController::class,'index'])->name('category-gallery.list');
+//gallery_category end thuan
+
+//gallery thuan
+Route::get('gallery',[GalleryController::class,'index'])->name('gallery.list');
+//gallery end thuan
+
+//slider thuan
+Route::get('slider',[SliderShowController::class,'index'])->name('slider.list');
+//slider end thuan
+
 
 //contact page
 Route::get('contact',[ContactController::class,'index'])->name('contact.list');

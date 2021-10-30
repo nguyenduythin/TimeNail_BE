@@ -4,13 +4,11 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Setting;
 
-class SettingController extends Controller
+class GalleryCategoryController extends Controller
 {
     public function index(Request $request)
     {
-        return view('admin.page.setting.setting-list');
+        return view('admin.page.gallery_category.gallery-category-list');
     }
-    
 }

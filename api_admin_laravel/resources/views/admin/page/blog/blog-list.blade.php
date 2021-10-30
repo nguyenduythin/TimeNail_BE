@@ -1,163 +1,263 @@
 @extends('admin.layout.main')
-@section('title', 'Blog category')
+@section('title', 'Blogs')
 @section('content')
+
 <div class="app-content content ">
-    <div class="content-overlay"></div>
-    <div class="header-navbar-shadow"></div>
-    <div class="content-wrapper container-xxl p-0">
-        <div class="content-header row">
-        </div>
-        <div class="content-body">
-
-            <!-- users list start -->
-            <section class="app-tag-list">
-                
-                <div class="card">
-                    <div class="card-datatable table-responsive pt-0">
-                        <table class="blog_category-list-table table" id="DataTables_Table_Blog_category">
-                            <thead class="table-light">
-                                <tr>
-
-                                    <th>Danh mục bài viết</th>
-                                    <th>Ảnh</th>
-                                    <th>Ghi chú</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <!-- Modal to add new user starts-->
-                    <div class="modal modal-slide-in new-blog_category-modal fade" id="modals-slide-in">
-                        <div class="modal-dialog">
-                            <form method="POST" action="{{ route('blog.category.add.api') }}"
-                                class="add-new-blog_category modal-content pt-0" enctype="multipart/form-data">
-                                @csrf
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close">×</button>
-                                <div class="modal-header mb-1">
-                                    <h5 class="modal-title" id="exampleModalLabel">Thêm danh mục bài viết</h5>
-                                </div>
-                                <div class="modal-body flex-grow-1">
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-name_cate_blog">Tên nhãn</label>
-                                        <input type="text" class="form-control dt-name-cate-blog"
-                                            id="basic-icon-default-name_cate_blog" placeholder="name category blog" name="name_cate_blog" />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-contact">Ghi chú</label>
-                                        <input type="text" id="basic-icon-default-contact" class="form-control "
-                                            placeholder="note" name="note" />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label for="customFile1" class="form-label">Ảnh</label>
-                                        <input class="form-control" type="file" id="customFile1" name="image" />
-                                    </div>
-                                    <button type="submit" class="btn btn-primary me-1 data-submit">Lưu</button>
-                                    <button type="reset" class="btn btn-outline-secondary"
-                                        data-bs-dismiss="modal">Cancel</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <!-- Modal to add new user Ends-->
-
-
-                </div>
-                <!-- list and filter end -->
-            </section>
-            <!-- users list ends -->
-
-        </div>
+  <div class="content-overlay"></div>
+  <div class="header-navbar-shadow"></div>
+  <div class="content-wrapper container-xxl p-0">
+    <div class="content-header row">
     </div>
-</div>
+    <div class="content-body">
 
-<!-- Edit User Modal -->
-<div class="modal fade show" id="editBlogCateModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-blogCate">
-        <div class="modal-content">
+
+
+      <h3 class="mt-50">Bài viết</h3>
+      <!-- table -->
+      <div class="card">
+        <div class="card-datatable table-responsive">
+          <table class="datatables-blogs table" id="datatables-blogs">
+            <thead class="table-light">
+              <tr>
+                <th>Tiêu đề bài viết</th>
+                <th>Danh mục bài viết</th>
+                <th>Ảnh</th>
+                <th>Nội dung</th>
+                <th>Thẻ gán</th>
+                <th>Người tạo</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+      <!-- table -->
+      <!-- Add Role Modal -->
+      <div class="modal fade" id="addBlogModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-add-new-blog">
+          <div class="modal-content">
             <div class="modal-header bg-transparent">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body pb-5 px-sm-5 pt-50">
-                <div class="text-center mb-2">
-                    <h1 class="mb-1">Cập nhật mới nhãn</h1>
-                    <p>Cập nhập chi tiết nhãn !</p>
+            <div class="modal-body px-5 pb-5">
+              <div class="text-center mb-4">
+                <h1 class="blog-title">Thêm mới bài viết</h1>
+              </div>
+              <!-- Add role form -->
+              <form id="addBlogForm" class="row" method="POST" action="{{ route('blog.list.api') }}" enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="description" class="mota">
+                <div class="d-flex center">
+                  <a href="#" class="me-25">
+                      <img src="" id="blog-upload-img" class="uploadedImage rounded me-50" alt="profile image"
+                          height="250" width="400" name="image" />
+                  </a>
+                  <!-- upload and reset button -->
+                  <div class="d-flex align-items-end mt-75 ms-1">
+                      <div>
+                          <label for="blog-upload" class="btn btn-sm btn-primary mb-75 me-75">Ảnh</label>
+                          <input type="file" id="blog-upload" name="image"  hidden accept="image/*" />
+                          <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
+                      </div>
+                  </div>
+                  <!--/ upload and reset button -->
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="modalBlogName">người viết bài</label>
+                  <select class="form-control dt-full-name" id="getAllUser" name="user_id" id="basic-icon-default-fullname12">
+                    
+                  </select>
+              </div>
+                <div class="col-6">
+                  <label class="form-label" for="modalBlogName">Tiêu đề bài viết</label>
+                  <input type="text" id="modalBlogName" class="form-control" placeholder="Enter blog name" name="title"
+                    tabindex="-1" data-msg="Please enter blog name" />
                 </div>
-                <form id="editBlogCateForm" action="{{ route('blog.category.update.api') }}" method="POST" class="row gy-1 pt-75"
-                    enctype="multipart/form-data">
-                    @csrf
-                    <input type="text" name="id" hidden>
-                    <div class="d-flex center">
-                        <a href="#" class="me-25">
-                            <img src="" id="blogCate-upload-img" class="uploadedImage rounded me-50" alt="profile image"
-                                height="250" width="400" name="image" />
-                        </a>
-                        <!-- upload and reset button -->
-                        <div class="d-flex align-items-end mt-75 ms-1">
-                            <div>
-                                <label for="blogCate-upload" class="btn btn-sm btn-primary mb-75 me-75">Ảnh</label>
-                                <input type="file" id="blogCate-upload" name="image"  hidden accept="image/*" />
-                                <button type="button" id="blogCate-reset"
-                                    class="btn btn-sm btn-outline-secondary mb-75">Reset</button>
-                                <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
-                            </div>
+                <div class="col-6">
+                  <label class="form-label" for="modalBlogName">Danh mục bài viết</label>
+                  <select class="form-control dt-full-name" id="getAllBlogCate" name="cate_blog_id" >
+                    
+                  </select>
+                </div>
+                {{-- <div class="col-12">
+                  <div class="mb-2">
+                    <label class="form-label">Content</label>
+                    <div id="blog-editor-wrapper">
+                      <div id="blog-editor-container">
+                        <div class="editor">
+                          <p name="description">
+                          </p>
                         </div>
-                        <!--/ upload and reset button -->
+                      </div>
                     </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditBlogCate">Tên nhãn</label>
-                        <input type="text" id="modalEditBlogCate name_cate_blog" name="name_cate_blog" class="form-control"
-                            placeholder="name blog category" data-msg="Please enter your name_cate_blog" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditTagNote">Ghi chú</label>
-                        <input type="text" id="modalEditTagNote note" name="note" class="form-control"
-                            placeholder="note" data-msg="Please enter your note" />
-                    </div>
-                    <div class="col-12 text-center mt-2 pt-50">
-                        <button type="submit" class="btn btn-primary me-1">Submit</button>
-                        <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal"
-                            aria-label="Close">
-                            Discard
-                        </button>
-                    </div>
-                </form>
+                  </div>
+                </div> --}}
+                <div class="col-12">
+                  <h4 class="mt-2 pt-50">Thẻ bài viết</h4>
+                  <!-- role table -->
+                  <div class="table-responsive">
+                    <table class="table table-flush-spacing">
+                      <tbody>
+
+                        <tr>
+                          <td>
+                            <div class="d-flex" id="getAllTag">
+
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- role table -->
+                </div>
+                <div class="col-12 text-center mt-2">
+                  <button type="submit" class="btn btn-primary me-1">Submit</button>
+                  <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
+                    Discard
+                  </button>
+                </div>
+              </form>
+              <!--/ Add role form -->
             </div>
+          </div>
         </div>
+      </div>
+      <!--/ Edit Role Modal -->
+
+      <div class="modal fade" id="editBlogModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-add-new-blog">
+          <div class="modal-content">
+            <div class="modal-header bg-transparent">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body px-5 pb-5">
+              <div class="text-center mb-4">
+                <h1 class="blog-title">Chỉnh sửa bài viết</h1>
+              </div>
+              <!-- Edit role form -->
+              <form id="editBlogForm" class="row" method="POST" action="{{ route('blog.update.api') }}" enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="description" class="mota">
+                <input type="hidden" name="id">
+                <div class="d-flex center">
+                  <a href="#" class="me-25">
+                      <img src="" id="blogEdit-upload-img" class="uploadedImage rounded me-50" alt="profile image"
+                          height="250" width="400" name="image" />
+                  </a>
+                  <!-- upload and reset button -->
+                  <div class="d-flex align-items-end mt-75 ms-1">
+                      <div>
+                          <label for="blogEdit-upload" class="btn btn-sm btn-primary mb-75 me-75">Ảnh</label>
+                          <input type="file" id="blogEdit-upload" name="image"  hidden accept="image/*" />
+                          <button type="button" id="blogEdit-reset"
+                              class="btn btn-sm btn-outline-secondary mb-75">Reset</button>
+                          <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
+                      </div>
+                  </div>
+                  <!--/ upload and reset button -->
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="modalBlogName">Người viết bài</label>
+                  <select class="form-control dt-full-name" id="getAllUserEdit" name="user_id" id="basic-icon-default-fullname12">
+                    
+                  </select>
+              </div>
+                <div class="col-6">
+                  <label class="form-label" for="modalBlogName">Tiêu đề bài viết</label>
+                  <input type="text" id="modalBlogName title" class="form-control" placeholder="Enter blog title" name="title"
+                    tabindex="-1" data-msg="Please enter blog title" />
+                </div>
+                <div class="col-6">
+                  <label class="form-label" for="modalBlogName">Danh mục bài viết</label>
+                  <select class="form-control dt-full-name" id="getAllBlogCateEdit" name="cate_blog_id" >
+                    
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="modalBlogName">Tiêu đề bài viết</label>
+                  <input type="text" id="modalBlogName title" class="form-control" placeholder="blog ..." name="description"
+                    tabindex="-1" data-msg="Please enter blog title" />
+                    {{-- <textarea name="description" ></textarea>
+                </div> --}}
+                {{-- <div class="col-12">
+                  <div class="mb-2">
+                    <label class="form-label">Content</label>
+                    <div id="blog-editor-wrapper">
+                      <div id="blog-editor-container">
+                        <div class="editor">
+                          <p name="description">
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> --}}
+                <div class="col-12">
+                  <h4 class="mt-2 pt-50">Thẻ bài viết</h4>
+                  <!-- role table -->
+                  <div class="table-responsive">
+                    <table class="table table-flush-spacing">
+                      <tbody>
+
+                        <tr>
+                          <td>
+                            <div class="d-flex" id="getAllTagEdit">
+
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- role table -->
+                </div>
+                <div class="col-12 text-center mt-2">
+                  <button type="submit" class="btn btn-primary me-1">Submit</button>
+                  <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
+                    Discard
+                  </button>
+                </div>
+              </form>
+              <!--/ Edit role form -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/ Edit Role Modal -->
+
     </div>
+  </div>
 </div>
-<!--/ Edit User Modal -->
+
 
 @endsection
 @section('script')
 <script>
     $(function () {
-
-    var e = $("#DataTables_Table_Blog_category");
-    var t = $(".new-blog_category-modal"),
-        a = $(".add-new-blog_category"),
-        s = $(".select2"),
-        n = $(".dt-contact"),
-        o = "{{ route('blog.category.list') }}",
-        r = "app-user-view-account.html";
+    var e = $("#datatables-blogs");
+    var o = "{{ route('blog.list') }}",
+        r = "app-feedback-view-account.html";
         var  table =   e.DataTable({
                 "ajax" : {
-                        "url" : "{{ route('blog.category.list.api') }}",
+                        "url" : "{{ route('blog.list.api') }}",
                         "type" : "GET",
                         "dataSrc": ""
                         },
                 columns: [
-                    { data: "name_cate_blog"  },
-                    { data: "image" }, 
-                    { data: "note" },
+                    { data: "title"  },
+                    { data: "category_blog" },
+                    { data: "image" },
+                    { data: "description" },
+                    { data: "blog_tag" },
+                    { data: "blog_user" },
                 ],
                 columnDefs: [
                     {
                         targets: 0,
                         responsivePriority: 2,
                         render: function (e, t, a, s) {
-                            var n = a.name_cate_blog;
+                            var n = a.title;
                             return (
                                 '<div class="d-flex justify-content-left align-items-center"><div class="d-flex flex-column"><a href="' +
                                 r +
@@ -168,7 +268,14 @@
                         },
                     },
                     {
-                        targets: 1,
+                      targets: 1,
+                      render: function(e, t, a, s) {
+                          var n = a.category_blog.name_cate_blog;
+                          return ('<span class="badge rounded-pill badge-light-warning" text-capitalized>' + n + '</span>')
+                      },
+                    },
+                    {
+                        targets: 2,
                         render: function (e, t, a, s) {
                             var i = a.image;
                                 
@@ -182,10 +289,26 @@
                         },
                     },
                     {
-                        targets: 3,
+                      targets: 4,
+                      render: function (e, t, a, s) {
+                          return  a.blog_tag.map(data => 
+                              (`<span class="badge rounded-pill badge-light-dark " text-capitalized>${data.name_tag}</span>`)
+                            ).join(" ") ;
+                      },
+                    },
+                    {
+                      targets: 5,
+                      render: function(e, t, a, s) {
+                          var n = a.blog_user.full_name;
+                          return ('<span >' + n + '</span>')
+                      },
+                    },
+                    {
+                        targets: 6,
                         title: "Actions",
                         orderable: !1,
                         render: function (e, t, a, s) {
+                            var test = a.id
                             return (
                                 '<div class="btn-group"><a class="btn btn-sm dropdown-toggle hide-arrow" data-bs-toggle="dropdown">' +
                                 feather.icons["more-vertical"].toSvg({
@@ -197,11 +320,11 @@
                                 feather.icons["file-text"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
-                                'Details</a><a href="#" id="editBlogCate" data-id="'+a.id+'"  data-bs-toggle="modal" data-bs-target="#editBlogCateModal" class="dropdown-item">' +
+                                'Details</a><a href="" id="editBlog" data-id="'+a.id+'" data-bs-toggle="modal" data-bs-target="#editBlogModal" class="dropdown-item">' +
                                 feather.icons["edit"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
-                                'Edit</a><a href="#" id="deleteBlogCate" data-id="'+a.id+'" class="dropdown-item delete-record">' +
+                                'Edit</a><a href="" id="deleteBlog" data-id="'+a.id+'" class="dropdown-item delete-rec                   ord">' +
                                 feather.icons["trash-2"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
@@ -285,23 +408,25 @@
                                 }, 50);
                         },
                     },
-                    {
-                        text: "Thêm mới danh mục",
-                        className: "add-new btn btn-primary",
-                        attr: {
-                            "data-bs-toggle": "modal",
-                            "data-bs-target": "#modals-slide-in",
-                        },
-                        init: function (e, t, a) {
-                            $(t).removeClass("btn-secondary");
-                        },
-                    },
                 ],
+                buttons: [
+                {
+                  text: 'Thêm mới bài viết',
+                  className: 'add-new btn btn-primary mt-50',
+                  attr: {
+                    'data-bs-toggle': 'modal',
+                    'data-bs-target': '#addBlogModal'
+                  },
+                  init: function (api, node, config) {
+                    $(node).removeClass('btn-secondary');
+                  }
+                }
+              ],
                 responsive: {
                     details: {
                         display: $.fn.dataTable.Responsive.display.modal({
                             header: function (e) {
-                                return "Details of " + e.data().name_cate_blog;
+                                return "Details of " + e.data().description;
                             },
                         }),
                         type: "column",
@@ -329,138 +454,267 @@
                     },
                 },
                 language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } },
-                
-            });
-        s.each(function () {
-            var e = $(this);
-            e.wrap('<div class="position-relative"></div>'),
-                e.select2({
-                    dropdownAutoWidth: !0,
-                    width: "100%",
-                    dropdownParent: e.parent(),
-                });
-        })
-a.length && (a.validate({
-                errorClass: "error",
-                rules: {
-                    "name_tag": { required: !0 },
-                    "note": { required: !0 },
-                    "image": { required: !0 },
-                },
-            }),
-            a.on("submit", function (e) {
-                e.preventDefault();
-                var s = a.valid();
-                var form = this;
-                $.ajax({
-                    type:"POST",
-                    url:$(form).attr('action'),
-                    data: new FormData(form),
-                    processData: false,
-                    dataType:'json',
-                    contentType: false,
-                    success: function(data){
-                        if (data.code==0) {
-                            $.each(data.error,function (prefix,val) {
-                                $(form).find('span'+prefix+'_error').text(val[0]);
+                initComplete: function () {
+                    this.api()
+                            .columns(1)
+                            .every(function () {
+                                var e = this,
+                                    t =
+                                        ($(
+                                            '<label class="form-label" for="FeedbackStar">Đánh giá sao</label>'
+                                        ).appendTo(".feedback_star"),
+                                        $(
+                                            '<select id="FeedbackStar" class="form-select text-capitalize mb-md-0 mb-2"><option value=""> Lựa chọn theo đánh giá sao </option></select>'
+                                        )
+                                            .appendTo(".feedback_star")
+                                            .on("change", function () {
+                                                var t =
+                                                    $.fn.dataTable.util.escapeRegex(
+                                                        $(this).val()
+                                                    );
+                                                e.search(
+                                                    t ? "^" + t + "$" : "",
+                                                    !0,
+                                                    !1
+                                                ).draw();
+                                            }));
+                                e.data()
+                                    .unique()
+                                    .sort()
+                                    .each(function (e, a) {
+                                        t.append(
+                                            '<option value="' +
+                                                e +
+                                                '" class="text-capitalize">' +
+                                                e +
+                                                "</option>"
+                                        );
+                                    });
                             });
-                        }else{
-                            $(form)[0].reset();
-                            t.modal("hide");
-                            table.ajax.reload();
-                            toastr.success(data.msg)
-                        }
-                    },
-                    error:function (error) {
-                        console.log("Thêm không thành công",error);
+                },
+            });
+            var tagtUploadImg = $("#blog-upload-img"),
+            tagUpload = $("#blog-upload"),
+            uploadedImage = $(".uploadedAvatar"),
+            tagReset = $("#blog-reset");
+            // var src = uploadedImage.attr("src");
+            tagUpload.on("change", function (ch) {
+                
+                var n = new FileReader(),
+                uploadedImage = ch.target.files;
+                (n.onload = function () {
+                    tagtUploadImg && tagtUploadImg.attr("src", n.result);
+                }),
+                n.readAsDataURL(uploadedImage[0]);
+            });
+            var  a = $("#addBlogForm");
+            a.length && (a.validate({
+                      errorClass: "error",
+                      rules: {
+                          "name": { required: !0 },
+                        
+                      },
+                  }),
+                  
+                  a.on("submit", function (e) {
+                      $(`.mota`).val($('.ql-editor p').html())
+                      e.preventDefault();
+                      var s = a.valid();
+                      var form = this;
+                      $.ajax({
+                          type:"POST",
+                          url:$(form).attr('action'),
+                          data: new FormData(form),
+                          processData: false,
+                          dataType:'json',
+                          contentType: false,
+                          headers: {
+                              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                          },
+                          success: function(data){
+                        
+                                  $(form)[0].reset();
+                                  $('#addBlogModal').modal("hide");
+                                  table.ajax.reload();
+                                  toastr.success(data.msg)
+                              
+                          },
+                          error:function (error) {
+
+                              console.log("Thêm không thành công",error);
+                          }
+                      })
+                  }))
+
+                   // get all permission
+                  $.ajax({
+                    "url" : "{{ route('tag.list.api') }}",
+                    "type" : "GET",
+                    dataType:'json',
+                    success: function( result ) {
+                      result.map(data => {
+                        $( "#getAllTag").append(`<div class="form-check me-3 me-lg-5">
+                                                                <input class="form-check-input" type="checkbox" id="${data.id}" name="blog_tag[]" data-id="${data.id}" value="${data.id}" />
+                                                                <label class="form-check-label" for="${data.id}"> ${data.name_tag} </label>
+                                                            </div>`);
+                                        
+                                                            
+                        $( "#getAllTagEdit").append(`<div class="form-check me-3 me-lg-5">
+                                                                <input class="form-check-input" type="checkbox" id="${data.id}" name="blog_tag[]" data-id="${data.id}" value="${data.id}" />
+                                                                <label class="form-check-label" for="${data.id}"> ${data.name_tag} </label>
+                                                            </div>`);
+
+
+                      })
                     }
-                })
+                  });
+                  $.ajax({
+                    "url" : "{{ route('blog.category.list.api') }}",
+                    "type" : "GET",
+                    dataType:'json',
+                    success: function( result ) {
+                      result.map(data => {
+                        $( "#getAllBlogCate").append(`<option value="${data.id}">${data.name_cate_blog}</option>`);
+                                        
+                                                            
+                        $( "#getAllBlogCateEdit").append(`<option value="${data.id}">${data.name_cate_blog}</option>`);
 
 
-      
-            }))
+                      })
+                    }
+                  });
 
-$('body').on('click' ,'#deleteBlogCate' , function(){
-    var blogCate_id = $(this).data("id");
-     if ( confirm("Bạn có chắc chắn muốn xóa nhãn này không ?")) {
-    $.ajax({
-        type:"DELETE",
-        url:"{{ route('blog.category.list.api') }}"+"/"+blogCate_id,
-        success: function(){
-            table.ajax.reload();
-            toastr.success("Xóa Thành Công");
-        },
-        error:function () {
-            toastr.success("Xóa không Thành Công");
-        }
-    })
-     }
-});
-// get detail edit
-$('body').on('click' ,'#editBlogCate' , function(){
-    var blogCate_id = $(this).data("id");
-    $.get('<?= route("blog.category.list.api") ?>'+"/show/"+blogCate_id , function (data) {
-var blogCatetUploadImg = $("#blogCate-upload-img"),
-    blogCateUpload = $("#blogCate-upload"),
-    uploadedImage = $(".uploadedImage"),
-    blogCateReset = $("#blogCate-reset");
-    if (uploadedImage) {
-    // var src = uploadedImage.attr("src");
-    blogCateUpload.on("change", function (ch) {
-        
-        var n = new FileReader(),
-        uploadedImage = ch.target.files;
-        (n.onload = function () {
-            blogCatetUploadImg && blogCatetUploadImg.attr("src", n.result);
-        }),
-        n.readAsDataURL(uploadedImage[0]);
-    }),
-    blogCateReset.on("click", function () {
-        uploadedImage.attr("src", data.image ? "/storage/"+ data.image 
-        : "{{ asset('admin/images/portrait/small/image-none.png') }}" );
-        });
-    };
-        var form = $('#editBlogCateForm');
-        $("#blogCate-upload-img").attr("src", data.image ? "/storage/"+ data.image 
-        : "{{ asset('admin/images/portrait/small/image-none.png') }}" );
-        form.find('input[name="id"]').val(data.id); 
-        form.find('input[name="name_cate_blog"]').val(data.name_cate_blog);    
-        form.find('input[name="note"]').val(data.note);
-    },'json')
-});
-// submit edit in db
+                  $.ajax({
+                    "url" : "{{ route('user.list.api') }}",
+                    "type" : "GET",
+                    dataType:'json',
+                    success: function( result ) {
+                      result.map(data => {
+                        $( "#getAllUser").append(`<option value="${data.id}">${data.full_name}</option>`);
+                                        
+                                                            
+                        $( "#getAllUserEdit").append(`<option value="${data.id}">${data.full_name}</option>`);
 
-$('#editBlogCateForm').on('submit', function(e){
-    e.preventDefault();
-    var form = this;
-    $.ajax({
-        type:"POST",
-        url:$(form).attr('action'),
-        data: new FormData(form),
-        processData: false,
-        dataType:'json',
-        contentType: false,
-        success: function(data){
-            if (data.code==0) {
-                $.each(data.error,function (prefix,val) {
-                    $(form).find('span'+prefix+'_error').text(val[0]);
+
+                      })
+                    }
+                  });
+    
+
+                // Delete 
+                  $('body').on('click' ,'#deleteBlog' , function(){
+                    var blog_id = $(this).data("id");
+                    if ( confirm("Bạn có chắc chắn muốn xóa  không ?")) {
+                    $.ajax({
+                        type:"DELETE",
+                        url:"{{ route('blog.list.api') }}"+"/"+blog_id,
+                        success: function(){
+                            table.ajax.reload();
+                            toastr.success("Xóa Thành Công");
+                        },
+                        error:function () {
+                            toastr.success("Xóa không Thành Công");
+                        }
+                    })
+                    }
                 });
-            }else{
-                console.log('fomr',data);
-                $(form)[0].reset();
-                $('#editBlogCateModal').modal("hide");
-                table.ajax.reload();
-                toastr.success(data.msg)
-            }
-        },
-        error:function (error) {
-            console.log("Sửa mới không thành công",error);
-        }
-    })
-});
+                // get detail edit
+                $('body').on('click' ,'#editBlog' , function(){
+                    var blog_id = $(this).data("id");
+                    var cate = null;
+                    var blogTag = "" ;
+                    $.get('<?= route("blog.list.api") ?>'+"/show/"+blog_id , function (data) {
+                      var tagtUploadImg = $("#blogEdit-upload-img"),
+                      tagUpload = $("#blogEdit-upload"),
+                      uploadedImage = $(".uploadedImage"),
+                      tagReset = $("#blogEdit-reset");
+                      if (uploadedImage) {
+                      tagUpload.on("change", function (ch) {
+                          
+                          var n = new FileReader(),
+                          uploadedImage = ch.target.files;
+                          (n.onload = function () {
+                              tagtUploadImg && tagtUploadImg.attr("src", n.result);
+                          }),
+                          n.readAsDataURL(uploadedImage[0]);
+                      }),
+                      tagReset.on("click", function () {
+                          uploadedImage.attr("src", data.image ? "/storage/"+ data.image 
+                          : "{{ asset('admin/images/portrait/small/image-none.png') }}" );
+                          });
+                      };
+                        var form = $('#editBlogForm');
+                        $("#blogEdit-upload-img").attr("src", data.image ? "/storage/"+ data.image 
+                        : "{{ asset('admin/images/portrait/small/image-none.png') }}" );
+                        form.find('input[name="id"]').val(data.id); 
+                        form.find('input[name="title"]').val(data.title); 
+                        form.find('input[name="description"]').val(data.description);  
+                        cate = data.cate_blog_id;
+                        blogTag = data.blog_tag;
+                        console.log(blogTag);
+                    },'json');
+                    $.ajax({
+                    "url" : "{{ route('blog.category.list.api') }}",
+                    "type" : "GET",
+                    dataType:'json',
+                    success: function( result ) {
+                      result.map(data => {
+                        if (cate == data.id) {
+                            $("#getAllBlogCateEdit").find("#" + cate).prop('selected', true);
+                        }  
+                      })
+                    }
+                    });
+                    $.ajax({
+                      "url" : "{{ route('tag.list.api') }}",
+                      "type" : "GET",
+                      dataType:'json',
+                      success: function( result ) {
+                        result.map(data => {                      
+                          blogTag.map(function(bt) {
+                            if (bt.pivot.tag_id == data.id) {
+                                $("#getAllTagEdit").find("#" + bt.pivot.tag_id, "input").prop('checked', true);
+                            }
+                          })
+                        })
+                      }
+                    });
+                });
+                // submit edit in db
+                $('#editBlogForm').on('submit', function(e){
+                    e.preventDefault();
+                    var form = this;
+                    $.ajax({
+                        type:"POST",
+                        url:$(form).attr('action'),
+                        data: new FormData(form),
+                        processData: false,
+                        dataType:'json',
+                        contentType: false,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(data){
+                                $(form)[0].reset();
+                                $('#editBlogModal').modal("hide");
+                                table.ajax.reload();
+                                toastr.success(data.msg)
+                        },
+                        error:function (error) {
+                            console.log("Sửa mới không thành công",error);
+                        }
+                    })
+                });
+                  // Filter form control to default size
+                  // ? setTimeout used for multilingual table initialization
+                  setTimeout(() => {
+                    $('.dataTables_filter .form-control').removeClass('form-control-sm');
+                    $('.dataTables_length .form-select').removeClass('form-select-sm');
+                  }, 300);
+                });
 
-});
 
 
 </script>
+
 @endsection

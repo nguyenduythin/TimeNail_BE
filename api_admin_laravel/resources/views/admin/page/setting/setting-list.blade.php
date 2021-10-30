@@ -392,16 +392,16 @@
                 language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } },
                 
             });
-        s.each(function () {
-            var e = $(this);
-            e.wrap('<div class="position-relative"></div>'),
-                e.select2({
-                    dropdownAutoWidth: !0,
-                    width: "100%",
-                    dropdownParent: e.parent(),
-                });
-        })
-a.length && (a.validate({
+            s.each(function () {
+                var e = $(this);
+                e.wrap('<div class="position-relative"></div>'),
+                    e.select2({
+                        dropdownAutoWidth: !0,
+                        width: "100%",
+                        dropdownParent: e.parent(),
+                    });
+            })
+            a.length && (a.validate({
                 errorClass: "error",
                 rules: {
                     "slogan": { required: !0 },
@@ -424,6 +424,9 @@ a.length && (a.validate({
                     processData: false,
                     dataType:'json',
                     contentType: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     success: function(data){
                         if (data.code==0) {
                             $.each(data.error,function (prefix,val) {
@@ -445,87 +448,90 @@ a.length && (a.validate({
       
             }))
 
-$('body').on('click' ,'#deleteSetting' , function(){
-    var setting_id = $(this).data("id");
-     if ( confirm("Bạn có chắc chắn muốn xóa cài đặt này không ?")) {
-    $.ajax({
-        type:"DELETE",
-        url:"{{ route('setting.list.api') }}"+"/"+setting_id,
-        success: function(){
-            table.ajax.reload();
-            toastr.success("Xóa Thành Công");
-        },
-        error:function () {
-            toastr.success("Xóa không Thành Công");
-        }
-    })
-     }
-});
+            $('body').on('click' ,'#deleteSetting' , function(){
+                var setting_id = $(this).data("id");
+                if ( confirm("Bạn có chắc chắn muốn xóa cài đặt này không ?")) {
+                $.ajax({
+                    type:"DELETE",
+                    url:"{{ route('setting.list.api') }}"+"/"+setting_id,
+                    success: function(){
+                        table.ajax.reload();
+                        toastr.success("Xóa Thành Công");
+                    },
+                    error:function () {
+                        toastr.success("Xóa không Thành Công");
+                    }
+                })
+                }
+            });
 // get detail edit
-$('body').on('click' ,'#editSetting' , function(){
-    var setting_id = $(this).data("id");
-    $.get('<?= route("setting.list.api") ?>'+"/show/"+setting_id , function (data) {
-var settingtUploadImg = $("#setting-upload-img"),
-    settingUpload = $("#setting-upload"),
-    uploadedLogo = $(".uploadedLogo"),
-    settingtReset = $("#setting-reset");
-    if (uploadedLogo) {
-    // var src = uploadedLogo.attr("src");
-    settingUpload.on("change", function (ch) {
-        
-        var n = new FileReader(),
-        uploadedLogo = ch.target.files;
-        (n.onload = function () {
-            settingtUploadImg && settingtUploadImg.attr("src", n.result);
-        }),
-        n.readAsDataURL(uploadedLogo[0]);
-    }),
-    settingtReset.on("click", function () {
-        uploadedLogo.attr("src", data.logo ? "/storage/"+ data.logo 
-        : "{{ asset('admin/images/portrait/small/logo-none.png') }}" );
-        });
-    };
-        var form = $('#editSettingForm');
-        $("#setting-upload-img").attr("src", data.logo ? "/storage/"+ data.logo 
-        : "{{ asset('admin/images/portrait/small/logo-none.png') }}" );
-        form.find('input[name="id"]').val(data.id); 
-        form.find('input[name="slogan"]').val(data.slogan);    
-        form.find('input[name="email"]').val(data.email);  
-        form.find('input[name="address"]').val(data.address); 
-        form.find('input[name="phone"]').val(data.phone);
-        form.find('input[name="name_manage"]').val(data.name_manage);   
-        form.find('input[name="title_deep"]').val(data.title_deep);
-    },'json')
-});
+            $('body').on('click' ,'#editSetting' , function(){
+                var setting_id = $(this).data("id");
+                $.get('<?= route("setting.list.api") ?>'+"/show/"+setting_id , function (data) {
+            var settingtUploadImg = $("#setting-upload-img"),
+                settingUpload = $("#setting-upload"),
+                uploadedLogo = $(".uploadedLogo"),
+                settingtReset = $("#setting-reset");
+                if (uploadedLogo) {
+                // var src = uploadedLogo.attr("src");
+                settingUpload.on("change", function (ch) {
+                    
+                    var n = new FileReader(),
+                    uploadedLogo = ch.target.files;
+                    (n.onload = function () {
+                        settingtUploadImg && settingtUploadImg.attr("src", n.result);
+                    }),
+                    n.readAsDataURL(uploadedLogo[0]);
+                }),
+                settingtReset.on("click", function () {
+                    uploadedLogo.attr("src", data.logo ? "/storage/"+ data.logo 
+                    : "{{ asset('admin/images/portrait/small/logo-none.png') }}" );
+                    });
+                };
+                    var form = $('#editSettingForm');
+                    $("#setting-upload-img").attr("src", data.logo ? "/storage/"+ data.logo 
+                    : "{{ asset('admin/images/portrait/small/logo-none.png') }}" );
+                    form.find('input[name="id"]').val(data.id); 
+                    form.find('input[name="slogan"]').val(data.slogan);    
+                    form.find('input[name="email"]').val(data.email);  
+                    form.find('input[name="address"]').val(data.address); 
+                    form.find('input[name="phone"]').val(data.phone);
+                    form.find('input[name="name_manage"]').val(data.name_manage);   
+                    form.find('input[name="title_deep"]').val(data.title_deep);
+                },'json')
+            });
 // submit edit in db
-$('#editSettingForm').on('submit', function(e){
-    e.preventDefault();
-    var form = this;
-    $.ajax({
-        type:"POST",
-        url:$(form).attr('action'),
-        data: new FormData(form),
-        processData: false,
-        dataType:'json',
-        contentType: false,
-        success: function(data){
-            if (data.code==0) {
-                $.each(data.error,function (prefix,val) {
-                    $(form).find('span'+prefix+'_error').text(val[0]);
-                });
-            }else{
-                console.log('fomr',data);
-                $(form)[0].reset();
-                $('#editSettingModal').modal("hide");
-                table.ajax.reload();
-                toastr.success(data.msg)
-            }
-        },
-        error:function (error) {
-            console.log("Sửa mới không thành công",error);
-        }
-    })
-});
+            $('#editSettingForm').on('submit', function(e){
+                e.preventDefault();
+                var form = this;
+                $.ajax({
+                    type:"POST",
+                    url:$(form).attr('action'),
+                    data: new FormData(form),
+                    processData: false,
+                    dataType:'json',
+                    contentType: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data){
+                        if (data.code==0) {
+                            $.each(data.error,function (prefix,val) {
+                                $(form).find('span'+prefix+'_error').text(val[0]);
+                            });
+                        }else{
+                            console.log('fomr',data);
+                            $(form)[0].reset();
+                            $('#editSettingModal').modal("hide");
+                            table.ajax.reload();
+                            toastr.success(data.msg)
+                        }
+                    },
+                    error:function (error) {
+                        console.log("Sửa mới không thành công",error);
+                    }
+                })
+            });
 
 });
 

@@ -5,6 +5,9 @@ namespace App\Http\Controllers\api\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BlogCategory;
+use App\Models\Blog;
+use App\Models\BlogTag;
+use Illuminate\Support\Facades\Storage;
 
 class BlogCategoryController extends Controller
 {
@@ -81,9 +84,13 @@ class BlogCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $blogCategory = BlogCategory::find($id)->delete();
-        // Storage::delete($setting->image);
-        // $feedback->destroy($id);
+        Blog::where('cate_blog_id', $id)->delete();
+        // BlogTag::where('blog_id', $blog)->delete();
+        // Blog::destroy($blog);
+        // $blog->delete();
+        $blogCategory = BlogCategory::find($id);
+        Storage::delete($blogCategory->image);
+        $blogCategory->delete();
         return  response()->json(['success' => 'Xóa thành công!']);
     }
 }

@@ -139,9 +139,9 @@
                                     data-i18n="blog">Bài viết</span></a>
 
                   </li>
-                  <li class=" nav-item {{ request()->is('blog-category*') ? 'active' : '' }}"><a
-                              class="d-flex align-items-center" href="{{ route('blog.category.list')}}"><i
-                                    data-feather='blog'></i><span class="menu-title text-truncate"
+                  <li class=" nav-item {{ request()->is('category-blog*') ? 'active' : '' }}"><a
+                              class="d-flex align-items-center" href="{{ route('category-blog.list')}}"><i
+                                    data-feather='list'></i><span class="menu-title text-truncate"
                                     data-i18n="blog">Danh mục bài viết</span></a>
 
                   </li>
@@ -159,12 +159,12 @@
 
                   </li>
                   <li class=" nav-item {{ request()->is('gallery*') ? 'active' : '' }}"><a
-                              class="d-flex align-items-center" href="#"><i data-feather='image'></i><span
+                              class="d-flex align-items-center" href="{{ route('gallery.list')}}"><i data-feather='image'></i><span
                                     class="menu-title text-truncate" data-i18n="Review">Thư Viện Dịch Vụ</span></a>
 
                   </li>
-                  <li class=" nav-item {{ request()->is('cate-gallery*') ? 'active' : '' }}"><a
-                              class="d-flex align-items-center" href="#"><i data-feather='list'></i><span
+                  <li class=" nav-item {{ request()->is('category-gallery*') ? 'active' : '' }}"><a
+                              class="d-flex align-items-center" href="{{ route('category-gallery.list')}}"><i data-feather='list'></i><span
                                     class="menu-title text-truncate" data-i18n="Review">Danh Mục Thư Viện</span></a>
 
                   </li>
@@ -179,7 +179,7 @@
                               data-feather="more-horizontal"></i>
                   </li>
                   <li class="nav-item {{ request()->is('slider*') ? 'active' : '' }}"><a
-                              class="d-flex align-items-center" href="#"><i data-feather='sliders'></i><span
+                              class="d-flex align-items-center" href="{{route('slider.list')}}"><i data-feather='sliders'></i><span
                                     class="menu-title text-truncate" data-i18n="Slider">Slider</span></a>
 
                   </li>
