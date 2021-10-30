@@ -82,9 +82,9 @@ class SettingController extends Controller
      */
     public function destroy($id)
     {
-        $setting = Setting::find($id)->delete();
-        // Storage::delete($setting->image);
-        // $feedback->destroy($id);
+        $setting = Setting::find($id);
+        Storage::delete($setting->logo);
+        $setting->delete();
         return  response()->json(['success' => 'Xóa thành công!']);
     }
 }

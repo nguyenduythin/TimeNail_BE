@@ -139,7 +139,7 @@
         a = $(".add-new-blog_category"),
         s = $(".select2"),
         n = $(".dt-contact"),
-        o = "{{ route('blog.category.list') }}",
+        o = "{{ route('category-blog.list') }}",
         r = "app-user-view-account.html";
         var  table =   e.DataTable({
                 "ajax" : {
@@ -329,7 +329,6 @@
                     },
                 },
                 language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } },
-                
             });
         s.each(function () {
             var e = $(this);
@@ -340,124 +339,130 @@
                     dropdownParent: e.parent(),
                 });
         })
-a.length && (a.validate({
-                errorClass: "error",
-                rules: {
-                    "name_tag": { required: !0 },
-                    "note": { required: !0 },
-                    "image": { required: !0 },
-                },
-            }),
-            a.on("submit", function (e) {
-                e.preventDefault();
-                var s = a.valid();
-                var form = this;
-                $.ajax({
-                    type:"POST",
-                    url:$(form).attr('action'),
-                    data: new FormData(form),
-                    processData: false,
-                    dataType:'json',
-                    contentType: false,
-                    success: function(data){
-                        if (data.code==0) {
-                            $.each(data.error,function (prefix,val) {
-                                $(form).find('span'+prefix+'_error').text(val[0]);
-                            });
-                        }else{
-                            $(form)[0].reset();
-                            t.modal("hide");
-                            table.ajax.reload();
-                            toastr.success(data.msg)
-                        }
+        a.length && (a.validate({
+            errorClass: "error",
+            rules: {
+                "name_tag": { required: !0 },
+                "note": { required: !0 },
+                "image": { required: !0 },
+            },
+        }),
+        a.on("submit", function (e) {
+            e.preventDefault();
+            var s = a.valid();
+            var form = this;
+            $.ajax({
+                type:"POST",
+                url:$(form).attr('action'),
+                data: new FormData(form),
+                processData: false,
+                dataType:'json',
+                contentType: false,
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    error:function (error) {
-                        console.log("Thêm không thành công",error);
+                success: function(data){
+                    if (data.code==0) {
+                        $.each(data.error,function (prefix,val) {
+                            $(form).find('span'+prefix+'_error').text(val[0]);
+                        });
+                    }else{
+                        $(form)[0].reset();
+                        t.modal("hide");
+                        table.ajax.reload();
+                        toastr.success(data.msg)
+                    }
+                },
+                error:function (error) {
+                    console.log("Thêm không thành công",error);
+                }
+            })
+        }))
+
+        $('body').on('click' ,'#deleteBlogCate' , function(){
+            var blogCate_id = $(this).data("id");
+            if ( confirm("Bạn có chắc chắn muốn xóa nhãn này không ?")) {
+                $.ajax({
+                    type:"DELETE",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url:"{{ route('blog.category.list.api') }}"+"/"+blogCate_id,
+                    success: function(){
+                        table.ajax.reload();
+                        toastr.success("Xóa Thành Công");
+                    },
+                    error:function () {
+                        toastr.success("Xóa không Thành Công");
                     }
                 })
-
-
-      
-            }))
-
-$('body').on('click' ,'#deleteBlogCate' , function(){
-    var blogCate_id = $(this).data("id");
-     if ( confirm("Bạn có chắc chắn muốn xóa nhãn này không ?")) {
-    $.ajax({
-        type:"DELETE",
-        url:"{{ route('blog.category.list.api') }}"+"/"+blogCate_id,
-        success: function(){
-            table.ajax.reload();
-            toastr.success("Xóa Thành Công");
-        },
-        error:function () {
-            toastr.success("Xóa không Thành Công");
-        }
-    })
-     }
-});
-// get detail edit
-$('body').on('click' ,'#editBlogCate' , function(){
-    var blogCate_id = $(this).data("id");
-    $.get('<?= route("blog.category.list.api") ?>'+"/show/"+blogCate_id , function (data) {
-var blogCatetUploadImg = $("#blogCate-upload-img"),
-    blogCateUpload = $("#blogCate-upload"),
-    uploadedImage = $(".uploadedImage"),
-    blogCateReset = $("#blogCate-reset");
-    if (uploadedImage) {
-    // var src = uploadedImage.attr("src");
-    blogCateUpload.on("change", function (ch) {
-        
-        var n = new FileReader(),
-        uploadedImage = ch.target.files;
-        (n.onload = function () {
-            blogCatetUploadImg && blogCatetUploadImg.attr("src", n.result);
-        }),
-        n.readAsDataURL(uploadedImage[0]);
-    }),
-    blogCateReset.on("click", function () {
-        uploadedImage.attr("src", data.image ? "/storage/"+ data.image 
-        : "{{ asset('admin/images/portrait/small/image-none.png') }}" );
+            }
         });
-    };
-        var form = $('#editBlogCateForm');
-        $("#blogCate-upload-img").attr("src", data.image ? "/storage/"+ data.image 
-        : "{{ asset('admin/images/portrait/small/image-none.png') }}" );
-        form.find('input[name="id"]').val(data.id); 
-        form.find('input[name="name_cate_blog"]').val(data.name_cate_blog);    
-        form.find('input[name="note"]').val(data.note);
-    },'json')
-});
+// get detail edit
+        $('body').on('click' ,'#editBlogCate' , function(){
+            var blogCate_id = $(this).data("id");
+            $.get('<?= route("blog.category.list.api") ?>'+"/show/"+blogCate_id , function (data) {
+        var blogCatetUploadImg = $("#blogCate-upload-img"),
+            blogCateUpload = $("#blogCate-upload"),
+            uploadedImage = $(".uploadedImage"),
+            blogCateReset = $("#blogCate-reset");
+            if (uploadedImage) {
+            // var src = uploadedImage.attr("src");
+            blogCateUpload.on("change", function (ch) {
+                
+                var n = new FileReader(),
+                uploadedImage = ch.target.files;
+                (n.onload = function () {
+                    blogCatetUploadImg && blogCatetUploadImg.attr("src", n.result);
+                }),
+                n.readAsDataURL(uploadedImage[0]);
+            }),
+            blogCateReset.on("click", function () {
+                uploadedImage.attr("src", data.image ? "/storage/"+ data.image 
+                : "{{ asset('admin/images/portrait/small/image-none.png') }}" );
+                });
+            };
+                var form = $('#editBlogCateForm');
+                $("#blogCate-upload-img").attr("src", data.image ? "/storage/"+ data.image 
+                : "{{ asset('admin/images/portrait/small/image-none.png') }}" );
+                form.find('input[name="id"]').val(data.id); 
+                form.find('input[name="name_cate_blog"]').val(data.name_cate_blog);    
+                form.find('input[name="note"]').val(data.note);
+            },'json')
+        });
 // submit edit in db
 
-$('#editBlogCateForm').on('submit', function(e){
-    e.preventDefault();
-    var form = this;
-    $.ajax({
-        type:"POST",
-        url:$(form).attr('action'),
-        data: new FormData(form),
-        processData: false,
-        dataType:'json',
-        contentType: false,
-        success: function(data){
-            if (data.code==0) {
-                $.each(data.error,function (prefix,val) {
-                    $(form).find('span'+prefix+'_error').text(val[0]);
-                });
-            }else{
-                console.log('fomr',data);
-                $(form)[0].reset();
-                $('#editBlogCateModal').modal("hide");
-                table.ajax.reload();
-                toastr.success(data.msg)
-            }
-        },
-        error:function (error) {
-            console.log("Sửa mới không thành công",error);
-        }
-    })
-});
+        $('#editBlogCateForm').on('submit', function(e){
+            e.preventDefault();
+            var form = this;
+            $.ajax({
+                type:"POST",
+                url:$(form).attr('action'),
+                data: new FormData(form),
+                processData: false,
+                dataType:'json',
+                contentType: false,
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                success: function(data){
+                    if (data.code==0) {
+                        $.each(data.error,function (prefix,val) {
+                            $(form).find('span'+prefix+'_error').text(val[0]);
+                        });
+                    }else{
+                        console.log('fomr',data);
+                        $(form)[0].reset();
+                        $('#editBlogCateModal').modal("hide");
+                        table.ajax.reload();
+                        toastr.success(data.msg)
+                    }
+                },
+                error:function (error) {
+                    console.log("Sửa mới không thành công",error);
+                }
+            })
+        });
 
 });
 

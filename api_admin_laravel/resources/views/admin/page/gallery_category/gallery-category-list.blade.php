@@ -1,163 +1,156 @@
 @extends('admin.layout.main')
-@section('title', 'Tag')
+@section('title', 'Gallery Category')
 @section('content')
+
 <div class="app-content content ">
-    <div class="content-overlay"></div>
-    <div class="header-navbar-shadow"></div>
-    <div class="content-wrapper container-xxl p-0">
-        <div class="content-header row">
-        </div>
-        <div class="content-body">
-
-            <!-- users list start -->
-            <section class="app-tag-list">
-                
-                <div class="card">
-                    <div class="card-datatable table-responsive pt-0">
-                        <table class="tag-list-table table" id="DataTables_Table_Tag">
-                            <thead class="table-light">
-                                <tr>
-
-                                    <th>Tên thẻ</th>
-                                    <th>Ảnh</th>
-                                    <th>Ghi chú</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <!-- Modal to add new user starts-->
-                    <div class="modal modal-slide-in new-tag-modal fade" id="modals-slide-in">
-                        <div class="modal-dialog">
-                            <form method="POST" action="{{ route('tag.add.api') }}"
-                                class="add-new-tag modal-content pt-0" enctype="multipart/form-data">
-                                @csrf
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close">×</button>
-                                <div class="modal-header mb-1">
-                                    <h5 class="modal-title" id="exampleModalLabel">Thêm tên thẻ</h5>
-                                </div>
-                                <div class="modal-body flex-grow-1">
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-name_tag">Tên thẻ</label>
-                                        <input type="text" class="form-control dt-name-tag"
-                                            id="basic-icon-default-name_tag" placeholder="name tag" name="name_tag" />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-contact">Ghi chú</label>
-                                        <input type="text" id="basic-icon-default-contact" class="form-control "
-                                            placeholder="note" name="note" />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label for="customFile1" class="form-label">Ảnh</label>
-                                        <input class="form-control" type="file" id="customFile1" name="image" />
-                                    </div>
-                                    <button type="submit" class="btn btn-primary me-1 data-submit">Lưu</button>
-                                    <button type="reset" class="btn btn-outline-secondary"
-                                        data-bs-dismiss="modal">Cancel</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <!-- Modal to add new user Ends-->
-
-
-                </div>
-                <!-- list and filter end -->
-            </section>
-            <!-- users list ends -->
-
-        </div>
+  <div class="content-overlay"></div>
+  <div class="header-navbar-shadow"></div>
+  <div class="content-wrapper container-xxl p-0">
+    <div class="content-header row">
     </div>
-</div>
+    <div class="content-body">
 
-<!-- Edit User Modal -->
-<div class="modal fade show" id="editTagModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-tag">
-        <div class="modal-content">
+      <h3 class="mt-50">Danh mục thư viện</h3>
+      <!-- table -->
+      <div class="card">
+        <div class="card-datatable table-responsive">
+          <table class="datatables-galleryCategory table" id="datatables-galleryCategory">
+            <thead class="table-light">
+              <tr>
+                <th>Tiêu đề thư viện</th>
+                <th>Ảnh</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+      <!-- table -->
+      <!-- Add Role Modal -->
+      <div class="modal fade" id="addGalleryCategoryModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-add-new-gallery-category">
+          <div class="modal-content">
             <div class="modal-header bg-transparent">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body pb-5 px-sm-5 pt-50">
-                <div class="text-center mb-2">
-                    <h1 class="mb-1">Cập nhật mới thẻ</h1>
-                    <p>Cập nhập chi tiết nhãn !</p>
+            <div class="modal-body px-5 pb-5">
+              <div class="text-center mb-4">
+                <h1 class="blog-title">Thêm mới danh mục ảnh</h1>
+              </div>
+              <!-- Add role form -->
+              <form id="addGalleryCategoryForm" class="row" method="POST" action="{{ route('gallery.category.list.api') }}" enctype="multipart/form-data">
+                @csrf
+                <div class="d-flex center">
+                  <a href="#" class="me-25">
+                      <img src="" id="gallery-cate-upload-img" class="uploadedAvatar rounded me-50" alt="profile avatar"
+                          height="250" width="400" name="avatar" />
+                  </a>
+                  <!-- upload and reset button -->
+                  <div class="d-flex align-items-end mt-75 ms-1">
+                      <div>
+                          <label for="gallery-cate-upload" class="btn btn-sm btn-primary mb-75 me-75">Ảnh</label>
+                          <input type="file" id="gallery-cate-upload" name="avatar"  hidden accept="image/*" />
+                          <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
+                      </div>
+                  </div>
+                  <!--/ upload and reset button -->
                 </div>
-                <form id="editTagForm" action="{{ route('tag.update.api') }}" method="POST" class="row gy-1 pt-75"
-                    enctype="multipart/form-data">
-                    @csrf
-                    <input type="text" name="id" hidden>
-                    <div class="d-flex center">
-                        <a href="#" class="me-25">
-                            <img src="" id="tag-upload-img" class="uploadedImage rounded me-50" alt="profile image"
-                                height="250" width="400" name="image" />
-                        </a>
-                        <!-- upload and reset button -->
-                        <div class="d-flex align-items-end mt-75 ms-1">
-                            <div>
-                                <label for="tag-upload" class="btn btn-sm btn-primary mb-75 me-75">Ảnh</label>
-                                <input type="file" id="tag-upload" name="image"  hidden accept="image/*" />
-                                <button type="button" id="tag-reset"
-                                    class="btn btn-sm btn-outline-secondary mb-75">Reset</button>
-                                <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
-                            </div>
-                        </div>
-                        <!--/ upload and reset button -->
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditSlogan">Tên thẻ</label>
-                        <input type="text" id="modalEditTag name_tag" name="name_tag" class="form-control"
-                            placeholder="name tag" data-msg="Please enter your name_tag" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditTagNote">Ghi chú</label>
-                        <input type="text" id="modalEditTagNote note" name="note" class="form-control"
-                            placeholder="note" data-msg="Please enter your note" />
-                    </div>
-                    <div class="col-12 text-center mt-2 pt-50">
-                        <button type="submit" class="btn btn-primary me-1">Submit</button>
-                        <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal"
-                            aria-label="Close">
-                            Discard
-                        </button>
-                    </div>
-                </form>
+                <div class="col-6">
+                  <label class="form-label" for="modalGalleryCategoryName">Tiêu đề thư viện</label>
+                  <input type="text" id="modalGalleryCategoryName" class="form-control" placeholder="Enter gallery caterory name" name="title"
+                    tabindex="-1" data-msg="Please enter gallery caterory name" />
+                </div>
+                <div class="col-12 text-center mt-2">
+                  <button type="submit" class="btn btn-primary me-1">Submit</button>
+                  <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
+                    Discard
+                  </button>
+                </div>
+              </form>
+              <!--/ Add role form -->
             </div>
+          </div>
         </div>
+      </div>
+      <!--/ Edit Role Modal -->
+
+      <div class="modal fade" id="editGalleryCategoryModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-add-new-gallery-category">
+          <div class="modal-content">
+            <div class="modal-header bg-transparent">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body px-5 pb-5">
+              <div class="text-center mb-4">
+                <h1 class="blog-title">Chỉnh sửa danh mục ảnh</h1>
+              </div>
+              <!-- Edit role form -->
+              <form id="editGalleryCategoryForm" class="row" method="POST" action="{{ route('gallery.category.update.api') }}" enctype="multipart/form-data">
+                @csrf
+                <input type="text" name="id" hidden>
+                <div class="d-flex center">
+                    <a href="#" class="me-25">
+                        <img src="" id="tag-upload-img" class="uploadedImage rounded me-50" alt="profile image"
+                            height="250" width="400" name="avatar" />
+                    </a>
+                    <!-- upload and reset button -->
+                    <div class="d-flex align-items-end mt-75 ms-1">
+                        <div>
+                            <label for="tag-upload" class="btn btn-sm btn-primary mb-75 me-75">Ảnh</label>
+                            <input type="file" id="tag-upload" name="avatar"  hidden accept="image/*" />
+                            <button type="button" id="tag-reset"
+                                class="btn btn-sm btn-outline-secondary mb-75">Reset</button>
+                            <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
+                        </div>
+                    </div>
+                    <!--/ upload and reset button -->
+                </div>
+                <div class="col-6">
+                  <label class="form-label" for="modalGalleryCategoryName">Tiêu đề thư viện</label>
+                  <input type="text" id="modalGalleryCategoryName title" class="form-control" placeholder="Enter gallery caterory title" name="title"
+                    tabindex="-1" data-msg="Please enter gallery caterory title" />
+                </div>
+                <div class="col-12 text-center mt-2">
+                  <button type="submit" class="btn btn-primary me-1">Submit</button>
+                  <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
+                    Discard
+                  </button>
+                </div>
+              </form>
+              <!--/ Edit role form -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/ Edit Role Modal -->
+
     </div>
+  </div>
 </div>
-<!--/ Edit User Modal -->
 
 @endsection
 @section('script')
 <script>
     $(function () {
-
-    var e = $("#DataTables_Table_Tag");
-    var t = $(".new-tag-modal"),
-        a = $(".add-new-tag"),
-        s = $(".select2"),
-        n = $(".dt-contact"),
-        o = "{{ route('tag.list') }}",
-        r = "app-user-view-account.html";
+    var e = $("#datatables-galleryCategory");
+    var o = "{{ route('category-gallery.list') }}",
+        r = "app-feedback-view-account.html";
         var  table =   e.DataTable({
                 "ajax" : {
-                        "url" : "{{ route('tag.list.api') }}",
+                        "url" : "{{ route('gallery.category.list.api') }}",
                         "type" : "GET",
                         "dataSrc": ""
                         },
                 columns: [
-                    { data: "name_tag"  },
-                    { data: "image" }, 
-                    { data: "note" },
+                    { data: "title"  },
+                    { data: "avatar" },
                 ],
                 columnDefs: [
                     {
                         targets: 0,
                         responsivePriority: 2,
                         render: function (e, t, a, s) {
-                            var n = a.name_tag;
+                            var n = a.title;
                             return (
                                 '<div class="d-flex justify-content-left align-items-center"><div class="d-flex flex-column"><a href="' +
                                 r +
@@ -170,7 +163,7 @@
                     {
                         targets: 1,
                         render: function (e, t, a, s) {
-                            var i = a.image;
+                            var i = a.avatar;
                                 
                             if (i)
                                 var c =
@@ -182,10 +175,11 @@
                         },
                     },
                     {
-                        targets: 3,
+                        targets: 2,
                         title: "Actions",
                         orderable: !1,
                         render: function (e, t, a, s) {
+                            var test = a.id
                             return (
                                 '<div class="btn-group"><a class="btn btn-sm dropdown-toggle hide-arrow" data-bs-toggle="dropdown">' +
                                 feather.icons["more-vertical"].toSvg({
@@ -197,11 +191,11 @@
                                 feather.icons["file-text"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
-                                'Details</a><a href="#" id="editTag" data-id="'+a.id+'"  data-bs-toggle="modal" data-bs-target="#editTagModal" class="dropdown-item">' +
+                                'Details</a><a href="" id="editGalleryCategory" data-id="'+a.id+'" data-bs-toggle="modal" data-bs-target="#editGalleryCategoryModal" class="dropdown-item">' +
                                 feather.icons["edit"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
-                                'Edit</a><a href="#" id="deleteTag" data-id="'+a.id+'" class="dropdown-item delete-record">' +
+                                'Edit</a><a href="" id="deleteGalleryCategory" data-id="'+a.id+'" class="dropdown-item delete-record">' +
                                 feather.icons["trash-2"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
@@ -285,23 +279,25 @@
                                 }, 50);
                         },
                     },
-                    {
-                        text: "Thêm mới nhãn",
-                        className: "add-new btn btn-primary",
-                        attr: {
-                            "data-bs-toggle": "modal",
-                            "data-bs-target": "#modals-slide-in",
-                        },
-                        init: function (e, t, a) {
-                            $(t).removeClass("btn-secondary");
-                        },
-                    },
                 ],
+                buttons: [
+                {
+                  text: 'Thêm mới thư viện',
+                  className: 'add-new btn btn-primary mt-50',
+                  attr: {
+                    'data-bs-toggle': 'modal',
+                    'data-bs-target': '#addGalleryCategoryModal'
+                  },
+                  init: function (api, node, config) {
+                    $(node).removeClass('btn-secondary');
+                  }
+                }
+              ],
                 responsive: {
                     details: {
                         display: $.fn.dataTable.Responsive.display.modal({
                             header: function (e) {
-                                return "Details of " + e.data().name_tag;
+                                return "Details of " + e.data().description;
                             },
                         }),
                         type: "column",
@@ -329,66 +325,71 @@
                     },
                 },
                 language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } },
-                
             });
-            s.each(function () {
-                var e = $(this);
-                e.wrap('<div class="position-relative"></div>'),
-                    e.select2({
-                        dropdownAutoWidth: !0,
-                        width: "100%",
-                        dropdownParent: e.parent(),
-                    });
-            })
+            
+            var tagtUploadImg = $("#gallery-cate-upload-img"),
+            tagUpload = $("#gallery-cate-upload"),
+            uploadedImage = $(".uploadedAvatar"),
+            tagReset = $("#tag-reset");
+            // var src = uploadedImage.attr("src");
+            tagUpload.on("change", function (ch) {
+                
+                var n = new FileReader(),
+                uploadedImage = ch.target.files;
+                (n.onload = function () {
+                    tagtUploadImg && tagtUploadImg.attr("src", n.result);
+                }),
+                n.readAsDataURL(uploadedImage[0]);
+            });
+            var  a = $("#addGalleryCategoryForm");
             a.length && (a.validate({
-                errorClass: "error",
-                rules: {
-                    "name_tag": { required: !0 },
-                    "note": { required: !0 },
-                    "image": { required: !0 },
-                },
-            }),
-            a.on("submit", function (e) {
-                e.preventDefault();
-                var s = a.valid();
-                var form = this;
-                $.ajax({
-                    type:"POST",
-                    url:$(form).attr('action'),
-                    data: new FormData(form),
-                    processData: false,
-                    dataType:'json',
-                    contentType: false,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                
+                    errorClass: "error",
+                    rules: {
+                        "name": { required: !0 },
+                        
                     },
-                    success: function(data){
-                        if (data.code==0) {
-                            $.each(data.error,function (prefix,val) {
-                                $(form).find('span'+prefix+'_error').text(val[0]);
-                            });
-                        }else{
-                            $(form)[0].reset();
-                            t.modal("hide");
-                            table.ajax.reload();
-                            toastr.success(data.msg)
-                        }
-                    },
-                    error:function (error) {
-                        console.log("Thêm không thành công",error);
-                    }
-                })
-            }))
+                }),
+                a.on("submit", function (e) {
+                    e.preventDefault();
+                    var s = a.valid();
+                    var form = this;
+                    $.ajax({
+                        type:"POST",
+                        url:$(form).attr('action'),
+                        data: new FormData(form),
+                        processData: false,
+                        dataType:'json',
+                        contentType: false,
+                        headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                        success: function(data){
+                        
+                                $(form)[0].reset();
+                                $('#addGalleryCategoryModal').modal("hide");
+                                table.ajax.reload();
+                                toastr.success(data.msg)
+                            
+                        },
+                        error:function (error) {
 
-            $('body').on('click' ,'#deleteTag' , function(){
-                var tag_id = $(this).data("id");
-                if ( confirm("Bạn có chắc chắn muốn xóa nhãn này không ?")) {
+                            console.log("Thêm không thành công",error);
+                        }
+                    })
+                }))
+    
+
+// Delete 
+            $('body').on('click' ,'#deleteGalleryCategory' , function(){
+                var gallery_cate_id = $(this).data("id");
+                if ( confirm("Bạn có chắc chắn muốn xóa  không ?")) {
                 $.ajax({
                     type:"DELETE",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url:"{{ route('tag.list.api') }}"+"/"+tag_id,
+                    url:"{{ route('gallery.category.list.api') }}"+"/"+gallery_cate_id,
                     success: function(){
                         table.ajax.reload();
                         toastr.success("Xóa Thành Công");
@@ -400,10 +401,10 @@
                 }
             });
 // get detail edit
-            $('body').on('click' ,'#editTag' , function(){
-                var tag_id = $(this).data("id");
-                $.get('<?= route("tag.list.api") ?>'+"/show/"+tag_id , function (data) {
-            var tagtUploadImg = $("#tag-upload-img"),
+            $('body').on('click' ,'#editGalleryCategory' , function(){
+                var gallery_cate_id = $(this).data("id");
+                $.get('<?= route("gallery.category.list.api") ?>'+"/show/"+gallery_cate_id , function (data) {
+                    var tagtUploadImg = $("#tag-upload-img"),
                 tagUpload = $("#tag-upload"),
                 uploadedImage = $(".uploadedImage"),
                 tagReset = $("#tag-reset");
@@ -419,23 +420,21 @@
                     n.readAsDataURL(uploadedImage[0]);
                 }),
                 tagReset.on("click", function () {
-                    uploadedImage.attr("src", data.image ? "/storage/"+ data.image 
+                    uploadedImage.attr("src", data.avatar ? "/storage/"+ data.avatar 
                     : "{{ asset('admin/images/portrait/small/image-none.png') }}" );
                     });
                 };
-                    var form = $('#editTagForm');
-                    $("#tag-upload-img").attr("src", data.image ? "/storage/"+ data.image 
+                    var form = $('#editGalleryCategoryForm');
+                    $("#tag-upload-img").attr("src", data.avatar ? "/storage/"+ data.avatar 
                     : "{{ asset('admin/images/portrait/small/image-none.png') }}" );
                     form.find('input[name="id"]').val(data.id); 
-                    form.find('input[name="name_tag"]').val(data.name_tag);    
-                    form.find('input[name="note"]').val(data.note);
+                    form.find('input[name="title"]').val(data.title);
                 },'json')
             });
-// submit edit in db
-
-            $('#editTagForm').on('submit', function(e){
+            $('#editGalleryCategoryForm').on('submit', function(e){
                 e.preventDefault();
                 var form = this;
+                console.log(form);
                 $.ajax({
                     type:"POST",
                     url:$(form).attr('action'),
@@ -454,7 +453,7 @@
                         }else{
                             console.log('fomr',data);
                             $(form)[0].reset();
-                            $('#editTagModal').modal("hide");
+                            $('#editGalleryCategoryModal').modal("hide");
                             table.ajax.reload();
                             toastr.success(data.msg)
                         }
@@ -464,9 +463,16 @@
                     }
                 })
             });
-
+  // Filter form control to default size
+  // ? setTimeout used for multilingual table initialization
+  setTimeout(() => {
+    $('.dataTables_filter .form-control').removeClass('form-control-sm');
+    $('.dataTables_length .form-select').removeClass('form-select-sm');
+  }, 300);
 });
 
 
+
 </script>
+
 @endsection

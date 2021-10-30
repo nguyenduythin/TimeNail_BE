@@ -1,5 +1,5 @@
 @extends('admin.layout.main')
-@section('title', 'Tag')
+@section('title', 'Slider')
 @section('content')
 <div class="app-content content ">
     <div class="content-overlay"></div>
@@ -10,43 +10,43 @@
         <div class="content-body">
 
             <!-- users list start -->
-            <section class="app-tag-list">
+            <section class="app-slider-list">
                 
                 <div class="card">
                     <div class="card-datatable table-responsive pt-0">
-                        <table class="tag-list-table table" id="DataTables_Table_Tag">
+                        <table class="slider-list-table table" id="DataTables_Table_Slider">
                             <thead class="table-light">
                                 <tr>
 
-                                    <th>Tên thẻ</th>
+                                    <th>Tên slider</th>
                                     <th>Ảnh</th>
-                                    <th>Ghi chú</th>
+                                    <th>Thứ tự hiển thị</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                         </table>
                     </div>
                     <!-- Modal to add new user starts-->
-                    <div class="modal modal-slide-in new-tag-modal fade" id="modals-slide-in">
+                    <div class="modal modal-slide-in new-slider-modal fade" id="modals-slide-in">
                         <div class="modal-dialog">
-                            <form method="POST" action="{{ route('tag.add.api') }}"
-                                class="add-new-tag modal-content pt-0" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('slider.add.api') }}"
+                                class="add-new-slider modal-content pt-0" enctype="multipart/form-data">
                                 @csrf
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close">×</button>
                                 <div class="modal-header mb-1">
-                                    <h5 class="modal-title" id="exampleModalLabel">Thêm tên thẻ</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Thêm tên slider</h5>
                                 </div>
                                 <div class="modal-body flex-grow-1">
                                     <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-name_tag">Tên thẻ</label>
-                                        <input type="text" class="form-control dt-name-tag"
-                                            id="basic-icon-default-name_tag" placeholder="name tag" name="name_tag" />
+                                        <label class="form-label" for="basic-icon-default-name_slider">Tên slider</label>
+                                        <input type="text" class="form-control dt-name-slider"
+                                            id="basic-icon-default-name slider" placeholder="name slider" name="name_slider" />
                                     </div>
                                     <div class="mb-1">
-                                        <label class="form-label" for="basic-icon-default-contact">Ghi chú</label>
-                                        <input type="text" id="basic-icon-default-contact" class="form-control "
-                                            placeholder="note" name="note" />
+                                        <label class="form-label" for="basic-icon-default-contact">Thứ tự hiển thị</label>
+                                        <input type="number" id="basic-icon-default-contact" class="form-control "
+                                            placeholder="Thứ tự hiển thị" name="show_image" />
                                     </div>
                                     <div class="mb-1">
                                         <label for="customFile1" class="form-label">Ảnh</label>
@@ -73,32 +73,32 @@
 </div>
 
 <!-- Edit User Modal -->
-<div class="modal fade show" id="editTagModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-tag">
+<div class="modal fade show" id="editSliderModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-slider">
         <div class="modal-content">
             <div class="modal-header bg-transparent">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body pb-5 px-sm-5 pt-50">
                 <div class="text-center mb-2">
-                    <h1 class="mb-1">Cập nhật mới thẻ</h1>
-                    <p>Cập nhập chi tiết nhãn !</p>
+                    <h1 class="mb-1">Cập nhật mới slider</h1>
+                    <p>Cập nhập chi tiết slider !</p>
                 </div>
-                <form id="editTagForm" action="{{ route('tag.update.api') }}" method="POST" class="row gy-1 pt-75"
+                <form id="editSliderForm" action="{{ route('slider.update.api') }}" method="POST" class="row gy-1 pt-75"
                     enctype="multipart/form-data">
                     @csrf
                     <input type="text" name="id" hidden>
                     <div class="d-flex center">
                         <a href="#" class="me-25">
-                            <img src="" id="tag-upload-img" class="uploadedImage rounded me-50" alt="profile image"
+                            <img src="" id="slider-upload-img" class="uploadedImage rounded me-50" alt="profile image"
                                 height="250" width="400" name="image" />
                         </a>
                         <!-- upload and reset button -->
                         <div class="d-flex align-items-end mt-75 ms-1">
                             <div>
-                                <label for="tag-upload" class="btn btn-sm btn-primary mb-75 me-75">Ảnh</label>
-                                <input type="file" id="tag-upload" name="image"  hidden accept="image/*" />
-                                <button type="button" id="tag-reset"
+                                <label for="slider-upload" class="btn btn-sm btn-primary mb-75 me-75">Ảnh</label>
+                                <input type="file" id="slider-upload" name="image"  hidden accept="image/*" />
+                                <button type="button" id="slider-reset"
                                     class="btn btn-sm btn-outline-secondary mb-75">Reset</button>
                                 <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
                             </div>
@@ -106,13 +106,13 @@
                         <!--/ upload and reset button -->
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditSlogan">Tên thẻ</label>
-                        <input type="text" id="modalEditTag name_tag" name="name_tag" class="form-control"
-                            placeholder="name tag" data-msg="Please enter your name_tag" />
+                        <label class="form-label" for="modalEdit">Tên slider</label>
+                        <input type="text" id="modalEdit name_slider" name="name_slider" class="form-control"
+                            placeholder="name slider" data-msg="Please enter your name_slider" />
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditTagNote">Ghi chú</label>
-                        <input type="text" id="modalEditTagNote note" name="note" class="form-control"
+                        <label class="form-label" for="modalEdit">Thứ tự hiển thị</label>
+                        <input type="number" id="modalEdit note" name="show_image" class="form-control"
                             placeholder="note" data-msg="Please enter your note" />
                     </div>
                     <div class="col-12 text-center mt-2 pt-50">
@@ -134,30 +134,30 @@
 <script>
     $(function () {
 
-    var e = $("#DataTables_Table_Tag");
-    var t = $(".new-tag-modal"),
-        a = $(".add-new-tag"),
+    var e = $("#DataTables_Table_Slider");
+    var t = $(".new-slider-modal"),
+        a = $(".add-new-slider"),
         s = $(".select2"),
         n = $(".dt-contact"),
-        o = "{{ route('tag.list') }}",
+        o = "{{ route('slider.list') }}",
         r = "app-user-view-account.html";
         var  table =   e.DataTable({
                 "ajax" : {
-                        "url" : "{{ route('tag.list.api') }}",
+                        "url" : "{{ route('slider.list.api') }}",
                         "type" : "GET",
                         "dataSrc": ""
                         },
                 columns: [
-                    { data: "name_tag"  },
+                    { data: "name_slider"  },
                     { data: "image" }, 
-                    { data: "note" },
+                    { data: "show_image" },
                 ],
                 columnDefs: [
                     {
                         targets: 0,
                         responsivePriority: 2,
                         render: function (e, t, a, s) {
-                            var n = a.name_tag;
+                            var n = a.name_slider;
                             return (
                                 '<div class="d-flex justify-content-left align-items-center"><div class="d-flex flex-column"><a href="' +
                                 r +
@@ -197,11 +197,11 @@
                                 feather.icons["file-text"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
-                                'Details</a><a href="#" id="editTag" data-id="'+a.id+'"  data-bs-toggle="modal" data-bs-target="#editTagModal" class="dropdown-item">' +
+                                'Details</a><a href="#" id="editSlider" data-id="'+a.id+'"  data-bs-toggle="modal" data-bs-target="#editSliderModal" class="dropdown-item">' +
                                 feather.icons["edit"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
-                                'Edit</a><a href="#" id="deleteTag" data-id="'+a.id+'" class="dropdown-item delete-record">' +
+                                'Edit</a><a href="#" id="deleteSlider" data-id="'+a.id+'" class="dropdown-item delete-record">' +
                                 feather.icons["trash-2"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
@@ -286,7 +286,7 @@
                         },
                     },
                     {
-                        text: "Thêm mới nhãn",
+                        text: "Thêm mới slider",
                         className: "add-new btn btn-primary",
                         attr: {
                             "data-bs-toggle": "modal",
@@ -301,7 +301,7 @@
                     details: {
                         display: $.fn.dataTable.Responsive.display.modal({
                             header: function (e) {
-                                return "Details of " + e.data().name_tag;
+                                return "Details of " + e.data().name_slider;
                             },
                         }),
                         type: "column",
@@ -341,13 +341,13 @@
                     });
             })
             a.length && (a.validate({
-                errorClass: "error",
-                rules: {
-                    "name_tag": { required: !0 },
-                    "note": { required: !0 },
-                    "image": { required: !0 },
-                },
-            }),
+                    errorClass: "error",
+                    rules: {
+                        "name_slider": { required: !0 },
+                        "image": { required: !0 },
+                        "show_image": { required: !0 },
+                    },
+                }),
             a.on("submit", function (e) {
                 e.preventDefault();
                 var s = a.valid();
@@ -378,17 +378,20 @@
                         console.log("Thêm không thành công",error);
                     }
                 })
+
+
+      
             }))
 
-            $('body').on('click' ,'#deleteTag' , function(){
-                var tag_id = $(this).data("id");
+            $('body').on('click' ,'#deleteSlider' , function(){
+                var slider_id = $(this).data("id");
                 if ( confirm("Bạn có chắc chắn muốn xóa nhãn này không ?")) {
                 $.ajax({
                     type:"DELETE",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url:"{{ route('tag.list.api') }}"+"/"+tag_id,
+                    url:"{{ route('slider.list.api') }}"+"/"+slider_id,
                     success: function(){
                         table.ajax.reload();
                         toastr.success("Xóa Thành Công");
@@ -400,40 +403,43 @@
                 }
             });
 // get detail edit
-            $('body').on('click' ,'#editTag' , function(){
-                var tag_id = $(this).data("id");
-                $.get('<?= route("tag.list.api") ?>'+"/show/"+tag_id , function (data) {
-            var tagtUploadImg = $("#tag-upload-img"),
-                tagUpload = $("#tag-upload"),
+
+
+            $('body').on('click' ,'#editSlider' , function(){
+                var slider_id = $(this).data("id");
+                $.get('<?= route("slider.list.api") ?>'+"/show/"+slider_id , function (data) {
+            var slidertUploadImg = $("#slider-upload-img"),
+                sliderUpload = $("#slider-upload"),
                 uploadedImage = $(".uploadedImage"),
-                tagReset = $("#tag-reset");
+                sliderReset = $("#slider-reset");
                 if (uploadedImage) {
                 // var src = uploadedImage.attr("src");
-                tagUpload.on("change", function (ch) {
+                sliderUpload.on("change", function (ch) {
                     
                     var n = new FileReader(),
                     uploadedImage = ch.target.files;
                     (n.onload = function () {
-                        tagtUploadImg && tagtUploadImg.attr("src", n.result);
+                        slidertUploadImg && slidertUploadImg.attr("src", n.result);
                     }),
                     n.readAsDataURL(uploadedImage[0]);
                 }),
-                tagReset.on("click", function () {
+                sliderReset.on("click", function () {
                     uploadedImage.attr("src", data.image ? "/storage/"+ data.image 
                     : "{{ asset('admin/images/portrait/small/image-none.png') }}" );
                     });
                 };
-                    var form = $('#editTagForm');
-                    $("#tag-upload-img").attr("src", data.image ? "/storage/"+ data.image 
+                    var form = $('#editSliderForm');
+                    $("#slider-upload-img").attr("src", data.image ? "/storage/"+ data.image 
                     : "{{ asset('admin/images/portrait/small/image-none.png') }}" );
                     form.find('input[name="id"]').val(data.id); 
-                    form.find('input[name="name_tag"]').val(data.name_tag);    
-                    form.find('input[name="note"]').val(data.note);
+                    form.find('input[name="name_slider"]').val(data.name_slider);    
+                    form.find('input[name="show_image"]').val(data.show_image);
                 },'json')
             });
 // submit edit in db
 
-            $('#editTagForm').on('submit', function(e){
+            $('#editSliderForm').on('submit', function(e){
+                
                 e.preventDefault();
                 var form = this;
                 $.ajax({
@@ -454,7 +460,7 @@
                         }else{
                             console.log('fomr',data);
                             $(form)[0].reset();
-                            $('#editTagModal').modal("hide");
+                            $('#editSliderModal').modal("hide");
                             table.ajax.reload();
                             toastr.success(data.msg)
                         }

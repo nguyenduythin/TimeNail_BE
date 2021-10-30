@@ -21,6 +21,9 @@ use App\Http\Controllers\api\admin\DashboardController as AdminDashboardControll
 use App\Http\Controllers\api\admin\LoginController;
 use App\Http\Controllers\api\admin\StaffController as AdminStaffController;
 use App\Http\Controllers\api\admin\TagController as AdminTagController;
+use App\Http\Controllers\api\admin\GalleryCategoryController as AdminGalleryCategoryController;
+use App\Http\Controllers\api\admin\GalleryController as AdminGalleryController;
+use App\Http\Controllers\api\admin\SliderShowController as AdminSliderShowController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -136,7 +139,7 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
     });
     //setting-end thuan
 
-    //setting thuan
+    //tag thuan
     Route::prefix('tag')->group(function () {
         Route::get('/', [AdminTagController::class, 'index'])->name('tag.list.api');
         Route::get('/show/{id}', [AdminTagController::class, 'show']);
@@ -144,7 +147,37 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
         Route::post('edit', [AdminTagController::class, 'update'])->name('tag.update.api');
         Route::delete('{id}', [AdminTagController::class, 'destroy']);
     });
-    //setting-end thuan
+    //tag-end thuan
+
+    //gallery-category thuan
+    Route::prefix('gallery-category')->group(function () {
+        Route::get('/', [AdminGalleryCategoryController::class, 'index'])->name('gallery.category.list.api');
+        Route::get('/show/{id}', [AdminGalleryCategoryController::class, 'show']);
+        Route::post('/', [AdminGalleryCategoryController::class, 'store'])->name('gallery.category.add.api');
+        Route::post('edit', [AdminGalleryCategoryController::class, 'update'])->name('gallery.category.update.api');
+        Route::delete('{id}', [AdminGalleryCategoryController::class, 'destroy']);
+    });
+    //gallery-category-end thuan
+
+    //gallery thuan
+    Route::prefix('gallery')->group(function () {
+        Route::get('/', [AdminGalleryController::class, 'index'])->name('gallery.list.api');
+        Route::get('/show/{id}', [AdminGalleryController::class, 'show']);
+        Route::post('/', [AdminGalleryController::class, 'store'])->name('gallery.add.api');
+        Route::post('edit', [AdminGalleryController::class, 'update'])->name('gallery.update.api');
+        Route::delete('{id}', [AdminGalleryController::class, 'destroy']);
+    });
+    //gallery-end thuan
+
+    //slider thuan
+    Route::prefix('slider')->group(function () {
+        Route::get('/', [AdminSliderShowController::class, 'index'])->name('slider.list.api');
+        Route::get('/show/{id}', [AdminSliderShowController::class, 'show']);
+        Route::post('/', [AdminSliderShowController::class, 'store'])->name('slider.add.api');
+        Route::post('edit', [AdminSliderShowController::class, 'update'])->name('slider.update.api');
+        Route::delete('{id}', [AdminSliderShowController::class, 'destroy']);
+    });
+    //slider-end thuan
 
     // contact
     Route::prefix('contact')->group(function () {

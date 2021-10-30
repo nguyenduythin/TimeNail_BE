@@ -23,11 +23,8 @@
                             <thead class="table-light">
                                 <tr>
                                     <th>Phản hồi</th>
-                                    <th>Ảnh</th>
                                     <th>Sao</th>
-                                    <th>Người phục vụ</th>
-                                    <th>Tên dịch vụ</th>
-                                    <th>Tên combo dịch vụ</th>
+                                    <th>Tên người phản hồi</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -60,11 +57,8 @@
                         },
                 columns: [
                     { data: "comment"  },
-                    { data: "image" }, 
                     { data: "number_star" },
                     { data: "full_name" },
-                    { data: "name_service" },
-                    { data: "name_combo" },
                 ],
                 columnDefs: [
                     {
@@ -82,21 +76,7 @@
                         },
                     },
                     {
-                        targets: 1,
-                        render: function (e, t, a, s) {
-                            var i = a.image;
-                                
-                            if (i)
-                                var c =
-                                    '<div><img src="/storage/'+
-                                    i +
-                                    '" alt="Avatar" height="50" width="50"></div>';
-                            
-                                return c ;
-                        },
-                    },
-                    {
-                        targets: 6,
+                        targets: 3,
                         title: "Actions",
                         orderable: !1,
                         render: function (e, t, a, s) {
@@ -237,7 +217,7 @@
                 language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } },
                 initComplete: function () {
                     this.api()
-                            .columns(2)
+                            .columns(1)
                             .every(function () {
                                 var e = this,
                                     t =
@@ -281,6 +261,9 @@ $('body').on('click' ,'#deleteFeedback' , function(){
      if ( confirm("Bạn có chắc chắn muốn xóa phản hồi này không ?")) {
     $.ajax({
         type:"DELETE",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
         url:"{{ route('feedback.list.api') }}"+"/"+feedback_id,
         success: function(){
             table.ajax.reload();
