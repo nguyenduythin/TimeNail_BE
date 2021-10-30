@@ -453,6 +453,9 @@
                 if ( confirm("Bạn có chắc chắn muốn xóa cài đặt này không ?")) {
                 $.ajax({
                     type:"DELETE",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     url:"{{ route('setting.list.api') }}"+"/"+setting_id,
                     success: function(){
                         table.ajax.reload();

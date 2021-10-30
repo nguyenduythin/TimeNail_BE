@@ -384,6 +384,9 @@
             if ( confirm("Bạn có chắc chắn muốn xóa nhãn này không ?")) {
                 $.ajax({
                     type:"DELETE",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     url:"{{ route('blog.category.list.api') }}"+"/"+blogCate_id,
                     success: function(){
                         table.ajax.reload();

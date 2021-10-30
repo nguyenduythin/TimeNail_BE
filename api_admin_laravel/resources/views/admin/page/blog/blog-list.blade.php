@@ -607,6 +607,9 @@
                     if ( confirm("Bạn có chắc chắn muốn xóa  không ?")) {
                     $.ajax({
                         type:"DELETE",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
                         url:"{{ route('blog.list.api') }}"+"/"+blog_id,
                         success: function(){
                             table.ajax.reload();

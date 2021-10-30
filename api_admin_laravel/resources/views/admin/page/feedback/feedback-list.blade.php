@@ -261,6 +261,9 @@ $('body').on('click' ,'#deleteFeedback' , function(){
      if ( confirm("Bạn có chắc chắn muốn xóa phản hồi này không ?")) {
     $.ajax({
         type:"DELETE",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
         url:"{{ route('feedback.list.api') }}"+"/"+feedback_id,
         success: function(){
             table.ajax.reload();

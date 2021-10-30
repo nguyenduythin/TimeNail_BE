@@ -5,14 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ComboService extends Model
+class BillStaff extends Model
 {
     use HasFactory;
 
-    protected $table = 'combo_service';
+    protected $table = 'bill_staff';
 
-    protected $fillable = [
-        'service_id',
-        'combo_id',
-    ];
 }

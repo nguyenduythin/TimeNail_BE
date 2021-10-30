@@ -11,4 +11,5 @@ class LoginController extends Controller
     {
         return view('admin.page.login');
     }
+    
 }

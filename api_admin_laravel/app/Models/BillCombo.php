@@ -5,14 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ComboService extends Model
+class BillCombo extends Model
 {
     use HasFactory;
 
-    protected $table = 'combo_service';
-
-    protected $fillable = [
-        'service_id',
-        'combo_id',
-    ];
+    protected $table = 'bill_combo';
 }

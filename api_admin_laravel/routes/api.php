@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\admin\BillController;
 use App\Http\Controllers\api\admin\CategoryServiceController;
 use App\Http\Controllers\api\admin\ComboController;
 use App\Http\Controllers\api\admin\ContactController;
@@ -10,8 +11,15 @@ use App\Http\Controllers\api\admin\FeedbackController as AdminFeedbackController
 use App\Http\Controllers\api\admin\PermissionController;
 use App\Http\Controllers\api\admin\RoleController;
 use App\Http\Controllers\api\admin\SettingController as AdminSettingController;
+use App\Http\Controllers\api\client\CategoryServiceController as ClientCategoryServiceController;
+use App\Http\Controllers\api\client\ComboController as ClientComboController;
+use App\Http\Controllers\api\client\ServiceController as ClientServiceController;
+use App\Models\CategoryService;
 use App\Http\Controllers\api\admin\BlogCategoryController as AdminBlogCategoryController;
 use App\Http\Controllers\api\admin\BlogController as AdminBlogController;
+use App\Http\Controllers\api\admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\api\admin\LoginController;
+use App\Http\Controllers\api\admin\StaffController as AdminStaffController;
 use App\Http\Controllers\api\admin\TagController as AdminTagController;
 use App\Http\Controllers\api\admin\GalleryCategoryController as AdminGalleryCategoryController;
 use App\Http\Controllers\api\admin\GalleryController as AdminGalleryController;
@@ -30,8 +38,33 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+//client
+Route::prefix('client')->group(function(){
+    //combo
+    Route::prefix('combo')->group(function(){
+        Route::get('/', [ClientComboController::class, 'index'])->name('combo.list');
+        Route::get('/show/{id}', [ClientComboController::class, 'show']);
+    });
+    //cate service
+    Route::prefix('cate-service')->group(function(){
+        Route::get('/', [ClientCategoryServiceController::class, 'index'])->name('cate-service.list');
+        Route::get('/show/{id}', [ClientCategoryServiceController::class, 'show']);
+    });
+    //service
+    Route::prefix('service')->group(function(){
+        Route::get('/', [ClientServiceController::class, 'index'])->name('service.list');
+        Route::get('/show/{id}', [ClientServiceController::class, 'show']);
+    });
+});
 
-Route::prefix('admin')->group(function () {
+
+Route::post('/login', [LoginController::class, 'login'])->name('login.admin');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout.admin');
+
+
+
+Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.api');
     // user
     Route::prefix('user')->group(function () {
         Route::get('/', [AdminUserController::class, 'index'])->name('user.list.api');
@@ -39,6 +72,14 @@ Route::prefix('admin')->group(function () {
         Route::post('/', [AdminUserController::class, 'store'])->name('user.add.api');
         Route::post('edit', [AdminUserController::class, 'update'])->name('user.update.api');
         Route::delete('{id}', [AdminUserController::class, 'destroy']);
+    });
+    //staff
+    Route::prefix('staff')->group(function () {
+        Route::get('/', [AdminStaffController::class, 'index'])->name('staff.list.api');
+        Route::get('/show/{id}', [AdminStaffController::class, 'show']);
+        Route::post('/', [AdminStaffController::class, 'store'])->name('staff.add.api');
+        Route::post('edit', [AdminStaffController::class, 'update'])->name('staff.update.api');
+        Route::delete('{id}', [AdminStaffController::class, 'destroy']);
     });
 
     // permission
@@ -49,8 +90,8 @@ Route::prefix('admin')->group(function () {
         Route::post('edit', [PermissionController::class, 'update'])->name('permission.update.api');
         Route::delete('{id}', [PermissionController::class, 'destroy']);
     });
-      // role
-      Route::prefix('role')->group(function () {
+    // role
+    Route::prefix('role')->group(function () {
         Route::get('/', [RoleController::class, 'index'])->name('role.list.api');
         Route::get('/show/{id}', [RoleController::class, 'show']);
         Route::post('/', [RoleController::class, 'store'])->name('role.add.api');
@@ -144,7 +185,6 @@ Route::prefix('admin')->group(function () {
         Route::delete('{id}', [ContactController::class, 'destroy']);
     });
 
-
     //discount
     Route::prefix('discount')->group(function () {
         Route::get('/', [DiscountController::class, 'index'])->name('discount.list.api');
@@ -152,35 +192,43 @@ Route::prefix('admin')->group(function () {
         Route::delete('{id}', [DiscountController::class, 'destroy']);
     });
 
-
     //category service
-    Route::prefix('cate-service')->group(function(){
-        Route::get('/',[CategoryServiceController::class,'index'])->name('cate-service.list.api');
+    Route::prefix('cate-service')->group(function () {
+        Route::get('/', [CategoryServiceController::class, 'index'])->name('cate-service.list.api');
         Route::get('/show/{id}', [CategoryServiceController::class, 'show']);
         Route::post('/', [CategoryServiceController::class, 'store'])->name('cate-service.add.api');
         Route::post('edit', [CategoryServiceController::class, 'update'])->name('cate-service.update.api');
-        Route::delete('{id}',[CategoryServiceController::class,'destroy']);
+        Route::delete('{id}', [CategoryServiceController::class, 'destroy']);
     });
 
     //service
-    Route::prefix('service')->group(function(){
-        Route::get('/',[ServiceController::class,'index'])->name('service.list.api');
+    Route::prefix('service')->group(function () {
+        Route::get('/', [ServiceController::class, 'index'])->name('service.list.api');
         Route::get('/show/{id}', [ServiceController::class, 'show']);
         Route::post('/', [ServiceController::class, 'store'])->name('service.add.api');
         Route::post('edit', [ServiceController::class, 'update'])->name('service.update.api');
-        Route::delete('{id}',[ServiceController::class,'destroy']);
+        Route::delete('{id}', [ServiceController::class, 'destroy']);
     });
-
 
     //combo
     Route::prefix('combo')->group(function(){
         Route::get('/',[ComboController::class,'index'])->name('combo.list.api');
+        Route::get('/show/{id}', [ComboController::class, 'show']);
         Route::post('/', [ComboController::class, 'store'])->name('combo.add.api');
+        Route::post('edit', [ComboController::class, 'update'])->name('combo.update.api');
+        Route::delete('{id}',[ComboController::class,'destroy']);
     });
- 
 
-    
 
+    //bill
+    Route::prefix('bill')->group(function(){
+        Route::get('/',[BillController::class,'index'])->name('bill.list.api');
+        Route::get('/show/{id}', [BillController::class, 'show']);
+        // Route::post('/', [BillController::class, 'store'])->name('bill.add.api');
+        Route::post('edit', [BillController::class, 'update'])->name('bill.update.api');
+        Route::delete('{id}',[BillController::class,'destroy']);
+        Route::get('/staff',[BillController::class,'staff'])->name('bill-staff.list.api');
+    });
 });
 
 

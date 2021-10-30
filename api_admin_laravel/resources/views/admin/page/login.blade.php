@@ -1,24 +1,10 @@
 <!DOCTYPE html>
-<!--
-Template Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-Author: PixInvent
-Website: http://www.pixinvent.com/
-Contact: hello@pixinvent.com
-Follow: www.twitter.com/pixinvents
-Like: www.facebook.com/pixinvents
-Purchase: https://1.envato.market/vuexy_admin
-Renew Support: https://1.envato.market/vuexy_admin
-License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
 
--->
 <html class="loading" lang="en" data-textdirection="ltr">
 <!-- BEGIN: Head-->
-
-<!-- Mirrored from pixinvent.com/demo/vuexy-html-bootstrap-admin-template/html/ltr/vertical-menu-template/auth-login-basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 04 Sep 2021 07:35:10 GMT -->
-
 <head>
     @include('admin.layout.meta')
-    <title>Login Page - Vuexy - Bootstrap HTML admin template</title>
+    <title>Admin - TimeNails</title>
     <link rel="apple-touch-icon" href="{{ asset('admin/images/ico/apple-icon-120.html')}}">
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600"
@@ -87,18 +73,17 @@ License: You must have a valid license purchased only from themeforest(the above
                                             </g>
                                         </g>
                                     </svg>
-                                    <h2 class="brand-text text-primary ms-1">Vuexy</h2>
+                                    <h2 class="brand-text text-primary ms-1">Timenail</h2>
                                 </a>
 
                                 <h4 class="card-title mb-1">Chào mừng bạn đến với quản lý TimeNail! 👋</h4>
                                 <p class="card-text mb-2">Hãy đăng nhập tài khoản Của bạn!</p>
 
-                                <form class="auth-login-form mt-2"
-                                    action=""
-                                    method="POST">
+                                <form class="auth-login-form mt-2" id="loginForm">
+                                    @csrf
                                     <div class="mb-1">
                                         <label for="login-email" class="form-label">Email</label>
-                                        <input type="text" class="form-control" id="login-email" name="login-email"
+                                        <input type="text" class="form-control" id="login-email" name="email"
                                             placeholder="john@example.com" aria-describedby="login-email" tabindex="1"
                                             autofocus />
                                     </div>
@@ -112,9 +97,9 @@ License: You must have a valid license purchased only from themeforest(the above
                                         </div>
                                         <div class="input-group input-group-merge form-password-toggle">
                                             <input type="password" class="form-control form-control-merge"
-                                                id="login-password" name="login-password" tabindex="2"
+                                                id="login-password" name="password" tabindex="2"
                                                 placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                                aria-describedby="login-password" />
+                                                aria-describedby="login-password" autocomplete />
                                             <span class="input-group-text cursor-pointer"><i
                                                     data-feather="eye"></i></span>
                                         </div>
@@ -128,9 +113,6 @@ License: You must have a valid license purchased only from themeforest(the above
                                     </div>
                                     <button class="btn btn-primary w-100" tabindex="4">Đăng Nhập</button>
                                 </form>
-
-                             
-                               
                             </div>
                         </div>
                         <!-- /Login basic -->
@@ -143,49 +125,45 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- END: Content-->
 
 
-    @include('admin.layout.script')
+ @include('admin.layout.script')
 
-    <script>
-        $(function () {
+<script>
+$(function () {
   'use strict';
-
   var pageLoginForm = $('.auth-login-form');
-
-  // jQuery Validation
-  // --------------------------------------------------------------------
-  if (pageLoginForm.length) {
-    pageLoginForm.validate({
-      /*
-      * ? To enable validation onkeyup
-      onkeyup: function (element) {
-        $(element).valid();
-      },*/
-      /*
-      * ? To enable validation on focusout
-      onfocusout: function (element) {
-        $(element).valid();
-      }, */
-      rules: {
-        'login-email': {
-          required: true,
-          email: true
+  $('#loginForm').on('submit', function(e){
+    e.preventDefault();
+   var form = this;
+    $.ajax({
+        type:"POST",
+        url:"{{ route('login.admin') }}",
+        data: new FormData(form),
+        processData: false,
+        dataType:'json',
+        contentType: false,
+        success: function(data){
+            if (data.error) {
+                toastr.error(data.error)
+            }
+            if (data.success) {
+                window.location.href = "/";
+                toastr.success(data.success);
+            }
         },
-        'login-password': {
-          required: true
+        error:function (error) {
+            toastr.warning("Có gì đó đang sảy ra !");
+            console.log("Đăng nhập không thành công !",error);
         }
-      }
-    });
-  }
+    })
 });
-        $(window).on('load',  function(){
-        if (feather) {
-          feather.replace({ width: 14, height: 14 });
-        }
-      })
-    </script>
+
+});
+ $(window).on('load',  function(){
+if (feather) {
+    feather.replace({ width: 14, height: 14 });
+}
+})
+</script>
 </body>
 <!-- END: Body-->
-
-<!-- Mirrored from pixinvent.com/demo/vuexy-html-bootstrap-admin-template/html/ltr/vertical-menu-template/auth-login-basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 04 Sep 2021 07:35:10 GMT -->
-
 </html>

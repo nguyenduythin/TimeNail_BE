@@ -26,20 +26,20 @@ class User extends Authenticatable
         'gender',
         'date_birth',
         'address',
-        'role_id',
         'description_staff',
         'experience_staff',
     ];
+    protected $guard_name = 'sanctum';// có dòng này mới chạy đc lệnh user::role('tên role')
 
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array
      */
-    // protected $hidden = [
-    //     'password',
-    //     'remember_token',
-    // ];
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
     /**
      * The attributes that should be cast.

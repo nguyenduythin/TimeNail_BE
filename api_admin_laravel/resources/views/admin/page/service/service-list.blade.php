@@ -11,70 +11,12 @@
 
             <!-- users list start -->
             <section class="app-user-list">
-                <div class="row">
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                                <div>
-                                    <h3 class="fw-bolder mb-75">21,459</h3>
-                                    <span>Total Users</span>
-                                </div>
-                                <div class="avatar bg-light-primary p-50">
-                                    <span class="avatar-content">
-                                        <i data-feather="user" class="font-medium-4"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                                <div>
-                                    <h3 class="fw-bolder mb-75">4,567</h3>
-                                    <span>Paid Users</span>
-                                </div>
-                                <div class="avatar bg-light-danger p-50">
-                                    <span class="avatar-content">
-                                        <i data-feather="user-plus" class="font-medium-4"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                                <div>
-                                    <h3 class="fw-bolder mb-75">19,860</h3>
-                                    <span>Active Users</span>
-                                </div>
-                                <div class="avatar bg-light-success p-50">
-                                    <span class="avatar-content">
-                                        <i data-feather="user-check" class="font-medium-4"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                                <div>
-                                    <h3 class="fw-bolder mb-75">237</h3>
-                                    <span>Pending Users</span>
-                                </div>
-                                <div class="avatar bg-light-warning p-50">
-                                    <span class="avatar-content">
-                                        <i data-feather="user-x" class="font-medium-4"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
                 <!-- list and filter start -->
                 <div class="card">
+                    <div class="card-body border-bottom">
+                        <h4 class="card-title">Dịch Vụ</h4>
+                    </div>
                     <div class="card-datatable table-responsive pt-0">
                         <table class="user-list-table table" id="DataTables_Table_User">
                             <thead class="table-light">
@@ -165,7 +107,7 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserFirstName">Giá Dịch Vụ (₫)</label>
-                        <input disabled type="number" id="modalEditUserFirstName full_name" name="price" class="form-control" placeholder="₫100,000" />
+                        <input disabled type="number" id="modalEditUserFirstName full_name" name="price" class="form-control" placeholder="100,000₫" />
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserFirstName">Tổng Thời Gian (phút)</label>
@@ -207,7 +149,7 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserFirstName">Giá Dịch Vụ (₫)</label>
-                        <input type="text" data-type="currency" id="modalEditUserFirstName full_name" name="price" class="form-control" placeholder="₫100,000" />
+                        <input type="text" data-type="currency" id="modalEditUserFirstName full_name" name="price" class="form-control" placeholder="100,000₫" />
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserFirstName">Tổng Thời Gian (phút)</label>
@@ -222,8 +164,6 @@
                         <label class="form-label" for="modalEditUserCountry">Mô Tả</label>
                         <textarea class="form-control" name="short_description" placeholder="Những dịch vụ chuyên nghiệp hứa hẹn sẽ đem lại trải nghiệm tuyệt vời cho quý khách !" id="address" cols="30" rows="4"></textarea>
                     </div>
-
-
                     <div class="col-12 text-center mt-2 pt-50">
                         <button type="submit" class="btn btn-primary me-1">Submit</button>
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
@@ -240,9 +180,6 @@
 @endsection
 @section('script')
 <script>
-
-
-
     //liệt kê cate cho thẻ select category service
     $.get('<?= route("service.list.api") ?>', function(data) {
         data.cate.map(function(x) {
@@ -490,6 +427,9 @@
                     processData: false,
                     dataType: 'json',
                     contentType: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     success: function(data) {
                         if (data.code == 0) {
                             $.each(data.error, function(prefix, val) {
@@ -516,6 +456,9 @@
             if (confirm("Bạn có chắc chắn muốn xóa Dịch vụ này không ?")) {
                 $.ajax({
                     type: "DELETE",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     url: "{{ route('service.list.api') }}" + "/" + user_id,
                     success: function() {
                         table.ajax.reload();
@@ -542,7 +485,14 @@
             }, 'json')
         });
 
-        // get detail edit
+        // list cate cho detailservice
+        $.get('<?= route("service.list.api") ?>', function(data) {
+            data.cate.map(function(x) {
+                document.getElementById('basic-icon-default-fullname12').insertAdjacentHTML('beforeend', '<option id="' + x.id + '" value="' + x.id + '">' + x.name_cate_service + '</option>');
+            })
+        })
+
+        // get detail edit và selected cate đã chọn
         $('body').on('click', '#editUser', function() {
             var user_id = $(this).data("id");
             var cate = null;
@@ -557,11 +507,9 @@
             }, 'json')
             $.get('<?= route("service.list.api") ?>', function(data) {
                 data.cate.map(function(x) {
-                    var html = '<option value="' + x.id + '">' + x.name_cate_service + '</option>'; //định nghĩa thẻ option trong select
                     if (cate == x.id) { //check cate đã chọn
-                        html = '<option selected value="' + x.id + '">' + x.name_cate_service + '</option>';
+                        $("#basic-icon-default-fullname12").find("#" + cate).prop('selected', true);
                     }
-                    document.getElementById('basic-icon-default-fullname12').insertAdjacentHTML('beforeend', html); //render thẻ option vào select
                 })
             })
         });
@@ -576,6 +524,9 @@
                 processData: false,
                 dataType: 'json',
                 contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 success: function(data) {
                     if (data.code == 0) {
                         $.each(data.error, function(prefix, val) {

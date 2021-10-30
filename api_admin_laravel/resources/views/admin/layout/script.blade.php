@@ -21,6 +21,11 @@
 <script src="{{ asset('admin/vendors/js/forms/cleave/cleave.min.js')}}"></script>
 <script src="{{ asset('admin/vendors/js/forms/cleave/addons/cleave-phone.us.js')}}"></script>
 <script src="{{ asset('admin/vendors/js/pickers/flatpickr/flatpickr.min.js')}}"></script>
+<script src="{{ asset('admin/vendors/js/pickers/pickadate/picker.js')}}"></script>
+<script src="{{ asset('admin/vendors/js/pickers/pickadate/picker.date.js')}}"></script>
+<script src="{{ asset('admin/vendors/js/pickers/pickadate/picker.time.js')}}"></script>
+<script src="{{ asset('admin/vendors/js/pickers/pickadate/legacy.js')}}"></script>
+<script src="{{ asset('admin/vendors/js/pickers/flatpickr/flatpickr.min.js')}}"></script>
 {{-- roles page --}}
 <script src="{{ asset('admin/vendors/js/tables/datatable/datatables.checkboxes.min.js')}}"></script>
 {{-- roles page-end --}}
@@ -36,6 +41,7 @@
 <script src="{{ asset('admin/js/scripts/forms/form-validation.js')}}"></script>
 <!-- BEGIN: Page JS-->
 <script src="{{ asset('admin/js/scripts/pages/dashboard-ecommerce.min.js')}}"></script>
+<script src="{{ asset('admin/js/scripts/forms/pickers/form-pickers.min.js')}}"></script>
 <!-- END: Page JS-->
 
 
@@ -56,8 +62,25 @@
     
 
 
+
 @yield('script')
 <script>
+  $('#logout-admin').on('click', function(){
+    $.ajax({
+        type:"GET",
+        url:"{{ route('logout.admin') }}",
+        processData: false,
+        dataType:'json',
+        contentType: false,
+        success: function(data){
+            window.location.href = "/admin-login"; 
+        },
+        error:function (error) {
+            toastr.warning("Có gì đó đang sảy ra !");
+            console.log("Đăng xuất không thành công !",error);
+        }
+    })
+});
   $(window).on('load',  function(){
       if (feather) {
         feather.replace({ width: 14, height: 14 });

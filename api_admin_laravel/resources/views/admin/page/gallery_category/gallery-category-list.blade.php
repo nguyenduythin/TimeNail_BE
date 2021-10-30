@@ -386,6 +386,9 @@
                 if ( confirm("Bạn có chắc chắn muốn xóa  không ?")) {
                 $.ajax({
                     type:"DELETE",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     url:"{{ route('gallery.category.list.api') }}"+"/"+gallery_cate_id,
                     success: function(){
                         table.ajax.reload();
