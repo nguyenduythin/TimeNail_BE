@@ -32,6 +32,8 @@
                                     <th>Giới tính</th>
                                     <th>Số điện thoại</th>
                                     <th>Địa chỉ</th>
+                                    <th>Kinh nghiệm</th>
+                                    <th>Giới thiệu</th>
 
                                     <th>Vai trò</th>
                                     <th>Hành động</th>
@@ -200,7 +202,7 @@
                     <div class="col-12 col-md-6">
                         <i data-feather='lock'></i>
                         <label class="form-label" for="role">Vai trò</label>
-                        <select id="staff-role" class="select2 form-select" name="role">
+                        <select id="staff-role" class="form-select" name="role">
                         </select>
 
                     </div>
@@ -209,8 +211,6 @@
                         <input type="password" id="modalEditTaxID " name="password"
                             class="form-control modal-edit-tax-id" placeholder="password" />
                     </div>
-
-
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserPhone">Số điện thoại</label>
                         <input type="text" id="modalEditUserPhone phone" name="phone"
@@ -236,13 +236,21 @@
                                 <label class="form-check-label" for="gender2">Nữ</label>
                             </div>
                         </div>
-
                     </div>
-                    <div class="col-12 ">
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="modalEditUserPhone">Kinh nghiệm</label>
+                        <input type="text" id="modalEditUserPhone phone" name="experience_staff"
+                            class="form-control phone-number-mask" placeholder="+1" />
+                    </div>
+                    <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserCountry">Địa chỉ</label>
                         <textarea class="form-control" name="address" id="address" cols="30" rows="1"></textarea>
                     </div>
-
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="modalEditUserCountry">Mô tả</label>
+                        <textarea class="form-control" name="description_staff" id="description_staff" cols="30"
+                            rows="1"></textarea>
+                    </div>
 
                     <div class="col-12 text-center mt-2 pt-50">
                         <button type="submit" class="btn btn-primary me-1">Lưu</button>
@@ -276,12 +284,13 @@
                         "dataSrc": "user"
                         },
                 columns: [
-                    // { data: "" }, 
                     { data: "full_name"  },
-                    // { data: "email" },
                     { data: "gender" }, 
                     { data: "phone" },
                     { data: "address" },
+                    { data: "experience_staff" },
+                    { data: "description_staff" },
+
                 ],
                 columnDefs: [
                     {
@@ -330,7 +339,7 @@
                         },
                     },
                     {
-                        targets: 4,
+                        targets: 6,
                         render: function (e, t, a, s) {
                             var n = a.roles.map(n=> n.name);
                             return (
@@ -368,8 +377,14 @@
                             }
                         },
                     },
+                    {  
+                        targets: 4,
+                        render: function (e, t, a, s) {
+                            return  (`<span class="badge badge-light-primary"><span>${a.experience_staff}</span></span>`);
+                        },
+                    },
                     {
-                        targets: 5,
+                        targets: 7,
                         title: "Actions",
                         orderable: !1,
                         render: function (e, t, a, s) {
@@ -422,7 +437,7 @@
                                         class: "font-small-4 me-50",
                                     }) + "Print",
                                 className: "dropdown-item",
-                           exportOptions: { columns: [0,1, 2, 3,4 ] },
+                           exportOptions: { columns: [0,1, 2, 3, 4 , 5, 6 ] },
                             },
                             {
                                 extend: "csv",
@@ -431,7 +446,7 @@
                                         class: "font-small-4 me-50",
                                     }) + "Csv",
                                 className: "dropdown-item",
-                            exportOptions: { columns: [0,1, 2, 3,4 ] },
+                            exportOptions: { columns: [0,1, 2, 3, 4 , 5, 6 ] },
                             },
                             {
                                 extend: "excel",
@@ -440,7 +455,7 @@
                                         class: "font-small-4 me-50",
                                     }) + "Excel",
                                 className: "dropdown-item",
-                               exportOptions: { columns: [0,1, 2, 3,4 ] },
+                               exportOptions: { columns: [0,1, 2, 3, 4 , 5, 6 ] },
                             },
                             {
                                 extend: "pdf",
@@ -449,7 +464,7 @@
                                         class: "font-small-4 me-50",
                                     }) + "Pdf",
                                 className: "dropdown-item",
-                             exportOptions: { columns: [0,1, 2, 3,4 ] },
+                             exportOptions: { columns: [0,1, 2, 3, 4 , 5, 6 ] },
                             },
                             {
                                 extend: "copy",
@@ -458,7 +473,7 @@
                                         class: "font-small-4 me-50",
                                     }) + "Copy",
                                 className: "dropdown-item",
-                                exportOptions: { columns: [0,1, 2, 3 ,4] },
+                                exportOptions: { columns: [0,1, 2, 3 ,4 , 5, 6] },
                             },
                         ],
                         init: function (e, t, a) {
@@ -622,7 +637,9 @@ $('body').on('click' ,'#editUser' , function(){
     form.find('input[name="email"]').val(data.email);  
     form.find('input[name="phone"]').val(data.phone);
     form.find('input[name="date_birth"]').val(data.date_birth);   
+    form.find('input[name="experience_staff"]').val(data.experience_staff); 
     form.find('input[name="password"]').val(data.password); 
+    form.find('#description_staff').val(data.description_staff); 
     form.find('#address').val(data.address); 
     if (data.gender == 1) {
         $('#gender1').attr('checked',true);

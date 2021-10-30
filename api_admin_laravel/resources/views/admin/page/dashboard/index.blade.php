@@ -45,7 +45,7 @@
               <div class="card-header">
                 <h4 class="card-title">Thống kê </h4>
                 <div class="d-flex align-items-center">
-                  <p class="card-text font-small-2 me-25 mb-0">Cập nhật 1 tháng trước</p>
+                  <p class="card-text font-small-2 me-25 mb-0">Cập nhật mới</p>
                 </div>
               </div>
               <div class="card-body statistics-body">
@@ -54,12 +54,12 @@
                     <div class="d-flex flex-row">
                       <div class="avatar bg-light-primary me-2">
                         <div class="avatar-content">
-                          <i data-feather="trending-up" class="avatar-icon"></i>
+                          <i data-feather="user-check" class="avatar-icon"></i>
                         </div>
                       </div>
                       <div class="my-auto">
-                        <h4 class="fw-bolder mb-0">230k</h4>
-                        <p class="card-text font-small-3 mb-0">Bán</p>
+                        <h4 class="fw-bolder mb-0" id="staff-count"></h4>
+                        <p class="card-text font-small-3 mb-0">Nhân viên</p>
                       </div>
                     </div>
                   </div>
@@ -71,7 +71,7 @@
                         </div>
                       </div>
                       <div class="my-auto">
-                        <h4 class="fw-bolder mb-0">8.549k</h4>
+                        <h4 class="fw-bolder mb-0" id="user-count"></h4>
                         <p class="card-text font-small-3 mb-0">Tài khoản</p>
                       </div>
                     </div>
@@ -84,7 +84,7 @@
                         </div>
                       </div>
                       <div class="my-auto">
-                        <h4 class="fw-bolder mb-0">1.423k</h4>
+                        <h4 class="fw-bolder mb-0" id="service-count"></h4>
                         <p class="card-text font-small-3 mb-0">Dịch vụ</p>
                       </div>
                     </div>
@@ -97,7 +97,7 @@
                         </div>
                       </div>
                       <div class="my-auto">
-                        <h4 class="fw-bolder mb-0">$9745</h4>
+                        <h4 class="fw-bolder mb-0" id="combo-count"></h4>
                         <p class="card-text font-small-3 mb-0">Combo</p>
                       </div>
                     </div>
@@ -255,6 +255,14 @@
 
 
 <script>
+  $.get('<?= route("dashboard.api") ?>', function(data) {
+        $('#combo-count').html(data.combo);
+        $('#user-count').html(data.user);
+
+        $('#staff-count').html(data.staff);
+        $('#service-count').html(data.service);
+
+ })
   const MONTHS = [
   'Tháng 1',
   'Tháng 2',

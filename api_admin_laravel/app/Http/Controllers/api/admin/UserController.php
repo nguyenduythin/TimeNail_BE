@@ -21,7 +21,15 @@ class UserController extends Controller
         $users = User::all();
         $users->load('roles');
         $roles = Role::all();
-        return response()->json(['user' => $users, "role" => $roles]);
+        $staff = User::role('Staff')->count();
+        $member = User::role('Member')->count();
+        $admin = User::role('Admin')->count();
+        $editor = User::role('Editor')->count();
+        return response()->json([
+            'user' => $users, "role" => $roles,
+            "staff" => $staff, "member" => $member,
+            "admin" => $admin, "editor" => $editor
+        ]);
     }
 
     /**

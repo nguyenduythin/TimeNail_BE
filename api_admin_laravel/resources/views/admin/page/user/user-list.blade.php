@@ -16,8 +16,8 @@
                         <div class="card">
                             <div class="card-body d-flex align-items-center justify-content-between">
                                 <div>
-                                    <h3 class="fw-bolder mb-75">21,459</h3>
-                                    <span>Total Users</span>
+                                    <h3 class="fw-bolder mb-75" id="member-count"></h3>
+                                    <span>Thành viên</span>
                                 </div>
                                 <div class="avatar bg-light-primary p-50">
                                     <span class="avatar-content">
@@ -31,12 +31,12 @@
                         <div class="card">
                             <div class="card-body d-flex align-items-center justify-content-between">
                                 <div>
-                                    <h3 class="fw-bolder mb-75">4,567</h3>
-                                    <span>Paid Users</span>
+                                    <h3 class="fw-bolder mb-75" id="admin-count"></h3>
+                                    <span>Quản lý</span>
                                 </div>
                                 <div class="avatar bg-light-danger p-50">
                                     <span class="avatar-content">
-                                        <i data-feather="user-plus" class="font-medium-4"></i>
+                                        <i data-feather="shield" class="font-medium-4"></i>
                                     </span>
                                 </div>
                             </div>
@@ -46,8 +46,8 @@
                         <div class="card">
                             <div class="card-body d-flex align-items-center justify-content-between">
                                 <div>
-                                    <h3 class="fw-bolder mb-75">19,860</h3>
-                                    <span>Active Users</span>
+                                    <h3 class="fw-bolder mb-75" id="staff-count"></h3>
+                                    <span>Nhân viên</span>
                                 </div>
                                 <div class="avatar bg-light-success p-50">
                                     <span class="avatar-content">
@@ -61,12 +61,12 @@
                         <div class="card">
                             <div class="card-body d-flex align-items-center justify-content-between">
                                 <div>
-                                    <h3 class="fw-bolder mb-75">237</h3>
-                                    <span>Pending Users</span>
+                                    <h3 class="fw-bolder mb-75" id="editor-count"></h3>
+                                    <span>Người biên tập</span>
                                 </div>
                                 <div class="avatar bg-light-warning p-50">
                                     <span class="avatar-content">
-                                        <i data-feather="user-x" class="font-medium-4"></i>
+                                        <i data-feather="edit-3" class="font-medium-4"></i>
                                     </span>
                                 </div>
                             </div>
@@ -87,21 +87,15 @@
                         <table class="user-list-table table" id="DataTables_Table_User">
                             <thead class="table-light">
                                 <tr>
-
                                     <th>Họ & Tên</th>
-                                    {{-- <th>Email</th> --}}
                                     <th>Giới tính</th>
                                     <th>Số điện thoại</th>
                                     <th>Địa chỉ</th>
-
                                     <th>Vai trò</th>
                                     <th>Hành động</th>
                                 </tr>
                             </thead>
-
-
                         </table>
-
 
                     </div>
                     <!-- Modal to add new user starts-->
@@ -153,24 +147,10 @@
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">Please enter your password.</div>
                                     </div>
-                                    {{-- <div class="mb-1">
-                                        <label class="form-label" for="basic-default-password">Password</label>
-                                        <input type="password" id="basic-icon-default-password"
-                                            name="basic-default-password" class="form-control dt-password"
-                                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="confirm-password">Confirm Password</label>
-                                        <input type="password" id="confirm-password" name="confirm-password"
-                                            class="form-control"
-                                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
-                                    </div> --}}
-                                    {{-- <input type="hidden" name="role" value="65"> --}}
                                     <div class="mb-1">
                                         <label class="form-label" for="bsDob">Ngày sinh</label>
                                         <input type="date" class="form-control picker" name="date_birth" id="bsDob"
                                             required />
-
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">Please enter your date of birth.</div>
                                     </div>
@@ -191,10 +171,7 @@
                             </form>
                         </div>
                     </div>
-
                     <!-- Modal to add new user Ends-->
-
-
                 </div>
                 <!-- list and filter end -->
             </section>
@@ -252,13 +229,15 @@
                         <label class="form-label" for="modalEditUserLastName">Ngày Sinh</label>
                         <input type="date" class="form-control picker" name="date_birth" id="date_birth" required />
                     </div>
+                    @role('Admin')
                     <div class="col-12 col-md-6">
                         <i data-feather='lock'></i>
                         <label class="form-label" for="role">Vai trò</label>
-                        <select id="user-role" class="select2 form-select" name="role">
+                        <select id="user-role" class="form-select" name="role">
                         </select>
-
                     </div>
+                    @endrole
+
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditTaxID">Mật khẩu</label>
                         <input type="password" id="modalEditTaxID " name="password"
@@ -272,11 +251,6 @@
                             class="form-control phone-number-mask" placeholder="+1 (609) 933-44-22"
                             value="+1 (609) 933-44-22" />
                     </div>
-                    {{-- <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditTaxID">Nhập lại mật khẩu</label>
-                        <input type="password" id="modalEditTaxID password_confirm" name="password_confirm"
-                            class="form-control modal-edit-tax-id" placeholder="Tax-8894" />
-                    </div> --}}
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserCountry">Giới Tính</label>
                         <div class="d-flex">
@@ -316,6 +290,12 @@
 @endsection
 @section('script')
 <script>
+$.get('<?= route("user.list.api") ?>', function(data) {
+        $('#staff-count').html(data.staff);
+        $('#admin-count').html(data.admin);
+        $('#editor-count').html(data.editor);
+        $('#member-count').html(data.member);
+ })
     $(function () {
     var e = $("#DataTables_Table_User");
     var t = $(".new-user-modal"),
@@ -437,6 +417,8 @@
                         title: "Actions",
                         orderable: !1,
                         render: function (e, t, a, s) {
+                            var deleteUser = 'oki'
+                            console.log('addđ' ,a.roles[0].name === 'Admin' ,   );
                             return (
                                 '<div class="btn-group"><a class="btn btn-sm dropdown-toggle hide-arrow" data-bs-toggle="dropdown">' +
                                 feather.icons["more-vertical"].toSvg({
@@ -452,11 +434,11 @@
                                 feather.icons["edit"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
-                                'Edit</a><a href="#" id="deleteUser" data-id="'+a.id+'" class="dropdown-item delete-record">' +
+                                'Edit</a> <a href="#" id="deleteUser" data-id="'+a.id+'" class="dropdown-item delete-record">' +
                                 feather.icons["trash-2"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
-                                "Delete</a></div></div></div>"
+                                "Delete </a></div></div></div>"
                             );
 
                         },

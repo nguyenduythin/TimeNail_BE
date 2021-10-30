@@ -20,9 +20,9 @@ class DashboardController extends Controller
         $userCount = User::count();
         $serviceCount = Service::count();
         $comboCount = Combo::count();
+        $staff = User::role('Staff')->count();
 
-
-        return response()->json(['user' => $userCount, "service" => $serviceCount, "combo" => $comboCount]);
+        return response()->json(['user' => $userCount, "service" => $serviceCount, "combo" => $comboCount , 'staff' => $staff]);
     }
 
     /**
