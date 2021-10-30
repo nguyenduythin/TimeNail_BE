@@ -1,5 +1,5 @@
 @extends('admin.layout.main')
-@section('title', 'User')
+@section('title', 'Staff')
 @section('content')
 <div class="app-content content ">
     <div class="content-overlay"></div>
@@ -11,11 +11,11 @@
 
             <!-- users list start -->
             <section class="app-user-list">
-               
+
                 <!-- list and filter start -->
                 <div class="card">
                     <div class="card-body border-bottom">
-                        <h4 class="card-title">Nhân viên</h4>
+                        <h4 class="card-title" style="margin-bottom: 0px; ">Nhân viên</h4>
                         <div class="row">
                             <div class="col-md-4 user_role"></div>
                             <div class="col-md-4 user_plan"></div>
@@ -32,29 +32,46 @@
                                     <th>Giới tính</th>
                                     <th>Số điện thoại</th>
                                     <th>Địa chỉ</th>
+                                    <th>Kinh nghiệm</th>
+                                    <th>Giới thiệu</th>
 
-                                    <th>Chức vụ</th>
-                                    <th>Actions</th>
+                                    <th>Vai trò</th>
+                                    <th>Hành động</th>
                                 </tr>
                             </thead>
-
-
                         </table>
-
-
                     </div>
                     <!-- Modal to add new user starts-->
                     <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
                         <div class="modal-dialog">
-                            <form method="POST" action="{{ route('user.add.api') }}"
+                            <form method="POST" action="{{ route('staff.add.api') }}"
                                 class="add-new-user modal-content pt-0" enctype="multipart/form-data">
                                 @csrf
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close">×</button>
                                 <div class="modal-header mb-1">
-                                    <h5 class="modal-title" id="exampleModalLabel">Thêm tài khoản</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Thêm nhân viên</h5>
                                 </div>
                                 <div class="modal-body flex-grow-1">
+                                    <div class="mb-1">
+                                        <label for="customFile1" class="form-label">Ảnh đại diện</label>
+                                        <input class="form-control" type="file" id="customFile1" name="avatar" />
+                                    </div>
+                                    <div class="mb-1">
+                                        <label class="form-label" class="d-block">Giới tính</label>
+                                        <div class="d-flex">
+                                            <div class="form-check ">
+                                                <input type="radio" id="validationRadio3" name="gender"
+                                                    class="form-check-input" value="1" required />
+                                                <label class="form-check-label" for="validationRadio3">Nam</label>
+                                            </div>
+                                            <div class="form-check " style="margin-left: 10px">
+                                                <input type="radio" id="validationRadio4" name="gender"
+                                                    class="form-check-input" value="2" required />
+                                                <label class="form-check-label" for="validationRadio4">Nữ</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="mb-1">
                                         <label class="form-label" for="basic-icon-default-fullname">Họ & Tên</label>
                                         <input type="text" class="form-control dt-full-name"
@@ -75,24 +92,17 @@
                                     </div>
                                     {{-- <div class="mb-1">
                                         <label class="form-label" for="basic-default-password">Password</label>
-                                        <input
-                                          type="password"
-                                          id="basic-icon-default-password"
-                                          name="basic-default-password"
-                                          class="form-control dt-password"
-                                          placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        />
-                                      </div>
-                                      <div class="mb-1">
+                                        <input type="password" id="basic-icon-default-password"
+                                            name="basic-default-password" class="form-control dt-password"
+                                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                                    </div>
+                                    <div class="mb-1">
                                         <label class="form-label" for="confirm-password">Confirm Password</label>
-                                        <input
-                                          type="password"
-                                          id="confirm-password"
-                                          name="confirm-password"
-                                          class="form-control"
-                                          placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        />
-                                      </div> --}}
+                                        <input type="password" id="confirm-password" name="confirm-password"
+                                            class="form-control"
+                                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                                    </div> --}}
+                                    {{-- <input type="hidden" name="role" value="65"> --}}
                                     <div class="mb-1">
                                         <label class="form-label" for="bsDob">Ngày sinh</label>
                                         <input type="date" class="form-control picker" name="date_birth" id="bsDob"
@@ -107,39 +117,21 @@
                                             placeholder="0336-933-4479" name="phone" />
                                     </div>
                                     <div class="mb-1">
+                                        <label class="form-label" for="basic-icon-default-contact">Kinh nghiệm</label>
+                                        <input type="number" id="basic-icon-default-contact" class="form-control "
+                                            placeholder="1" name="experience_staff" />
+                                    </div>
+                                    <div class="mb-1">
                                         <label class="form-label" for="basic-icon-default-company">Địa chỉ</label>
                                         <input type="text" id="basic-icon-default-company" class="form-control "
                                             placeholder="địa chỉ" name="address" />
                                     </div>
                                     <div class="mb-1">
-                                        <label for="customFile1" class="form-label">Ảnh đại diện</label>
-                                        <input class="form-control" type="file" id="customFile1" name="avatar" />
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" class="d-block">Giới tính</label>
-                                        <div class="form-check my-50">
-                                            <input type="radio" id="validationRadio3" name="gender"
-                                                class="form-check-input" value="1" required />
-                                            <label class="form-check-label" for="validationRadio3">Nam</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" id="validationRadio4" name="gender"
-                                                class="form-check-input" value="2" required />
-                                            <label class="form-check-label" for="validationRadio4">Nữ</label>
-                                        </div>
-                                    </div>
-                                    {{--                                    
-                                    <div class="mb-1">
-                                        <label class="form-label" for="user-role">User Role</label>
-                                        <select id="user-role" class="select2 form-select">
-                                            <option value="subscriber">Subscriber</option>
-                                            <option value="editor">Editor</option>
-                                            <option value="maintainer">Maintainer</option>
-                                            <option value="author">Author</option>
-                                            <option value="admin">Admin</option>
-                                        </select>
-                                    </div> --}}
+                                        <label class="form-label" for="basic-icon-default-company">Giới thiệu</label>
 
+                                        <textarea name="description_staff" class="form-control" id="" cols="30"
+                                            rows="3"></textarea>
+                                    </div>
                                     <button type="submit" class="btn btn-primary me-1 data-submit">Lưu</button>
                                     <button type="reset" class="btn btn-outline-secondary"
                                         data-bs-dismiss="modal">Cancel</button>
@@ -147,7 +139,6 @@
                             </form>
                         </div>
                     </div>
-
                     <!-- Modal to add new user Ends-->
 
 
@@ -169,10 +160,10 @@
             </div>
             <div class="modal-body pb-5 px-sm-5 pt-50">
                 <div class="text-center mb-2">
-                    <h1 class="mb-1">Cập nhật mới tài khoản</h1>
+                    <h1 class="mb-1">Cập nhật mới nhân viên</h1>
                     <p>Cập nhập chi tiết tài khoản mới !</p>
                 </div>
-                <form id="editUserForm" action="{{ route('user.update.api') }}" method="POST" class="row gy-1 pt-75"
+                <form id="editUserForm" action="{{ route('staff.update.api') }}" method="POST" class="row gy-1 pt-75"
                     enctype="multipart/form-data">
                     @csrf
                     <input type="text" name="id" hidden>
@@ -209,33 +200,28 @@
                         <input type="date" class="form-control picker" name="date_birth" id="date_birth" required />
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserStatus">Chức vụ</label>
-                        <select id="modalEditUserStatus" name="modalEditUserStatus" class="form-select"
-                            aria-label="Default select example">
-                            <option selected>Lựa chọn</option>
-                            <option value="1">Admin</option>
-                            <option value="2">Auth</option>
-                            <option value="3">Subject</option>
+                        <i data-feather='lock'></i>
+                        <label class="form-label" for="role">Vai trò</label>
+                        <select id="staff-role" class="form-select" name="role">
                         </select>
+
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditTaxID">Mật khẩu</label>
-                        <input type="password" id="modalEditTaxID password" name="password"
+                        <input type="password" id="modalEditTaxID " name="password"
                             class="form-control modal-edit-tax-id" placeholder="password" />
                     </div>
-
-
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserPhone">Số điện thoại</label>
                         <input type="text" id="modalEditUserPhone phone" name="phone"
                             class="form-control phone-number-mask" placeholder="+1 (609) 933-44-22"
                             value="+1 (609) 933-44-22" />
                     </div>
-                    <div class="col-12 col-md-6">
+                    {{-- <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditTaxID">Nhập lại mật khẩu</label>
                         <input type="password" id="modalEditTaxID password_confirm" name="password_confirm"
                             class="form-control modal-edit-tax-id" placeholder="Tax-8894" />
-                    </div>
+                    </div> --}}
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserCountry">Giới Tính</label>
                         <div class="d-flex">
@@ -250,19 +236,27 @@
                                 <label class="form-check-label" for="gender2">Nữ</label>
                             </div>
                         </div>
-
                     </div>
-                    <div class="col-12 ">
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="modalEditUserPhone">Kinh nghiệm</label>
+                        <input type="text" id="modalEditUserPhone phone" name="experience_staff"
+                            class="form-control phone-number-mask" placeholder="+1" />
+                    </div>
+                    <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserCountry">Địa chỉ</label>
                         <textarea class="form-control" name="address" id="address" cols="30" rows="1"></textarea>
                     </div>
-
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="modalEditUserCountry">Mô tả</label>
+                        <textarea class="form-control" name="description_staff" id="description_staff" cols="30"
+                            rows="1"></textarea>
+                    </div>
 
                     <div class="col-12 text-center mt-2 pt-50">
-                        <button type="submit" class="btn btn-primary me-1">Submit</button>
+                        <button type="submit" class="btn btn-primary me-1">Lưu</button>
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal"
                             aria-label="Close">
-                            Discard
+                            Quay lại
                         </button>
                     </div>
                 </form>
@@ -276,7 +270,6 @@
 @section('script')
 <script>
     $(function () {
-
     var e = $("#DataTables_Table_User");
     var t = $(".new-user-modal"),
         a = $(".add-new-user"),
@@ -284,28 +277,22 @@
         n = $(".dt-contact"),
         o = "{{ route('user.list') }}",
         r = "app-user-view-account.html";
-        var  table =   e.DataTable({
+        var  table = e.DataTable({
                 "ajax" : {
-                        "url" : "{{ route('user.list.api') }}",
+                        "url" : "{{ route('staff.list.api') }}",
                         "type" : "GET",
-                        "dataSrc": ""
+                        "dataSrc": "user"
                         },
                 columns: [
-                    // { data: "" }, 
                     { data: "full_name"  },
-                    // { data: "email" },
                     { data: "gender" }, 
                     { data: "phone" },
                     { data: "address" },
+                    { data: "experience_staff" },
+                    { data: "description_staff" },
+
                 ],
                 columnDefs: [
-                    // {
-                    //     className: "control",
-                    //     orderable: !1,
-                    //     responsivePriority: 1,
-                    //     targets: 0,
-                  
-                    // },
                     {
                         targets: 0,
                         responsivePriority: 2,
@@ -338,34 +325,33 @@
                                     "</span>";
                             }
                             return (
+                                
                                 '<div class="d-flex justify-content-left align-items-center"><div class="avatar-wrapper"><div class="avatar ' +
                                 ("" === i ? " bg-light-" + d + " " : "") +
                                 ' me-1">' +
                                 c +
-                                '</div></div><div class="d-flex flex-column"><a href="' +
-                                r +
-                                '" class="user_name text-truncate text-body"><span class="fw-bolder">' +
+                                '</div></div><div class="d-flex flex-column"><span class="fw-bolder">' +
                                 n +
-                                '</span></a><small class="emp_post text-muted">' +
+                                '</span><small class="emp_post text-muted">' +
                                 l +
                                 "</small></div></div>"
                             );
                         },
                     },
                     {
-                        targets: 4,
+                        targets: 6,
                         render: function (e, t, a, s) {
-                            var n = a.role;
+                            var n = a.roles.map(n=> n.name);
                             return (
                                 "<span class='text-truncate align-middle'>" +
                                 {
-                                    Subscriber: feather.icons.user.toSvg({
+                                    Member: feather.icons.user.toSvg({
                                         class: "font-medium-3 text-primary me-50",
                                     }),
                                     Author: feather.icons.settings.toSvg({
                                         class: "font-medium-3 text-warning me-50",
                                     }),
-                                    Maintainer: feather.icons.database.toSvg({
+                                    Staff: feather.icons["user-check"].toSvg({
                                         class: "font-medium-3 text-success me-50",
                                     }),
                                     Editor: feather.icons["edit-2"].toSvg({
@@ -374,8 +360,8 @@
                                     Admin: feather.icons.slack.toSvg({
                                         class: "font-medium-3 text-danger me-50",
                                     }),
-                                }["Subscriber"]+
-                                "Thành viên" +
+                                }[n[0]]+
+                                n[0] +
                                 "</span>"
                             );
                         },
@@ -391,8 +377,14 @@
                             }
                         },
                     },
+                    {  
+                        targets: 4,
+                        render: function (e, t, a, s) {
+                            return  (`<span class="badge badge-light-primary"><span>${a.experience_staff}</span></span>`);
+                        },
+                    },
                     {
-                        targets: 5,
+                        targets: 7,
                         title: "Actions",
                         orderable: !1,
                         render: function (e, t, a, s) {
@@ -445,7 +437,7 @@
                                         class: "font-small-4 me-50",
                                     }) + "Print",
                                 className: "dropdown-item",
-                           exportOptions: { columns: [0,1, 2, 3,4 ] },
+                           exportOptions: { columns: [0,1, 2, 3, 4 , 5, 6 ] },
                             },
                             {
                                 extend: "csv",
@@ -454,7 +446,7 @@
                                         class: "font-small-4 me-50",
                                     }) + "Csv",
                                 className: "dropdown-item",
-                            exportOptions: { columns: [0,1, 2, 3,4 ] },
+                            exportOptions: { columns: [0,1, 2, 3, 4 , 5, 6 ] },
                             },
                             {
                                 extend: "excel",
@@ -463,7 +455,7 @@
                                         class: "font-small-4 me-50",
                                     }) + "Excel",
                                 className: "dropdown-item",
-                               exportOptions: { columns: [0,1, 2, 3,4 ] },
+                               exportOptions: { columns: [0,1, 2, 3, 4 , 5, 6 ] },
                             },
                             {
                                 extend: "pdf",
@@ -472,7 +464,7 @@
                                         class: "font-small-4 me-50",
                                     }) + "Pdf",
                                 className: "dropdown-item",
-                             exportOptions: { columns: [0,1, 2, 3,4 ] },
+                             exportOptions: { columns: [0,1, 2, 3, 4 , 5, 6 ] },
                             },
                             {
                                 extend: "copy",
@@ -481,7 +473,7 @@
                                         class: "font-small-4 me-50",
                                     }) + "Copy",
                                 className: "dropdown-item",
-                                exportOptions: { columns: [0,1, 2, 3 ,4] },
+                                exportOptions: { columns: [0,1, 2, 3 ,4 , 5, 6] },
                             },
                         ],
                         init: function (e, t, a) {
@@ -496,7 +488,7 @@
                         },
                     },
                     {
-                        text: "Thêm Mới Tài Khoản",
+                        text: "Thêm Mới Nhân Viên",
                         className: "add-new btn btn-primary",
                         attr: {
                             "data-bs-toggle": "modal",
@@ -539,110 +531,6 @@
                     },
                 },
                 language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } },
-                initComplete: function () {
-                    this.api()
-                        .columns(3)
-                        .every(function () {
-                            var e = this,
-                                t =
-                                    ($(
-                                        '<label class="form-label" for="UserRole">Chức vụ</label>'
-                                    ).appendTo(".user_role"),
-                                    $(
-                                        '<select id="UserRole" class="form-select text-capitalize mb-md-0 mb-2"><option value=""> Lựa chọn chức vụ </option></select>'
-                                    )
-                                        .appendTo(".user_role")
-                                        .on("change", function () {
-                                            var t =
-                                                $.fn.dataTable.util.escapeRegex(
-                                                    $(this).val()
-                                                );
-                                            e.search(
-                                                t ? "^" + t + "$" : "",
-                                                !0,
-                                                !1
-                                            ).draw();
-                                        }));
-                            e.data()
-                                .unique()
-                                .sort()
-                                .each(function (e, a) {
-                                    t.append(
-                                        '<option value="' +
-                                            e +
-                                            '" class="text-capitalize">' +
-                                            e +
-                                            "</option>"
-                                    );
-                                });
-                        }),
-                    this.api()
-                            .columns(2)
-                            .every(function () {
-                                var e = this,
-                                    t =
-                                        ($(
-                                            '<label class="form-label" for="UserPlan">Số điện thoại</label>'
-                                        ).appendTo(".user_plan"),
-                                        $(
-                                            '<select id="UserPlan" class="form-select text-capitalize mb-md-0 mb-2"><option value=""> Lựa chọn SĐT </option></select>'
-                                        )
-                                            .appendTo(".user_plan")
-                                            .on("change", function () {
-                                                var t =
-                                                    $.fn.dataTable.util.escapeRegex(
-                                                        $(this).val()
-                                                    );
-                                                e.search(
-                                                    t ? "^" + t + "$" : "",
-                                                    !0,
-                                                    !1
-                                                ).draw();
-                                            }));
-                                e.data()
-                                    .unique()
-                                    .sort()
-                                    .each(function (e, a) {
-                                        t.append(
-                                            '<option value="' +
-                                                e +
-                                                '" class="text-capitalize">' +
-                                                e +
-                                                "</option>"
-                                        );
-                                    });
-                            }),
-                    this.api()
-                            .columns(1)
-                            .every(function () {
-                                var op = [{'vlue':1, 'name' : 'Nam'},{'vlue':2, 'name' : 'Nữ'}];
-                                var e = this,
-                                    t =
-                                        ($(
-                                            '<label class="form-label" for="FilterTransaction">Giới Tính</label>'
-                                        ).appendTo(".user_status"),
-                                        $(
-                                            '<select id="FilterTransaction" class="form-select text-capitalize mb-md-0 mb-2xx"><option value=""> Lựa chọn giới tính </option></select>'
-                                        )
-                                            .appendTo(".user_status")
-                                            .on("change", function () {
-                                                
-                                                var t = $.fn.dataTable.util.escapeRegex(
-                                                            $(this).val()
-                                                        );
-                                                e.search(
-                                                    t==1 ? "^" + 'Nam'  + "$" : "Nữ",
-                                                    !0,
-                                                    !1
-                                                ).draw();
-                                            }));
-                                op.map(function (e, a) {
-                                        t.append(
-                                            '<option value="'+e.vlue+'" class="text-capitalize"> '+e.name+' </option>'
-                                        );
-                                    });
-                            });
-                },
             });
         s.each(function () {
             var e = $(this);
@@ -674,6 +562,9 @@ a.length && (a.validate({
                     processData: false,
                     dataType:'json',
                     contentType: false,
+                    headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
                     success: function(data){
                         if (data.code==0) {
                             $.each(data.error,function (prefix,val) {
@@ -690,9 +581,6 @@ a.length && (a.validate({
                         console.log("Thêm không thành công",error);
                     }
                 })
-
-
-      
             }))
 
 $('body').on('click' ,'#deleteUser' , function(){
@@ -701,6 +589,9 @@ $('body').on('click' ,'#deleteUser' , function(){
     $.ajax({
         type:"DELETE",
         url:"{{ route('user.list.api') }}"+"/"+user_id,
+        headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
         success: function(){
             table.ajax.reload();
             toastr.success("Xóa Thành Công");
@@ -711,18 +602,21 @@ $('body').on('click' ,'#deleteUser' , function(){
     })
      }
 });
+$.get('<?= route("staff.list.api") ?>', function(dataR) {
+        dataR.role.map(function(x) {
+          $('#staff-role').append(`<option value="${x.id}" data-id="${x.id}" >${x.name}</option>`)
+        })
+    })
 // get detail edit
 $('body').on('click' ,'#editUser' , function(){
     var user_id = $(this).data("id");
-    $.get('<?= route("user.list.api") ?>'+"/show/"+user_id , function (data) {
-var accountUploadImg = $("#account-upload-img"),
+    $.get('<?= route("staff.list.api") ?>'+"/show/"+user_id , function (data) {
+    var accountUploadImg = $("#account-upload-img"),
     accountUpload = $("#account-upload"),
     uploadedAvatar = $(".uploadedAvatar"),
     accountReset = $("#account-reset");
     if (uploadedAvatar) {
-    // var src = uploadedAvatar.attr("src");
     accountUpload.on("change", function (ch) {
-        
         var n = new FileReader(),
         uploadedAvatar = ch.target.files;
         (n.onload = function () {
@@ -735,22 +629,31 @@ var accountUploadImg = $("#account-upload-img"),
         : "{{ asset('admin/images/portrait/small/avatar-none.png') }}" );
         });
     };
-        var form = $('#editUserForm');
-        $("#account-upload-img").attr("src", data.avatar ? "/storage/"+ data.avatar 
-        : "{{ asset('admin/images/portrait/small/avatar-none.png') }}" );
-        form.find('input[name="id"]').val(data.id); 
-        form.find('input[name="full_name"]').val(data.full_name);    
-        form.find('input[name="email"]').val(data.email);  
-        form.find('input[name="phone"]').val(data.phone);
-        form.find('input[name="date_birth"]').val(data.date_birth);   
-        form.find('input[name="password"]').val(data.password);  
-        form.find('#address').val(data.address);  
-        if (data.gender == 1) {
-            $('#gender1').attr('checked',true);
-        }else{
-            $('#gender2').attr('checked',true);
-        }
-    },'json')
+    var form = $('#editUserForm');
+    $("#account-upload-img").attr("src", data.avatar ? "/storage/"+ data.avatar 
+    : "{{ asset('admin/images/portrait/small/avatar-none.png') }}" );
+    form.find('input[name="id"]').val(data.id); 
+    form.find('input[name="full_name"]').val(data.full_name);    
+    form.find('input[name="email"]').val(data.email);  
+    form.find('input[name="phone"]').val(data.phone);
+    form.find('input[name="date_birth"]').val(data.date_birth);   
+    form.find('input[name="experience_staff"]').val(data.experience_staff); 
+    form.find('input[name="password"]').val(data.password); 
+    form.find('#description_staff').val(data.description_staff); 
+    form.find('#address').val(data.address); 
+    if (data.gender == 1) {
+        $('#gender1').attr('checked',true);
+    }else{
+        $('#gender2').attr('checked',true);
+    }
+    $.get('<?= route("staff.list.api") ?>', function(dataR) {
+        dataR.role.map(function(x) {
+            if (data.roles[0].id == x.id) {
+                $("#staff-role").find(`option[data-id="${x.id}"]`).prop('selected', true);
+             }
+        })
+    })
+},'json')
 });
 // submit edit in db
 $('#editUserForm').on('submit', function(e){
@@ -763,13 +666,15 @@ $('#editUserForm').on('submit', function(e){
         processData: false,
         dataType:'json',
         contentType: false,
+        headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
         success: function(data){
             if (data.code==0) {
                 $.each(data.error,function (prefix,val) {
                     $(form).find('span'+prefix+'_error').text(val[0]);
                 });
             }else{
-                console.log('fomr',data);
                 $(form)[0].reset();
                 $('#editUserModal').modal("hide");
                 table.ajax.reload();

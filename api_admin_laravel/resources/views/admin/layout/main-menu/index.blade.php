@@ -24,7 +24,7 @@
                                                                   style="fill:currentColor"></path>
                                                             <path id="Path1"
                                                                   d="M69.3453773,32.2519224 L101.428699,1.42108547e-14 L138.784583,1.42108547e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L32.8435758,70.5039241 L69.3453773,32.2519224 Z"
-                                                                  fill="url(#linearGradient-1)" opacity="0.2"></path>
+                                                                  fill="url(#linearGradient-4)" opacity="0.2"></path>
                                                             <polygon id="Path-2" fill="#000000" opacity="0.049999997"
                                                                   points="69.3922914 32.4202615 32.8435758 70.5039241 54.0490008 16.1851325">
                                                             </polygon>
@@ -39,7 +39,7 @@
                                                 </g>
                                           </g>
                                     </svg></span>
-                              <h2 class="brand-text">Vuexy</h2>
+                              <h2 class="brand-text">TimeNails</h2>
                         </a></li>
                   <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pe-0"
                               data-bs-toggle="collapse"><i
@@ -57,11 +57,7 @@
                                     data-i18n="Dashboards">Trang chính</span><span
                                     class="badge badge-light-warning rounded-pill ms-auto me-1">2</span></a>
                         <ul class="menu-content">
-                              <li><a class="d-flex align-items-center" href="dashboard-analytics.html"><i
-                                                data-feather="circle"></i><span class="menu-item text-truncate"
-                                                data-i18n="Analytics">Lịch</span></a>
-                              </li>
-                              <li class=""><a class="d-flex align-items-center" href="dashboard-ecommerce.html"><i
+                              <li class=""><a class="d-flex align-items-center" href="/"><i
                                                 data-feather="circle"></i><span class="menu-item text-truncate"
                                                 data-i18n="eCommerce">Thống kê</span></a>
                               </li>
@@ -80,6 +76,7 @@
                                     data-feather='user-check'></i><span class="menu-title text-truncate"
                                     data-i18n="Users">Nhân viên</span></a>
                   </li>
+                  @role('Admin')
                   <li class="navigation-header"><span data-i18n="Tài khoản">Phân quyền</span><i
                               data-feather="more-horizontal"></i>
                   </li>
@@ -99,82 +96,72 @@
                               </li>
                         </ul>
                   </li>
+                  @endrole
                   <li class=" navigation-header"><span data-i18n="Dịch vụ">Dịch vụ</span><i
                               data-feather="more-horizontal"></i>
                   </li>
-                  <li class=" nav-item {{ request()->is('service*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{route('service.list')}}"><i
+                  <li class=" nav-item {{ request()->is('service*') ? 'active' : '' }}"><a
+                              class="d-flex align-items-center" href="{{route('service.list')}}"><i
                                     data-feather='shopping-bag'></i><span class="menu-title text-truncate"
                                     data-i18n="Dịch vụ lẻ">Dịch vụ lẻ</span></a>
-
                   </li>
-                  <li class=" nav-item {{ request()->is('cate-service*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{route('cate-service.list')}}"><i
+                  <li class=" nav-item {{ request()->is('cate-service*') ? 'active' : '' }}"><a
+                              class="d-flex align-items-center" href="{{route('cate-service.list')}}"><i
                                     data-feather="list"></i><span class="menu-title text-truncate"
                                     data-i18n="Dịch vụ lẻ">Danh mục Dịch vụ</span></a>
-
                   </li>
-
-
-                  <li class=" nav-item {{ request()->is('combo*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{route('combo.list')}}"><i
+                  <li class=" nav-item {{ request()->is('combo*') ? 'active' : '' }}"><a
+                              class="d-flex align-items-center" href="{{route('combo.list')}}"><i
                                     data-feather='refresh-cw'></i><span class="menu-title text-truncate"
                                     data-i18n="combo">Combo dịch vụ</span></a>
-
                   </li>
                   <li class=" nav-item {{ request()->is('discount*') ? 'active' : '' }}"><a
                               class="d-flex align-items-center" href="{{route('discount.list')}}"><i
                                     data-feather='percent'></i><span class="menu-title text-truncate"
                                     data-i18n="giảm giá">Mã giảm giá</span></a>
-
                   </li>
                   <li class=" nav-item {{ request()->is('bill*') ? 'active' : '' }}"><a
                               class="d-flex align-items-center" href="{{route('bill.list')}}"><i data-feather='file-text'></i><span
                                     class="menu-title text-truncate" data-i18n="Invoice">Hóa đơn</span></a>
-
                   </li>
                   <li class=" navigation-header"><span data-i18n="Dịch vụ">Truyền thông</span><i
                               data-feather="more-horizontal"></i>
                   </li>
                   <li class=" nav-item {{ request()->is('blog*') ? 'active' : '' }}"><a
-                              class="d-flex align-items-center" href="ui-typography.html"><i
-                                    data-feather='edit'></i><span class="menu-title text-truncate"
-                                    data-i18n="Feedback">Bài viết</span></a>
-
+                              class="d-flex align-items-center" href="{{ route('blog.list')}}"><i
+                                    data-feather='edit'></i><span class="menu-title text-truncate" data-i18n="blog">Bài
+                                    viết</span></a>
                   </li>
-                  <li class=" nav-item {{ request()->is('cate-blog*') ? 'active' : '' }}"><a
-                              class="d-flex align-items-center" href="ui-typography.html"><i
-                                    data-feather='list'></i><span class="menu-title text-truncate"
-                                    data-i18n="Feedback">Danh mục bài viết</span></a>
-
+                  <li class=" nav-item {{ request()->is('blog-category*') ? 'active' : '' }}"><a
+                              class="d-flex align-items-center" href="{{ route('blog.category.list')}}"><i
+                                    data-feather='list'></i><span class="menu-title text-truncate" data-i18n="blog">Danh
+                                    mục bài viết</span></a>
                   </li>
-                  <li class=" nav-item {{ request()->is('tags*') ? 'active' : '' }}"><a
-                              class="d-flex align-items-center" href="ui-typography.html"><i
-                                    data-feather='tag'></i><span class="menu-title text-truncate"
-                                    data-i18n="Feedback">Tags</span></a>
-
+                  <li class=" nav-item {{ request()->is('tag*') ? 'active' : '' }}"><a class="d-flex align-items-center"
+                              href="{{ route('tag.list')}}"><i data-feather="tag"></i><span
+                                    class="menu-title text-truncate" data-i18n="tag">Tags</span></a>
                   </li>
                   <li class=" navigation-header"><span data-i18n="Dịch vụ">Tương tác & Hỗ trợ</span><i
                               data-feather="more-horizontal"></i>
                   </li>
-                  <li class=" nav-item {{ request()->is('feedback*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('feedback.list')}}"><i data-feather='mail'></i><span
-                                    class="menu-title text-truncate" data-i18n="Feedback">Feedback</span></a>
-
+                  <li class=" nav-item {{ request()->is('feedback*') ? 'active' : '' }}"><a
+                              class="d-flex align-items-center" href="{{ route('feedback.list')}}"><i
+                                    data-feather='mail'></i><span class="menu-title text-truncate"
+                                    data-i18n="Feedback">Feedback</span></a>
                   </li>
                   <li class=" nav-item {{ request()->is('gallery*') ? 'active' : '' }}"><a
                               class="d-flex align-items-center" href="#"><i data-feather='image'></i><span
                                     class="menu-title text-truncate" data-i18n="Review">Thư Viện Dịch Vụ</span></a>
-
                   </li>
                   <li class=" nav-item {{ request()->is('cate-gallery*') ? 'active' : '' }}"><a
                               class="d-flex align-items-center" href="#"><i data-feather='list'></i><span
                                     class="menu-title text-truncate" data-i18n="Review">Danh Mục Thư Viện</span></a>
-
                   </li>
                   <li class=" nav-item {{ request()->is('contact*') ? 'active' : '' }}"><a
                               class="d-flex align-items-center" href="{{route('contact.list')}}"><i
                                     data-feather='phone'></i><span class="menu-title text-truncate"
                                     data-i18n="contact">Liên Hệ</span></a>
-
                   </li>
-
                   <li class=" navigation-header"><span data-i18n="Infomation">Thông Tin</span><i
                               data-feather="more-horizontal"></i>
                   </li>
@@ -183,7 +170,8 @@
                                     class="menu-title text-truncate" data-i18n="Slider">Slider</span></a>
 
                   </li>
-                  <li class=" nav-item {{ request()->is('setting*') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('setting.list')}}"><i
+                  <li class=" nav-item {{ request()->is('setting*') ? 'active' : '' }}"><a
+                              class="d-flex align-items-center" href="{{ route('setting.list')}}"><i
                                     data-feather='settings'></i><span class="menu-title text-truncate"
                                     data-i18n="Settings">Time Nails</span></a>
 
@@ -191,3 +179,11 @@
             </ul>
       </div>
 </div>
+@section('script')
+
+<script>
+    
+</script>
+
+
+@endsection
