@@ -252,7 +252,8 @@
 @endsection
 @section('script')
 <script src="{{ asset('admin/vendors/js/charts/chart.min.js')}}"></script>
-
+<script src="{{ asset('admin/vendors/js/charts/apexcharts.min.js')}}"></script>
+<script src="{{ asset('admin/js/scripts/pages/dashboard-ecommerce.min.js')}}"></script>
 
 <script>
   $.get('<?= route("dashboard.api") ?>', function(data) {

@@ -44,30 +44,32 @@
                 <h1 class="blog-title">Thêm mới bài viết</h1>
               </div>
               <!-- Add role form -->
-              <form id="addBlogForm" class="row" method="POST" action="{{ route('blog.list.api') }}" enctype="multipart/form-data">
+              <form id="addBlogForm" class="row" method="POST" action="{{ route('blog.list.api') }}"
+                enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="description" class="mota">
                 <div class="d-flex center">
                   <a href="#" class="me-25">
-                      <img src="" id="blog-upload-img" class="uploadedImage rounded me-50" alt="profile image"
-                          height="250" width="400" name="image" />
+                    <img src="" id="blog-upload-img" class="uploadedImage rounded me-50" alt="profile image"
+                      height="250" width="400" name="image" />
                   </a>
                   <!-- upload and reset button -->
                   <div class="d-flex align-items-end mt-75 ms-1">
-                      <div>
-                          <label for="blog-upload" class="btn btn-sm btn-primary mb-75 me-75">Ảnh</label>
-                          <input type="file" id="blog-upload" name="image"  hidden accept="image/*" />
-                          <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
-                      </div>
+                    <div>
+                      <label for="blog-upload" class="btn btn-sm btn-primary mb-75 me-75">Ảnh</label>
+                      <input type="file" id="blog-upload" name="image" hidden accept="image/*" />
+                      <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
+                    </div>
                   </div>
                   <!--/ upload and reset button -->
-              </div>
-              <div class="col-12">
-                <label class="form-label" for="modalBlogName">người viết bài</label>
-                  <select class="form-control dt-full-name" id="getAllUser" name="user_id" id="basic-icon-default-fullname12">
-                    
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="modalBlogName">người viết bài</label>
+                  <select class="form-control dt-full-name" id="getAllUser" name="user_id"
+                    id="basic-icon-default-fullname12">
+
                   </select>
-              </div>
+                </div>
                 <div class="col-6">
                   <label class="form-label" for="modalBlogName">Tiêu đề bài viết</label>
                   <input type="text" id="modalBlogName" class="form-control" placeholder="Enter blog name" name="title"
@@ -75,8 +77,8 @@
                 </div>
                 <div class="col-6">
                   <label class="form-label" for="modalBlogName">Danh mục bài viết</label>
-                  <select class="form-control dt-full-name" id="getAllBlogCate" name="cate_blog_id" >
-                    
+                  <select class="form-control dt-full-name" id="getAllBlogCate" name="cate_blog_id">
+
                   </select>
                 </div>
                 {{-- <div class="col-12">
@@ -136,49 +138,51 @@
                 <h1 class="blog-title">Chỉnh sửa bài viết</h1>
               </div>
               <!-- Edit role form -->
-              <form id="editBlogForm" class="row" method="POST" action="{{ route('blog.update.api') }}" enctype="multipart/form-data">
+              <form id="editBlogForm" class="row" method="POST" action="{{ route('blog.update.api') }}"
+                enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="description" class="mota">
                 <input type="hidden" name="id">
                 <div class="d-flex center">
                   <a href="#" class="me-25">
-                      <img src="" id="blogEdit-upload-img" class="uploadedImage rounded me-50" alt="profile image"
-                          height="250" width="400" name="image" />
+                    <img src="" id="blogEdit-upload-img" class="uploadedImage rounded me-50" alt="profile image"
+                      height="250" width="400" name="image" />
                   </a>
                   <!-- upload and reset button -->
                   <div class="d-flex align-items-end mt-75 ms-1">
-                      <div>
-                          <label for="blogEdit-upload" class="btn btn-sm btn-primary mb-75 me-75">Ảnh</label>
-                          <input type="file" id="blogEdit-upload" name="image"  hidden accept="image/*" />
-                          <button type="button" id="blogEdit-reset"
-                              class="btn btn-sm btn-outline-secondary mb-75">Reset</button>
-                          <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
-                      </div>
+                    <div>
+                      <label for="blogEdit-upload" class="btn btn-sm btn-primary mb-75 me-75">Ảnh</label>
+                      <input type="file" id="blogEdit-upload" name="image" hidden accept="image/*" />
+                      <button type="button" id="blogEdit-reset"
+                        class="btn btn-sm btn-outline-secondary mb-75">Reset</button>
+                      <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
+                    </div>
                   </div>
                   <!--/ upload and reset button -->
-              </div>
-              <div class="col-12">
-                <label class="form-label" for="modalBlogName">Người viết bài</label>
-                  <select class="form-control dt-full-name" id="getAllUserEdit" name="user_id" id="basic-icon-default-fullname12">
-                    
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="modalBlogName">Người viết bài</label>
+                  <select class="form-control dt-full-name" id="getAllUserEdit" name="user_id"
+                    id="basic-icon-default-fullname12">
+
                   </select>
-              </div>
+                </div>
                 <div class="col-6">
                   <label class="form-label" for="modalBlogName">Tiêu đề bài viết</label>
-                  <input type="text" id="modalBlogName title" class="form-control" placeholder="Enter blog title" name="title"
-                    tabindex="-1" data-msg="Please enter blog title" />
+                  <input type="text" id="modalBlogName title" class="form-control" placeholder="Enter blog title"
+                    name="title" tabindex="-1" data-msg="Please enter blog title" />
                 </div>
                 <div class="col-6">
                   <label class="form-label" for="modalBlogName">Danh mục bài viết</label>
-                  <select class="form-control dt-full-name" id="getAllBlogCateEdit" name="cate_blog_id" >
-                    
+                  <select class="form-control dt-full-name" id="getAllBlogCateEdit" name="cate_blog_id">
+
                   </select>
                 </div>
                 <div class="col-12">
                   <label class="form-label" for="modalBlogName">Tiêu đề bài viết</label>
-                  <input type="text" id="modalBlogName title" class="form-control" placeholder="blog ..." name="description"
-                    tabindex="-1" data-msg="Please enter blog title" />
-                    {{-- <textarea name="description" ></textarea>
+                  <input type="text" id="modalBlogName title" class="form-control" placeholder="blog ..."
+                    name="description" tabindex="-1" data-msg="Please enter blog title" />
+                  {{-- <textarea name="description"></textarea>
                 </div> --}}
                 {{-- <div class="col-12">
                   <div class="mb-2">
@@ -233,8 +237,16 @@
 
 @endsection
 @section('script')
+<!-- BEGIN: Page Vendor JS-->
+<script src="{{asset('admin/vendors/js/editors/quill/katex.min.js')}}"></script>
+<script src="{{asset('admin/vendors/js/editors/quill/highlight.min.js')}}"></script>
+<script src="{{asset('admin/vendors/js/editors/quill/quill.min.js')}}"></script>
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Page JS-->
+<script src="{{asset('admin/js/scripts/pages/page-blog-edit.min.js')}}"></script>
+<!-- END: Page JS-->
 <script>
-    $(function () {
+  $(function () {
     var e = $("#datatables-blogs");
     var o = "{{ route('blog.list') }}",
         r = "app-feedback-view-account.html";
@@ -583,7 +595,6 @@
                       })
                     }
                   });
-
                   $.ajax({
                     "url" : "{{ route('user.list.api') }}",
                     "type" : "GET",

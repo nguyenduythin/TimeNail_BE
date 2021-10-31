@@ -17,10 +17,8 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        $gallery =DB::table('galleries')
-                    ->join('categories_gallery', 'categories_gallery.id', '=', 'galleries.cate_gl_id')
-                    ->select('galleries.id', 'title', 'url', 'cate_gl_id')
-                    ->get();
+        $gallery = Gallery::all();
+        $gallery->load('cate_gallery');
         return response()->json($gallery);
     }
 
@@ -63,7 +61,7 @@ class GalleryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request )
+    public function update(Request $request)
     {
         $gallery = Gallery::find($request->id);
         if ($request->hasFile('url')) {

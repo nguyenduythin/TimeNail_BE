@@ -3,7 +3,6 @@
 <!-- BEGIN Vendor JS-->
 
 <!-- BEGIN: Page Vendor JS-->
-<script src="{{ asset('admin/vendors/js/charts/apexcharts.min.js')}}"></script>
 <script src="{{ asset('admin/vendors/js/extensions/toastr.min.js')}}"></script>
 <script src="{{ asset('admin/vendors/js/forms/select/select2.full.min.js')}}"></script>
 <script src="{{ asset('admin/vendors/js/tables/datatable/jquery.dataTables.min.js')}}"></script>
@@ -40,28 +39,11 @@
 <!-- END: Theme JS-->
 <script src="{{ asset('admin/js/scripts/forms/form-validation.js')}}"></script>
 <!-- BEGIN: Page JS-->
-<script src="{{ asset('admin/js/scripts/pages/dashboard-ecommerce.min.js')}}"></script>
 <script src="{{ asset('admin/js/scripts/forms/pickers/form-pickers.min.js')}}"></script>
 <!-- END: Page JS-->
 
 
-    <!-- BEGIN Vendor JS-->
-
-    <!-- BEGIN: Page Vendor JS-->
-    <script src="{{asset('admin/vendors/js/editors/quill/katex.min.js')}}"></script>
-    <script src="{{asset('admin/vendors/js/editors/quill/highlight.min.js')}}"></script>
-    <script src="{{asset('admin/vendors/js/editors/quill/quill.min.js')}}"></script>
-    <!-- END: Page Vendor JS-->
-
-
-
-    <!-- BEGIN: Page JS-->
-    <script src="{{asset('admin/js/scripts/pages/page-blog-edit.min.js')}}"></script>
-    <!-- END: Page JS-->
-
-    
-
-
+<!-- BEGIN Vendor JS-->
 
 @yield('script')
 <script>

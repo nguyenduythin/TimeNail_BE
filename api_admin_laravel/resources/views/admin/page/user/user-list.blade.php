@@ -417,8 +417,8 @@ $.get('<?= route("user.list.api") ?>', function(data) {
                         title: "Actions",
                         orderable: !1,
                         render: function (e, t, a, s) {
-                            var deleteUser = 'oki'
-                            console.log('addđ' ,a.roles[0].name === 'Admin' ,   );
+                            // var deleteUser = 'oki'
+                            // console.log('addđ' ,a.roles[0].name === 'Admin' ,   );
                             return (
                                 '<div class="btn-group"><a class="btn btn-sm dropdown-toggle hide-arrow" data-bs-toggle="dropdown">' +
                                 feather.icons["more-vertical"].toSvg({
@@ -563,17 +563,16 @@ $.get('<?= route("user.list.api") ?>', function(data) {
                 },
                 language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } },
                 initComplete: function (test,et) {
-                  
                     this.api()
-                        .columns(2)
+                        .columns(3)
                         .every(function () {
                             var e = this,
                                 t =
                                     ($(
-                                        '<label class="form-label" for="UserRole">Vai trò</label>'
+                                        '<label class="form-label" for="UserRole">Địa chỉ</label>'
                                     ).appendTo(".user_role"),
                                     $(
-                                        '<select id="UserRole" class="form-select text-capitalize mb-md-0 mb-2"><option value=""> Lựa chọn vai trò </option></select>'
+                                        '<select id="UserRole" class="form-select text-capitalize mb-md-0 mb-2"><option value=""> Lựa chọn địa chỉ </option></select>'
                                     )
                                         .appendTo(".user_role")
                                         .on("change", function () {

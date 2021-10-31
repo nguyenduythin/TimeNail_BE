@@ -84,7 +84,6 @@ class ServiceController extends Controller
      */
     public function destroy($id)
     {
-        //
         Service::destroy($id);
         return  response()->json(['success' => 'Xóa thành công!']);
     }

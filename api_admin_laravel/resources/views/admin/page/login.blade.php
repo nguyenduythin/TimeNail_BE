@@ -104,13 +104,6 @@
                                                     data-feather="eye"></i></span>
                                         </div>
                                     </div>
-                                    <div class="mb-1">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="remember-me"
-                                                tabindex="3" />
-                                            <label class="form-check-label" for="remember-me"> Nhớ tài khoản </label>
-                                        </div>
-                                    </div>
                                     <button class="btn btn-primary w-100" tabindex="4">Đăng Nhập</button>
                                 </form>
                             </div>

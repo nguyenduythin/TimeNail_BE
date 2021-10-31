@@ -3,131 +3,138 @@
 @section('content')
 
 <div class="app-content content ">
-  <div class="content-overlay"></div>
-  <div class="header-navbar-shadow"></div>
-  <div class="content-wrapper container-xxl p-0">
-    <div class="content-header row">
-    </div>
-    <div class="content-body">
-
-      <h3 class="mt-50">Danh mục thư viện</h3>
-      <!-- table -->
-      <div class="card">
-        <div class="card-datatable table-responsive">
-          <table class="datatables-galleryCategory table" id="datatables-galleryCategory">
-            <thead class="table-light">
-              <tr>
-                <th>Danh mục thư viện</th>
-                <th>Ảnh</th>
-                <th>Hành động</th>
-              </tr>
-            </thead>
-          </table>
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
         </div>
-      </div>
-      <!-- table -->
-      <!-- Add Role Modal -->
-      <div class="modal fade" id="addGalleryCategoryModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-add-new-gallery-category">
-          <div class="modal-content">
-            <div class="modal-header bg-transparent">
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body px-5 pb-5">
-              <div class="text-center mb-4">
-                <h1 class="blog-title">Thêm mới danh mục ảnh</h1>
-              </div>
-              <!-- Add role form -->
-              <form id="addGalleryCategoryForm" class="row" method="POST" action="{{ route('gallery.list.api') }}" enctype="multipart/form-data">
-                @csrf
-                <div class="d-flex center">
-                  <a href="#" class="me-25">
-                      <img src="" id="gallery-cate-upload-img" class="uploadedAvatar rounded me-50" alt="profile avatar"
-                          height="250" width="400" name="url" />
-                  </a>
-                  <!-- upload and reset button -->
-                  <div class="d-flex align-items-end mt-75 ms-1">
-                      <div>
-                          <label for="gallery-cate-upload" class="btn btn-sm btn-primary mb-75 me-75">Ảnh</label>
-                          <input type="file" id="gallery-cate-upload" name="url"  hidden accept="image/*" />
-                          <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
-                      </div>
-                  </div>
-                  <!--/ upload and reset button -->
-                </div>
-                <div class="col-12">
-                    <label class="form-label" for="modalBlogName">Danh mục bài viết</label>
-                    <select class="form-control dt-full-name" id="getAllBlogCate" name="cate_gl_id" >
-                      
-                    </select>
-                  </div>
-                <div class="col-12 text-center mt-2">
-                  <button type="submit" class="btn btn-primary me-1">Submit</button>
-                  <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
-                    Discard
-                  </button>
-                </div>
-              </form>
-              <!--/ Add role form -->
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--/ Edit Role Modal -->
+        <div class="content-body">
 
-      <div class="modal fade" id="editGalleryCategoryModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-add-new-gallery-category">
-          <div class="modal-content">
-            <div class="modal-header bg-transparent">
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h3 class="mt-50">Danh mục thư viện</h3>
+            <!-- table -->
+            <div class="card">
+                <div class="card-datatable table-responsive">
+                    <table class="datatables-galleryCategory table" id="datatables-galleryCategory">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Danh mục thư viện</th>
+                                <th>Ảnh</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
-            <div class="modal-body px-5 pb-5">
-              <div class="text-center mb-4">
-                <h1 class="blog-title">Chỉnh sửa danh mục ảnh</h1>
-              </div>
-              <!-- Edit role form -->
-              <form id="editGalleryCategoryForm" class="row" method="POST" action="{{ route('gallery.update.api') }}" enctype="multipart/form-data">
-                @csrf
-                <input type="text" name="id" hidden>
-                <div class="d-flex center">
-                    <a href="#" class="me-25">
-                        <img src="" id="tag-upload-img" class="uploadedImage rounded me-50" alt="profile image"
-                            height="250" width="400" name="url" />
-                    </a>
-                    <!-- upload and reset button -->
-                    <div class="d-flex align-items-end mt-75 ms-1">
-                        <div>
-                            <label for="tag-upload" class="btn btn-sm btn-primary mb-75 me-75">Ảnh</label>
-                            <input type="file" id="tag-upload" name="url"  hidden accept="image/*" />
-                            <button type="button" id="tag-reset"
-                                class="btn btn-sm btn-outline-secondary mb-75">Reset</button>
-                            <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
+            <!-- table -->
+            <!-- Add Role Modal -->
+            <div class="modal fade" id="addGalleryCategoryModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered modal-add-new-gallery-category">
+                    <div class="modal-content">
+                        <div class="modal-header bg-transparent">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body px-5 pb-5">
+                            <div class="text-center mb-4">
+                                <h1 class="blog-title">Thêm mới danh mục ảnh</h1>
+                            </div>
+                            <!-- Add role form -->
+                            <form id="addGalleryCategoryForm" class="row" method="POST"
+                                action="{{ route('gallery.list.api') }}" enctype="multipart/form-data">
+                                @csrf
+                                <div class="d-flex center">
+                                    <a href="#" class="me-25">
+                                        <img src="" id="gallery-cate-upload-img" class="uploadedAvatar rounded me-50"
+                                            alt="profile avatar" height="250" width="300" name="url" />
+                                    </a>
+                                    <!-- upload and reset button -->
+                                    <div class="d-flex align-items-end mt-75 ms-1">
+                                        <div>
+                                            <label for="gallery-cate-upload"
+                                                class="btn btn-sm btn-primary mb-75 me-75">Ảnh</label>
+                                            <input type="file" id="gallery-cate-upload" name="url" hidden
+                                                accept="image/*" />
+                                            <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
+                                        </div>
+                                    </div>
+                                    <!--/ upload and reset button -->
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label" for="modalBlogName">Danh mục bài viết</label>
+                                    <select class="form-control dt-full-name" id="getAllBlogCate" name="cate_gl_id">
+
+                                    </select>
+                                </div>
+                                <div class="col-12 text-center mt-2">
+                                    <button type="submit" class="btn btn-primary me-1">Submit</button>
+                                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                        Discard
+                                    </button>
+                                </div>
+                            </form>
+                            <!--/ Add role form -->
                         </div>
                     </div>
-                    <!--/ upload and reset button -->
                 </div>
-                <div class="col-12">
-                    <label class="form-label" for="modalBlogName">Danh mục bài viết</label>
-                    <select class="form-control dt-full-name" name="cate_gl_id" id="getAllBlogCateEdit">
-                      
-                    </select>
-                  </div>
-                <div class="col-12 text-center mt-2">
-                  <button type="submit" class="btn btn-primary me-1">Submit</button>
-                  <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
-                    Discard
-                  </button>
-                </div>
-              </form>
-              <!--/ Edit role form -->
             </div>
-          </div>
-        </div>
-      </div>
-      <!--/ Edit Role Modal -->
+            <!--/ Edit Role Modal -->
 
+            <div class="modal fade" id="editGalleryCategoryModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered modal-add-new-gallery-category">
+                    <div class="modal-content">
+                        <div class="modal-header bg-transparent">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body px-5 pb-5">
+                            <div class="text-center mb-4">
+                                <h1 class="blog-title">Chỉnh sửa danh mục ảnh</h1>
+                            </div>
+                            <!-- Edit role form -->
+                            <form id="editGalleryCategoryForm" class="row" method="POST"
+                                action="{{ route('gallery.update.api') }}" enctype="multipart/form-data">
+                                @csrf
+                                <input type="text" name="id" hidden>
+                                <div class="d-flex center">
+                                    <a href="#" class="me-25">
+                                        <img src="" id="tag-upload-img" class="uploadedImage rounded me-50"
+                                            alt="profile image" height="250" width="400" name="url" />
+                                    </a>
+                                    <!-- upload and reset button -->
+                                    <div class="d-flex align-items-end mt-75 ms-1">
+                                        <div>
+                                            <label for="tag-upload"
+                                                class="btn btn-sm btn-primary mb-75 me-75">Ảnh</label>
+                                            <input type="file" id="tag-upload" name="url" hidden accept="image/*" />
+                                            <button type="button" id="tag-reset"
+                                                class="btn btn-sm btn-outline-secondary mb-75">Reset</button>
+                                            <p class="mb-0">Loại tệp được phép: png, jpg, jpeg.</p>
+                                        </div>
+                                    </div>
+                                    <!--/ upload and reset button -->
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label" for="modalBlogName">Danh mục bài viết</label>
+                                    <select class="form-control dt-full-name" name="cate_gl_id" id="getAllBlogCateEdit">
+
+                                    </select>
+                                </div>
+                                <div class="col-12 text-center mt-2">
+                                    <button type="submit" class="btn btn-primary me-1">Submit</button>
+                                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                        Discard
+                                    </button>
+                                </div>
+                            </form>
+                            <!--/ Edit role form -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/ Edit Role Modal -->
+
+        </div>
     </div>
-  </div>
 </div>
 
 @endsection
@@ -135,8 +142,7 @@
 <script>
     $(function () {
     var e = $("#datatables-galleryCategory");
-    var o = "{{ route('gallery.list') }}",
-        r = "app-feedback-view-account.html";
+    var o = "{{ route('gallery.list') }}";
         var  table =   e.DataTable({
                 "ajax" : {
                         "url" : "{{ route('gallery.list.api') }}",
@@ -152,11 +158,9 @@
                         targets: 0,
                         responsivePriority: 2,
                         render: function (e, t, a, s) {
-                            var n = a.title;
+                            var n = a.cate_gallery.title;
                             return (
-                                '<div class="d-flex justify-content-left align-items-center"><div class="d-flex flex-column"><a href="' +
-                                r +
-                                '" class="user_name text-truncate text-body"><span class="fw-bolder">' +
+                                '<div class="d-flex justify-content-left align-items-center"><div class="d-flex flex-column"><a href="" class="user_name text-truncate text-body"><span class="fw-bolder">' +
                                 n +
                                 '</span></div></div>'
                             );
@@ -187,9 +191,7 @@
                                 feather.icons["more-vertical"].toSvg({
                                     class: "font-small-4",
                                 }) +
-                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="' +
-                                r +
-                                '" class="dropdown-item">' +
+                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="#" class="dropdown-item">' +
                                 feather.icons["file-text"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
@@ -334,21 +336,17 @@
         dataType:'json',
         success: function( result ) {
             result.map(data => {
-
             $( "#getAllBlogCate").append(`<option value="${data.id}">${data.title}</option>`);
-
-            $( "#getAllBlogCateEdit").append(`<option value="${data.id}">${data.title}</option>`);
-                            
+            $( "#getAllBlogCateEdit").append(`<option id="${data.id}" value="${data.id}">${data.title}</option>`);            
             })
         }
-        });
+            });
         var tagtUploadImg = $("#gallery-cate-upload-img"),
         tagUpload = $("#gallery-cate-upload"),
         uploadedImage = $(".uploadedAvatar"),
         tagReset = $("#tag-reset");
-        // var src = uploadedImage.attr("src");
+        var src = uploadedImage.attr("src" , "{{asset('admin/images/img-default.png')}}");
         tagUpload.on("change", function (ch) {
-            
             var n = new FileReader(),
             uploadedImage = ch.target.files;
             (n.onload = function () {
@@ -358,7 +356,6 @@
         });
         var  a = $("#addGalleryCategoryForm");
         a.length && (a.validate({
-            
                 errorClass: "error",
                 rules: {
                     "url": { required: !0 },
@@ -381,15 +378,13 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                 success: function(data){
-                
+                        uploadedImage.attr("src" , "{{asset('admin/images/img-default.png')}}");
                         $(form)[0].reset();
                         $('#addGalleryCategoryModal').modal("hide");
                         table.ajax.reload();
                         toastr.success(data.msg)
-                    
                 },
                 error:function (error) {
-
                     console.log("Thêm không thành công",error);
                 }
             })
@@ -419,7 +414,6 @@
 
         $('body').on('click' ,'#editGalleryCategory' , function(){
             var gallery_id = $(this).data("id");
-            var cate = null;
             $.get('<?= route("gallery.list.api") ?>'+"/show/"+gallery_id , function (data) {
                 var tagtUploadImg = $("#tag-upload-img"),
                 tagUpload = $("#tag-upload"),
@@ -428,7 +422,6 @@
                 if (uploadedImage) {
                 // var src = uploadedImage.attr("src");
                 tagUpload.on("change", function (ch) {
-                    
                     var n = new FileReader(),
                     uploadedImage = ch.target.files;
                     (n.onload = function () {
@@ -445,29 +438,14 @@
                 $("#tag-upload-img").attr("src", data.url ? "/storage/"+ data.url 
                 : "{{ asset('admin/images/portrait/small/image-none.png') }}" );
                 form.find('input[name="id"]').val(data.id); 
-                cate = data.cate_gl_id;
+                 $.get("<?= route('gallery.category.list.api') ?>", function(dataCate) {
+                    dataCate.map((x)=>{
+                        if (data.cate_gl_id === x.id) { 
+                            $("#getAllBlogCateEdit").find("#" + data.cate_gl_id ).prop('selected', true);
+                        }
+                    })
+                    });
             },'json')
-            // $.get("{{ route('gallery.category.list.api') }}", function(data) {
-            //             data.cate.map(function(x) {
-            //                 console.log(x.id);
-            //                 if (cate == x.id) { //check cate đã chọn
-            //                     $("#getAllBlogCateEdit").find("#" + cate).prop('selected', true);
-            //                 }
-            //             })
-            //         });
-            $.ajax({
-            "url" : "{{ route('gallery.category.list.api') }}",
-            "type" : "GET",
-            dataType:'json',
-            success: function( result ) {
-                result.map(data => {
-                    console.log(data.id);
-                    if (cate == data.id) {
-                        $("#getAllBlogCateEdit").find("#" + cate).prop('selected', true);
-                    }             
-                })
-            }
-            });
         });
         $('#editGalleryCategoryForm').on('submit', function(e){
             e.preventDefault();

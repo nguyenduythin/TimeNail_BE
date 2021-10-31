@@ -7,6 +7,8 @@ use App\Models\Combo;
 use App\Models\ComboService;
 use App\Models\Contact;
 use App\Models\Discount;
+use App\Models\Gallery;
+use App\Models\GalleryCategory;
 use App\Models\Service;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -27,5 +29,7 @@ class DatabaseSeeder extends Seeder
     // Service::factory(20)->create();
     // Combo::factory(15)->create();
     // ComboService::factory(15)->create();
+    // GalleryCategory::factory(5)->create();
+    // Gallery::factory(5)->create();
   }
 }

@@ -115,8 +115,6 @@ class UserController extends Controller
         $user = User::find($id);
         Storage::delete($user->avatar);
         $user->delete();
-        //Storage::delete($user->avatar);
-        // $user->destroy($id);
         return  response()->json(['success' => 'Xóa thành công!']);
     }
 }

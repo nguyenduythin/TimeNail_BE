@@ -32,7 +32,7 @@ class GalleryCategoryController extends Controller
         $galleryCategory = new GalleryCategory();
         $galleryCategory->fill($request->all());
         if ($request->hasFile('avatar')) {
-            $galleryCategory->avatar = $request->file('avatar')->storeAs('/images/avatar_gallery-category', uniqid() . '-' . $request->avatar->getClientOriginalName());
+            $galleryCategory->avatar = $request->file('avatar')->storeAs('/images/gallery-category', uniqid() . '-' . $request->avatar->getClientOriginalName());
         }
         $query = $galleryCategory->save();
         if (!$query) {
@@ -64,7 +64,7 @@ class GalleryCategoryController extends Controller
     {
         $galleryCategory = GalleryCategory::find($request->id);
         if ($request->hasFile('avatar')) {
-            $galleryCategory->avatar = $request->file('avatar')->storeAs('/images/avatar_gallery-category', uniqid() . '-' . $request->avatar->getClientOriginalName());
+            $galleryCategory->avatar = $request->file('avatar')->storeAs('/images/gallery-category', uniqid() . '-' . $request->avatar->getClientOriginalName());
         }
         $galleryCategory->fill($request->all());
         $query =  $galleryCategory->save();
@@ -73,7 +73,6 @@ class GalleryCategoryController extends Controller
         } else {
             return response()->json(['code' => 1, 'msg' => 'Sửa mới thành công !']);
         }
-        
     }
 
     /**
@@ -86,8 +85,10 @@ class GalleryCategoryController extends Controller
     {
         $galleryCategory = GalleryCategory::find($id);
         Storage::delete($galleryCategory->avatar);
-        $gallery = Gallery::where('cate_gl_id', $id);
-        $gallery->delete();
+        $gallery = Gallery::where('cate_gl_id', $id)->get();
+        foreach ($gallery as $item) {
+            Storage::delete($item->url);
+        }
         $galleryCategory->delete();
         return  response()->json(['success' => 'Xóa thành công!']);
     }

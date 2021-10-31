@@ -19,6 +19,7 @@ use App\Http\Controllers\admin\TagController;
 use App\Http\Controllers\admin\GalleryCategoryController;
 use App\Http\Controllers\admin\GalleryController;
 use App\Http\Controllers\admin\SliderShowController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +36,14 @@ use Illuminate\Support\Facades\Route;
 //login
 Route::get('admin-login', [LoginController::class, 'index'])->name('login.index');
 
+//fix error login 
+Route::get('/clear-cache', function () {
+    //php artisan config:clear
+    //php artisan cache:clear
+    //php artisan route:clear
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/',  [DashboardController::class, 'index'])->name('dashboard');
@@ -48,9 +57,9 @@ Route::middleware('auth')->group(function () {
     //permission list
     Route::get('permission', [PermissionController::class, 'index'])->name('permission.list');
 
-//blog_category thuan
-Route::get('category-blog',[BlogCategoryController::class,'index'])->name('category-blog.list');
-//blog_category end thuan
+    //blog_category thuan
+    Route::get('category-blog', [BlogCategoryController::class, 'index'])->name('category-blog.list');
+    //blog_category end thuan
     //feedback thuan
     Route::get('feedback', [FeedbackController::class, 'index'])->name('feedback.list');
     //feedback end thuan
@@ -64,20 +73,20 @@ Route::get('category-blog',[BlogCategoryController::class,'index'])->name('categ
     //blog_category end thuan
 
     //gallery_category thuan
-    Route::get('category-gallery',[GalleryCategoryController::class,'index'])->name('category-gallery.list');
+    Route::get('category-gallery', [GalleryCategoryController::class, 'index'])->name('category-gallery.list');
     //gallery_category end thuan
 
     //gallery thuan
-    Route::get('gallery',[GalleryController::class,'index'])->name('gallery.list');
+    Route::get('gallery', [GalleryController::class, 'index'])->name('gallery.list');
     //gallery end thuan
 
     //slider thuan
-    Route::get('slider',[SliderShowController::class,'index'])->name('slider.list');
+    Route::get('slider', [SliderShowController::class, 'index'])->name('slider.list');
     //slider end thuan
 
 
     //contact page
-    Route::get('contact',[ContactController::class,'index'])->name('contact.list');
+    Route::get('contact', [ContactController::class, 'index'])->name('contact.list');
     //blog thuan
     Route::get('blog', [BlogController::class, 'index'])->name('blog.list');
     //blog end thuan
