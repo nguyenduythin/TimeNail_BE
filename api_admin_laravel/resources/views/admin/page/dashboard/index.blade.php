@@ -286,18 +286,18 @@ const data = {
     label: 'Doanh thu dịch vụ',
     backgroundColor: 'rgb(255, 99, 132)',
     borderColor: 'rgb(255, 99, 132)',
-    data: [10, 10, 5, 2, 20, 30, 43,23,12,44,33,55],
+    data: [10, 10, 5, 2, 20, 30, 43,23,12,44,33,25],
   },
   {
     label: 'Doanh thu combo',
     backgroundColor: 'rgb(76, 133, 255)',
     borderColor: 'rgb(76, 133, 255)',
-    data: [10, 0, 12, 23, 2, 30, 50,0,12,4,45,33],
+    data: [10, 0, 12, 23, 2, 30, 50,13,12,4,25,33],
   },
 ]
 };
 const config = {
-  type: 'line',
+  type: 'bar',
   data: data,
   options: {}
 };

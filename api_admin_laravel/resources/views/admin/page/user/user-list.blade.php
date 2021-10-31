@@ -238,11 +238,11 @@
                     </div>
                     @endrole
 
-                    <div class="col-12 col-md-6">
+                    {{-- <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditTaxID">Mật khẩu</label>
                         <input type="password" id="modalEditTaxID " name="password"
                             class="form-control modal-edit-tax-id" placeholder="password" />
-                    </div>
+                    </div> --}}
 
 
                     <div class="col-12 col-md-6">

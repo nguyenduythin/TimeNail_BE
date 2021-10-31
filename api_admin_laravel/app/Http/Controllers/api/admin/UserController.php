@@ -87,10 +87,9 @@ class UserController extends Controller
         }
         $user->fill($request->all());
         // if (!Hash::check($request->password)) {
-        $user->fill([
-            'password' => Hash::make($request->password)
-        ]);
-
+        // $user->fill([
+        //     'password' => Hash::make($request->password)
+        // ]);
         // }
         if ($request->hasFile('avatar')) {
             $user->avatar = $request->file('avatar')->storeAs('/images/avatar_users', uniqid() . '-' . $request->avatar->getClientOriginalName());

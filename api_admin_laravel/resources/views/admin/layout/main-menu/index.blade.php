@@ -121,8 +121,9 @@
                                     data-i18n="giảm giá">Mã giảm giá</span></a>
                   </li>
                   <li class=" nav-item {{ request()->is('bill*') ? 'active' : '' }}"><a
-                              class="d-flex align-items-center" href="{{route('bill.list')}}"><i data-feather='file-text'></i><span
-                                    class="menu-title text-truncate" data-i18n="Invoice">Hóa đơn</span></a>
+                              class="d-flex align-items-center" href="{{route('bill.list')}}"><i
+                                    data-feather='file-text'></i><span class="menu-title text-truncate"
+                                    data-i18n="Invoice">Hóa đơn</span></a>
                   </li>
                   <li class=" navigation-header"><span data-i18n="Dịch vụ">Truyền thông</span><i
                               data-feather="more-horizontal"></i>
@@ -134,8 +135,8 @@
                   </li>
                   <li class=" nav-item {{ request()->is('category-blog*') ? 'active' : '' }}"><a
                               class="d-flex align-items-center" href="{{ route('category-blog.list')}}"><i
-                                    data-feather='list'></i><span class="menu-title text-truncate"
-                                    data-i18n="blog">Danh mục bài viết</span></a>
+                                    data-feather='list'></i><span class="menu-title text-truncate" data-i18n="blog">Danh
+                                    mục bài viết</span></a>
 
                   </li>
                   <li class=" nav-item {{ request()->is('tag*') ? 'active' : '' }}"><a class="d-flex align-items-center"
@@ -151,12 +152,14 @@
                                     data-i18n="Feedback">Feedback</span></a>
                   </li>
                   <li class=" nav-item {{ request()->is('gallery*') ? 'active' : '' }}"><a
-                              class="d-flex align-items-center" href="{{ route('gallery.list')}}"><i data-feather='image'></i><span
-                                    class="menu-title text-truncate" data-i18n="Review">Thư Viện Dịch Vụ</span></a>
+                              class="d-flex align-items-center" href="{{ route('gallery.list')}}"><i
+                                    data-feather='image'></i><span class="menu-title text-truncate"
+                                    data-i18n="Review">Thư Viện Dịch Vụ</span></a>
                   </li>
                   <li class=" nav-item {{ request()->is('category-gallery*') ? 'active' : '' }}"><a
-                              class="d-flex align-items-center" href="{{ route('category-gallery.list')}}"><i data-feather='list'></i><span
-                                    class="menu-title text-truncate" data-i18n="Review">Danh Mục Thư Viện</span></a>
+                              class="d-flex align-items-center" href="{{ route('category-gallery.list')}}"><i
+                                    data-feather='list'></i><span class="menu-title text-truncate"
+                                    data-i18n="Review">Danh Mục Thư Viện</span></a>
                   </li>
                   <li class=" nav-item {{ request()->is('contact*') ? 'active' : '' }}"><a
                               class="d-flex align-items-center" href="{{route('contact.list')}}"><i
@@ -167,8 +170,9 @@
                               data-feather="more-horizontal"></i>
                   </li>
                   <li class="nav-item {{ request()->is('slider*') ? 'active' : '' }}"><a
-                              class="d-flex align-items-center" href="{{route('slider.list')}}"><i data-feather='sliders'></i><span
-                                    class="menu-title text-truncate" data-i18n="Slider">Slider</span></a>
+                              class="d-flex align-items-center" href="{{route('slider.list')}}"><i
+                                    data-feather='sliders'></i><span class="menu-title text-truncate"
+                                    data-i18n="Slider">Slider</span></a>
 
                   </li>
                   <li class=" nav-item {{ request()->is('setting*') ? 'active' : '' }}"><a
@@ -183,7 +187,7 @@
 @section('script')
 
 <script>
-    
+
 </script>
 
 

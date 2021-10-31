@@ -22,7 +22,6 @@
                 <th>Tiêu đề bài viết</th>
                 <th>Danh mục bài viết</th>
                 <th>Ảnh</th>
-                <th>Nội dung</th>
                 <th>Thẻ gán</th>
                 <th>Người tạo</th>
                 <th>Hành động</th>
@@ -47,11 +46,10 @@
               <form id="addBlogForm" class="row" method="POST" action="{{ route('blog.list.api') }}"
                 enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="description" class="mota">
                 <div class="d-flex center">
                   <a href="#" class="me-25">
-                    <img src="" id="blog-upload-img" class="uploadedImage rounded me-50" alt="profile image"
-                      height="250" width="400" name="image" />
+                    <img src="" id="blog-upload-img" class="uploadedImage rounded me-50 uploadedAvatar"
+                      alt="profile image" height="250" width="300" name="image" />
                   </a>
                   <!-- upload and reset button -->
                   <div class="d-flex align-items-end mt-75 ms-1">
@@ -65,10 +63,10 @@
                 </div>
                 <div class="col-12">
                   <label class="form-label" for="modalBlogName">người viết bài</label>
-                  <select class="form-control dt-full-name" id="getAllUser" name="user_id"
-                    id="basic-icon-default-fullname12">
-
-                  </select>
+                  <input type="hidden" name="user_id" value="{{  Auth::user()->id }}">
+                  <p class="form-control ">
+                    {{ Auth::user()->full_name }}
+                  </p>
                 </div>
                 <div class="col-6">
                   <label class="form-label" for="modalBlogName">Tiêu đề bài viết</label>
@@ -81,22 +79,8 @@
 
                   </select>
                 </div>
-                {{-- <div class="col-12">
-                  <div class="mb-2">
-                    <label class="form-label">Content</label>
-                    <div id="blog-editor-wrapper">
-                      <div id="blog-editor-container">
-                        <div class="editor">
-                          <p name="description">
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> --}}
                 <div class="col-12">
-                  <h4 class="mt-2 pt-50">Thẻ bài viết</h4>
-                  <!-- role table -->
+                  <h5 class="form-label mt-25" style="margin-top: 10px !important" for="modalBlogName">Thẻ bài viết</h5>
                   <div class="table-responsive">
                     <table class="table table-flush-spacing">
                       <tbody>
@@ -104,19 +88,25 @@
                         <tr>
                           <td>
                             <div class="d-flex" id="getAllTag">
-
                             </div>
                           </td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
-                  <!-- role table -->
+                </div>
+                <div class="col-12">
+                  <div class="mb-2">
+                    <h5 class="form-label">Nội dung</h5>
+                    <textarea name="description" id="editor" cols="30" rows="30">
+                    </textarea>
+
+                  </div>
                 </div>
                 <div class="col-12 text-center mt-2">
-                  <button type="submit" class="btn btn-primary me-1">Submit</button>
+                  <button type="submit" class="btn btn-primary me-1">Lưu</button>
                   <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
-                    Discard
+                    Quay lại
                   </button>
                 </div>
               </form>
@@ -141,7 +131,6 @@
               <form id="editBlogForm" class="row" method="POST" action="{{ route('blog.update.api') }}"
                 enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="description" class="mota">
                 <input type="hidden" name="id">
                 <div class="d-flex center">
                   <a href="#" class="me-25">
@@ -162,9 +151,8 @@
                 </div>
                 <div class="col-12">
                   <label class="form-label" for="modalBlogName">Người viết bài</label>
-                  <select class="form-control dt-full-name" id="getAllUserEdit" name="user_id"
+                  <select class="form-control dt-full-name" id="getAllBogCate" name="user_id"
                     id="basic-icon-default-fullname12">
-
                   </select>
                 </div>
                 <div class="col-6">
@@ -175,51 +163,36 @@
                 <div class="col-6">
                   <label class="form-label" for="modalBlogName">Danh mục bài viết</label>
                   <select class="form-control dt-full-name" id="getAllBlogCateEdit" name="cate_blog_id">
-
                   </select>
                 </div>
                 <div class="col-12">
-                  <label class="form-label" for="modalBlogName">Tiêu đề bài viết</label>
-                  <input type="text" id="modalBlogName title" class="form-control" placeholder="blog ..."
-                    name="description" tabindex="-1" data-msg="Please enter blog title" />
-                  {{-- <textarea name="description"></textarea>
-                </div> --}}
-                {{-- <div class="col-12">
-                  <div class="mb-2">
-                    <label class="form-label">Content</label>
-                    <div id="blog-editor-wrapper">
-                      <div id="blog-editor-container">
-                        <div class="editor">
-                          <p name="description">
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> --}}
-                <div class="col-12">
                   <h4 class="mt-2 pt-50">Thẻ bài viết</h4>
-                  <!-- role table -->
                   <div class="table-responsive">
                     <table class="table table-flush-spacing">
                       <tbody>
-
                         <tr>
                           <td>
                             <div class="d-flex" id="getAllTagEdit">
-
                             </div>
                           </td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
-                  <!-- role table -->
                 </div>
+                <div class="col-12">
+                  <div class="mb-2">
+                    <h5 class="form-label">Nội dung</h5>
+                    <textarea name="description" class="description_edit" id="editorEdit" cols="30" rows="30">
+                    </textarea>
+
+                  </div>
+                </div>
+
                 <div class="col-12 text-center mt-2">
-                  <button type="submit" class="btn btn-primary me-1">Submit</button>
+                  <button type="submit" class="btn btn-primary me-1">Lưu</button>
                   <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
-                    Discard
+                    Quay lại
                   </button>
                 </div>
               </form>
@@ -238,15 +211,21 @@
 @endsection
 @section('script')
 <!-- BEGIN: Page Vendor JS-->
-<script src="{{asset('admin/vendors/js/editors/quill/katex.min.js')}}"></script>
+{{-- <script src="{{asset('admin/vendors/js/editors/quill/katex.min.js')}}"></script>
 <script src="{{asset('admin/vendors/js/editors/quill/highlight.min.js')}}"></script>
-<script src="{{asset('admin/vendors/js/editors/quill/quill.min.js')}}"></script>
+<script src="{{asset('admin/vendors/js/editors/quill/quill.min.js')}}"></script> --}}
 <!-- END: Page Vendor JS-->
 <!-- BEGIN: Page JS-->
 <script src="{{asset('admin/js/scripts/pages/page-blog-edit.min.js')}}"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
 <!-- END: Page JS-->
 <script>
   $(function () {
+    let editorEdit;
+    ClassicEditor.create( document.querySelector('#editor'));
+    ClassicEditor.create( document.querySelector('#editorEdit')).then( newEditor => {
+      editorEdit = newEditor;
+    });
     var e = $("#datatables-blogs");
     var o = "{{ route('blog.list') }}",
         r = "app-feedback-view-account.html";
@@ -260,7 +239,7 @@
                     { data: "title"  },
                     { data: "category_blog" },
                     { data: "image" },
-                    { data: "description" },
+                    // { data: "description" },
                     { data: "blog_tag" },
                     { data: "blog_user" },
                 ],
@@ -290,7 +269,6 @@
                         targets: 2,
                         render: function (e, t, a, s) {
                             var i = a.image;
-                                
                             if (i)
                                 var c =
                                     '<div><img src="/storage/'+
@@ -301,7 +279,7 @@
                         },
                     },
                     {
-                      targets: 4,
+                      targets: 3,
                       render: function (e, t, a, s) {
                           return  a.blog_tag.map(data => 
                               (`<span class="badge rounded-pill badge-light-dark " text-capitalized>${data.name_tag}</span>`)
@@ -309,14 +287,14 @@
                       },
                     },
                     {
-                      targets: 5,
+                      targets: 4,
                       render: function(e, t, a, s) {
                           var n = a.blog_user.full_name;
                           return ('<span >' + n + '</span>')
                       },
                     },
                     {
-                        targets: 6,
+                        targets: 5,
                         title: "Actions",
                         orderable: !1,
                         render: function (e, t, a, s) {
@@ -505,13 +483,12 @@
                             });
                 },
             });
-            var tagtUploadImg = $("#blog-upload-img"),
-            tagUpload = $("#blog-upload"),
-            uploadedImage = $(".uploadedAvatar"),
-            tagReset = $("#blog-reset");
-            // var src = uploadedImage.attr("src");
+          var tagtUploadImg = $("#blog-upload-img"),
+              tagUpload = $("#blog-upload"),
+              uploadedImage = $(".uploadedAvatar"),
+              tagReset = $("#blog-reset");
+          var src =   uploadedImage.attr("src" , "{{asset('admin/images/img-default.png')}}");
             tagUpload.on("change", function (ch) {
-                
                 var n = new FileReader(),
                 uploadedImage = ch.target.files;
                 (n.onload = function () {
@@ -524,7 +501,6 @@
                       errorClass: "error",
                       rules: {
                           "name": { required: !0 },
-                        
                       },
                   }),
                   
@@ -544,9 +520,9 @@
                               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                           },
                           success: function(data){
-                        
                                   $(form)[0].reset();
                                   $('#addBlogModal').modal("hide");
+                                  uploadedImage.attr("src" , "{{asset('admin/images/img-default.png')}}");
                                   table.ajax.reload();
                                   toastr.success(data.msg)
                               
@@ -558,7 +534,7 @@
                       })
                   }))
 
-                   // get all permission
+                   // get all tags
                   $.ajax({
                     "url" : "{{ route('tag.list.api') }}",
                     "type" : "GET",
@@ -568,15 +544,11 @@
                         $( "#getAllTag").append(`<div class="form-check me-3 me-lg-5">
                                                                 <input class="form-check-input" type="checkbox" id="${data.id}" name="blog_tag[]" data-id="${data.id}" value="${data.id}" />
                                                                 <label class="form-check-label" for="${data.id}"> ${data.name_tag} </label>
-                                                            </div>`);
-                                        
-                                                            
+                                                            </div>`);       
                         $( "#getAllTagEdit").append(`<div class="form-check me-3 me-lg-5">
                                                                 <input class="form-check-input" type="checkbox" id="${data.id}" name="blog_tag[]" data-id="${data.id}" value="${data.id}" />
                                                                 <label class="form-check-label" for="${data.id}"> ${data.name_tag} </label>
                                                             </div>`);
-
-
                       })
                     }
                   });
@@ -586,32 +558,12 @@
                     dataType:'json',
                     success: function( result ) {
                       result.map(data => {
-                        $( "#getAllBlogCate").append(`<option value="${data.id}">${data.name_cate_blog}</option>`);
-                                        
-                                                            
-                        $( "#getAllBlogCateEdit").append(`<option value="${data.id}">${data.name_cate_blog}</option>`);
-
-
+                        $( "#getAllBlogCate").append(`<option value="${data.id}">${data.name_cate_blog}</option>`);                                
+                        $( "#getAllBlogCateEdit").append(`<option value="${data.id}" id="${data.id}">${data.name_cate_blog}</option>`);
                       })
                     }
                   });
-                  $.ajax({
-                    "url" : "{{ route('user.list.api') }}",
-                    "type" : "GET",
-                    dataType:'json',
-                    success: function( result ) {
-                      result.map(data => {
-                        $( "#getAllUser").append(`<option value="${data.id}">${data.full_name}</option>`);
-                                        
-                                                            
-                        $( "#getAllUserEdit").append(`<option value="${data.id}">${data.full_name}</option>`);
-
-
-                      })
-                    }
-                  });
-    
-
+               
                 // Delete 
                   $('body').on('click' ,'#deleteBlog' , function(){
                     var blog_id = $(this).data("id");
@@ -644,7 +596,6 @@
                       tagReset = $("#blogEdit-reset");
                       if (uploadedImage) {
                       tagUpload.on("change", function (ch) {
-                          
                           var n = new FileReader(),
                           uploadedImage = ch.target.files;
                           (n.onload = function () {
@@ -657,17 +608,16 @@
                           : "{{ asset('admin/images/portrait/small/image-none.png') }}" );
                           });
                       };
-                        var form = $('#editBlogForm');
+                      var form = $('#editBlogForm');
                         $("#blogEdit-upload-img").attr("src", data.image ? "/storage/"+ data.image 
                         : "{{ asset('admin/images/portrait/small/image-none.png') }}" );
                         form.find('input[name="id"]').val(data.id); 
                         form.find('input[name="title"]').val(data.title); 
-                        form.find('input[name="description"]').val(data.description);  
+                        editorEdit.setData(data.description);
                         cate = data.cate_blog_id;
                         blogTag = data.blog_tag;
-                        console.log(blogTag);
                     },'json');
-                    $.ajax({
+                  $.ajax({
                     "url" : "{{ route('blog.category.list.api') }}",
                     "type" : "GET",
                     dataType:'json',
@@ -679,7 +629,8 @@
                       })
                     }
                     });
-                    $.ajax({
+
+                  $.ajax({
                       "url" : "{{ route('tag.list.api') }}",
                       "type" : "GET",
                       dataType:'json',
@@ -719,13 +670,13 @@
                         }
                     })
                 });
-                  // Filter form control to default size
-                  // ? setTimeout used for multilingual table initialization
-                  setTimeout(() => {
-                    $('.dataTables_filter .form-control').removeClass('form-control-sm');
-                    $('.dataTables_length .form-select').removeClass('form-select-sm');
-                  }, 300);
-                });
+  // Filter form control to default size
+  // ? setTimeout used for multilingual table initialization
+  setTimeout(() => {
+    $('.dataTables_filter .form-control').removeClass('form-control-sm');
+    $('.dataTables_length .form-select').removeClass('form-select-sm');
+  }, 300);
+});
 
 
 
