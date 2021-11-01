@@ -15,7 +15,7 @@
                 <!-- list and filter start -->
                 <div class="card">
                     <div class="card-body border-bottom">
-                        <h4 class="card-title">Dịch Vụ</h4>
+                        <h4 class="card-title"> Combo Dịch Vụ</h4>
                     </div>
                     <div class="card-datatable table-responsive pt-0">
                         <table class="user-list-table table" id="DataTables_Table_User">
@@ -211,7 +211,7 @@
                     <h1 class="mb-1">Cập nhật combo</h1>
                     <p>Cập nhật chi tiết combo !</p>
                 </div>
-                <form id="editUserForm" action="{{route('combo.update.api')}}" method="POST" class="row gy-1 pt-75 add-new-user" enctype="multipart/form-data">
+                <form id="editComboForm" action="{{route('combo.update.api')}}" method="POST" class="row gy-1 pt-75 add-new-user" enctype="multipart/form-data">
                     @csrf
                     <input type="text" name="id" hidden>
                     <div class="d-flex center">
@@ -632,6 +632,7 @@
 
         // get detail edit và checked các service đã có
         $('body').on('click', '#editUser', function() {
+            $('#editComboForm')[0].reset();
             // mai làm tiếp phần list service
             var user_id = $(this).data("id");
             $.get('<?= route("combo.list.api") ?>' + "/show/" + user_id, function(data) {
@@ -644,7 +645,7 @@
                 })
                 $("#account-upload-img1").attr("src", data.model.image ? "/storage/" + data.model.image :
                     "{{ asset('admin/images/portrait/small/avatar-none.png') }}");
-                var form = $('#editUserForm');
+                var form = $('#editComboForm');
                 form.find('input[name="id"]').val(data.model.id);
                 form.find('input[name="name_combo"]').val(data.model.name_combo);
                 form.find('input[name="total_price"]').val(data.model.total_price);
@@ -655,7 +656,7 @@
 
         });
         // submit edit in db
-        $('#editUserForm').on('submit', function(e) {
+        $('#editComboForm').on('submit', function(e) {
             e.preventDefault();
             var form = this;
             $.ajax({
