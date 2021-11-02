@@ -17,6 +17,9 @@ class CategoryServiceController extends Controller
     {
         //
         $model = CategoryService::all();
+        foreach($model as $c){
+            $c['image'] = asset('storage/'.$c['image']);
+        }
         return response()->json($model);
     }
 
@@ -40,7 +43,10 @@ class CategoryServiceController extends Controller
     public function show($id)
     {
         //
-        return CategoryService::find($id);
+        $model = CategoryService::find($id);
+        $model['image'] = asset('storage/'.$model['image']);
+        $model->load('services');
+        return response()->json($model);
     }
 
     /**

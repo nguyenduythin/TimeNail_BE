@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\api\client;
 
 use App\Http\Controllers\Controller;
-use App\Models\Combo;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 
-class ComboController extends Controller
+class ContactController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +16,6 @@ class ComboController extends Controller
     public function index()
     {
         //
-        $model = Combo::all();
-        // foreach($model as $c){
-        //     $c['image'] = asset('storage/'.$c['image']);
-        // }
-        // $model->load('services');
-        return response()->json($model);
     }
 
     /**
@@ -32,7 +26,14 @@ class ComboController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $model = new Contact();
+        $model->fill($request->all());
+        $model->save();
+        if (!$model) {
+            return response()->json(['code' => 0, 'msg' => 'Thêm mới không thành công !']);
+        } else {
+            return response()->json(['code' => 1, 'msg' => 'Thêm mới thành công !']);
+        }
     }
 
     /**
@@ -44,10 +45,6 @@ class ComboController extends Controller
     public function show($id)
     {
         //
-        $model = Combo::find($id);
-        $model['image'] = asset('storage/'.$model['image']);
-        $model->load('services');
-        return response()->json($model);
     }
 
     /**

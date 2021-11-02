@@ -16,4 +16,8 @@ class CategoryService extends Model
         'image',
         'note',
     ];
+
+    public function services(){
+        return $this->hasMany(Service::class,'cate_service_id');
+    }
 }

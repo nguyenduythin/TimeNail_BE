@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\api\client;
 
 use App\Http\Controllers\Controller;
-use App\Models\Combo;
+use App\Models\Blog;
 use Illuminate\Http\Request;
 
-class ComboController extends Controller
+class BlogController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,12 +15,13 @@ class ComboController extends Controller
      */
     public function index()
     {
-        //
-        $model = Combo::all();
-        // foreach($model as $c){
-        //     $c['image'] = asset('storage/'.$c['image']);
-        // }
-        // $model->load('services');
+        $model = Blog::all();
+        $model->load('categoryBlog');
+        $model->load('blogUser');
+        $model->load('blogTag');
+        foreach($model as $c){
+            $c['image'] = asset('storage/'.$c['image']);
+        }
         return response()->json($model);
     }
 
@@ -43,10 +44,11 @@ class ComboController extends Controller
      */
     public function show($id)
     {
-        //
-        $model = Combo::find($id);
+        $model = Blog::find($id);
+        $model->load('categoryBlog');
+        $model->load('blogUser');
+        $model->load('blogTag');
         $model['image'] = asset('storage/'.$model['image']);
-        $model->load('services');
         return response()->json($model);
     }
 

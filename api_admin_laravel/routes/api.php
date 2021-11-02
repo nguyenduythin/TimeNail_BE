@@ -24,7 +24,9 @@ use App\Http\Controllers\api\admin\TagController as AdminTagController;
 use App\Http\Controllers\api\admin\GalleryCategoryController as AdminGalleryCategoryController;
 use App\Http\Controllers\api\admin\GalleryController as AdminGalleryController;
 use App\Http\Controllers\api\admin\SliderShowController as AdminSliderShowController;
-
+use App\Http\Controllers\api\client\BlogController as ClientBlogController;
+use App\Http\Controllers\api\client\ContactController as ClientContactController;
+use App\Http\Controllers\api\client\GalleryCategoryController as ClientGalleryCategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -54,6 +56,20 @@ Route::prefix('client')->group(function(){
     Route::prefix('service')->group(function(){
         Route::get('/', [ClientServiceController::class, 'index'])->name('service.list');
         Route::get('/show/{id}', [ClientServiceController::class, 'show']);
+    });
+    //blog
+    Route::prefix('blog')->group(function(){
+        Route::get('/', [ClientBlogController::class, 'index'])->name('blog.list');
+        Route::get('/show/{id}', [ClientBlogController::class, 'show']);
+    });
+    //gallery
+    Route::prefix('gallery-category')->group(function(){
+        Route::get('/',[ClientGalleryCategoryController::class,'index']);
+        Route::get('/show/{id}', [ClientGalleryCategoryController::class, 'show']);
+    });
+    //contact
+    Route::prefix('contact')->group(function(){
+        Route::post('/', [ClientContactController::class, 'store']);
     });
 });
 

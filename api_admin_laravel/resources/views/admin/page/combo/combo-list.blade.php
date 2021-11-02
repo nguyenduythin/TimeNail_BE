@@ -15,7 +15,7 @@
                 <!-- list and filter start -->
                 <div class="card">
                     <div class="card-body border-bottom">
-                        <h4 class="card-title">Dịch Vụ</h4>
+                        <h4 class="card-title">Combo</h4>
                     </div>
                     <div class="card-datatable table-responsive pt-0">
                         <table class="user-list-table table" id="DataTables_Table_User">
