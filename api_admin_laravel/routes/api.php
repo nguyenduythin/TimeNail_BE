@@ -24,9 +24,12 @@ use App\Http\Controllers\api\admin\TagController as AdminTagController;
 use App\Http\Controllers\api\admin\GalleryCategoryController as AdminGalleryCategoryController;
 use App\Http\Controllers\api\admin\GalleryController as AdminGalleryController;
 use App\Http\Controllers\api\admin\SliderShowController as AdminSliderShowController;
+use App\Http\Controllers\api\client\BillController as ClientBillController;
 use App\Http\Controllers\api\client\BlogController as ClientBlogController;
 use App\Http\Controllers\api\client\ContactController as ClientContactController;
+use App\Http\Controllers\api\client\DiscountController as ClientDiscountController;
 use App\Http\Controllers\api\client\GalleryCategoryController as ClientGalleryCategoryController;
+use App\Http\Controllers\api\client\SettingController as ClientSettingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -67,10 +70,24 @@ Route::prefix('client')->group(function(){
         Route::get('/',[ClientGalleryCategoryController::class,'index']);
         Route::get('/show/{id}', [ClientGalleryCategoryController::class, 'show']);
     });
+    //discount
+    Route::prefix('discount')->group(function(){
+        Route::post('/', [ClientDiscountController::class, 'show']);
+    });
+    //bill
+    Route::prefix('bill')->group(function(){
+        Route::post('/', [ClientBillController::class, 'store']);
+    });
     //contact
     Route::prefix('contact')->group(function(){
         Route::post('/', [ClientContactController::class, 'store']);
     });
+    //setting
+    Route::prefix('setting')->group(function(){
+        Route::get('/', [ClientSettingController::class, 'index']);
+        Route::get('/show/{id}', [ClientSettingController::class, 'show']);
+    });
+
 });
 
 
