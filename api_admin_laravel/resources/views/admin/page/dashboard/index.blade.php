@@ -259,11 +259,11 @@
   $.get('<?= route("dashboard.api") ?>', function(data) {
         $('#combo-count').html(data.combo);
         $('#user-count').html(data.user);
-
         $('#staff-count').html(data.staff);
         $('#service-count').html(data.service);
 
  })
+ 
   const MONTHS = [
   'Tháng 1',
   'Tháng 2',

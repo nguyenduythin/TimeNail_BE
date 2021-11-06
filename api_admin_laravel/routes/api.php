@@ -24,7 +24,8 @@ use App\Http\Controllers\api\admin\TagController as AdminTagController;
 use App\Http\Controllers\api\admin\GalleryCategoryController as AdminGalleryCategoryController;
 use App\Http\Controllers\api\admin\GalleryController as AdminGalleryController;
 use App\Http\Controllers\api\admin\SliderShowController as AdminSliderShowController;
-
+use App\Http\Controllers\api\client\loginController as ClientLoginController;
+use App\Http\Controllers\api\client\LoginWithGoogleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,20 +39,29 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+//login & resigter
+Route::prefix('login')->group(function () {
+    Route::get('/google/redirect', [LoginWithGoogleController::class, 'loginWithGoogle'])->name('google.login.api');
+    Route::get('/google/callback/', [LoginWithGoogleController::class, 'callbackFromGoogle']);
+});
 //client
-Route::prefix('client')->group(function(){
+Route::prefix('client')->group(function () {
+    Route::post('/login', [ClientLoginController::class, 'login']);
+    Route::get('/logout', [ClientLoginController::class, 'logout']);
+
+    Route::post('/register', [ClientLoginController::class, 'register']);
     //combo
-    Route::prefix('combo')->group(function(){
+    Route::prefix('combo')->group(function () {
         Route::get('/', [ClientComboController::class, 'index'])->name('combo.list');
         Route::get('/show/{id}', [ClientComboController::class, 'show']);
     });
     //cate service
-    Route::prefix('cate-service')->group(function(){
+    Route::prefix('cate-service')->group(function () {
         Route::get('/', [ClientCategoryServiceController::class, 'index'])->name('cate-service.list');
         Route::get('/show/{id}', [ClientCategoryServiceController::class, 'show']);
     });
     //service
-    Route::prefix('service')->group(function(){
+    Route::prefix('service')->group(function () {
         Route::get('/', [ClientServiceController::class, 'index'])->name('service.list');
         Route::get('/show/{id}', [ClientServiceController::class, 'show']);
     });
@@ -211,23 +221,22 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
     });
 
     //combo
-    Route::prefix('combo')->group(function(){
-        Route::get('/',[ComboController::class,'index'])->name('combo.list.api');
+    Route::prefix('combo')->group(function () {
+        Route::get('/', [ComboController::class, 'index'])->name('combo.list.api');
         Route::get('/show/{id}', [ComboController::class, 'show']);
         Route::post('/', [ComboController::class, 'store'])->name('combo.add.api');
         Route::post('edit', [ComboController::class, 'update'])->name('combo.update.api');
-        Route::delete('{id}',[ComboController::class,'destroy']);
+        Route::delete('{id}', [ComboController::class, 'destroy']);
     });
 
-
     //bill
-    Route::prefix('bill')->group(function(){
-        Route::get('/',[BillController::class,'index'])->name('bill.list.api');
+    Route::prefix('bill')->group(function () {
+        Route::get('/', [BillController::class, 'index'])->name('bill.list.api');
         Route::get('/show/{id}', [BillController::class, 'show']);
         // Route::post('/', [BillController::class, 'store'])->name('bill.add.api');
         Route::post('edit', [BillController::class, 'update'])->name('bill.update.api');
-        Route::delete('{id}',[BillController::class,'destroy']);
-        Route::get('/staff',[BillController::class,'staff'])->name('bill-staff.list.api');
+        Route::delete('{id}', [BillController::class, 'destroy']);
+        Route::get('/staff', [BillController::class, 'staff'])->name('bill-staff.list.api');
     });
 });
 

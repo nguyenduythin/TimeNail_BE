@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
   public function run()
   {
     // Discount::factory(25)->create();
-    // Contact::factory(50)->create();
+    //  Contact::factory(50)->create();
     // User::factory(100)->create();
     // CategoryService::factory(10)->create();
     // Service::factory(20)->create();

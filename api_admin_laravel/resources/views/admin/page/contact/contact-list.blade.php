@@ -24,6 +24,7 @@
                                 <tr>
 
                                     <th>Họ & Tên</th>
+                                    <th>Email</th>
                                     <th>Tin Nhắn</th>
                                     <th>Action</th>
                                 </tr>
@@ -66,86 +67,18 @@
                 // { data: "" }, 
 
                 {
-                    data: "user.full_name"
+                    data: "full_name_ct"
                 },
-                // { data: "email" },
+                { 
+                    data: "email_ct"
+                },
                 {
                     data: "message"
                 },
             ],
             columnDefs: [
-                // {
-                //     className: "control",
-                //     orderable: !1,
-                //     responsivePriority: 1,
-                //     targets: 0,
-
-                // },
                 {
-                    targets: 0,
-                    responsivePriority: 2,
-                    render: function(e, t, a, s) {
-                        var n = a.user.full_name,
-                            l = a.user.email,
-                            i = a.user.avatar;
-
-                        if (i)
-                            var c =
-                                '<img src="/storage/' +
-                                i +
-                                '" alt="Avatar" height="32" width="32">';
-
-                        // var c =
-                        // '<img src="
-                        // {{asset( "storage/" . '+ i +')}}
-                        // " alt="Avatar" height="32" width="32">';
-
-                        else {
-                            var d = [
-                                    "success",
-                                    "danger",
-                                    "warning",
-                                    "info",
-                                    "dark",
-                                    "primary",
-                                    "secondary",
-                                ][Math.floor(6 * Math.random()) + 1],
-                                p = (n = a.user.full_name).match(/\b\w/g) || [];
-                            c =
-                                '<span class="avatar-content">' +
-                                (p = (
-                                    (p.shift() || "") + (p.pop() || "")
-                                ).toUpperCase()) +
-                                "</span>";
-                        }
-                        return (
-                            '<div class="d-flex justify-content-left align-items-center"><div class="avatar-wrapper"><div class="avatar ' +
-                            ("" === i ? " bg-light-" + d + " " : "") +
-                            ' me-1">' +
-                            c +
-                            '</div></div><div class="d-flex flex-column"><a href="' +
-                            r +
-                            '" class="user_name text-truncate text-body"><span class="fw-bolder">' +
-                            n +
-                            '</span></a><small class="emp_post text-muted">' +
-                            l +
-                            "</small></div></div>"
-                        );
-                    },
-                },
-                //target đoạn này đang có lỗi khiến nó không nhận css của class
-                // {
-                //     // targets: 1,
-                //     render: function (e, t, a, s) {
-                //         var n = a.message;
-                //         if (n) {
-                //             return  ('<span class="badge rounded-pill badge-light-warning" text-capitalized>'+ n +'</span>')
-                //         }
-                //     },
-                // },
-
-                {
-                    targets: 2,
+                    targets: 3,
                     title: "Actions",
                     orderable: !1,
                     render: function(e, t, a, s) {

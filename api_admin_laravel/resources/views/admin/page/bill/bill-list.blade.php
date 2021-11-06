@@ -267,12 +267,13 @@
                             l = a.user.email,
                             i = a.user.avatar;
 
-                        if (i)
-                            var c =
-                                '<img src="/storage/' +
-                                i +
-                                '" alt="Avatar" height="32" width="32">';
-                        else {
+                        if (i){
+                            if (i.includes('https')) {
+                                var c =`<img src="${i}" alt="Avatar" height="32" width="32">`;
+                            }else{
+                                var c =`<img src="/storage/${i}" alt="Avatar" height="32" width="32">`;
+                            }
+                        }else {
                             var d = [
                                     "success",
                                     "danger",
@@ -465,7 +466,6 @@
 
         $('body').on('click', '#deleteUser', function() {
             var id = $(this).data("id");
-            console.log('addd' ,id);
             if (confirm("Bạn có chắc chắn muốn xóa Hóa đơn này không ?")) {
                 $.ajax({
                     type: "DELETE",

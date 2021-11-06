@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles ;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -20,6 +20,8 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'full_name',
+        'google_id',
+        'avatar',
         'email',
         'password',
         'phone',
@@ -29,7 +31,7 @@ class User extends Authenticatable
         'description_staff',
         'experience_staff',
     ];
-    protected $guard_name = 'sanctum';// có dòng này mới chạy đc lệnh user::role('tên role')
+    protected $guard_name = 'sanctum'; // need to line => user::role('tên role')
 
     /**
      * The attributes that should be hidden for serialization.
