@@ -24,8 +24,10 @@ class ContactFactory extends Factory
     {
         return [
             //
+            'full_name_ct' => $this->faker->name,
+            'email_ct' => $this->faker->email,
             'message' => $this->faker->text(),
-            'user_id' => User::all()->random()->id,
+
         ];
     }
 }

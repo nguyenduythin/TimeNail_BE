@@ -362,20 +362,22 @@ $.ajax({
 });
 // get detail edit
 $('body').on('click' ,'#editRole' , function(){
+    $('#editRoleForm')[0].reset();
     var role_id = $(this).data("id");
     $.get('<?= route("role.list.api") ?>'+"/show/"+role_id , function (data) {
         var form = $('#editRoleForm');
         form.find('input[name="id"]').val(data.id); 
         form.find('input[name="name"]').val(data.name); 
-        var permissions  =  data.permissions
-    
+        var permissions  =  data.permissions;
+        console.log('đata',data);
+       
     $.get("{{ route('permission.list.api') }}" , function (result) {
       result.map(x => {
-      data.permissions.map(function(y) {
-                      if (y.id == x.id) {
-                          $("#getAllPermissionEdit").find("#"+y.id,"input").prop('checked', true);
-                      }
-                  })
+        data.permissions.map((y)=>{
+                        if (y.id === x.id) {
+                            $("#getAllPermissionEdit").find("#"+y.id,"input").prop('checked', true);
+                        }
+                    })
         })
     })
 

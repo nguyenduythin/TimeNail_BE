@@ -558,8 +558,8 @@
                     dataType:'json',
                     success: function( result ) {
                       result.map(data => {
-                        $( "#getAllBlogCate").append(`<option value="${data.id}">${data.name_cate_blog}</option>`);                                
-                        $( "#getAllBlogCateEdit").append(`<option value="${data.id}" id="${data.id}">${data.name_cate_blog}</option>`);
+                        $("#getAllBlogCate").append(`<option value="${data.id}">${data.name_cate_blog}</option>`);                                
+                        $("#getAllBlogCateEdit").append(`<option value="${data.id}" id="${data.id}">${data.name_cate_blog}</option>`);
                       })
                     }
                   });
@@ -586,6 +586,7 @@
                 });
                 // get detail edit
                 $('body').on('click' ,'#editBlog' , function(){
+                  $('#editBlogForm')[0].reset();
                     var blog_id = $(this).data("id");
                     var cate = null;
                     var blogTag = "" ;

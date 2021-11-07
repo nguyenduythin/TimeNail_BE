@@ -290,7 +290,7 @@
 @endsection
 @section('script')
 <script>
-$.get('<?= route("user.list.api") ?>', function(data) {
+    $.get('<?= route("user.list.api") ?>', function(data) {
         $('#staff-count').html(data.staff);
         $('#admin-count').html(data.admin);
         $('#editor-count').html(data.editor);
@@ -333,13 +333,15 @@ $.get('<?= route("user.list.api") ?>', function(data) {
                             var n = a.full_name,
                                 l = a.email,
                                 i = a.avatar;
-                              
+                              console.log('i' , i);
                             if (i)
-                                var c =
-                                    '<img src="/storage/'+
-                                    i +
-                                    '" alt="Avatar" height="32" width="32">';
-                            else {
+                            {
+                                if (i.includes('https')) {
+                                    var c =`<img src="${i}" alt="Avatar" height="32" width="32">`;
+                                }else{
+                                    var c =`<img src="/storage/${i}" alt="Avatar" height="32" width="32">`;
+                                }
+                            }else {
                                 var d = [
                                         "success",
                                         "danger",

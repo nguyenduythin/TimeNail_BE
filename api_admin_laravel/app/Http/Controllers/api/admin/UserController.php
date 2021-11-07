@@ -42,9 +42,7 @@ class UserController extends Controller
     {
         $user = new User();
         $user->fill($request->all());
-
         $user->syncRoles("Member");
-
         $user->fill([
             'password' => Hash::make($request->password)
         ]);

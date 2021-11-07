@@ -18,7 +18,7 @@
                 <div class="card">
                   <div class="card-body pb-50">
                     <h6>Hóa đơn</h6>
-                    <h2 class="fw-bolder mb-1">2,76k</h2>
+                    <h2 class="fw-bolder mb-1" id="total_bill"></h2>
                     <div id="statistics-order-chart"></div>
                   </div>
                 </div>
@@ -30,7 +30,7 @@
                 <div class="card card-tiny-line-stats">
                   <div class="card-body pb-50">
                     <h6>Lơi nhuận</h6>
-                    <h2 class="fw-bolder mb-1">6,24k</h2>
+                    <h2 class="fw-bolder mb-1" id="avg_bill"></h2>
                     <div id="statistics-profit-chart"></div>
                   </div>
                 </div>
@@ -256,14 +256,34 @@
 <script src="{{ asset('admin/js/scripts/pages/dashboard-ecommerce.min.js')}}"></script>
 
 <script>
+function nFormatter(num, digits) {
+  const lookup = [
+    { value: 1, symbol: "" },
+    { value: 1e3, symbol: "k" },
+    { value: 1e6, symbol: "M" },
+    { value: 1e9, symbol: "G" },
+    { value: 1e12, symbol: "T" },
+    { value: 1e15, symbol: "P" },
+    { value: 1e18, symbol: "E" }
+  ];
+  const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+  var item = lookup.slice().reverse().find(function(item) {
+    return num >= item.value;
+  });
+  return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+}
+
   $.get('<?= route("dashboard.api") ?>', function(data) {
         $('#combo-count').html(data.combo);
         $('#user-count').html(data.user);
-
         $('#staff-count').html(data.staff);
         $('#service-count').html(data.service);
+        $('#total_bill').html(nFormatter(data.bill , 1));
+        $('#avg_bill').html(nFormatter(data.avg_bill , 1));
+
 
  })
+ 
   const MONTHS = [
   'Tháng 1',
   'Tháng 2',

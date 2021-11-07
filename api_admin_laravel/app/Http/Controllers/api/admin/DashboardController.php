@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bill;
 use App\Models\Combo;
 use App\Models\Service;
 use App\Models\User;
@@ -21,8 +22,14 @@ class DashboardController extends Controller
         $serviceCount = Service::count();
         $comboCount = Combo::count();
         $staff = User::role('Staff')->count();
+        $bill = Bill::sum('total_bill');
+        $avg_bill = Bill::avg('total_bill');
 
-        return response()->json(['user' => $userCount, "service" => $serviceCount, "combo" => $comboCount , 'staff' => $staff]);
+
+        return response()->json([
+            'user' => $userCount, "service" => $serviceCount,
+            "combo" => $comboCount, 'staff' => $staff , 'bill' => $bill , 'avg_bill'=> $avg_bill
+        ]);
     }
 
     /**

@@ -19,6 +19,7 @@ use App\Http\Controllers\admin\TagController;
 use App\Http\Controllers\admin\GalleryCategoryController;
 use App\Http\Controllers\admin\GalleryController;
 use App\Http\Controllers\admin\SliderShowController;
+use App\Http\Controllers\api\client\LoginWithGoogleController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,7 @@ Route::get('/clear-cache', function () {
     //php artisan config:clear
     //php artisan cache:clear
     //php artisan route:clear
+    //php artisan optimize:clear
     Artisan::call('cache:clear');
     return "Cache is cleared";
 });

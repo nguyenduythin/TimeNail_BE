@@ -105,7 +105,9 @@
                                         </div>
                                     </div>
                                     <button class="btn btn-primary w-100" tabindex="4">Đăng Nhập</button>
+                                    <br>
                                 </form>
+                                <a href="{{ route('google.login.api') }}"><button class="btn btn-danger w-100 mt-25" tabindex="4">Google</button></a>  
                             </div>
                         </div>
                         <!-- /Login basic -->

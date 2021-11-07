@@ -24,7 +24,7 @@
                                     <th>Tổng Thời Gian</th>
                                     <th>Ngày Đặt</th>
                                     <th>Tổng Hóa Đơn</th>
-                                    <th>Ghi Chú</th>
+                                    <th>Số Điện thoại</th>
                                     <th>Trạng Thái</th>
                                     <th>Hành Động</th>
                                 </tr>
@@ -58,7 +58,7 @@
                     <h1 class="mb-1">Chi tiết hóa đơn</h1>
                     <p>Chi tiết hóa đơn !</p>
                 </div>
-                <form id="detailUserForm" method="POST" class="row gy-1 pt-75" enctype="multipart/form-data">
+                <form id="detailBillForm" method="POST" class="row gy-1 pt-75" enctype="multipart/form-data">
                     @csrf
                     <input type="text" name="id" hidden>
                     <div class="col-12 col-md-6">
@@ -72,6 +72,10 @@
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="">Ngày Đặt</label>
                         <input disabled type="text" name="date_work" class="form-control flatpickr-date-time flatpickr-input active" />
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="">Số điện thoại</label>
+                        <input disabled type="text" name="phone" class="form-control" />
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="">Tổng Tiền</label>
@@ -140,7 +144,7 @@
                     <h1 class="mb-1">Cập nhật mới hóa đơn</h1>
                     <p>Cập nhập chi tiết hóa đơn mới !</p>
                 </div>
-                <form id="editUserForm" action="{{route('bill.update.api')}}" method="POST" class="row gy-1 pt-75" enctype="multipart/form-data">
+                <form id="editBillForm" action="{{route('bill.update.api')}}" method="POST" class="row gy-1 pt-75" enctype="multipart/form-data">
                     @csrf
                     <input type="text" name="id" hidden>
                     <div class="col-12 col-md-6">
@@ -241,7 +245,7 @@
                     data: "total_bill"
                 },
                 {
-                    data: "note_bill"
+                    data: "phone"
                 },
                 {
                     data: "status_bill"
@@ -263,12 +267,13 @@
                             l = a.user.email,
                             i = a.user.avatar;
 
-                        if (i)
-                            var c =
-                                '<img src="/storage/' +
-                                i +
-                                '" alt="Avatar" height="32" width="32">';
-                        else {
+                        if (i){
+                            if (i.includes('https')) {
+                                var c =`<img src="${i}" alt="Avatar" height="32" width="32">`;
+                            }else{
+                                var c =`<img src="/storage/${i}" alt="Avatar" height="32" width="32">`;
+                            }
+                        }else {
                             var d = [
                                     "success",
                                     "danger",
@@ -460,11 +465,14 @@
         })
 
         $('body').on('click', '#deleteUser', function() {
-            var user_id = $(this).data("id");
+            var id = $(this).data("id");
             if (confirm("Bạn có chắc chắn muốn xóa Hóa đơn này không ?")) {
                 $.ajax({
                     type: "DELETE",
-                    url: "{{ route('bill.list.api') }}" + "/" + user_id,
+                    url: "{{ route('bill.list.api') }}" + "/" + id,
+                    headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
                     success: function() {
                         table.ajax.reload();
                         toastr.success("Xóa Thành Công");
@@ -509,10 +517,11 @@
                 data.staff.map(function(x) {
                     $("#service-list6").find("#" + x.id, "input").prop('checked', true);
                 });
-                var form = $('#detailUserForm');
+                var form = $('#detailBillForm');
                 form.find('input[name="full_name"]').val(data.user.full_name);
                 form.find('input[name="total_time_execution"]').val(data.total_time_execution);
                 form.find('input[name="date_work"]').val(data.date_work);
+                form.find('input[name="phone"]').val(data.phone);
                 form.find('input[name="total_bill"]').val(data.total_bill.toLocaleString() + '₫');
                 if (data.status_bill == 1) {
                     form.find('input[name="status_bill"]').val('Chờ xác nhận');
@@ -555,6 +564,7 @@
         })
         // get detail edit
         $('body').on('click', '#editUser', function() {
+            $('#editBillForm')[0].reset();
             var user_id = $(this).data("id");
             $.get('<?= route("bill.list.api") ?>' + "/show/" + user_id, function(data) {
                 data.combo.map(function(x) {
@@ -566,7 +576,7 @@
                 data.staff.map(function(x) {
                     $("#service-list3").find("#" + x.id, "input").prop('checked', true);
                 });
-                var form = $('#editUserForm');
+                var form = $('#editBillForm');
                 $("#select2-basic").find("#" + data.status_bill, "option").attr('selected', true);
                 form.find('input[name="id"]').val(data.id);
                 form.find('input[name="date_work"]').val(data.date_work);
@@ -574,7 +584,7 @@
             }, 'json')
         });
         // submit edit in db
-        $('#editUserForm').on('submit', function(e) {
+        $('#editBillForm').on('submit', function(e) {
             e.preventDefault();
             var form = this;
             $.ajax({

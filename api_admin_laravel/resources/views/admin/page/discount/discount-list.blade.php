@@ -172,6 +172,7 @@
                 search: "Search",
                 searchPlaceholder: "Search..",
             },
+            language: { paginate: { previous: "&nbsp;", next: "&nbsp;" } },
             buttons: [{
                     extend: "collection",
                     className: "btn btn-outline-secondary dropdown-toggle me-2",
