@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\api\client;
 
 use App\Http\Controllers\Controller;
-use App\Models\Combo;
+use App\Models\Discount;
 use Illuminate\Http\Request;
 
-class ComboController extends Controller
+class DiscountController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +16,6 @@ class ComboController extends Controller
     public function index()
     {
         //
-        $model = Combo::all();
-        // foreach($model as $c){
-        //     $c['image'] = asset('storage/'.$c['image']);
-        // }
-        // $model->load('services');
-        return response()->json($model);
     }
 
     /**
@@ -41,13 +35,14 @@ class ComboController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
-        $model = Combo::find($id);
-        $model['image'] = asset('storage/'.$model['image']);
-        $model->load('services');
-        return response()->json($model);
+        $model = Discount::where('code_discount',$request->code_discount)->get();
+        if ($model->count()==0) {
+            return response()->json(['msg' => 'Mã giảm giá không đúng']);
+        } else {
+            return response()->json($model);
+        }
     }
 
     /**
