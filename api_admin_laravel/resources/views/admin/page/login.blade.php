@@ -2,6 +2,7 @@
 
 <html class="loading" lang="en" data-textdirection="ltr">
 <!-- BEGIN: Head-->
+
 <head>
     @include('admin.layout.meta')
     <title>Admin - TimeNails</title>
@@ -85,7 +86,7 @@
                                         <label for="login-email" class="form-label">Email</label>
                                         <input type="text" class="form-control" id="login-email" name="email"
                                             placeholder="john@example.com" aria-describedby="login-email" tabindex="1"
-                                            autofocus />
+                                            autofocus  />
                                     </div>
 
                                     <div class="mb-1">
@@ -107,7 +108,8 @@
                                     <button class="btn btn-primary w-100" tabindex="4">Đăng Nhập</button>
                                     <br>
                                 </form>
-                                <a href="{{ route('google.login.api') }}"><button class="btn btn-danger w-100 mt-25" tabindex="4">Google</button></a>  
+                                <a href="{{ route('google.login.api') }}"><button class="btn btn-danger w-100 mt-25"
+                                        tabindex="4">Google</button></a>
                             </div>
                         </div>
                         <!-- /Login basic -->
@@ -120,15 +122,20 @@
     <!-- END: Content-->
 
 
- @include('admin.layout.script')
+    @include('admin.layout.script')
 
 <script>
+function validateEmail(email) {
+  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
 $(function () {
   'use strict';
   var pageLoginForm = $('.auth-login-form');
   $('#loginForm').on('submit', function(e){
     e.preventDefault();
    var form = this;
+   if (validateEmail($('#login-email').val()) ) {
     $.ajax({
         type:"POST",
         url:"{{ route('login.admin') }}",
@@ -150,6 +157,9 @@ $(function () {
             console.log("Đăng nhập không thành công !",error);
         }
     })
+}else{
+    toastr.error('email không đúng định dạng !');
+}
 });
 
 });
@@ -158,7 +168,8 @@ if (feather) {
     feather.replace({ width: 14, height: 14 });
 }
 })
-</script>
+    </script>
 </body>
 <!-- END: Body-->
+
 </html>

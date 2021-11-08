@@ -46,6 +46,11 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+        'admin' => [
+            'web',
+            'auth',
+            'role:admin'
+        ],
     ];
 
     /**
@@ -67,5 +72,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'abilities' => \Laravel\Sanctum\Http\Middleware\CheckAbilities::class,
         'ability' => \Laravel\Sanctum\Http\Middleware\CheckForAnyAbility::class,
+        'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
     ];
 }

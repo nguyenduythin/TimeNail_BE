@@ -17,10 +17,10 @@ class ComboController extends Controller
     {
         //
         $model = Combo::all();
-        // foreach($model as $c){
-        //     $c['image'] = asset('storage/'.$c['image']);
-        // }
-        // $model->load('services');
+        foreach($model as $c){
+            $c['image'] = asset('storage/'.$c['image']);
+        }
+        $model->load('services');
         return response()->json($model);
     }
 

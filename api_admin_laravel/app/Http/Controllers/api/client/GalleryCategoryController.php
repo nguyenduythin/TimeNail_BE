@@ -19,6 +19,8 @@ class GalleryCategoryController extends Controller
         foreach($model as $c){
             $c['avatar'] = asset('storage/'.$c['avatar']);
         }
+        $model->load('gallery');
+
         return response()->json($model);
     }
 

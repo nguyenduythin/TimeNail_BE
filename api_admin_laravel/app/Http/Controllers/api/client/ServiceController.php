@@ -17,7 +17,6 @@ class ServiceController extends Controller
     {
         //
         $model = Service::all();
-        $model->load('cate_service');
         return response()->json($model);
     }
 
