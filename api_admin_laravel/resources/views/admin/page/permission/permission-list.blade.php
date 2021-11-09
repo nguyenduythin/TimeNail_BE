@@ -9,8 +9,8 @@
     <div class="content-header row">
     </div>
     <div class="content-body">
-      <h3>Permissions List</h3>
-      <p>Each category (Basic, Professional, and Business) includes the four predefined roles shown below.</p>
+      <h3>Danh sách quyền</h3>
+      <p>Mỗi danh mục (Cơ bản, Chuyên nghiệp và Kinh doanh) bao gồm bốn vai trò được xác định trước được hiển thị bên dưới.</p>
 
       <!-- Permission Table -->
       <div class="card">
@@ -20,10 +20,10 @@
               <tr>
                 <th></th>
                 <th></th>
-                <th>Name</th>
-                <th>Assigned To</th>
-                <th>Created Date</th>
-                <th>Actions</th>
+                <th>Tên Quyền</th>
+                <th>Phân công</th>
+                <th>Ngày tạo</th>
+                <th>Hành động</th>
               </tr>
             </thead>
           </table>
@@ -181,7 +181,7 @@
         {
           // Actions
           targets: -1,
-          title: 'Actions',
+          title: 'Hành động',
           orderable: false,
           render: function (data, type, full, meta) {
             return (

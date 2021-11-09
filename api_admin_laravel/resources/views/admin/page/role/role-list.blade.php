@@ -12,8 +12,8 @@
 
 
 
-      <h3 class="mt-50">Total users with their roles</h3>
-      <p class="mb-2">Find all of your company’s administrator accounts and their associate roles.</p>
+      <h3 class="mt-50">Tổng số người dùng với vai trò của họ</h3>
+      <p class="mb-2">Tìm tất cả các tài khoản quản trị viên của công ty bạn và các vai trò liên kết của họ.</p>
       <!-- table -->
       <div class="card">
         <div class="card-datatable table-responsive">
@@ -193,7 +193,7 @@
         {
           // Actions
           targets: -1,
-          title: 'Actions',
+          title: 'Hành động',
           orderable: false,
           render: function (data, type, full, meta) {
             return (

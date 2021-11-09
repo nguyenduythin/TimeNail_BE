@@ -153,8 +153,7 @@ $(function () {
             }
         },
         error:function (error) {
-            toastr.warning("Có gì đó đang sảy ra !");
-            console.log("Đăng nhập không thành công !",error);
+            toastr.error('Tài khoản mật khẩu không chính xác')
         }
     })
 }else{
