@@ -82,7 +82,9 @@ class BillController extends Controller
         $bill = Bill::find($model['id']);
         $bill->load('staff','service','combo');
         $user = User::find($request->user_id);
-        Mail::to($user['email'])->send(new BillMail($bill,$bill['staff'],$bill['combo'],$bill['service'],$discount['percent']));
+        Mail::to($user['email'])->send(new BillMail($bill,$bill['staff'],$bill['combo'],
+                                                        $bill['service'],$bill['date_work'],
+                                                        $user['full_name'],$discount['percent']));
         if (!$query) {
             return response()->json(['code' => 0, 'msg' => 'Đặt lịch không thành công !']);
         } else {

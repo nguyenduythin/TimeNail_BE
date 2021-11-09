@@ -193,6 +193,14 @@
                                     <td align="left" bgcolor="#D2C7BA" width="75%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>Mã Hóa Đơn</strong></td>
                                     <td align="left" bgcolor="#D2C7BA" width="25%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>{{$bill['code_bill']}}</strong></td>
                                 </tr>
+                                <tr>
+                                    <td align="left" width="75%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>Tên Khách Hàng</strong></td>
+                                    <td align="left" width="25%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>{{$name}}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="75%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>Ngày Đặt</strong></td>
+                                    <td align="left" width="25%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>{{$date}}</strong></td>
+                                </tr>
                                 @php $tong = 0; @endphp
                                 @if(count($combo)>0)
                                 <th align="left" width="75%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">Combo</th>
