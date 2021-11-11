@@ -27,7 +27,6 @@ class ContactFactory extends Factory
             'full_name_ct' => $this->faker->name,
             'email_ct' => $this->faker->email,
             'message' => $this->faker->text(),
-
         ];
     }
 }

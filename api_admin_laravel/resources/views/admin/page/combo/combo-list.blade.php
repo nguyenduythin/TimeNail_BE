@@ -577,22 +577,36 @@
 
         $('body').on('click', '#deleteUser', function() {
             var user_id = $(this).data("id");
-            if (confirm("Bạn có chắc chắn muốn xóa Combo này không ?")) {
-                $.ajax({
-                    type: "DELETE",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: "{{ route('combo.list.api') }}" + "/" + user_id,
-                    success: function() {
-                        table.ajax.reload();
-                        toastr.success("Xóa Thành Công");
-                    },
-                    error: function() {
-                        toastr.success("Xóa không Thành Công");
-                    }
-                })
-            }
+            Swal.fire({
+                title: "Bạn có chắc chắn?",
+                text: "Bạn sẽ không thể hoàn tác!",
+                icon: "warning",
+                showCancelButton: !0,
+                cancelButtonText: 'Quay lại',
+                confirmButtonText: "Đúng, Xóa!",
+                customClass: {
+                    confirmButton: "btn btn-primary",
+                    cancelButton: "btn btn-outline-danger ms-1",
+                },
+                buttonsStyling: !1,
+                }).then(function (t) {
+                    if (t.value) {
+                        $.ajax({
+                            type:"DELETE",
+                            url: "{{ route('combo.list.api') }}" + "/" + user_id,
+                            headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                        success: function(){
+                            table.ajax.reload();
+                            toastr.success("Xóa Thành Công");
+                        },
+                        error:function () {
+                            toastr.error("Xóa không Thành Công");
+                        }
+                    })
+                    } 
+                });
         });
         //list service for detail
         $.get('<?= route("service.list.api") ?>', function(data) {
