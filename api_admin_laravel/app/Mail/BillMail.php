@@ -14,20 +14,26 @@ class BillMail extends Mailable
     public $staff;
     public $combo;
     public $service;
+    public $date;
+    public $name;
     public $discount;
+    public $people;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($bill,$staff,$combo,$service,$discount)
+    public function __construct($bill,$staff,$combo,$service,$date,$name,$discount,$people)
     {
         //
         $this->bill = $bill;
         $this->staff = $staff;
         $this->combo = $combo;
         $this->service = $service;
+        $this->date = $date;
+        $this->name = $name;
         $this->discount = $discount;
+        $this->people = $people;
     }
 
     /**

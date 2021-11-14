@@ -128,9 +128,9 @@
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                     <tr>
                         <td align="center" valign="top" style="padding: 36px 24px;">
-                            <a href="https://sendgrid.com" target="_blank" style="display: inline-block;">
+                            <!-- <a href="https://sendgrid.com" target="_blank" style="display: inline-block;">
                                 <img src="{{asset('storage/images/email/paste-logo-light@2x.png')}}" alt="Logo" border="0" width="48" style="display: block; width: 48px; max-width: 48px; min-width: 48px;">
-                            </a>
+                            </a> -->
                         </td>
                     </tr>
                 </table>
@@ -193,6 +193,18 @@
                                     <td align="left" bgcolor="#D2C7BA" width="75%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>Mã Hóa Đơn</strong></td>
                                     <td align="left" bgcolor="#D2C7BA" width="25%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>{{$bill['code_bill']}}</strong></td>
                                 </tr>
+                                <tr>
+                                    <td align="left" width="75%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>Tên Khách Hàng</strong></td>
+                                    <td align="left" width="25%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>{{$name}}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="75%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>Ngày Đặt</strong></td>
+                                    <td align="left" width="25%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>{{$date}}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="75%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>Số Người</strong></td>
+                                    <td align="left" width="25%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>{{$people}}</strong></td>
+                                </tr>
                                 @php $tong = 0; @endphp
                                 @if(count($combo)>0)
                                 <th align="left" width="75%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">Combo</th>
@@ -211,6 +223,13 @@
                                 <tr>
                                     <td align="left" width="75%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">{{$c->name_service}}</td>
                                     <td align="left" width="25%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">{{number_format($c->price)}}₫</td>
+                                </tr>
+                                @endforeach
+                                <th align="left" width="75%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">Nhân Viên</th>
+                                @foreach($bill['staff'] as $c)
+                                <tr>
+                                    <td align="left" width="75%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">Tên Nhân Viên</td>
+                                    <td align="left" width="25%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">{{$c->full_name}}</td>
                                 </tr>
                                 @endforeach
                                 @endif
@@ -259,7 +278,7 @@
                                 <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 300px;">
                                     <tr>
                                         <td align="left" valign="top" style="padding-bottom: 36px; padding-left: 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-                                            <p><strong>Địa Chỉ Cửa Hàng 1</strong></p>
+                                            <p><strong>Địa Chỉ Cửa Hàng</strong></p>
                                             <p>66 Hồ Tùng Mậu<br>Mai Dịch<br>Cầu Giấy, Hà Nội</p>
                                         </td>
                                     </tr>
@@ -273,8 +292,7 @@
                                 <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 300px;">
                                     <tr>
                                         <td align="left" valign="top" style="padding-bottom: 36px; padding-left: 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-                                            <p><strong>Địa Chỉ Cửa Hàng 2</strong></p>
-                                            <p>88 Xuân Thủy<br>Dịch Vọng Hậu<br>Cầu Giấy, Hà Nội</p>
+                                            
                                         </td>
                                     </tr>
                                 </table>

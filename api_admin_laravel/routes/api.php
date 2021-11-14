@@ -33,6 +33,8 @@ use App\Http\Controllers\api\client\SettingController as ClientSettingController
 use App\Http\Controllers\api\client\loginController as ClientLoginController;
 use App\Http\Controllers\api\client\LoginWithGoogleController;
 use App\Http\Controllers\api\client\NewPasswordController;
+use App\Http\Controllers\api\client\StaffController as ClientStaffController;
+use App\Http\Controllers\api\client\UserController as ClientUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -61,6 +63,19 @@ Route::prefix('client')->group(function () {
     Route::get('/logout', [ClientLoginController::class, 'logout']);
 
     Route::post('/register', [ClientLoginController::class, 'register']);
+
+    //info
+    Route::prefix('user-info')->group(function () {
+        Route::get('/', [ClientUserController::class, 'index']);
+        Route::post('/info', [ClientUserController::class, 'info']);
+        Route::post('/password', [ClientUserController::class, 'password']);
+    });
+    Route::prefix('staff-info')->group(function () {
+        Route::get('/', [ClientStaffController::class, 'index']);
+        Route::post('/info', [ClientStaffController::class, 'info']);
+        Route::post('/password', [ClientStaffController::class, 'password']);
+    });
+
     //combo
     Route::prefix('combo')->group(function () {
         Route::get('/', [ClientComboController::class, 'index'])->name('combo.list');
