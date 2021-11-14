@@ -394,12 +394,23 @@
                     width: "100%",
                     dropdownParent: e.parent(),
                 });
-        })
+        });
+        var response;
+        $.validator.addMethod(
+            "uniqueServiceName", 
+            function(value, element) {
+                $.get('<?=  route("service.list.api") ?>', function(dataR) {
+                    response =  dataR.service.some(e => e.name_service === value);
+                        });
+                return !response;
+            },
+            "Dịch vụ đã tồn tại!"
+        );  
         a.length && (a.validate({
                 errorClass: "error",
                 rules: {
                     "name_service": {
-                        required: !0
+                        required: !0 ,uniqueServiceName : true
                     },
                     "price": {
                         required: !0,
@@ -420,6 +431,7 @@
                 e.preventDefault();
                 var s = a.valid();
                 var form = this;
+                if (s) {
                 $.ajax({
                     type: "POST",
                     url: $(form).attr('action'),
@@ -445,10 +457,8 @@
                     error: function(error) {
                         console.log("Thêm không thành công", error);
                     }
-                })
-
-
-
+                })      
+                }
             }))
 
         $('body').on('click', '#deleteUser', function() {

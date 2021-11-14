@@ -41,8 +41,8 @@
             </div>
             <div class="modal-body px-5 pb-5">
               <div class="text-center mb-4">
-                <h1 class="role-title">Add New Role</h1>
-                <p>Set role permissions</p>
+                <h1 class="role-title">Thêm mới vai trò</h1>
+                <p>Đặt quyền vai trò</p>
               </div>
               <!-- Add role form -->
               <form id="addRoleForm" class="row" method="POST" action="{{ route('role.list.api') }}">
@@ -278,20 +278,32 @@
       },
      
 
-    });
+    })
+
 var  a = $("#addRoleForm");
+var response;
+  $.validator.addMethod(
+      "uniqueName", 
+      function(value, element) {
+          $.get('<?= route("role.list.api") ?>', function(dataR) {
+              response =  dataR.some(e => e.name === value);
+                  });
+          return !response;
+      },
+      "Vai trò đã tồn tại!"
+  );
 a.length && (a.validate({
           errorClass: "error",
           rules: {
-              "name": { required: !0 },
-            
+              "name": { required: !0 , uniqueName : true},
           },
       }),
       a.on("submit", function (e) {
           e.preventDefault();
           var s = a.valid();
           var form = this;
-          $.ajax({
+  if (s) {
+     $.ajax({
               type:"POST",
               url:$(form).attr('action'),
               data: new FormData(form),
@@ -313,7 +325,8 @@ a.length && (a.validate({
 
                   console.log("Thêm không thành công",error);
               }
-          })
+          });
+      }
       }))
 
 // get all permission

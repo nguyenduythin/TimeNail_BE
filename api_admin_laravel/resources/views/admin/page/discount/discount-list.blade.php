@@ -41,7 +41,7 @@
                                 @csrf
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                                 <div class="modal-header mb-1">
-                                    <h5 class="modal-title" id="exampleModalLabel">Thêm tài khoản</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Thêm Mã giảm giá</h5>
                                 </div>
                                 <div class="modal-body flex-grow-1">
                                     <div class="mb-1">
@@ -263,13 +263,23 @@
                     dropdownParent: e.parent(),
                 });
         })
-
+        var response;
+        $.validator.addMethod(
+            "uniqueDiscountName", 
+            function(value, element) {
+                $.get('<?=  route("discount.list.api") ?>', function(dataR) {
+                    response =  dataR.some(e => e.code_discount === value);
+                        });
+                return !response;
+            },
+            "Mã đã tồn tại!"
+        );  
         a.length &&
             (a.validate({
                     errorClass: "error",
                     rules: {
-                        "discount_code": {
-                            required: !0
+                        "code_discount": {
+                            required: !0,uniqueDiscountName : true
                         },
                         "image": {
                             required: !0
@@ -289,6 +299,7 @@
                     e.preventDefault();
                     var s = a.valid();
                     var form = this;
+                    if (s) {
                     $.ajax({
                         type: "POST",
                         url: $(form).attr('action'),
@@ -314,10 +325,7 @@
                         error: function(error) {
                             console.log("Thêm không thành công", error);
                         }
-                    })
-
-
-
+                    })}
                 }))
 
 

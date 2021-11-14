@@ -161,6 +161,10 @@
                             <option id="5" value="5">Hủy</option>
                         </select>
                     </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="phone">Số điện thoại</label>
+                        <input type="text" name="phone" class="form-control active" minlength="10" maxlength="10"  required/>
+                    </div>
                     <div class="col-12">
                         <h4 class="mt-2 pt-50">Combo Có Trong Hóa Đơn</h4>
                         <!-- Permission table -->
@@ -595,6 +599,7 @@
                 $("#select2-basic").find("#" + data.status_bill, "option").attr('selected', true);
                 form.find('input[name="id"]').val(data.id);
                 form.find('input[name="date_work"]').val(data.date_work);
+                form.find('input[name="phone"]').val(data.phone);
                 form.find('#note_bill').val(data.note_bill);
             }, 'json')
         });
@@ -615,7 +620,6 @@
                             $(form).find('span' + prefix + '_error').text(val[0]);
                         });
                     } else {
-                        console.log('fomr', data);
                         $(form)[0].reset();
                         $('#editUserModal').modal("hide");
                         table.ajax.reload();

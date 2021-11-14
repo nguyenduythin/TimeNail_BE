@@ -445,7 +445,7 @@ $.get('<?= route("dashboard.api") ?>', function(data) {
     labels: getDate,
     datasets: [
     {
-      label: 'Doanh thu theo ngày',
+      label: 'Doanh thu Hóa đơn',
       backgroundColor: 'rgb(255, 99, 132)',
       borderColor: 'rgb(255, 99, 132)',
       data: data.total_bill,

@@ -32,6 +32,7 @@ use App\Http\Controllers\api\client\GalleryCategoryController as ClientGalleryCa
 use App\Http\Controllers\api\client\SettingController as ClientSettingController;
 use App\Http\Controllers\api\client\loginController as ClientLoginController;
 use App\Http\Controllers\api\client\LoginWithGoogleController;
+use App\Http\Controllers\api\client\NewPasswordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -50,6 +51,10 @@ Route::prefix('login')->group(function () {
     Route::get('/google/redirect', [LoginWithGoogleController::class, 'loginWithGoogle'])->name('google.login.api');
     Route::get('/google/callback/', [LoginWithGoogleController::class, 'callbackFromGoogle']);
 });
+
+// password reset
+Route::post('forgot-password', [NewPasswordController::class, 'forgotPassword']);
+Route::post('reset-password', [NewPasswordController::class, 'reset']);
 //client
 Route::prefix('client')->group(function () {
     Route::post('/login', [ClientLoginController::class, 'login']);

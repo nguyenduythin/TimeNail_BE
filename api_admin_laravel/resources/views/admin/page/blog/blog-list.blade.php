@@ -494,7 +494,9 @@
             a.length && (a.validate({
                       errorClass: "error",
                       rules: {
-                          "name": { required: !0 },
+                          "title": { required: !0 },
+                          "description": { required: !0 },
+
                       },
                   }),
                   
@@ -503,6 +505,7 @@
                       e.preventDefault();
                       var s = a.valid();
                       var form = this;
+                      if(s){
                       $.ajax({
                           type:"POST",
                           url:$(form).attr('action'),
@@ -525,7 +528,7 @@
 
                               console.log("Thêm không thành công",error);
                           }
-                      })
+                      })}
                   }))
 
                    // get all tags

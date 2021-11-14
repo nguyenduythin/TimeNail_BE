@@ -39,8 +39,8 @@
             </div>
             <div class="modal-body px-sm-5 pb-5">
               <div class="text-center mb-2">
-                <h1 class="mb-1">Add New Permission</h1>
-                <p>Permissions you may use and assign to your users.</p>
+                <h1 class="mb-1">Thêm mới quyền</h1>
+                <p>Các quyền bạn có thể sử dụng và gán cho người dùng của mình.</p>
               </div>
               <form id="addPermissionForm" method="POST" action="{{ route('permission.add.api') }}" class="row">
                 <div class="col-12">
@@ -267,18 +267,26 @@
       
     });
 var  a = $("#addPermissionForm");
+var response;
+  $.validator.addMethod(
+      "uniquePName", 
+      function(value, element) {
+          $.get('<?=  route("permission.list.api") ?>', function(dataR) {
+              response =  dataR.some(e => e.name === value);
+                  });
+          return !response;
+      },"Vai trò đã tồn tại!");
 a.length && (a.validate({
           errorClass: "error",
           rules: {
-              "name": { required: !0 },
-    
+              "name": { required: !0, uniquePName:true },
           },
       }),
       a.on("submit", function (e) {
           e.preventDefault();
           var s = a.valid();
           var form = this;
-          
+          if (s) {
           $.ajax({
               type:"POST",
               url:$(form).attr('action'),
@@ -304,7 +312,8 @@ a.length && (a.validate({
               error:function (error) {
                   console.log("Thêm không thành công",error);
               }
-          })
+          });      
+        }
       }))
 
 

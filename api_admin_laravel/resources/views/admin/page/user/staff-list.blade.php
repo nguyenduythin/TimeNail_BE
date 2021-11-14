@@ -114,7 +114,7 @@
                                     <div class="mb-1">
                                         <label class="form-label" for="basic-icon-default-contact">Số điện thoại</label>
                                         <input type="text" id="basic-icon-default-contact" class="form-control "
-                                            placeholder="0336-933-4479" name="phone" />
+                                            placeholder="0336-933-4479" name="phone"   minlength="10" maxlength="10"  required/>
                                     </div>
                                     <div class="mb-1">
                                         <label class="form-label" for="basic-icon-default-contact">Kinh nghiệm</label>
@@ -215,7 +215,7 @@
                         <label class="form-label" for="modalEditUserPhone">Số điện thoại</label>
                         <input type="text" id="modalEditUserPhone phone" name="phone"
                             class="form-control phone-number-mask" placeholder="+1 (609) 933-44-22"
-                            value="+1 (609) 933-44-22" />
+                            value="+1 (609) 933-44-22"  minlength="10" maxlength="10"  required />
                     </div>
                     {{-- <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditTaxID">Nhập lại mật khẩu</label>
@@ -239,7 +239,7 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserPhone">Kinh nghiệm</label>
-                        <input type="text" id="modalEditUserPhone phone" name="experience_staff"
+                        <input type="text" id="modalEditUserPhone " name="experience_staff"
                             class="form-control phone-number-mask" placeholder="+1" />
                     </div>
                     <div class="col-12 col-md-6">
@@ -380,7 +380,7 @@
                     {  
                         targets: 4,
                         render: function (e, t, a, s) {
-                            return  (`<span class="badge badge-light-primary"><span>${a.experience_staff}</span></span>`);
+                            return  (`<span class="badge badge-light-primary"><span>${a.experience_staff === null ? 'không' : a.experience_staff }</span></span>`);
                         },
                     },
                     {
@@ -540,12 +540,23 @@
                     width: "100%",
                     dropdownParent: e.parent(),
                 });
-        })
+        });
+var response;
+    $.validator.addMethod(
+        "uniqueUserEmail", 
+        function(value, element) {
+            $.get('<?= route("user.list.api") ?>', function(dataR) {
+                response =  dataR.user.some(e => e.email === value);
+                    });
+            return !response;
+        },
+        "Tài khoản này đã tồn tại!"
+    );
 a.length && (a.validate({
                 errorClass: "error",
                 rules: {
                     "full_name": { required: !0 },
-                    "email": { required: !0 },
+                    "email": { required: !0 , email : true ,  uniqueUserEmail:true},
                     "phone": { required: !0 },
                     "address": { required: !0 },
                     "avatar": { required: !0 },
@@ -555,6 +566,7 @@ a.length && (a.validate({
                 e.preventDefault();
                 var s = a.valid();
                 var form = this;
+                if (s) {
                 $.ajax({
                     type:"POST",
                     url:$(form).attr('action'),
@@ -580,7 +592,8 @@ a.length && (a.validate({
                     error:function (error) {
                         console.log("Thêm không thành công",error);
                     }
-                })
+                });
+            }
             }))
 
 $('body').on('click' ,'#deleteUser' , function(){

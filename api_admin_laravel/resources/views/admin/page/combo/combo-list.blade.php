@@ -53,7 +53,7 @@
                                         <input type="text" name="id" hidden>
                                         <div class="col-12 col-md-6">
                                             <label class="form-label" for="modalEditUserFirstName">Tên Combo</label>
-                                            <input type="text" id="modalEditUserFirstName full_name" name="name_combo" class="form-control" placeholder="Combo Hè" />
+                                            <input type="text" id="modalEditUserFirstName full_name" name="name_combo" class="form-control" placeholder="Combo " />
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <label class="form-label" for="modalEditUserFirstName">Giá Combo (₫)</label>
@@ -515,7 +515,8 @@
                     width: "100%",
                     dropdownParent: e.parent(),
                 });
-        })
+        });
+
         a.length && (a.validate({
                 errorClass: "error",
                 rules: {
@@ -544,6 +545,7 @@
                 e.preventDefault();
                 var s = a.valid();
                 var form = this;
+                if (s) {
                 $.ajax({
                     type: "POST",
                     url: $(form).attr('action'),
@@ -569,10 +571,8 @@
                     error: function(error) {
                         console.log("Thêm không thành công", error);
                     }
-                })
-
-
-
+                })                    
+                }
             }))
 
         $('body').on('click', '#deleteUser', function() {

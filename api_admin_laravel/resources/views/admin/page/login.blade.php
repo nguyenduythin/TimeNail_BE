@@ -57,9 +57,9 @@
                                     <div class="mb-1">
                                         <div class="d-flex justify-content-between">
                                             <label class="form-label" for="login-password">Mật khẩu</label>
-                                            <a href="#">
-                                                <small>Quên mật khẩu ? </small>
-                                            </a>
+                                            {{-- <a href="#">
+                                                <small>Quên mật khẩu ?</small>
+                                            </a> --}}
                                         </div>
                                         <div class="input-group input-group-merge form-password-toggle">
                                             <input type="password" class="form-control form-control-merge"
