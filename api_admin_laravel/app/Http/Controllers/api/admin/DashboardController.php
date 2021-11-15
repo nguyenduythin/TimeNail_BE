@@ -36,7 +36,7 @@ class DashboardController extends Controller
         $avg_bill = Bill::avg('total_bill');
         $doing_bil = Bill::where('status_bill', 3)->count();
         $success_bill = Bill::where('status_bill', 4)->count();
-        $date_work = Bill::pluck('date_work');
+        $date_work = Bill::pluck('total_bill','date_work' );
         $total_bill = Bill::pluck('total_bill');
         return response()->json([
             'user' => $userCount, "service" => $serviceCount,

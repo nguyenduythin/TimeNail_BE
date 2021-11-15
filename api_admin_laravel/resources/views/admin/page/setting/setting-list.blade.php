@@ -252,13 +252,7 @@
                                 feather.icons["more-vertical"].toSvg({
                                     class: "font-small-4",
                                 }) +
-                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="' +
-                                r +
-                                '" class="dropdown-item">' +
-                                feather.icons["file-text"].toSvg({
-                                    class: "font-small-4 me-50",
-                                }) +
-                                'Details</a><a href="#" id="editSetting" data-id="'+a.id+'"  data-bs-toggle="modal" data-bs-target="#editSettingModal" class="dropdown-item">' +
+                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="#" id="editSetting" data-id="'+a.id+'"  data-bs-toggle="modal" data-bs-target="#editSettingModal" class="dropdown-item">' +
                                 feather.icons["edit"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
@@ -417,6 +411,7 @@
                 e.preventDefault();
                 var s = a.valid();
                 var form = this;
+                if (s) {
                 $.ajax({
                     type:"POST",
                     url:$(form).attr('action'),
@@ -443,7 +438,7 @@
                         console.log("Thêm không thành công",error);
                     }
                 })
-
+            }
 
       
             }))
