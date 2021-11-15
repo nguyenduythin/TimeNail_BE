@@ -233,10 +233,13 @@
                                 </tr>
                                 @endforeach
                                 @endif
-                                @if($discount != '')
+                                @if($bill['code_discount'] != '')
+                                @php
+                                    $discount = \App\Models\Discount::where('code_discount',$bill['code_discount'])->first();
+                                @endphp
                                 <tr>
                                     <td align="left" width="75%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">Giảm Giá</td>
-                                    <td align="left" width="25%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">{{number_format($tong/100*$discount)}}₫</td>
+                                    <td align="left" width="25%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">{{number_format($tong/100*$discount['percent'])}}₫</td>
                                 </tr>
                                 @endif
                                 <tr>
