@@ -52,7 +52,6 @@ class BillController extends Controller
         }
         if($request->code_discount){
             $model['code_discount'] = $request->code_discount;
-            $discount = Discount::where('code_discount',$request->code_discount)->first();
         }
         $model['total_time_execution'] = $request->total_time_execution;
         $model['total_bill'] = $request->total_bill;
@@ -84,7 +83,7 @@ class BillController extends Controller
         $user = User::find($request->user_id);
         Mail::to($user['email'])->queue(new BillMail($bill,$bill['staff'],$bill['combo'],
                                                         $bill['service'],$bill['date_work'],
-                                                        $user['full_name'],$discount['percent'],
+                                                        $user['full_name'],
                                                         $bill['total_people'],));
         if (!$query) {
             return response()->json(['code' => 0, 'msg' => 'Đặt lịch không thành công !']);

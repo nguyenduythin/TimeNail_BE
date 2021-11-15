@@ -16,14 +16,13 @@ class BillMail extends Mailable
     public $service;
     public $date;
     public $name;
-    public $discount;
     public $people;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($bill,$staff,$combo,$service,$date,$name,$discount,$people)
+    public function __construct($bill,$staff,$combo,$service,$date,$name,$people)
     {
         //
         $this->bill = $bill;
@@ -32,7 +31,6 @@ class BillMail extends Mailable
         $this->service = $service;
         $this->date = $date;
         $this->name = $name;
-        $this->discount = $discount;
         $this->people = $people;
     }
 
