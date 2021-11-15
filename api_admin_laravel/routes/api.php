@@ -70,6 +70,7 @@ Route::prefix('client')->group(function () {
         Route::post('/info', [ClientUserController::class, 'info']);
         Route::post('/password', [ClientUserController::class, 'password']);
     });
+    Route::get('/list-staff', [ClientStaffController::class, 'getAll']);
     Route::prefix('staff-info')->group(function () {
         Route::get('/', [ClientStaffController::class, 'index']);
         Route::post('/info', [ClientStaffController::class, 'info']);

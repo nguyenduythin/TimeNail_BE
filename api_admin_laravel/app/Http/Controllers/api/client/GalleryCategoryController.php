@@ -20,7 +20,7 @@ class GalleryCategoryController extends Controller
             $c['avatar'] = asset('storage/'.$c['avatar']);
         }
         $model->load('gallery');
-
+        dd($model);die;
         return response()->json($model);
     }
 
