@@ -19,7 +19,7 @@
                         <h4 class="card-title">Liên Hệ</h4>
                     </div>
                     <div class="card-datatable table-responsive pt-0">
-                        <table class="user-list-table table" id="DataTables_Table_User">
+                        <table class="user-list-table table" id="DataTables_contact">
                             <thead class="table-light">
                                 <tr>
 
@@ -50,13 +50,8 @@
 @section('script')
 <script>
     $(function() {
-        var e = $("#DataTables_Table_User");
-        var t = $(".new-user-modal"),
-            a = $(".add-new-user"),
-            s = $(".select2"),
-            n = $(".dt-contact"),
-            o = "{{ route('contact.list') }}",
-            r = "app-user-view-account.html";
+        var e = $("#DataTables_contact");
+        var s = $(".select2");
         var table = e.DataTable({
             "ajax": {
                 "url": "{{ route('contact.list.api') }}",
@@ -64,8 +59,6 @@
                 "dataSrc": ""
             },
             columns: [
-                // { data: "" }, 
-
                 {
                     data: "full_name_ct"
                 },
@@ -74,15 +67,14 @@
                 },
                 {
                     data: "message"
-                },
+                }
             ],
             columnDefs: [
                 {
                     targets: 3,
-                    title: "Actions",
                     orderable: !1,
                     render: function(e, t, a, s) {
-                        var test = a.id
+                    
                         return (
                             '<div class="btn-group"><a class="btn btn-sm dropdown-toggle hide-arrow" data-bs-toggle="dropdown">' +
                             feather.icons["more-vertical"].toSvg({
@@ -120,7 +112,7 @@
                             }) + "Print", //nên để tên thao tác full in hoa nhìn đẹp hơn
                             className: "dropdown-item",
                             exportOptions: {
-                                columns: [0, 1]
+                                columns: [0, 1 , 2]
                             },
                         },
                         {
@@ -130,7 +122,7 @@
                             }) + "Csv",
                             className: "dropdown-item",
                             exportOptions: {
-                                columns: [0, 1]
+                                columns: [0, 1 , 2]
                             },
                         },
                         {
@@ -140,7 +132,7 @@
                             }) + "Excel",
                             className: "dropdown-item",
                             exportOptions: {
-                                columns: [0, 1]
+                                columns: [0, 1 , 2]
                             },
                         },
                         {
@@ -150,7 +142,7 @@
                             }) + "Pdf",
                             className: "dropdown-item",
                             exportOptions: {
-                                columns: [0, 1]
+                                columns: [0, 1 , 2]
                             },
                         },
                         {
@@ -160,7 +152,7 @@
                             }) + "Copy",
                             className: "dropdown-item",
                             exportOptions: {
-                                columns: [0, 1]
+                                columns: [0, 1 , 2]
                             },
                         },
                     ],
@@ -179,11 +171,7 @@
             ],
             responsive: {
                 details: {
-                    display: $.fn.dataTable.Responsive.display.modal({
-                        header: function(e) {
-                            return "Details of " + e.data().full_name;
-                        },
-                    }),
+                   
                     type: "column",
                     renderer: function(e, t, a) {
                         var s = $.map(a, function(e, t) {
@@ -226,58 +214,39 @@
                 });
         })
 
-        a.length &&
-            (a.validate({
-                    errorClass: "error",
-                    rules: {
-                        "full_name": {
-                            required: !0
-                        },
-                        "email": {
-                            required: !0
-                        },
-                        "phone": {
-                            required: !0
-                        },
-                        "address": {
-                            required: !0
-                        },
-                        "avatar": {
-                            required: !0
-                        },
-                    },
-                }),
-                a.on("submit", function(e) {
-                    var s = a.valid();
-
-                    var name = $('#basic-icon-default-fullname').val()
-                    e.preventDefault(), s && t.modal("hide");
-                    console.log(name, 'ewwewwe');
-
-                }))
-
-
-
         $('body').on('click', '#deleteUser', function() {
             var contact_id = $(this).data("id");
-            if (confirm("Bạn có chắc chắn muốn xóa Nội dung này không ?")) {
-                $.ajax({
-                    type: "DELETE",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            Swal.fire({
+                    title: "Bạn có chắc chắn?",
+                    text: "Bạn sẽ không thể hoàn tác!",
+                    icon: "warning",
+                    showCancelButton: !0,
+                    cancelButtonText: 'Quay lại',
+                    confirmButtonText: "Đúng, Xóa!",
+                    customClass: {
+                        confirmButton: "btn btn-primary",
+                        cancelButton: "btn btn-outline-danger ms-1",
                     },
-                    url: "{{ route('contact.list.api') }}" + "/" + contact_id,
-                    success: function() {
-                        table.ajax.reload();
-                    },
-                    error: function() {
-                        console.log("xóa thất bại");
-                    }
-                })
-            }
+                    buttonsStyling: !1,
+                    }).then(function (t) {
+                        if (t.value) {
+                            $.ajax({
+                                type:"DELETE",
+                                url: "{{ route('contact.list.api') }}" + "/" + contact_id,
+                                headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                            success: function(){
+                                table.ajax.reload();
+                                toastr.success("Xóa Thành Công");
+                            },
+                            error:function () {
+                                toastr.error("Xóa không Thành Công");
+                            }
+                        })
+                        } 
+                    });
         });
-
-
     });
 </script>
 @endsection

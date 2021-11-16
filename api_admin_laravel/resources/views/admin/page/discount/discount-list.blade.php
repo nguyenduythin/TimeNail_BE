@@ -14,7 +14,7 @@
                 <!-- list and filter start -->
                 <div class="card">
                     <div class="card-body border-bottom">
-                        <h4 class="card-title">Dịch Vụ</h4>
+                        <h4 class="card-title">Mã giảm giá</h4>
                     </div>
                     <div class="card-datatable table-responsive pt-0">
                         <table class="user-list-table table" id="DataTables_Table_User">
@@ -41,7 +41,7 @@
                                 @csrf
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                                 <div class="modal-header mb-1">
-                                    <h5 class="modal-title" id="exampleModalLabel">Thêm tài khoản</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Thêm Mã giảm giá</h5>
                                 </div>
                                 <div class="modal-body flex-grow-1">
                                     <div class="mb-1">
@@ -263,13 +263,23 @@
                     dropdownParent: e.parent(),
                 });
         })
-
+        var response;
+        $.validator.addMethod(
+            "uniqueDiscountName", 
+            function(value, element) {
+                $.get('<?=  route("discount.list.api") ?>', function(dataR) {
+                    response =  dataR.some(e => e.code_discount === value);
+                        });
+                return !response;
+            },
+            "Mã đã tồn tại!"
+        );  
         a.length &&
             (a.validate({
                     errorClass: "error",
                     rules: {
-                        "discount_code": {
-                            required: !0
+                        "code_discount": {
+                            required: !0,uniqueDiscountName : true
                         },
                         "image": {
                             required: !0
@@ -289,6 +299,7 @@
                     e.preventDefault();
                     var s = a.valid();
                     var form = this;
+                    if (s) {
                     $.ajax({
                         type: "POST",
                         url: $(form).attr('action'),
@@ -314,32 +325,44 @@
                         error: function(error) {
                             console.log("Thêm không thành công", error);
                         }
-                    })
-
-
-
+                    })}
                 }))
 
 
 
         $('body').on('click', '#deleteUser', function() {
             var user_id = $(this).data("id");
-            if (confirm("Bạn có chắc chắn muốn xóa Mã giảm giá này không ?")) {
-                $.ajax({
-                    type: "DELETE",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            Swal.fire({
+                    title: "Bạn có chắc chắn?",
+                    text: "Bạn sẽ không thể hoàn tác!",
+                    icon: "warning",
+                    showCancelButton: !0,
+                    cancelButtonText: 'Quay lại',
+                    confirmButtonText: "Đúng, Xóa!",
+                    customClass: {
+                        confirmButton: "btn btn-primary",
+                        cancelButton: "btn btn-outline-danger ms-1",
                     },
-                    url: "{{ route('discount.list.api') }}" + "/" + user_id,
-                    success: function(data) {
-                        table.ajax.reload();
-                        toastr.success(data.success)
-                    },
-                    error: function() {
-                        console.log("xóa thất bại");
-                    }
-                })
-            }
+                    buttonsStyling: !1,
+                    }).then(function (t) {
+                        if (t.value) {
+                            $.ajax({
+                                type:"DELETE",
+                                url: "{{ route('discount.list.api') }}" + "/" + user_id,
+                                headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                            success: function(){
+                                table.ajax.reload();
+                                toastr.success("Xóa Thành Công");
+                            },
+                            error:function () {
+                                toastr.error("Xóa không Thành Công");
+                            }
+                        })
+                        } 
+                    });
+                                                               
         });
 
 

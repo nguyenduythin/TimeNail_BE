@@ -149,12 +149,11 @@
                   </div>
                   <!--/ upload and reset button -->
                 </div>
-                <div class="col-12">
+                {{-- <div class="col-12">
                   <label class="form-label" for="modalBlogName">Người viết bài</label>
-                  <select class="form-control dt-full-name" id="getAllBogCate" name="user_id"
-                    id="basic-icon-default-fullname12">
-                  </select>
-                </div>
+                  <input type="text" id="modalBlogName title" class="form-control"
+                  name="user_id" tabindex="-1" disabled />
+                </div> --}}
                 <div class="col-6">
                   <label class="form-label" for="modalBlogName">Tiêu đề bài viết</label>
                   <input type="text" id="modalBlogName title" class="form-control" placeholder="Enter blog title"
@@ -210,12 +209,7 @@
 
 @endsection
 @section('script')
-<!-- BEGIN: Page Vendor JS-->
-{{-- <script src="{{asset('admin/vendors/js/editors/quill/katex.min.js')}}"></script>
-<script src="{{asset('admin/vendors/js/editors/quill/highlight.min.js')}}"></script>
-<script src="{{asset('admin/vendors/js/editors/quill/quill.min.js')}}"></script> --}}
-<!-- END: Page Vendor JS-->
-<!-- BEGIN: Page JS-->
+
 <script src="{{asset('admin/js/scripts/pages/page-blog-edit.min.js')}}"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
 <!-- END: Page JS-->
@@ -304,17 +298,11 @@
                                 feather.icons["more-vertical"].toSvg({
                                     class: "font-small-4",
                                 }) +
-                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="' +
-                                r +
-                                '" class="dropdown-item">' +
-                                feather.icons["file-text"].toSvg({
-                                    class: "font-small-4 me-50",
-                                }) +
-                                'Details</a><a href="" id="editBlog" data-id="'+a.id+'" data-bs-toggle="modal" data-bs-target="#editBlogModal" class="dropdown-item">' +
+                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="#" id="editBlog" data-id="'+a.id+'" data-bs-toggle="modal" data-bs-target="#editBlogModal" class="dropdown-item">' +
                                 feather.icons["edit"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
-                                'Edit</a><a href="" id="deleteBlog" data-id="'+a.id+'" class="dropdown-item delete-rec                   ord">' +
+                                'Edit</a><a href="#" id="deleteBlog" data-id="'+a.id+'" class="dropdown-item delete-rec                   ord">' +
                                 feather.icons["trash-2"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
@@ -500,7 +488,9 @@
             a.length && (a.validate({
                       errorClass: "error",
                       rules: {
-                          "name": { required: !0 },
+                          "title": { required: !0 },
+                          "description": { required: !0 },
+
                       },
                   }),
                   
@@ -509,6 +499,7 @@
                       e.preventDefault();
                       var s = a.valid();
                       var form = this;
+                      if(s){
                       $.ajax({
                           type:"POST",
                           url:$(form).attr('action'),
@@ -531,7 +522,7 @@
 
                               console.log("Thêm không thành công",error);
                           }
-                      })
+                      })}
                   }))
 
                    // get all tags
@@ -567,22 +558,37 @@
                 // Delete 
                   $('body').on('click' ,'#deleteBlog' , function(){
                     var blog_id = $(this).data("id");
-                    if ( confirm("Bạn có chắc chắn muốn xóa  không ?")) {
-                    $.ajax({
-                        type:"DELETE",
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    Swal.fire({
+                        title: "Bạn có chắc chắn?",
+                        text: "Bạn sẽ không thể hoàn tác!",
+                        icon: "warning",
+                        showCancelButton: !0,
+                        cancelButtonText: 'Quay lại',
+                        confirmButtonText: "Đúng, Xóa!",
+                        customClass: {
+                          confirmButton: "btn btn-primary",
+                          cancelButton: "btn btn-outline-danger ms-1",
                         },
-                        url:"{{ route('blog.list.api') }}"+"/"+blog_id,
-                        success: function(){
-                            table.ajax.reload();
-                            toastr.success("Xóa Thành Công");
-                        },
-                        error:function () {
-                            toastr.success("Xóa không Thành Công");
-                        }
-                    })
-                    }
+                        buttonsStyling: !1,
+                      }).then(function (t) {
+                          if (t.value) {
+                                $.ajax({
+                                  type:"DELETE",
+                                  url:"{{ route('blog.list.api') }}"+"/"+blog_id,
+                                  headers: {
+                                          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                      },
+                              success: function(){
+                                  table.ajax.reload();
+                                  toastr.success("Xóa Thành Công");
+                              },
+                              error:function () {
+                                  toastr.error("Xóa không Thành Công");
+                              }
+                          })
+                          } 
+                      });                                 
+                  
                 });
                 // get detail edit
                 $('body').on('click' ,'#editBlog' , function(){

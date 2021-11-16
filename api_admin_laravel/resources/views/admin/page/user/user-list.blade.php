@@ -157,7 +157,7 @@
                                     <div class="mb-1">
                                         <label class="form-label" for="basic-icon-default-contact">Số điện thoại</label>
                                         <input type="text" id="basic-icon-default-contact" class="form-control "
-                                            placeholder="0336-933-4479" name="phone" />
+                                            placeholder="0336-933-4479" name="phone"  minlength="10" maxlength="10"  required />
                                     </div>
                                     <div class="mb-1">
                                         <label class="form-label" for="basic-icon-default-company">Địa chỉ</label>
@@ -249,7 +249,7 @@
                         <label class="form-label" for="modalEditUserPhone">Số điện thoại</label>
                         <input type="text" id="modalEditUserPhone phone" name="phone"
                             class="form-control phone-number-mask" placeholder="+1 (609) 933-44-22"
-                            value="+1 (609) 933-44-22" />
+                            value="+1 (609) 933-44-22"  minlength="10" maxlength="10"  required/>
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserCountry">Giới Tính</label>
@@ -333,7 +333,6 @@
                             var n = a.full_name,
                                 l = a.email,
                                 i = a.avatar;
-                              console.log('i' , i);
                             if (i)
                             {
                                 if (i.includes('https')) {
@@ -426,13 +425,7 @@
                                 feather.icons["more-vertical"].toSvg({
                                     class: "font-small-4",
                                 }) +
-                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="' +
-                                r +
-                                '" class="dropdown-item">' +
-                                feather.icons["file-text"].toSvg({
-                                    class: "font-small-4 me-50",
-                                }) +
-                                'Details</a><a href="#" id="editUser" data-id="'+a.id+'"  data-bs-toggle="modal" data-bs-target="#editUserModal" class="dropdown-item">' +
+                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="#" id="editUser" data-id="'+a.id+'"  data-bs-toggle="modal" data-bs-target="#editUserModal" class="dropdown-item">' +
                                 feather.icons["edit"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
@@ -679,11 +672,24 @@
                     dropdownParent: e.parent(),
                 });
         })
+
+ var response;
+    $.validator.addMethod(
+        "uniqueUserEmail", 
+        function(value, element) {
+            $.get('<?= route("user.list.api") ?>', function(dataR) {
+                response =  dataR.user.some(e => e.email === value);
+                    });
+            return !response;
+        },
+        "Tài khoản này đã tồn tại!"
+    );
+
 a.length && (a.validate({
                 errorClass: "error",
                 rules: {
                     "full_name": { required: !0 },
-                    "email": { required: !0 },
+                    "email": { required: !0 , email: true , uniqueUserEmail: true },
                     "phone": { required: !0 },
                     "address": { required: !0 },
                     "avatar": { required: !0 },
@@ -693,7 +699,8 @@ a.length && (a.validate({
                 e.preventDefault();
                 var s = a.valid();
                 var form = this;
-                $.ajax({
+            if (s) {
+            $.ajax({
                     type:"POST",
                     url:$(form).attr('action'),
                     data: new FormData(form),
@@ -719,29 +726,42 @@ a.length && (a.validate({
                         console.log("Thêm không thành công",error);
                     }
                 })
-
-
-      
-            }))
+                }
+               
+            }));
 
 $('body').on('click' ,'#deleteUser' , function(){
     var user_id = $(this).data("id");
-     if ( confirm("Bạn có chắc chắn muốn xóa Tài khoản này không ?")) {
-    $.ajax({
-        type:"DELETE",
-        url:"{{ route('user.list.api') }}"+"/"+user_id,
-        headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        Swal.fire({
+          title: "Bạn có chắc chắn?",
+          text: "Bạn sẽ không thể hoàn tác!",
+          icon: "warning",
+          showCancelButton: !0,
+          cancelButtonText: 'Quay lại',
+          confirmButtonText: "Đúng, Xóa!",
+          customClass: {
+            confirmButton: "btn btn-primary",
+            cancelButton: "btn btn-outline-danger ms-1",
+          },
+          buttonsStyling: !1,
+        }).then(function (t) {
+            if (t.value) {
+                  $.ajax({
+                    type:"DELETE",
+                    url:"{{ route('user.list.api') }}"+"/"+user_id,
+                    headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                success: function(){
+                    table.ajax.reload();
+                    toastr.success("Xóa Thành Công");
                 },
-        success: function(){
-            table.ajax.reload();
-            toastr.success("Xóa Thành Công");
-        },
-        error:function () {
-            toastr.success("Xóa không Thành Công");
-        }
-    })
-     }
+                error:function () {
+                    toastr.error("Xóa không Thành Công");
+                }
+            })
+            } 
+        });
 });
 $.get('<?= route("user.list.api") ?>', function(dataR) {
     dataR.role.map(function(x) {

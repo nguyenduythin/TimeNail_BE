@@ -9,8 +9,8 @@
     <div class="content-header row">
     </div>
     <div class="content-body">
-      <h3>Permissions List</h3>
-      <p>Each category (Basic, Professional, and Business) includes the four predefined roles shown below.</p>
+      <h3>Danh sách quyền</h3>
+      <p>Mỗi danh mục (Cơ bản, Chuyên nghiệp và Kinh doanh) bao gồm bốn vai trò được xác định trước được hiển thị bên dưới.</p>
 
       <!-- Permission Table -->
       <div class="card">
@@ -20,10 +20,10 @@
               <tr>
                 <th></th>
                 <th></th>
-                <th>Name</th>
-                <th>Assigned To</th>
-                <th>Created Date</th>
-                <th>Actions</th>
+                <th>Tên Quyền</th>
+                <th>Phân công</th>
+                <th>Ngày tạo</th>
+                <th>Hành động</th>
               </tr>
             </thead>
           </table>
@@ -39,8 +39,8 @@
             </div>
             <div class="modal-body px-sm-5 pb-5">
               <div class="text-center mb-2">
-                <h1 class="mb-1">Add New Permission</h1>
-                <p>Permissions you may use and assign to your users.</p>
+                <h1 class="mb-1">Thêm mới quyền</h1>
+                <p>Các quyền bạn có thể sử dụng và gán cho người dùng của mình.</p>
               </div>
               <form id="addPermissionForm" method="POST" action="{{ route('permission.add.api') }}" class="row">
                 <div class="col-12">
@@ -181,7 +181,7 @@
         {
           // Actions
           targets: -1,
-          title: 'Actions',
+          title: 'Hành động',
           orderable: false,
           render: function (data, type, full, meta) {
             return (
@@ -267,18 +267,26 @@
       
     });
 var  a = $("#addPermissionForm");
+var response;
+  $.validator.addMethod(
+      "uniquePName", 
+      function(value, element) {
+          $.get('<?=  route("permission.list.api") ?>', function(dataR) {
+              response =  dataR.some(e => e.name === value);
+                  });
+          return !response;
+      },"Vai trò đã tồn tại!");
 a.length && (a.validate({
           errorClass: "error",
           rules: {
-              "name": { required: !0 },
-    
+              "name": { required: !0, uniquePName:true },
           },
       }),
       a.on("submit", function (e) {
           e.preventDefault();
           var s = a.valid();
           var form = this;
-          
+          if (s) {
           $.ajax({
               type:"POST",
               url:$(form).attr('action'),
@@ -304,7 +312,8 @@ a.length && (a.validate({
               error:function (error) {
                   console.log("Thêm không thành công",error);
               }
-          })
+          });      
+        }
       }))
 
 
@@ -312,22 +321,37 @@ a.length && (a.validate({
 // Delete permission
   $('body').on('click' ,'#deletePermission' , function(){
     var user_id = $(this).data("id");
-     if ( confirm("Bạn có chắc chắn muốn xóa Tài khoản này không ?")) {
-    $.ajax({
-        type:"DELETE",
-        url:"{{ route('permission.list.api') }}"+"/"+user_id,
-        headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-        success: function(){
-            table.ajax.reload();
-            toastr.success("Xóa Thành Công");
-        },
-        error:function () {
-            toastr.success("Xóa không Thành Công");
-        }
-    })
-     }
+    Swal.fire({
+          title: "Bạn có chắc chắn?",
+          text: "Bạn sẽ không thể hoàn tác!",
+          icon: "warning",
+          showCancelButton: !0,
+          cancelButtonText: 'Quay lại',
+          confirmButtonText: "Đúng, Xóa!",
+          customClass: {
+              confirmButton: "btn btn-primary",
+              cancelButton: "btn btn-outline-danger ms-1",
+          },
+          buttonsStyling: !1,
+          }).then(function (t) {
+              if (t.value) {
+                  $.ajax({
+                      type:"DELETE",
+                      url:"{{ route('permission.list.api') }}"+"/"+user_id,
+                      headers: {
+                              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                          },
+                  success: function(){
+                      table.ajax.reload();
+                      toastr.success("Xóa Thành Công");
+                  },
+                  error:function () {
+                      toastr.error("Xóa không Thành Công");
+                  }
+              })
+              } 
+          });
+
 });
 // get detail edit
 $('body').on('click' ,'#editPermission' , function(){

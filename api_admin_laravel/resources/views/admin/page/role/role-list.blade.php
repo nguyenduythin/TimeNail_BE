@@ -12,8 +12,8 @@
 
 
 
-      <h3 class="mt-50">Total users with their roles</h3>
-      <p class="mb-2">Find all of your company’s administrator accounts and their associate roles.</p>
+      <h3 class="mt-50">Tổng số người dùng với vai trò của họ</h3>
+      <p class="mb-2">Tìm tất cả các tài khoản quản trị viên của công ty bạn và các vai trò liên kết của họ.</p>
       <!-- table -->
       <div class="card">
         <div class="card-datatable table-responsive">
@@ -41,8 +41,8 @@
             </div>
             <div class="modal-body px-5 pb-5">
               <div class="text-center mb-4">
-                <h1 class="role-title">Add New Role</h1>
-                <p>Set role permissions</p>
+                <h1 class="role-title">Thêm mới vai trò</h1>
+                <p>Đặt quyền vai trò</p>
               </div>
               <!-- Add role form -->
               <form id="addRoleForm" class="row" method="POST" action="{{ route('role.list.api') }}">
@@ -193,7 +193,7 @@
         {
           // Actions
           targets: -1,
-          title: 'Actions',
+          title: 'Hành động',
           orderable: false,
           render: function (data, type, full, meta) {
             return (
@@ -278,20 +278,32 @@
       },
      
 
-    });
+    })
+
 var  a = $("#addRoleForm");
+var response;
+  $.validator.addMethod(
+      "uniqueName", 
+      function(value, element) {
+          $.get('<?= route("role.list.api") ?>', function(dataR) {
+              response =  dataR.some(e => e.name === value);
+                  });
+          return !response;
+      },
+      "Vai trò đã tồn tại!"
+  );
 a.length && (a.validate({
           errorClass: "error",
           rules: {
-              "name": { required: !0 },
-            
+              "name": { required: !0 , uniqueName : true},
           },
       }),
       a.on("submit", function (e) {
           e.preventDefault();
           var s = a.valid();
           var form = this;
-          $.ajax({
+  if (s) {
+     $.ajax({
               type:"POST",
               url:$(form).attr('action'),
               data: new FormData(form),
@@ -313,7 +325,8 @@ a.length && (a.validate({
 
                   console.log("Thêm không thành công",error);
               }
-          })
+          });
+      }
       }))
 
 // get all permission
@@ -343,22 +356,36 @@ $.ajax({
 // Delete 
   $('body').on('click' ,'#deleteRole' , function(){
     var user_id = $(this).data("id");
-     if ( confirm("Bạn có chắc chắn muốn xóa  không ?")) {
-    $.ajax({
-        type:"DELETE",
-        url:"{{ route('role.list.api') }}"+"/"+user_id,
-        headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-        success: function(){
-            table.ajax.reload();
-            toastr.success("Xóa Thành Công");
-        },
-        error:function () {
-            toastr.success("Xóa không Thành Công");
-        }
-    })
-     }
+    Swal.fire({
+          title: "Bạn có chắc chắn?",
+          text: "Bạn sẽ không thể hoàn tác!",
+          icon: "warning",
+          showCancelButton: !0,
+          cancelButtonText: 'Quay lại',
+          confirmButtonText: "Đúng, Xóa!",
+          customClass: {
+              confirmButton: "btn btn-primary",
+              cancelButton: "btn btn-outline-danger ms-1",
+          },
+          buttonsStyling: !1,
+          }).then(function (t) {
+              if (t.value) {
+                  $.ajax({
+                      type:"DELETE",
+                      url:"{{ route('role.list.api') }}"+"/"+user_id,
+                      headers: {
+                              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                          },
+                  success: function(){
+                      table.ajax.reload();
+                      toastr.success("Xóa Thành Công");
+                  },
+                  error:function () {
+                      toastr.error("Xóa không Thành Công");
+                  }
+              })
+              } 
+          });
 });
 // get detail edit
 $('body').on('click' ,'#editRole' , function(){

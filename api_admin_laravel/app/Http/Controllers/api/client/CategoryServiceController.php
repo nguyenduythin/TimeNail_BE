@@ -20,6 +20,7 @@ class CategoryServiceController extends Controller
         foreach($model as $c){
             $c['image'] = asset('storage/'.$c['image']);
         }
+        $model->load('services');
         return response()->json($model);
     }
 

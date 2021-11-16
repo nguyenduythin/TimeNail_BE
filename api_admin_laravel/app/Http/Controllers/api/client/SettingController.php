@@ -16,6 +16,9 @@ class SettingController extends Controller
     public function index()
     {
         $model = Setting::all();
+        foreach($model as $c){
+            $c['logo'] = asset('storage/'.$c['logo']);
+        }
         return response()->json($model);
     }
 

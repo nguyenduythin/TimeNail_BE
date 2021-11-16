@@ -394,12 +394,23 @@
                     width: "100%",
                     dropdownParent: e.parent(),
                 });
-        })
+        });
+        var response;
+        $.validator.addMethod(
+            "uniqueServiceName", 
+            function(value, element) {
+                $.get('<?=  route("service.list.api") ?>', function(dataR) {
+                    response =  dataR.service.some(e => e.name_service === value);
+                        });
+                return !response;
+            },
+            "Dịch vụ đã tồn tại!"
+        );  
         a.length && (a.validate({
                 errorClass: "error",
                 rules: {
                     "name_service": {
-                        required: !0
+                        required: !0 ,uniqueServiceName : true
                     },
                     "price": {
                         required: !0,
@@ -420,6 +431,7 @@
                 e.preventDefault();
                 var s = a.valid();
                 var form = this;
+                if (s) {
                 $.ajax({
                     type: "POST",
                     url: $(form).attr('action'),
@@ -445,30 +457,43 @@
                     error: function(error) {
                         console.log("Thêm không thành công", error);
                     }
-                })
-
-
-
+                })      
+                }
             }))
 
         $('body').on('click', '#deleteUser', function() {
             var user_id = $(this).data("id");
-            if (confirm("Bạn có chắc chắn muốn xóa Dịch vụ này không ?")) {
-                $.ajax({
-                    type: "DELETE",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            Swal.fire({
+                    title: "Bạn có chắc chắn?",
+                    text: "Bạn sẽ không thể hoàn tác!",
+                    icon: "warning",
+                    showCancelButton: !0,
+                    cancelButtonText: 'Quay lại',
+                    confirmButtonText: "Đúng, Xóa!",
+                    customClass: {
+                        confirmButton: "btn btn-primary",
+                        cancelButton: "btn btn-outline-danger ms-1",
                     },
-                    url: "{{ route('service.list.api') }}" + "/" + user_id,
-                    success: function() {
-                        table.ajax.reload();
-                        toastr.success("Xóa Thành Công");
-                    },
-                    error: function() {
-                        toastr.success("Xóa không Thành Công");
-                    }
-                })
-            }
+                    buttonsStyling: !1,
+                    }).then(function (t) {
+                        if (t.value) {
+                            $.ajax({
+                                type:"DELETE",
+                                url: "{{ route('service.list.api') }}" + "/" + user_id,
+
+                                headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                            success: function(){
+                                table.ajax.reload();
+                                toastr.success("Xóa Thành Công");
+                            },
+                            error:function () {
+                                toastr.error("Xóa không Thành Công");
+                            }
+                        })
+                        } 
+                    });
         });
         //detail
         $('body').on('click', '#detailUser', function() {

@@ -53,7 +53,7 @@
                                         <input type="text" name="id" hidden>
                                         <div class="col-12 col-md-6">
                                             <label class="form-label" for="modalEditUserFirstName">Tên Combo</label>
-                                            <input type="text" id="modalEditUserFirstName full_name" name="name_combo" class="form-control" placeholder="Combo Hè" />
+                                            <input type="text" id="modalEditUserFirstName full_name" name="name_combo" class="form-control" placeholder="Combo " />
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <label class="form-label" for="modalEditUserFirstName">Giá Combo (₫)</label>
@@ -515,7 +515,8 @@
                     width: "100%",
                     dropdownParent: e.parent(),
                 });
-        })
+        });
+
         a.length && (a.validate({
                 errorClass: "error",
                 rules: {
@@ -544,6 +545,7 @@
                 e.preventDefault();
                 var s = a.valid();
                 var form = this;
+                if (s) {
                 $.ajax({
                     type: "POST",
                     url: $(form).attr('action'),
@@ -569,30 +571,42 @@
                     error: function(error) {
                         console.log("Thêm không thành công", error);
                     }
-                })
-
-
-
+                })                    
+                }
             }))
 
         $('body').on('click', '#deleteUser', function() {
             var user_id = $(this).data("id");
-            if (confirm("Bạn có chắc chắn muốn xóa Combo này không ?")) {
-                $.ajax({
-                    type: "DELETE",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: "{{ route('combo.list.api') }}" + "/" + user_id,
-                    success: function() {
-                        table.ajax.reload();
-                        toastr.success("Xóa Thành Công");
-                    },
-                    error: function() {
-                        toastr.success("Xóa không Thành Công");
-                    }
-                })
-            }
+            Swal.fire({
+                title: "Bạn có chắc chắn?",
+                text: "Bạn sẽ không thể hoàn tác!",
+                icon: "warning",
+                showCancelButton: !0,
+                cancelButtonText: 'Quay lại',
+                confirmButtonText: "Đúng, Xóa!",
+                customClass: {
+                    confirmButton: "btn btn-primary",
+                    cancelButton: "btn btn-outline-danger ms-1",
+                },
+                buttonsStyling: !1,
+                }).then(function (t) {
+                    if (t.value) {
+                        $.ajax({
+                            type:"DELETE",
+                            url: "{{ route('combo.list.api') }}" + "/" + user_id,
+                            headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                        success: function(){
+                            table.ajax.reload();
+                            toastr.success("Xóa Thành Công");
+                        },
+                        error:function () {
+                            toastr.error("Xóa không Thành Công");
+                        }
+                    })
+                    } 
+                });
         });
         //list service for detail
         $.get('<?= route("service.list.api") ?>', function(data) {

@@ -191,13 +191,7 @@
                                 feather.icons["more-vertical"].toSvg({
                                     class: "font-small-4",
                                 }) +
-                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="' +
-                                r +
-                                '" class="dropdown-item">' +
-                                feather.icons["file-text"].toSvg({
-                                    class: "font-small-4 me-50",
-                                }) +
-                                'Details</a><a href="#" id="editTag" data-id="'+a.id+'"  data-bs-toggle="modal" data-bs-target="#editTagModal" class="dropdown-item">' +
+                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="#" id="editTag" data-id="'+a.id+'"  data-bs-toggle="modal" data-bs-target="#editTagModal" class="dropdown-item">' +
                                 feather.icons["edit"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +
@@ -382,22 +376,37 @@
 
             $('body').on('click' ,'#deleteTag' , function(){
                 var tag_id = $(this).data("id");
-                if ( confirm("Bạn có chắc chắn muốn xóa nhãn này không ?")) {
-                $.ajax({
-                    type:"DELETE",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url:"{{ route('tag.list.api') }}"+"/"+tag_id,
-                    success: function(){
-                        table.ajax.reload();
-                        toastr.success("Xóa Thành Công");
-                    },
-                    error:function () {
-                        toastr.success("Xóa không Thành Công");
-                    }
-                })
-                }
+                Swal.fire({
+                            title: "Bạn có chắc chắn?",
+                            text: "Bạn sẽ không thể hoàn tác!",
+                            icon: "warning",
+                            showCancelButton: !0,
+                            cancelButtonText: 'Quay lại',
+                            confirmButtonText: "Đúng, Xóa!",
+                            customClass: {
+                                confirmButton: "btn btn-primary",
+                                cancelButton: "btn btn-outline-danger ms-1",
+                            },
+                            buttonsStyling: !1,
+                            }).then(function (t) {
+                                if (t.value) {
+                                    $.ajax({
+                                        type:"DELETE",
+                                        url:"{{ route('tag.list.api') }}"+"/"+tag_id,
+                                        headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                            },
+                                    success: function(){
+                                        table.ajax.reload();
+                                        toastr.success("Xóa Thành Công");
+                                    },
+                                    error:function () {
+                                        toastr.error("Xóa không Thành Công");
+                                    }
+                                })
+                                } 
+                            });
+
             });
 // get detail edit
             $('body').on('click' ,'#editTag' , function(){

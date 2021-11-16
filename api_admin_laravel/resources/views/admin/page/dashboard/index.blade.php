@@ -141,11 +141,11 @@
                 <div class="row border-top text-center mx-0">
                   <div class="col-6 border-end py-1">
                     <p class="card-text text-muted mb-0">Hoàn thành</p>
-                    <h3 class="fw-bolder mb-0">786,617</h3>
+                    <h3 class="fw-bolder mb-0" id="success_bill">0</h3>
                   </div>
                   <div class="col-6 py-1">
                     <p class="card-text text-muted mb-0">đang làm</p>
-                    <h3 class="fw-bolder mb-0">13,561</h3>
+                    <h3 class="fw-bolder mb-0" id="doing_bill">0</h3>
                   </div>
                 </div>
               </div>
@@ -157,14 +157,10 @@
           <div class="col-lg-6 col-md-6 col-12">
             <div class="card card-transaction">
               <div class="card-header">
-                <h4 class="card-title">Transactions</h4>
+                <h4 class="card-title">Chăm sóc Khách hàng</h4>
                 <div class="dropdown chart-dropdown">
                   <i data-feather="more-vertical" class="font-medium-3 cursor-pointer" data-bs-toggle="dropdown"></i>
-                  <div class="dropdown-menu dropdown-menu-end">
-                    <a class="dropdown-item" href="#">Last 28 Days</a>
-                    <a class="dropdown-item" href="#">Last Month</a>
-                    <a class="dropdown-item" href="#">Last Year</a>
-                  </div>
+
                 </div>
               </div>
               <div class="card-body">
@@ -176,67 +172,68 @@
                       </div>
                     </div>
                     <div class="transaction-percentage">
-                      <h6 class="transaction-title">Wallet</h6>
-                      <small>Starbucks</small>
+                      <h6 class="transaction-title">Bài viết</h6>
+                      <small>Thông tin, chia sẻ</small>
                     </div>
                   </div>
-                  <div class="fw-bolder text-danger">- $74</div>
+                  <div class="fw-bolder text-success" id="blog">- $74</div>
                 </div>
                 <div class="transaction-item">
                   <div class="d-flex">
                     <div class="avatar bg-light-success rounded float-start">
                       <div class="avatar-content">
-                        <i data-feather="check" class="avatar-icon font-medium-3"></i>
+                        <i data-feather="thumbs-up" class="avatar-icon font-medium-3"></i>
                       </div>
                     </div>
                     <div class="transaction-percentage">
-                      <h6 class="transaction-title">Bank Transfer</h6>
-                      <small>Add Money</small>
+                      <h6 class="transaction-title">Feedback</h6>
+                      <small>Đóng góp từ khách hàng</small>
                     </div>
                   </div>
-                  <div class="fw-bolder text-success">+ $480</div>
+                  <div class="fw-bolder text-success" id="feedback"></div>
                 </div>
                 <div class="transaction-item">
                   <div class="d-flex">
                     <div class="avatar bg-light-danger rounded float-start">
                       <div class="avatar-content">
-                        <i data-feather="dollar-sign" class="avatar-icon font-medium-3"></i>
+                        <i data-feather="percent" class="avatar-icon font-medium-3"></i>
+
                       </div>
                     </div>
                     <div class="transaction-percentage">
-                      <h6 class="transaction-title">Paypal</h6>
-                      <small>Add Money</small>
+                      <h6 class="transaction-title">Mã giảm giá</h6>
+                      <small>các ưu đãi</small>
                     </div>
                   </div>
-                  <div class="fw-bolder text-success">+ $590</div>
+                  <div class="fw-bolder text-success" id="discount"></div>
                 </div>
                 <div class="transaction-item">
                   <div class="d-flex">
                     <div class="avatar bg-light-warning rounded float-start">
                       <div class="avatar-content">
-                        <i data-feather="credit-card" class="avatar-icon font-medium-3"></i>
+                        <i data-feather='image' class="avatar-icon font-medium-3"></i>
                       </div>
                     </div>
                     <div class="transaction-percentage">
-                      <h6 class="transaction-title">Mastercard</h6>
-                      <small>Ordered Food</small>
+                      <h6 class="transaction-title">Thư Viện ảnh</h6>
+                      <small>Cập nhật mới</small>
                     </div>
                   </div>
-                  <div class="fw-bolder text-danger">- $23</div>
+                  <div class="fw-bolder text-success" id="gallery"></div>
                 </div>
                 <div class="transaction-item">
                   <div class="d-flex">
                     <div class="avatar bg-light-info rounded float-start">
                       <div class="avatar-content">
-                        <i data-feather="trending-up" class="avatar-icon font-medium-3"></i>
+                        <i data-feather="message-square" class="avatar-icon font-medium-3"></i>
                       </div>
                     </div>
                     <div class="transaction-percentage">
-                      <h6 class="transaction-title">Transfer</h6>
-                      <small>Refund</small>
+                      <h6 class="transaction-title">Liên hệ</h6>
+                      <small>Hỗ trợ</small>
                     </div>
                   </div>
-                  <div class="fw-bolder text-success">+ $98</div>
+                  <div class="fw-bolder text-success" id="contact"></div>
                 </div>
               </div>
             </div>
@@ -253,10 +250,19 @@
 @section('script')
 <script src="{{ asset('admin/vendors/js/charts/chart.min.js')}}"></script>
 <script src="{{ asset('admin/vendors/js/charts/apexcharts.min.js')}}"></script>
-<script src="{{ asset('admin/js/scripts/pages/dashboard-ecommerce.min.js')}}"></script>
+<script>
+  S = "rtl" === $("html").attr("data-textdirection");
+    setTimeout(function () {
+        toastr.success(
+            "Admin TimeNails. Bây giờ bạn có thể bắt đầu khám phá!",
+            "👋 Chào mừng bạn!",
+            { closeButton: !0, tapToDismiss: !1, rtl: S }
+        );
+    }, 2e3);
+</script>
 
 <script>
-function nFormatter(num, digits) {
+  function nFormatter(num, digits) {
   const lookup = [
     { value: 1, symbol: "" },
     { value: 1e3, symbol: "k" },
@@ -278,53 +284,192 @@ function nFormatter(num, digits) {
         $('#user-count').html(data.user);
         $('#staff-count').html(data.staff);
         $('#service-count').html(data.service);
+        $('#doing_bill').html(data.doing_bill);
+        $('#blog').html( '+ ' + data.blog );
+        $('#gallery').html( '+ ' + data.gallery );
+        $('#feedback').html( '+ ' + data.feedback );
+        $('#discount').html( '+ ' + data.discount );
+        $('#contact').html( '+ ' + data.contact );
+
+
+        $('#success_bill').html(data.success_bill);
         $('#total_bill').html(nFormatter(data.bill , 1));
         $('#avg_bill').html(nFormatter(data.avg_bill , 1));
 
-
  })
- 
-  const MONTHS = [
-  'Tháng 1',
-  'Tháng 2',
-  'Tháng 3',
-  'Tháng 4',
-  'Tháng 5',
-  'Tháng 6',
-  'Tháng 7',
-  'Tháng 8',
-  'Tháng 9',
-  'Tháng 10',
-  'Tháng 11',
-  'Tháng 12',
-];
 
-const data = {
-  labels: MONTHS,
-  datasets: [
-  {
-    label: 'Doanh thu dịch vụ',
-    backgroundColor: 'rgb(255, 99, 132)',
-    borderColor: 'rgb(255, 99, 132)',
-    data: [10, 10, 5, 2, 20, 30, 43,23,12,44,33,25],
-  },
-  {
-    label: 'Doanh thu combo',
-    backgroundColor: 'rgb(76, 133, 255)',
-    borderColor: 'rgb(76, 133, 255)',
-    data: [10, 0, 12, 23, 2, 30, 50,13,12,4,25,33],
-  },
-]
-};
-const config = {
-  type: 'bar',
-  data: data,
-  options: {}
-};
+ g = document.querySelector("#statistics-profit-chart");
+        c = "#f3f3f3",
+        w = "#EBEBEB",
+        p = "#b9b9c3";
 
-const myChart = new Chart(
-    $('#myChart'),
-    config
-  );
+ e = {chart: {
+                height: 70,
+                type: "line",
+                toolbar: { show: !1 },
+                zoom: { enabled: !1 },
+            },
+            grid: {
+                borderColor: w,
+                strokeDashArray: 5,
+                xaxis: { lines: { show: !0 } },
+                yaxis: { lines: { show: !1 } },
+                padding: { top: -30, bottom: -10 },
+            },
+            stroke: { width: 3 },
+            colors: [window.colors.solid.info],
+            series: [{ data: [0, 20, 5, 30, 15, 45] }],
+            markers: {
+                size: 2,
+                colors: window.colors.solid.info,
+                strokeColors: window.colors.solid.info,
+                strokeWidth: 2,
+                strokeOpacity: 1,
+                strokeDashArray: 0,
+                fillOpacity: 1,
+                discrete: [
+                    {
+                        seriesIndex: 0,
+                        dataPointIndex: 5,
+                        fillColor: "#ffffff",
+                        strokeColor: window.colors.solid.info,
+                        size: 5,
+                    },
+                ],
+                shape: "circle",
+                radius: 2,
+                hover: { size: 3 },
+            },
+            xaxis: {
+                labels: { show: !0, style: { fontSize: "0px" } },
+                axisBorder: { show: !1 },
+                axisTicks: { show: !1 },
+            },
+            yaxis: { show: !1 },
+            tooltip: { x: { show: !1 } },
+        };new ApexCharts(g, e).render();
+
+u = document.querySelector("#statistics-order-chart");
+o = {chart: {
+                height: 70,
+                type: "bar",
+                stacked: !0,
+                toolbar: { show: !1 },
+            },
+            grid: {
+                show: !1,
+                padding: { left: 0, right: 0, top: -15, bottom: -15 },
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: !1,
+                    columnWidth: "20%",
+                    startingShape: "rounded",
+                    colors: {
+                        backgroundBarColors: [c, c, c, c, c],
+                        backgroundBarRadius: 5,
+                    },
+                },
+            },
+            legend: { show: !1 },
+            dataLabels: { enabled: !1 },
+            colors: [window.colors.solid.warning],
+            series: [{ name: "2020", data: [45, 85, 65, 45, 65] }],
+            xaxis: {
+                labels: { show: !1 },
+                axisBorder: { show: !1 },
+                axisTicks: { show: !1 },
+            },
+            yaxis: { show: !1 },
+            tooltip: { x: { show: !1 } },
+        };new ApexCharts(u, o).render();
+
+       
+  $.get('<?= route("dashboard.api") ?>', function(data) {
+        $('#doing_bill').html(data.doing_bill);
+        $('#success_bill').html(data.success_bill);
+ const percent = Math.round(( 100 / (data.success_bill + data.doing_bill) ) * data.success_bill);
+ B = document.querySelector("#goal-overview-radial-bar-chart");
+ h = {chart: {
+                height: 245,
+                type: "radialBar",
+                sparkline: { enabled: !0 },
+                dropShadow: {
+                    enabled: !0,
+                    blur: 3,
+                    left: 1,
+                    top: 1,
+                    opacity: 0.1,
+                },
+            },
+            colors: ["#51e5a8"],
+            plotOptions: {
+                radialBar: {
+                    offsetY: -10,
+                    startAngle: -150,
+                    endAngle: 150,
+                    hollow: { size: "77%" },
+                    track: { background: "#ebe9f1", strokeWidth: "50%" },
+                    dataLabels: {
+                        name: { show: !1 },
+                        value: {
+                            color: "#5e5873",
+                            fontSize: "2.86rem",
+                            fontWeight: "600",
+                        },
+                    },
+                },
+            },
+            fill: {
+                type: "gradient",
+                gradient: {
+                    shade: "dark",
+                    type: "horizontal",
+                    shadeIntensity: 0.5,
+                    gradientToColors: [window.colors.solid.success],
+                    inverseColors: !0,
+                    opacityFrom: 1,
+                    opacityTo: 1,
+                    stops: [0, 100],
+                },
+            },
+            series: [percent],
+            stroke: { lineCap: "round" },
+            grid: { padding: { bottom: 30 } },
+        };new ApexCharts(B, h).render();
+ }) 
+$.get('<?= route("dashboard.api") ?>', function(data) {
+  const getDate = data.date_work.map(n => n.slice(0,10));
+  console.log(getDate);
+  const dataB = {
+    labels: getDate,
+    datasets: [
+    {
+      label: 'Doanh thu Hóa đơn',
+      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgb(255, 99, 132)',
+      data: data.total_bill,
+    },
+    // {
+    //   label: 'Doanh thu combo',
+    //   backgroundColor: 'rgb(76, 133, 255)',
+    //   borderColor: 'rgb(76, 133, 255)',
+    //   data: data.total_bill,
+    // },
+  ]
+  };
+
+  const config = {
+    type: 'bar',
+    data: dataB,
+    options: {}
+  };
+
+  const myChart = new Chart(
+      $('#myChart'),
+      config
+    );
+ });
+
 </script>
 @endsection

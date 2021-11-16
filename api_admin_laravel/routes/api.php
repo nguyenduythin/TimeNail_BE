@@ -32,6 +32,7 @@ use App\Http\Controllers\api\client\GalleryCategoryController as ClientGalleryCa
 use App\Http\Controllers\api\client\SettingController as ClientSettingController;
 use App\Http\Controllers\api\client\loginController as ClientLoginController;
 use App\Http\Controllers\api\client\LoginWithGoogleController;
+use App\Http\Controllers\api\client\NewPasswordController;
 use App\Http\Controllers\api\client\StaffController as ClientStaffController;
 use App\Http\Controllers\api\client\UserController as ClientUserController;
 use Illuminate\Http\Request;
@@ -52,6 +53,10 @@ Route::prefix('login')->group(function () {
     Route::get('/google/redirect', [LoginWithGoogleController::class, 'loginWithGoogle'])->name('google.login.api');
     Route::get('/google/callback/', [LoginWithGoogleController::class, 'callbackFromGoogle']);
 });
+
+// password reset
+Route::post('forgot-password', [NewPasswordController::class, 'forgotPassword']);
+Route::post('reset-password', [NewPasswordController::class, 'reset']);
 //client
 Route::prefix('client')->group(function () {
     Route::post('/login', [ClientLoginController::class, 'login']);
@@ -65,6 +70,7 @@ Route::prefix('client')->group(function () {
         Route::post('/info', [ClientUserController::class, 'info']);
         Route::post('/password', [ClientUserController::class, 'password']);
     });
+    Route::get('/list-staff', [ClientStaffController::class, 'getAll']);
     Route::prefix('staff-info')->group(function () {
         Route::get('/', [ClientStaffController::class, 'index']);
         Route::post('/info', [ClientStaffController::class, 'info']);

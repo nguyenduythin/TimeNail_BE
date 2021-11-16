@@ -25,6 +25,9 @@
 <script src="{{ asset('admin/vendors/js/pickers/pickadate/picker.time.js')}}"></script>
 <script src="{{ asset('admin/vendors/js/pickers/pickadate/legacy.js')}}"></script>
 <script src="{{ asset('admin/vendors/js/pickers/flatpickr/flatpickr.min.js')}}"></script>
+<script src="{{ asset('admin/vendors/js/extensions/sweetalert2.all.min.js')}}"></script>
+
+
 {{-- roles page --}}
 <script src="{{ asset('admin/vendors/js/tables/datatable/datatables.checkboxes.min.js')}}"></script>
 {{-- roles page-end --}}

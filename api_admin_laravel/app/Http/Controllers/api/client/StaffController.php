@@ -26,6 +26,17 @@ class StaffController extends Controller
             return response()->json(['error' =>'Không phải là staff']);
         }
     }
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAll()
+    {
+        $staff = User::role('Staff')->get();
+        $staff->load('roles');
+        return response()->json(['user' => $staff]);
+    }
 
     /**
      * Store a newly created resource in storage.

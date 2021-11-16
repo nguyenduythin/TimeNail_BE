@@ -47,7 +47,7 @@ Route::get('/clear-cache', function () {
     return "Cache is cleared";
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth','role:Admin')->group(function () {
     Route::get('/',  [DashboardController::class, 'index'])->name('dashboard');
 
     //user

@@ -67,6 +67,8 @@ class BillController extends Controller
         $model['date_work'] = $request->date_work;
         $model['status_bill'] = $request->status_bill;
         $model['note_bill'] = $request->note_bill;
+        $model['phone'] = $request->phone;
+
         BillCombo::where('bill_id',$request->id)->delete();
         BillService::where('bill_id',$request->id)->delete();
         BillStaff::where('bill_id',$request->id)->delete();
