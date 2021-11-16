@@ -37,13 +37,18 @@ class ComboController extends Controller
         if ($request->hasFile('image')) {
             $model->image = $request->file('image')->storeAs('/images/combo_avatar', uniqid() . '-' . $request->image->getClientOriginalName());
         }
+        $model['total_time_work'] = 0;
         $query =  $model->save();
+        $time = 0;
         for($i=0;$i<count($request->service_id);$i++){
+            $service = Service::find($request->service_id[$i]);
             $many = new ComboService();
             $many['combo_id'] = $model->id;
             $many['service_id'] = $request->service_id[$i];
             $many->save();
+            $time += $service['total_time_work'];
         }
+        $model->update(['total_time_work'=>$time]);
         if (!$query) {
             return response()->json(['code' => 0, 'msg' => 'Thêm mới không thành công !']);
         } else {
@@ -81,14 +86,19 @@ class ComboController extends Controller
         if ($request->hasFile('image')) {
             $model->image = $request->file('image')->storeAs('/images/combo_avatar', uniqid() . '-' . $request->image->getClientOriginalName());
         }
+        $model['total_time_work'] = 0;
         $query =  $model->save();
+        $time = 0;
         ComboService::where('combo_id',$request->id)->delete();
         for($i=0;$i<count($request->service_id);$i++){
+            $service = Service::find($request->service_id[$i]);
             $many = new ComboService();
             $many['combo_id'] = $model->id;
             $many['service_id'] = $request->service_id[$i];
             $many->save();
+            $time += $service['total_time_work'];
         }
+        $model->update(['total_time_work'=>$time]);
         if (!$query) {
             return response()->json(['code' => 0, 'msg' => 'Sửa không thành công !']);
         } else {
