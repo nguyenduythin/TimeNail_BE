@@ -28,6 +28,7 @@ use App\Http\Controllers\api\client\BillController as ClientBillController;
 use App\Http\Controllers\api\client\BlogController as ClientBlogController;
 use App\Http\Controllers\api\client\ContactController as ClientContactController;
 use App\Http\Controllers\api\client\DiscountController as ClientDiscountController;
+use App\Http\Controllers\api\client\FeedbackController as ClientFeedbackController;
 use App\Http\Controllers\api\client\GalleryCategoryController as ClientGalleryCategoryController;
 use App\Http\Controllers\api\client\SettingController as ClientSettingController;
 use App\Http\Controllers\api\client\loginController as ClientLoginController;
@@ -113,6 +114,10 @@ Route::prefix('client')->group(function () {
     //contact
     Route::prefix('contact')->group(function(){
         Route::post('/', [ClientContactController::class, 'store']);
+    });
+    //feedback
+    Route::prefix('feedback')->group(function(){
+        Route::post('/', [ClientFeedbackController::class, 'store']);
     });
     //setting
     Route::prefix('setting')->group(function(){

@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notification;
 class ResetPasswordNotification extends Notification
 {
     use Queueable;
-
+    public $url;
     /**
      * Create a new notification instance.
      *
