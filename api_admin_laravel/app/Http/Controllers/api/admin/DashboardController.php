@@ -21,8 +21,17 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($start , $end)
     {
+        if (!empty($start) && !empty($end)) {
+            // $from = date($_GET['start']);
+            // $to = date($_GET['end']);
+            $from = date($start);
+            $to = date($end);
+            $date_work =  Bill::whereBetween('date_work', [$from, $to])->pluck('date_work');
+        }else{
+            $date_work = Bill::pluck('date_work');
+        }
         $userCount = User::count();
         $serviceCount = Service::count();
         $blog = Blog::count();
@@ -36,14 +45,20 @@ class DashboardController extends Controller
         $avg_bill = Bill::avg('total_bill');
         $doing_bil = Bill::where('status_bill', 3)->count();
         $success_bill = Bill::where('status_bill', 4)->count();
-        $date_work = Bill::pluck('date_work' );
+ 
+        // $date_works = Bill::select(array('date_work', 'total_bill'))->get();
+
+        // $from = date('2021-10-10');
+        // $to = date('2021-12-02');
+        // $date_works = Bill::whereBetween('date_work', [$from, $to])->select(array('date_work', 'total_bill'))->get();
+
         $total_bill = Bill::pluck('total_bill');
         return response()->json([
             'user' => $userCount, "service" => $serviceCount,
             "combo" => $comboCount, 'staff' => $staff, 'bill' => $bill, 'avg_bill' => $avg_bill,
-            'doing_bill' => $doing_bil, 'success_bill' => $success_bill, 'date_work' => $date_work, 
+            'doing_bill' => $doing_bil, 'success_bill' => $success_bill, 'date_work' => $date_work,
             'total_bill' => $total_bill, 'contact' => $contact, 'blog' => $blog,
-            'discount' => $discount, 'feedback' => $feedback, 'gallery' => $gallery,
+            'discount' => $discount, 'feedback' => $feedback, 'gallery' => $gallery
         ]);
     }
 

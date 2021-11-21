@@ -129,7 +129,7 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout.admin');
 
 
 Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
-    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.api');
+    Route::get('/dashboard/{start}/{end}', [AdminDashboardController::class, 'index'])->name('dashboard.api');
     // user
     Route::prefix('user')->group(function () {
         Route::get('/', [AdminUserController::class, 'index'])->name('user.list.api');

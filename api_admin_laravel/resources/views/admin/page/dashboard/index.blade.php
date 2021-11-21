@@ -118,6 +118,24 @@
                 <div class="header-left">
                   <h4 class="card-title">Tổng Doanh Thu</h4>
                 </div>
+                <div class="header-right d-flex align-items-center mt-sm-0 mt-1 mr-5">
+                  <i data-feather="calendar"></i>
+                  <input type="text"
+                    class="form-control flatpickr-basic flatpickr-input border-0 shadow-none bg-transparent pe-0 "
+                    placeholder="Start" id="start" name="start"
+                    style="width: 91px;" value="2021-10-05" />
+                  to
+                  <input type="text"
+                    class="form-control flatpickr-basic flatpickr-input border-0 shadow-none bg-transparent pe-0 "
+                    placeholder="End" id="end" name="end" style="width: 93px; padding-left: 6px;" value="2021-12-30" />
+                  <button type="submit" id="find-date-submit" class="btn btn-flat-secondary"
+                    style="background-color: rgba(88, 88, 88, 0.027);">Find date</button>
+                </div>
+                {{-- <div class="header-right d-flex align-items-center mt-sm-0 mt-1">
+                  <i data-feather="calendar"></i>
+                  <input type="text" class="form-control flat-picker border-0 shadow-none bg-transparent pe-0 "
+                    placeholder="YYYY-MM-DD" readonly="readonly" />
+                </div> --}}
               </div>
               <div class="card-body">
                 <canvas id="myChart" style="height: 100px"></canvas>
@@ -246,6 +264,10 @@
     </div>
   </div>
 </div>
+
+<!--Bar Chart Start -->
+
+<!-- Bar Chart End -->
 @endsection
 @section('script')
 <script src="{{ asset('admin/vendors/js/charts/chart.min.js')}}"></script>
@@ -279,7 +301,15 @@
   return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
 }
 
-  $.get('<?= route("dashboard.api") ?>', function(data) {
+var start = $('#start').val();
+var end = $('#end').val();
+var url = '{{ route("dashboard.api", [":start", ":end" ]) }}';
+url = url.replace(':start', start);
+url = url.replace(':end', end);
+
+
+
+  $.get(url, function(data) {
         $('#combo-count').html(data.combo);
         $('#user-count').html(data.user);
         $('#staff-count').html(data.staff);
@@ -291,12 +321,9 @@
         $('#discount').html( '+ ' + data.discount );
         $('#contact').html( '+ ' + data.contact );
 
-
         $('#success_bill').html(data.success_bill);
         $('#total_bill').html(nFormatter(data.bill , 1));
         $('#avg_bill').html(nFormatter(data.avg_bill , 1));
-
- })
 
  g = document.querySelector("#statistics-profit-chart");
         c = "#f3f3f3",
@@ -384,8 +411,6 @@ o = {chart: {
             tooltip: { x: { show: !1 } },
         };new ApexCharts(u, o).render();
 
-       
-  $.get('<?= route("dashboard.api") ?>', function(data) {
         $('#doing_bill').html(data.doing_bill);
         $('#success_bill').html(data.success_bill);
  const percent = Math.round(( 100 / (data.success_bill + data.doing_bill) ) * data.success_bill);
@@ -437,10 +462,10 @@ o = {chart: {
             stroke: { lineCap: "round" },
             grid: { padding: { bottom: 30 } },
         };new ApexCharts(B, h).render();
- }) 
-$.get('<?= route("dashboard.api") ?>', function(data) {
+
+
+
   const getDate = data.date_work.map(n => n.slice(0,10));
-  console.log(getDate);
   const dataB = {
     labels: getDate,
     datasets: [
@@ -462,14 +487,66 @@ $.get('<?= route("dashboard.api") ?>', function(data) {
   const config = {
     type: 'bar',
     data: dataB,
-    options: {}
+    options: {
+      scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+    }
   };
 
   const myChart = new Chart(
       $('#myChart'),
       config
     );
+
+$('#find-date-submit').click(function (e) { 
+  e.preventDefault();
+    start = $('#start').val();
+    end = $('#end').val();
+    var url = '{{ route("dashboard.api", [":start", ":end" ]) }}';
+    url = url.replace(':start', start);
+    url = url.replace(':end', end);
+    console.log('start' ,start , 'end' , end);
+    $.get(url, function(data) {
+      console.log(data);
+      const getDate = data.date_work.map(n => n.slice(0,10));
+      myChart.config.data.labels = getDate;
+      myChart.update();
+        })
+    });
+
+
+
+
+
+
+
+  var r = $(".flat-picker");
+  new Date();
+    r.each(function () {
+      $(this).flatpickr({
+        mode: "range",
+        defaultDate: [moment(getDate[0]).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD') ],
+        onChange:  function(dates) {
+                      const dateNew = [...getDate]
+                      if (dates.length == 2) {
+                          var start =  moment( dates[0]).format('YYYY-MM-DD');
+                          var end = moment( dates[1]).format('YYYY-MM-DD');
+                          var indexStartDate = dateNew.indexOf(start);
+                          var indexEndDate = dateNew.indexOf(end);
+                          const filterData = dateNew.slice(indexStartDate, indexEndDate + 1);
+                          myChart.config.data.labels = filterData;
+                          myChart.update();
+                          
+                      }
+                  }
+      });
+    });
  });
 
 </script>
+<script src="{{ asset('admin/vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
+<script src="{{ asset('admin/vendors/js/moment/moment.js') }}"></script>
 @endsection

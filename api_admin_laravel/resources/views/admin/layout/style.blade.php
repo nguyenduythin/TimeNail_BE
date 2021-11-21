@@ -20,6 +20,7 @@
 <link rel="stylesheet" type="text/css"
   href="{{ asset('admin/vendors/css/tables/datatable/rowGroup.bootstrap5.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('admin/vendors/css/pickers/flatpickr/flatpickr.min.css')}}">
+
 <!-- END: Vendor CSS-->
 
 <!-- BEGIN: Theme CSS-->
@@ -40,11 +41,7 @@
 <link rel="stylesheet" type="text/css"
   href="{{ asset('admin/css/plugins/extensions/ext-component-sweet-alerts.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/plugins/forms/form-validation.css')}}">
-<!-- END: Page CSS-->
-
-<!-- BEGIN: Custom CSS-->
-{{--
-<link rel="stylesheet" type="text/css" href="{{ asset('admin/style.css')}}"> --}}
+{{--<link rel="stylesheet" type="text/css" href="{{ asset('admin/style.css')}}"> --}}
 <!-- END: Custom CSS-->
 <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/plugins/forms/pickers/form-flat-pickr.min.css')}}">
 
