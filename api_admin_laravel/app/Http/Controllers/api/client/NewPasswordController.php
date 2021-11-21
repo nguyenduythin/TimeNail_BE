@@ -34,7 +34,7 @@ class NewPasswordController extends Controller
             ];
         }
 
-        return trans($status);
+        return ['status' => __($status)];
     }
 
     public function reset(Request $request)

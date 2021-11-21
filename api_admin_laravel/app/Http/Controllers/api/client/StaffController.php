@@ -35,7 +35,7 @@ class StaffController extends Controller
     {
         $staff = User::role('Staff')->get();
         $staff->load('roles');
-        return response()->json(['user' => $staff]);
+        return response()->json($staff);
     }
 
     /**
