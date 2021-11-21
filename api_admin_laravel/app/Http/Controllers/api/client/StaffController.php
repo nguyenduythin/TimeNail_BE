@@ -35,7 +35,7 @@ class StaffController extends Controller
     {
         $staff = User::role('Staff')->get();
         $staff->load('roles');
-        return response()->json(['user' => $staff]);
+        return response()->json($staff);
     }
 
     /**
@@ -77,7 +77,7 @@ class StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function password(Request $request, $id)
+    public function password(Request $request)
     {
         $user = User::find(Auth::user()->id);
         if(empty($request->password) || !Hash::check($request->password, $user->password)){

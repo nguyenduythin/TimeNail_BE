@@ -60,10 +60,6 @@
                                             <input type="text" data-type="currency" id="modalEditUserFirstName full_name" name="total_price" class="form-control" placeholder="100,000₫" />
                                         </div>
                                         <div class="col-12 col-md-6">
-                                            <label class="form-label" for="modalEditUserFirstName">Thời Gian (phút)</label>
-                                            <input type="text" data-type="currency" id="modalEditUserFirstName full_name" name="total_time_work" class="form-control" />
-                                        </div>
-                                        <div class="col-12 col-md-6">
                                             <label class="form-label" for="modalEditUserFirstName">Ảnh Combo</label>
                                             <input type="file" id="modalEditUserFirstName full_name" name="image" class="form-control" accept="image/*" />
                                         </div>
@@ -236,10 +232,6 @@
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserFirstName">Giá Combo (₫)</label>
                         <input type="text" data-type="currency" id="modalEditUserFirstName full_name" name="total_price" class="form-control" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserFirstName">Thời Gian (phút)</label>
-                        <input type="text" data-type="currency" id="modalEditUserFirstName full_name" name="total_time_work" class="form-control" />
                     </div>
                     <div class="col-12">
                         <h4 class="mt-2 pt-50">Dịch Vụ Có Trong Combo</h4>
@@ -531,11 +523,6 @@
                         min: 1,
                         digits: true
                     },
-                    "total_time_work": {
-                        required: !0,
-                        min: 1,
-                        digits: true
-                    },
                     "short_description": {
                         required: !0
                     },
@@ -663,7 +650,6 @@
                 form.find('input[name="id"]').val(data.model.id);
                 form.find('input[name="name_combo"]').val(data.model.name_combo);
                 form.find('input[name="total_price"]').val(data.model.total_price);
-                form.find('input[name="total_time_work"]').val(data.model.total_time_work);
                 form.find('#address1').val(data.model.short_description);
                 form.find('#address2').val(data.model.description);
             }, 'json')

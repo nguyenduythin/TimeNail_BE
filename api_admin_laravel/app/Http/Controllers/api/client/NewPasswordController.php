@@ -28,9 +28,13 @@ class NewPasswordController extends Controller
             $request->only('email')
         );
 
-        return $status === Password::RESET_LINK_SENT
-            ? back()->with(['status' => __($status)])
-            : back()->withErrors(['email' => __($status)]);
+        if ($status == Password::RESET_LINK_SENT) {
+            return [
+                'status' => __($status)
+            ];
+        }
+
+        return ['status' => __($status)];
     }
 
     public function reset(Request $request)
@@ -38,7 +42,7 @@ class NewPasswordController extends Controller
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => ['required', 'confirmed', RulesPassword::defaults()],
+            'password' => ['required', 'confirmed'],
         ]);
 
         $status = Password::reset(
