@@ -123,11 +123,11 @@
                   <input type="text"
                     class="form-control flatpickr-basic flatpickr-input border-0 shadow-none bg-transparent pe-0 "
                     placeholder="Start" id="start" name="start"
-                    style="width: 91px;" value="2021-10-05" />
+                    style="width: 91px;" />
                   to
                   <input type="text"
                     class="form-control flatpickr-basic flatpickr-input border-0 shadow-none bg-transparent pe-0 "
-                    placeholder="End" id="end" name="end" style="width: 93px; padding-left: 6px;" value="2021-12-30" />
+                    placeholder="End" id="end" name="end" style="width: 93px; padding-left: 6px;" />
                   <button type="submit" id="find-date-submit" class="btn btn-flat-secondary"
                     style="background-color: rgba(88, 88, 88, 0.027);">Find date</button>
                 </div>
@@ -272,6 +272,8 @@
 @section('script')
 <script src="{{ asset('admin/vendors/js/charts/chart.min.js')}}"></script>
 <script src="{{ asset('admin/vendors/js/charts/apexcharts.min.js')}}"></script>
+<script src="{{ asset('admin/vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
+<script src="{{ asset('admin/vendors/js/moment/moment.js') }}"></script>
 <script>
   S = "rtl" === $("html").attr("data-textdirection");
     setTimeout(function () {
@@ -301,15 +303,25 @@
   return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
 }
 
-var start = $('#start').val();
-var end = $('#end').val();
+
+ $.get("{{ route('getDateWorkFirst.api') }}",
+   function (date) {
+    var start = moment(date).format('YYYY-MM-DD');
+    $('#start').val(start);
+    $('#start').flatpickr({ minDate: start });
+
+   },
+ );
+
+var end = moment().format('YYYY-MM-DD');
+$('#end').val(end);
+$('#end').flatpickr({ maxDate: end });
+
 var url = '{{ route("dashboard.api", [":start", ":end" ]) }}';
 url = url.replace(':start', start);
 url = url.replace(':end', end);
 
-
-
-  $.get(url, function(data) {
+  $.get(url, async function(data) {
         $('#combo-count').html(data.combo);
         $('#user-count').html(data.user);
         $('#staff-count').html(data.staff);
@@ -466,8 +478,9 @@ o = {chart: {
 
 
   const getDate = data.date_work.map(n => n.slice(0,10));
+  
   const dataB = {
-    labels: getDate,
+    labels:  getDate,
     datasets: [
     {
       label: 'Doanh thu Hóa đơn',
@@ -508,20 +521,16 @@ $('#find-date-submit').click(function (e) {
     var url = '{{ route("dashboard.api", [":start", ":end" ]) }}';
     url = url.replace(':start', start);
     url = url.replace(':end', end);
-    console.log('start' ,start , 'end' , end);
     $.get(url, function(data) {
-      console.log(data);
-      const getDate = data.date_work.map(n => n.slice(0,10));
-      myChart.config.data.labels = getDate;
-      myChart.update();
-        })
+        const getDate = data.date_work.map(n => n.slice(0,10));
+        if (data.date_work.length > 0) {
+          myChart.config.data.labels = getDate;
+          myChart.update();
+        }else{
+          toastr.warning('Không tìm thấy dữ liệu trong khoảng thời gian này!');
+        }
+      })
     });
-
-
-
-
-
-
 
   var r = $(".flat-picker");
   new Date();
@@ -547,6 +556,4 @@ $('#find-date-submit').click(function (e) {
  });
 
 </script>
-<script src="{{ asset('admin/vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
-<script src="{{ asset('admin/vendors/js/moment/moment.js') }}"></script>
 @endsection
