@@ -54,9 +54,20 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function postUserGG(Request $request)
     {
-        //
+        $user = new User();
+        $user->fill($request->all());
+        $user->syncRoles("Member");
+        $user->fill([
+            'password' => Hash::make($request->password)
+        ]);
+        $query =  $user->save();
+        if (!$query) {
+            return response()->json(['code' => 0, 'msg' => 'Thêm mới không thành công !']);
+        } else {
+            return response()->json(['code' => 1, 'msg' => 'Thêm mới thành công !']);
+        }
     }
 
     /**
