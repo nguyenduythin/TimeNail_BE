@@ -27,12 +27,11 @@ class DashboardController extends Controller
         if (!empty($start) && !empty($end)) {
             $from = date($start);
             $to = date($end);
-            $date_work =  Bill::whereBetween('date_work', [$from, $to])->pluck('date_work');
-            $get_duplicates = Bill::selectRaw(' date_work, sum(total_bill) as total_bill')
-                        ->groupBy('date_work')
-                        ->havingRaw('COUNT(*) > 1')
-                        ->get();
-
+            // $date_work =  Bill::whereBetween('date_work', [$from, $to])->distinct()->pluck('date_work');
+            $date_work = Bill::whereBetween('date_work', [$from, $to])->selectRaw('date(date_work) as date_work, sum(total_bill) as total_bill')
+                                ->groupBy(DB::raw('date(date_work)'))
+                                ->get();
+            // $date_work = get_object_vars($date_work);
         }else{
              $date_work = Bill::pluck('date_work');
         }
@@ -49,12 +48,12 @@ class DashboardController extends Controller
         $avg_bill = Bill::avg('total_bill');
         $doing_bil = Bill::where('status_bill', 3)->count();
         $success_bill = Bill::where('status_bill', 4)->count();
-        $total_bill = Bill::pluck('total_bill');
+        // $total_bill = Bill::pluck('total_bill');
         return response()->json([
             'user' => $userCount, "service" => $serviceCount,
             "combo" => $comboCount, 'staff' => $staff, 'bill' => $bill, 'avg_bill' => $avg_bill,
-            'doing_bill' => $doing_bil, 'success_bill' => $success_bill, 'date_work' => $date_work,
-            'total_bill' => $total_bill, 'contact' => $contact, 'blog' => $blog,
+            'doing_bill' => $doing_bil, 'success_bill' => $success_bill, 
+            'date_work' => $date_work, 'contact' => $contact, 'blog' => $blog,
             'discount' => $discount, 'feedback' => $feedback, 'gallery' => $gallery
         ]);
     }

@@ -477,8 +477,8 @@ o = {chart: {
 
 
 
-  const getDate = data.date_work.map(n => n.slice(0,10));
-  
+  const getDate = data.date_work.map(n => n.date_work );
+  const total_bill = data.date_work.map(n => n.total_bill );
   const dataB = {
     labels:  getDate,
     datasets: [
@@ -486,7 +486,7 @@ o = {chart: {
       label: 'Doanh thu Hóa đơn',
       backgroundColor: 'rgb(255, 99, 132)',
       borderColor: 'rgb(255, 99, 132)',
-      data: data.total_bill,
+      data: total_bill,
     },
     // {
     //   label: 'Doanh thu combo',
@@ -522,7 +522,7 @@ $('#find-date-submit').click(function (e) {
     url = url.replace(':start', start);
     url = url.replace(':end', end);
     $.get(url, function(data) {
-        const getDate = data.date_work.map(n => n.slice(0,10));
+        const getDate = data.date_work.map(n => n.date_work);
         if (data.date_work.length > 0) {
           myChart.config.data.labels = getDate;
           myChart.update();
