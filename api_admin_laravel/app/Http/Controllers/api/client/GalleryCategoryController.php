@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Gallery;
 use App\Models\GalleryCategory;
 use Illuminate\Http\Request;
 
@@ -19,8 +20,6 @@ class GalleryCategoryController extends Controller
         foreach($model as $c){
             $c['avatar'] = asset('storage/'.$c['avatar']);
         }
-        $model->load('gallery');
-        dd($model);die;
         return response()->json($model);
     }
 
@@ -43,10 +42,8 @@ class GalleryCategoryController extends Controller
      */
     public function show($id)
     {
-        $model = GalleryCategory::find($id);
-        $model->load('gallery');
-        $model['avatar'] = asset('storage/'.$model['avatar']);
-        foreach($model['gallery'] as $c){
+        $model = Gallery::where('cate_gl_id',$id)->get();
+        foreach($model as $c){
             $c['url'] = asset('storage/'.$c['url']);
         }
         return response()->json($model);
