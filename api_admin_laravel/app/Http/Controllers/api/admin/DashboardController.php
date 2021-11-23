@@ -13,6 +13,7 @@ use App\Models\Gallery;
 use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -27,8 +28,13 @@ class DashboardController extends Controller
             $from = date($start);
             $to = date($end);
             $date_work =  Bill::whereBetween('date_work', [$from, $to])->pluck('date_work');
+            $get_duplicates = Bill::selectRaw(' date_work, sum(total_bill) as total_bill')
+                        ->groupBy('date_work')
+                        ->havingRaw('COUNT(*) > 1')
+                        ->get();
+
         }else{
-            $date_work = Bill::pluck('date_work');
+             $date_work = Bill::pluck('date_work');
         }
         $userCount = User::count();
         $serviceCount = Service::count();
