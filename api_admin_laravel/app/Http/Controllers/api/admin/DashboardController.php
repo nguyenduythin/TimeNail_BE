@@ -22,18 +22,16 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($start , $end)
+    public function index($start, $end)
     {
         if (!empty($start) && !empty($end)) {
             $from = date($start);
             $to = date($end);
-            // $date_work =  Bill::whereBetween('date_work', [$from, $to])->distinct()->pluck('date_work');
             $date_work = Bill::whereBetween('date_work', [$from, $to])->selectRaw('date(date_work) as date_work, sum(total_bill) as total_bill')
-                                ->groupBy(DB::raw('date(date_work)'))
-                                ->get();
-            // $date_work = get_object_vars($date_work);
-        }else{
-             $date_work = Bill::pluck('date_work');
+                ->groupBy(DB::raw('date(date_work)'))
+                ->get();
+        } else {
+            $date_work = Bill::pluck('date_work');
         }
         $userCount = User::count();
         $serviceCount = Service::count();
@@ -52,7 +50,7 @@ class DashboardController extends Controller
         return response()->json([
             'user' => $userCount, "service" => $serviceCount,
             "combo" => $comboCount, 'staff' => $staff, 'bill' => $bill, 'avg_bill' => $avg_bill,
-            'doing_bill' => $doing_bil, 'success_bill' => $success_bill, 
+            'doing_bill' => $doing_bil, 'success_bill' => $success_bill,
             'date_work' => $date_work, 'contact' => $contact, 'blog' => $blog,
             'discount' => $discount, 'feedback' => $feedback, 'gallery' => $gallery
         ]);
