@@ -46,7 +46,7 @@ class StaffController extends Controller
      */
     public function info(Request $request)
     {
-        $user = User::find(Auth::user()->id);
+        $user = User::find($request->id);
         $user->fill();
         if ($request->hasFile('avatar')) {
             $user->avatar = $request->file('avatar')->storeAs('/images/avatar_users', uniqid() . '-' . $request->avatar->getClientOriginalName());
@@ -79,7 +79,7 @@ class StaffController extends Controller
      */
     public function password(Request $request)
     {
-        $user = User::find(Auth::user()->id);
+        $user = User::find($request->id);
         if(empty($request->password) || !Hash::check($request->password, $user->password)){
             return response()->json(['error' => 'Mật khẩu cũ không chính xác!']);
         }elseif(empty($request->new_password)||empty($request->re_password)){

@@ -63,7 +63,7 @@ Route::post('reset-password', [NewPasswordController::class, 'reset']);
 Route::prefix('client')->group(function () {
     Route::post('/login', [ClientLoginController::class, 'login']);
     Route::get('/logout', [ClientLoginController::class, 'logout']);
-
+    Route::post('/login-google', [ClientUserController::class, 'postUserGG']);
     Route::post('/register', [ClientLoginController::class, 'register']);
 
     //info
@@ -72,6 +72,7 @@ Route::prefix('client')->group(function () {
         Route::post('/info', [ClientUserController::class, 'info']);
         Route::post('/password', [ClientUserController::class, 'password']);
     });
+    
     Route::get('/list-staff', [ClientStaffController::class, 'getAll']);
     Route::prefix('staff-info')->group(function () {
         Route::get('/', [ClientStaffController::class, 'index']);
@@ -136,7 +137,9 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout.admin');
 
 
 Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
-    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.api');
+    Route::get('/dashboard/{start}/{end}', [AdminDashboardController::class, 'index'])->name('dashboard.api');
+    Route::get('/dashboard/first-date', [AdminDashboardController::class, 'getOnlyDateWorkFist'])->name('getDateWorkFirst.api');
+    
     // user
     Route::prefix('user')->group(function () {
         Route::get('/', [AdminUserController::class, 'index'])->name('user.list.api');

@@ -13,6 +13,7 @@ use App\Models\Gallery;
 use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -21,8 +22,17 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($start, $end)
     {
+        if (!empty($start) && !empty($end)) {
+            $from = date($start);
+            $to = date($end);
+            $date_work = Bill::whereBetween('date_work', [$from, $to])->selectRaw('date(date_work) as date_work, sum(total_bill) as total_bill')
+                ->groupBy(DB::raw('date(date_work)'))
+                ->get();
+        } else {
+            $date_work = Bill::pluck('date_work');
+        }
         $userCount = User::count();
         $serviceCount = Service::count();
         $blog = Blog::count();
@@ -36,14 +46,13 @@ class DashboardController extends Controller
         $avg_bill = Bill::avg('total_bill');
         $doing_bil = Bill::where('status_bill', 3)->count();
         $success_bill = Bill::where('status_bill', 4)->count();
-        $date_work = Bill::pluck('date_work' );
-        $total_bill = Bill::pluck('total_bill');
+        // $total_bill = Bill::pluck('total_bill');
         return response()->json([
             'user' => $userCount, "service" => $serviceCount,
             "combo" => $comboCount, 'staff' => $staff, 'bill' => $bill, 'avg_bill' => $avg_bill,
-            'doing_bill' => $doing_bil, 'success_bill' => $success_bill, 'date_work' => $date_work, 
-            'total_bill' => $total_bill, 'contact' => $contact, 'blog' => $blog,
-            'discount' => $discount, 'feedback' => $feedback, 'gallery' => $gallery,
+            'doing_bill' => $doing_bil, 'success_bill' => $success_bill,
+            'date_work' => $date_work, 'contact' => $contact, 'blog' => $blog,
+            'discount' => $discount, 'feedback' => $feedback, 'gallery' => $gallery
         ]);
     }
 
@@ -53,9 +62,10 @@ class DashboardController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function getOnlyDateWorkFist()
     {
-        //
+        $date_work = Bill::pluck('date_work')->first();
+        return response()->json($date_work);
     }
 
     /**

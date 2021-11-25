@@ -18,12 +18,11 @@ class UserController extends Controller
     public function index()
     {
         $user = User::find(Auth::user()->id);
-        $user['avatar'] = asset('storage/'.$user['avatar']);
-        if($user->getRoleNames()->first()=='Member'){
+        $user['avatar'] = asset('storage/' . $user['avatar']);
+        if ($user->getRoleNames()->first() == 'Member') {
             return response()->json($user);
-            
-        }else{
-            return response()->json(['error' =>'Không phải là member']);
+        } else {
+            return response()->json(['error' => 'Không phải là member']);
         }
     }
 
@@ -35,7 +34,7 @@ class UserController extends Controller
      */
     public function info(Request $request)
     {
-        $user = User::find(Auth::user()->id);
+        $user = User::find($request->id);
         $user->fill();
         if ($request->hasFile('avatar')) {
             $user->avatar = $request->file('avatar')->storeAs('/images/avatar_users', uniqid() . '-' . $request->avatar->getClientOriginalName());
@@ -54,9 +53,29 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function postUserGG(Request $request)
     {
-        //
+        $is_user = User::where('email', $request['email'])->first();
+        if (!$is_user) {
+            $saveUser = User::updateOrCreate([
+                'google_id' => $request->google_id,
+            ], [
+                'full_name' => $request->full_name,
+                'email' => $request->email,
+                'avatar' => $request->avatar,
+                'password' => Hash::make($request->full_name . '@' . $request->google_id)
+            ]);
+            $saveUser->syncRoles("Member");
+            $saveUser = User::where('email', $request['email'])->first();
+            return response()->json(['code' => 1, 'msg' => 'Thêm mới thành công !']);
+        } else {
+            $saveUser = User::where('email',  $request['email'])->update([
+                'google_id' => $request->google_id,
+            ]);
+            $saveUser = User::where('email', $request['email'])->first();
+            return response()->json(['code' => 2, 'msg' => 'Đăng nhập thành Công !', 
+            'user' => $saveUser]);
+        };
     }
 
     /**
@@ -68,19 +87,17 @@ class UserController extends Controller
      */
     public function password(Request $request)
     {
-        $user = User::find(Auth::user()->id);
-        if(empty($request->password) || !Hash::check($request->password, $user->password)){
+        $user = User::find($request->id);
+        if (empty($request->password) || !Hash::check($request->password, $user->password)) {
             return response()->json(['error' => 'Mật khẩu cũ không chính xác!']);
-        }elseif(empty($request->new_password)||empty($request->re_password)){
+        } elseif (empty($request->new_password) || empty($request->re_password)) {
             return response()->json(['error' => 'Chưa nhập mật khẩu mới!']);
-        }
-        else{
-            if($request->new_password == $request->re_password){
+        } else {
+            if ($request->new_password == $request->re_password) {
                 $user['password'] = Hash::make($request->re_password);
                 $user->save();
                 return response()->json(['success' => 'Đổi mật khẩu thành công!']);
-            }
-            else{
+            } else {
                 return response()->json(['error' => 'Mật khẩu mới không trùng nhau!']);
             }
         }
