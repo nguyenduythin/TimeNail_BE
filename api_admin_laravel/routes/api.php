@@ -23,6 +23,7 @@ use App\Http\Controllers\api\admin\StaffController as AdminStaffController;
 use App\Http\Controllers\api\admin\TagController as AdminTagController;
 use App\Http\Controllers\api\admin\GalleryCategoryController as AdminGalleryCategoryController;
 use App\Http\Controllers\api\admin\GalleryController as AdminGalleryController;
+use App\Http\Controllers\api\admin\NotificationController;
 use App\Http\Controllers\api\admin\SliderShowController as AdminSliderShowController;
 use App\Http\Controllers\api\client\BillController as ClientBillController;
 use App\Http\Controllers\api\client\BlogController as ClientBlogController;
@@ -109,6 +110,7 @@ Route::prefix('client')->group(function () {
     });
     //bill
     Route::prefix('bill')->group(function(){
+        Route::get('/',[ClientBillController::class,'index']);
         Route::post('/', [ClientBillController::class, 'store']);
     });
     //contact
@@ -298,6 +300,10 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
         Route::delete('{id}', [BillController::class, 'destroy']);
         Route::get('/staff', [BillController::class, 'staff'])->name('bill-staff.list.api');
     });
+
+    //notification
+    Route::get('read-all-notifi',[NotificationController::class,'readAll'])->name('read-all');
+    Route::get('read-all-notifi/{id}',[NotificationController::class,'read'])->name('read');
 });
 
 
