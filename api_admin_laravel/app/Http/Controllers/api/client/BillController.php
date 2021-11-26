@@ -13,6 +13,7 @@ use App\Models\Discount;
 use App\Models\Service;
 use App\Models\User;
 use App\Notifications\BillAdminNotification;
+use App\Notifications\BillClientNotification;
 use Illuminate\Http\Request;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\Auth;
@@ -106,6 +107,7 @@ class BillController extends Controller
 
         $notifi_to_admin = User::role('Admin')->get();
         Notification::send($notifi_to_admin,new BillAdminNotification($user,$bill['date_work']));
+        Notification::send($user,new BillClientNotification($bill));
         
         Mail::to($user['email'])->queue(new BillMail(
             $bill,
