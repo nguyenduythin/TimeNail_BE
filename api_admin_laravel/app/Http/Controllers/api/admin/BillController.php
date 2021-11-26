@@ -23,7 +23,7 @@ class BillController extends Controller
     public function index()
     {
         //
-        $model = Bill::all();
+        $model = Bill::orderBy('created_at','desc')->get();
         $model->load('user','staff');
         return response()->json($model);
     }
@@ -49,7 +49,7 @@ class BillController extends Controller
     {
         //
         $model = Bill::find($id);
-        $model['date_work'] = Carbon::create($model['date_work'])->format('Y-m-d H:i');
+        $model['time_work'] = Carbon::create($model['time_work'])->format('H:i');
         $model->load('service','user','staff','combo');
         return response()->json($model);
     }
@@ -65,6 +65,7 @@ class BillController extends Controller
     {
         $model = Bill::find($request->id);
         $model['date_work'] = $request->date_work;
+        $model['time_work'] = $request->time_work;
         $model['status_bill'] = $request->status_bill;
         $model['note_bill'] = $request->note_bill;
         $model['phone'] = $request->phone;

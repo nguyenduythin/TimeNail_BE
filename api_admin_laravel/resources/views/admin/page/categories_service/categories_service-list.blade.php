@@ -25,7 +25,7 @@
                                     <th>Tên Danh Mục</th>
                                     <th>Ảnh</th>
                                     <th>Ghi Chú</th>
-                                    <th>Actions</th>
+                                    <th>Hành Động</th>
                                 </tr>
                             </thead>
 

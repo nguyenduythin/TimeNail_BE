@@ -71,7 +71,11 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="">Ngày Đặt</label>
-                        <input disabled type="text" name="date_work" class="form-control flatpickr-date-time flatpickr-input active" />
+                        <input disabled type="text" name="date_work" class="form-control flatpickr-basic flatpickr-input active">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="">Giờ Đặt</label>
+                        <input disabled type="text" name="time_work" class="form-control flatpickr-time text-start flatpickr-input active">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="">Số điện thoại</label>
@@ -149,7 +153,11 @@
                     <input type="text" name="id" hidden>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="">Ngày Đặt</label>
-                        <input type="text" name="date_work" class="form-control flatpickr-date-time flatpickr-input active" />
+                        <input type="text" name="date_work" class="form-control flatpickr-basic flatpickr-input active">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="">Giờ Đặt</label>
+                        <input type="text" name="time_work" class="form-control flatpickr-time text-start flatpickr-input active">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="">Trạng Thái</label>
@@ -163,7 +171,7 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="phone">Số điện thoại</label>
-                        <input type="text" name="phone" class="form-control active" minlength="10" maxlength="10"  required/>
+                        <input type="text" name="phone" class="form-control active" minlength="10" maxlength="10" required />
                     </div>
                     <div class="col-12">
                         <h4 class="mt-2 pt-50">Combo Có Trong Hóa Đơn</h4>
@@ -256,13 +264,10 @@
                 },
             ],
             columnDefs: [
-                // {
-                //     className: "control",
-                //     orderable: !1,
-                //     responsivePriority: 1,
-                //     targets: 0,
-
-                // },
+                {
+                    "width": "12%",
+                    "targets": 6
+                },
                 {
                     targets: 0,
                     responsivePriority: 2,
@@ -271,13 +276,13 @@
                             l = a.user.email,
                             i = a.user.avatar;
 
-                        if (i){
+                        if (i) {
                             if (i.includes('https')) {
-                                var c =`<img src="${i}" alt="Avatar" height="32" width="32">`;
-                            }else{
-                                var c =`<img src="/storage/${i}" alt="Avatar" height="32" width="32">`;
+                                var c = `<img src="${i}" alt="Avatar" height="32" width="32">`;
+                            } else {
+                                var c = `<img src="/storage/${i}" alt="Avatar" height="32" width="32">`;
                             }
-                        }else {
+                        } else {
                             var d = [
                                     "success",
                                     "danger",
@@ -469,57 +474,57 @@
         })
 
         $('body').on('click', '#deleteUser', function() {
-        var id = $(this).data("id");
-         Swal.fire({
-          title: "Bạn có chắc chắn?",
-          text: "Bạn sẽ không thể hoàn tác!",
-          icon: "warning",
-          showCancelButton: !0,
-          cancelButtonText: 'Quay lại',
-          confirmButtonText: "Đúng, Xóa!",
-          customClass: {
-            confirmButton: "btn btn-primary",
-            cancelButton: "btn btn-outline-danger ms-1",
-          },
-          buttonsStyling: !1,
-        }).then(function (t) {
-            if (t.value) {
-                  $.ajax({
-                    type:"DELETE",
-                    url:"{{ route('bill.list.api')  }}"+"/"+id,
-                    headers: {
+            var id = $(this).data("id");
+            Swal.fire({
+                title: "Bạn có chắc chắn?",
+                text: "Bạn sẽ không thể hoàn tác!",
+                icon: "warning",
+                showCancelButton: !0,
+                cancelButtonText: 'Quay lại',
+                confirmButtonText: "Đúng, Xóa!",
+                customClass: {
+                    confirmButton: "btn btn-primary",
+                    cancelButton: "btn btn-outline-danger ms-1",
+                },
+                buttonsStyling: !1,
+            }).then(function(t) {
+                if (t.value) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('bill.list.api')  }}" + "/" + id,
+                        headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                success: function(){
-                    table.ajax.reload();
-                    toastr.success("Xóa Thành Công");
-                },
-                error:function () {
-                    toastr.error("Xóa không Thành Công");
+                        success: function() {
+                            table.ajax.reload();
+                            toastr.success("Xóa Thành Công");
+                        },
+                        error: function() {
+                            toastr.error("Xóa không Thành Công");
+                        }
+                    })
                 }
-            })
-            } 
-        });
-         
+            });
+
         });
         $.get('<?= route("combo.list.api") ?>', function(data) {
             data.map(function(x) {
                 $('#service-list4').append(
-                    '<tr><td class="text-nowrap fw-bolder">' + x.name_combo + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" disabled name="combo_id[]" value="' + x.id + '" type="checkbox" id="'+x.id+'" /></div></div></td></tr>'
+                    '<tr><td class="text-nowrap fw-bolder">' + x.name_combo + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" disabled name="combo_id[]" value="' + x.id + '" type="checkbox" id="' + x.id + '" /></div></div></td></tr>'
                 );
             })
         })
         $.get('<?= route("service.list.api") ?>', function(data) {
             data.service.map(function(x) {
                 $('#service-list5').append(
-                    '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" disabled name="service_id[]" value="' + x.id + '" type="checkbox" id="'+x.id+'" /></div></div></td></tr>'
+                    '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" disabled name="service_id[]" value="' + x.id + '" type="checkbox" id="' + x.id + '" /></div></div></td></tr>'
                 );
             })
         })
         $.get('<?= route("bill-staff.list.api") ?>', function(data) {
             data.map(function(x) {
                 $('#service-list6').append(
-                    '<tr><td class="text-nowrap fw-bolder">' + x.full_name + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" disabled name="staff_id[]" value="' + x.id + '" type="checkbox" id="'+x.id+'" /></div></div></td></tr>'
+                    '<tr><td class="text-nowrap fw-bolder">' + x.full_name + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" disabled name="staff_id[]" value="' + x.id + '" type="checkbox" id="' + x.id + '" /></div></div></td></tr>'
                 );
             })
         })
@@ -540,6 +545,7 @@
                 form.find('input[name="full_name"]').val(data.user.full_name);
                 form.find('input[name="total_time_execution"]').val(data.total_time_execution);
                 form.find('input[name="date_work"]').val(data.date_work);
+                form.find('input[name="time_work"]').val(data.time_work);
                 form.find('input[name="phone"]').val(data.phone);
                 form.find('input[name="total_bill"]').val(data.total_bill.toLocaleString() + '₫');
                 if (data.status_bill == 1) {
@@ -563,21 +569,21 @@
         $.get('<?= route("combo.list.api") ?>', function(data) {
             data.map(function(x) {
                 $('#service-list1').append(
-                    '<tr><td class="text-nowrap fw-bolder">' + x.name_combo + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="combo_id[]" value="' + x.id + '" type="checkbox" id="'+x.id+'" /></div></div></td></tr>'
+                    '<tr><td class="text-nowrap fw-bolder">' + x.name_combo + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="combo_id[]" value="' + x.id + '" type="checkbox" id="' + x.id + '" /></div></div></td></tr>'
                 );
             })
         })
         $.get('<?= route("service.list.api") ?>', function(data) {
             data.service.map(function(x) {
                 $('#service-list2').append(
-                    '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="service_id[]" value="' + x.id + '" type="checkbox" id="'+x.id+'" /></div></div></td></tr>'
+                    '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="service_id[]" value="' + x.id + '" type="checkbox" id="' + x.id + '" /></div></div></td></tr>'
                 );
             })
         })
         $.get('<?= route("bill-staff.list.api") ?>', function(data) {
             data.map(function(x) {
                 $('#service-list3').append(
-                    '<tr><td class="text-nowrap fw-bolder">' + x.full_name + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="staff_id[]" value="' + x.id + '" type="checkbox" id="'+x.id+'" /></div></div></td></tr>'
+                    '<tr><td class="text-nowrap fw-bolder">' + x.full_name + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="staff_id[]" value="' + x.id + '" type="checkbox" id="' + x.id + '" /></div></div></td></tr>'
                 );
             })
         })
@@ -599,6 +605,7 @@
                 $("#select2-basic").find("#" + data.status_bill, "option").attr('selected', true);
                 form.find('input[name="id"]').val(data.id);
                 form.find('input[name="date_work"]').val(data.date_work);
+                form.find('input[name="time_work"]').val(data.time_work);
                 form.find('input[name="phone"]').val(data.phone);
                 form.find('#note_bill').val(data.note_bill);
             }, 'json')

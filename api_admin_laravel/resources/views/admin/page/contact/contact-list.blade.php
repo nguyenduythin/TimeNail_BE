@@ -26,7 +26,7 @@
                                     <th>Họ & Tên</th>
                                     <th>Email</th>
                                     <th>Tin Nhắn</th>
-                                    <th>Action</th>
+                                    <th>Hành Động</th>
                                 </tr>
                             </thead>
 

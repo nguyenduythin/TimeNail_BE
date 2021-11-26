@@ -29,20 +29,20 @@ class BillController extends Controller
      */
     public function index()
     {
-        // $user = User::find(195);
-        // if ($user->getRoleNames()->first() == 'Member') {
-        //     // $staff = DB::table('bill_staff')->where('staff_id', $user->id)->get();
-        //     // $staff2 = [];
-        //     // foreach ($staff as $c) {
-        //     //     array_push($staff2, $c->bill_id);
-        //     // }
-        //     $all_bill = Bill::where('user_id',$user->id)->orderBy('created_at','desc')->get();
-        //     return response()->json($all_bill);
-        // }
-        $ok = User::role('Admin')->get();
-        $user = User::find(182);
-        // Notification::send($ok,new BillAdminNotification($user));
-        return response()->json($ok);
+        $user = User::find(Auth::user()->id);
+        if ($user->getRoleNames()->first() == 'Member') {
+            $all_bill = Bill::where('user_id',$user->id)->orderBy('created_at','desc')->get();
+            return response()->json($all_bill);
+        }else{
+            $get_bill_id = DB::table('bill_staff')->where('staff_id',$user->id)->pluck('bill_id');
+            $bill_today = DB::table('bills')->whereIn('id',$get_bill_id)
+                ->where('date_work','=',now()->format('Y-m-d'))->get();
+            $bill_future = DB::table('bills')->whereIn('id',$get_bill_id)
+                ->where('date_work','>',now()->format('Y-m-d'))->get();
+            return response()->json(['today'=>$bill_today,'future'=>$bill_future]);
+        }
+        // $ok=Bill::find(110);
+        // return response()->json($ok->date_work);
     }
 
     /**
@@ -58,6 +58,7 @@ class BillController extends Controller
         $model = new Bill();
         $model['code_bill'] = $faker->taxId();
         $model['date_work'] = $request->date_work;
+        $model['time_work'] = $request->time_work;
         $model['status_bill'] = 1;
         $model['user_id'] = $request->user_id;
         $model['total_people'] = $request->total_people;

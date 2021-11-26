@@ -25,7 +25,7 @@
                                     <th>Ảnh</th>
                                     <th>Phần Trăm</th>
                                     <th>Số Lượng</th>
-                                    <th>Actions</th>
+                                    <th>Hành Động</th>
                                 </tr>
                             </thead>
 

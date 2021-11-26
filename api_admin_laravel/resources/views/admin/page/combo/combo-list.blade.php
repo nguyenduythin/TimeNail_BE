@@ -28,7 +28,7 @@
                                     <th>Tổng Thời Gian</th>
                                     <th>Mô Tả</th>
                                     <!-- <th>Mô Tả Chi Tiết</th> -->
-                                    <th>Actions</th>
+                                    <th>Hành Động</th>
                                 </tr>
                             </thead>
 
