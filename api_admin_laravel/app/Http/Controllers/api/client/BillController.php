@@ -41,8 +41,6 @@ class BillController extends Controller
                 ->where('date_work','>',now()->format('Y-m-d'))->get();
             return response()->json(['today'=>$bill_today,'future'=>$bill_future]);
         }
-        // $ok=Bill::find(110);
-        // return response()->json($ok->date_work);
     }
 
     /**
@@ -67,7 +65,15 @@ class BillController extends Controller
             $model['note_bill'] = $request->note_bill;
         }
         if ($request->code_discount) {
-            $model['code_discount'] = $request->code_discount;
+            $code_request = Discount::where('code_discount',$request->code_discount)->first();
+            if($code_request->quantity > 0){
+                $code = Discount::find($code_request->id);
+                $code['quantity'] = $code['quantity'] - 1;
+                $code->save();
+                $model['code_discount'] = $request->code_discount;
+            }else{
+                return response()->json(['error' => 'Đã hết mã giảm giá']);
+            }
         }
         $model['total_time_execution'] = $request->total_time_execution;
         $model['total_bill'] = $request->total_bill;

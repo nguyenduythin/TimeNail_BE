@@ -72,13 +72,16 @@ Route::prefix('client')->group(function () {
         Route::post('/info', [ClientUserController::class, 'info']);
         Route::post('/password', [ClientUserController::class, 'password']);
     });
-    
+
     Route::get('/list-staff', [ClientStaffController::class, 'getAll']);
     Route::prefix('staff-info')->group(function () {
         Route::get('/', [ClientStaffController::class, 'index']);
         Route::post('/info', [ClientStaffController::class, 'info']);
         Route::post('/password', [ClientStaffController::class, 'password']);
     });
+
+    //notification
+    Route::get('all-notification', [NotificationController::class, 'show']);
 
     //combo
     Route::prefix('combo')->group(function () {
@@ -96,50 +99,53 @@ Route::prefix('client')->group(function () {
         Route::get('/show/{id}', [ClientServiceController::class, 'show']);
     });
     //blog
-    Route::prefix('blog')->group(function(){
+    Route::prefix('blog')->group(function () {
         Route::get('/', [ClientBlogController::class, 'index'])->name('blog.list');
         Route::get('/show/{id}', [ClientBlogController::class, 'show']);
     });
     //gallery
-    Route::prefix('gallery-category')->group(function(){
-        Route::get('/',[ClientGalleryCategoryController::class,'index']);
+    Route::prefix('gallery-category')->group(function () {
+        Route::get('/', [ClientGalleryCategoryController::class, 'index']);
         Route::get('/show/{id}', [ClientGalleryCategoryController::class, 'show']);
     });
     //discount
-    Route::prefix('discount')->group(function(){
+    Route::prefix('discount')->group(function () {
         Route::post('/', [ClientDiscountController::class, 'show']);
     });
     //bill
-    Route::prefix('bill')->group(function(){
-        Route::get('/',[ClientBillController::class,'index']);
+    Route::prefix('bill')->group(function () {
+        Route::get('/', [ClientBillController::class, 'index']);
         Route::post('/', [ClientBillController::class, 'store']);
     });
     //contact
-    Route::prefix('contact')->group(function(){
+    Route::prefix('contact')->group(function () {
         Route::post('/', [ClientContactController::class, 'store']);
     });
     //feedback
-    Route::prefix('feedback')->group(function(){
+    Route::prefix('feedback')->group(function () {
         Route::post('/', [ClientFeedbackController::class, 'store']);
     });
     //setting
-    Route::prefix('setting')->group(function(){
+    Route::prefix('setting')->group(function () {
         Route::get('/', [ClientSettingController::class, 'index']);
         Route::get('/show/{id}', [ClientSettingController::class, 'show']);
     });
-
 });
 
 
 Route::post('/login', [LoginController::class, 'login'])->name('login.admin');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout.admin');
 
+//read notification 
+Route::get('read-all-notifi', [NotificationController::class, 'readAll'])->name('read-all');
+Route::get('read-all-notifi/{id}', [NotificationController::class, 'read'])->name('read');
+
 
 
 Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard/{start}/{end}', [AdminDashboardController::class, 'index'])->name('dashboard.api');
     Route::get('/dashboard/first-date', [AdminDashboardController::class, 'getOnlyDateWorkFist'])->name('getDateWorkFirst.api');
-    
+
     // user
     Route::prefix('user')->group(function () {
         Route::get('/', [AdminUserController::class, 'index'])->name('user.list.api');
@@ -303,10 +309,6 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
         Route::delete('{id}', [BillController::class, 'destroy']);
         Route::get('/staff', [BillController::class, 'staff'])->name('bill-staff.list.api');
     });
-
-    //notification
-    Route::get('read-all-notifi',[NotificationController::class,'readAll'])->name('read-all');
-    Route::get('read-all-notifi/{id}',[NotificationController::class,'read'])->name('read');
 });
 
 

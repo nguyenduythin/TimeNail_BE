@@ -23,7 +23,7 @@ class BillController extends Controller
     public function index()
     {
         //
-        $model = Bill::orderBy('created_at','desc')->get();
+        $model = Bill::all();
         $model->load('user','staff');
         return response()->json($model);
     }
