@@ -11,7 +11,7 @@ class Bill extends Model
 
     protected $table = 'bills';
     public $fillable = [
-        'code_bill', 'total_time_execution', 'date_work',
+        'code_bill', 'total_time_execution', 'date_work','time_work',
         'total_bill', 'note_bill', 'status_bill',
         'total_people', 'code_discount', 'phone'
     ];
