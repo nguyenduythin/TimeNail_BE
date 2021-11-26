@@ -18,8 +18,10 @@ class loginController extends Controller
         }
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $token = auth()->user()->createToken('timeNail')->plainTextToken;
-            return response()->json(['success' => 'Đăng nhập thành công!', 
-            'user' => auth()->user(), 'roles' => Auth::user()->roles[0]->name, 'token' => $token], 200);
+            return response()->json([
+                'success' => 'Đăng nhập thành công!',
+                'user' => auth()->user(), 'roles' => Auth::user()->roles[0]->name, 'token' => $token
+            ], 200);
         }
         return response()->json(['error' => 'Ooops! something went wrong!']);
     }
@@ -34,17 +36,22 @@ class loginController extends Controller
     }
     public function register(Request $request)
     {
-        $user = new User();
-        $user->fill($request->all());
-        $user->syncRoles("Member");
-        $user->fill([
-            'password' => Hash::make($request->password)
-        ]);
-        $query =  $user->save();
-        if (!$query) {
-            return response()->json(['msg' => 'Đăng ký không thành công !'], 400);
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            $user = new User();
+            $user->fill($request->all());
+            $user->syncRoles("Member");
+            $user->fill([
+                'password' => Hash::make($request->password)
+            ]);
+            $query =  $user->save();
+            if (!$query) {
+                return response()->json(['msg' => 'Đăng ký không thành công !'], 400);
+            } else {
+                return response()->json(['msg' => 'Đăng ký thành công !'], 200);
+            }
         } else {
-            return response()->json(['msg' => 'Đăng ký thành công !'], 200);
+            return response()->json(['msg' => 'Tài khoản đã tồn tại !'], 400);
         }
     }
 }
