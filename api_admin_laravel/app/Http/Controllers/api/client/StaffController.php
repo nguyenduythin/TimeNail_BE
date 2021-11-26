@@ -47,7 +47,7 @@ class StaffController extends Controller
     public function info(Request $request)
     {
         $user = User::find($request->id);
-        $user->fill();
+        $user->fill($request->all());
         if ($request->hasFile('avatar')) {
             $user->avatar = $request->file('avatar')->storeAs('/images/avatar_users', uniqid() . '-' . $request->avatar->getClientOriginalName());
         }
