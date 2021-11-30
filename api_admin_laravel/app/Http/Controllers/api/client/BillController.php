@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\BillMail;
 use App\Models\Bill;
 use App\Models\BillCombo;
+use App\Models\BillMember;
 use App\Models\BillService;
 use App\Models\BillStaff;
 use App\Models\Combo;
@@ -32,15 +33,15 @@ class BillController extends Controller
     {
         $user = User::find(Auth::user()->id);
         if ($user->getRoleNames()->first() == 'Member') {
-            $all_bill = Bill::where('user_id',$user->id)->orderBy('created_at','desc')->get();
+            $all_bill = Bill::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
             return response()->json($all_bill);
-        }else{
-            $get_bill_id = DB::table('bill_staff')->where('staff_id',$user->id)->pluck('bill_id');
-            $bill_today = DB::table('bills')->whereIn('id',$get_bill_id)
-                ->where('date_work','=',now()->format('Y-m-d'))->get();
-            $bill_future = DB::table('bills')->whereIn('id',$get_bill_id)
-                ->where('date_work','>',now()->format('Y-m-d'))->get();
-            return response()->json(['today'=>$bill_today,'future'=>$bill_future]);
+        } else {
+            $get_bill_id = DB::table('bill_staff')->where('staff_id', $user->id)->pluck('bill_id');
+            $bill_today = DB::table('bills')->whereIn('id', $get_bill_id)
+                ->where('date_work', '=', now()->format('Y-m-d'))->get();
+            $bill_future = DB::table('bills')->whereIn('id', $get_bill_id)
+                ->where('date_work', '>', now()->format('Y-m-d'))->get();
+            return response()->json(['today' => $bill_today, 'future' => $bill_future]);
         }
     }
 
@@ -60,55 +61,109 @@ class BillController extends Controller
         $model['time_work'] = $request->time_work;
         $model['status_bill'] = 1;
         $model['user_id'] = $request->user_id;
-        $model['total_people'] = $request->total_people;
         $model['phone'] = $request->phone;
         if ($request->note_bill) {
             $model['note_bill'] = $request->note_bill;
         }
         if ($request->code_discount) {
-            $code_request = Discount::where('code_discount',$request->code_discount)->first();
-            if($code_request->quantity > 0){
+            $code_request = Discount::where('code_discount', $request->code_discount)->first();
+            if ($code_request->quantity > 0) {
                 $code = Discount::find($code_request->id);
                 $code['quantity'] = $code['quantity'] - 1;
                 $code->save();
                 $model['code_discount'] = $request->code_discount;
-            }else{
+            } else {
                 return response()->json(['error' => 'Đã hết mã giảm giá']);
             }
         }
         $model['total_time_execution'] = $request->total_time_execution;
         $model['total_bill'] = $request->total_bill;
         $query = $model->save();
-        if ($request->combo_id) {
-            for ($i = 0; $i < count($request->combo_id); $i++) {
+
+        if ($request->member_1) {
+            $bill_detail = new BillMember();
+            $bill_detail['bill_id'] = $model['id'];
+            $bill_detail['number_member'] = $request->member_1;
+            $bill_detail['service_id'] = json_encode($request->service_id1);
+            $bill_detail['combo_id'] = json_encode($request->combo_id1);
+            $bill_detail['staff_id'] = $request->staff_1;
+            $bill_detail->save();
+            for ($i = 0; $i < count($request->combo_id1); $i++) {
                 $many = new BillCombo();
                 $many['bill_id'] = $model['id'];
-                $many['combo_id'] = $request->combo_id[$i];
+                $many['combo_id'] = $request->combo_id1[$i];
                 $many->save();
             }
-        }
-        if ($request->service_id) {
-            for ($i = 0; $i < count($request->service_id); $i++) {
+            for ($i = 0; $i < count($request->service_id1); $i++) {
                 $many = new BillService();
                 $many['bill_id'] = $model['id'];
-                $many['service_id'] = $request->service_id[$i];
+                $many['service_id'] = $request->service_id1[$i];
                 $many->save();
             }
-        }
-        for ($i = 0; $i < count($request->staff_id); $i++) {
             $many = new BillStaff();
             $many['bill_id'] = $model['id'];
-            $many['staff_id'] = $request->staff_id[$i];
+            $many['staff_id'] = $request->staff_1;
             $many->save();
         }
+        if ($request->member_2) {
+            $bill_detail = new BillMember();
+            $bill_detail['bill_id'] = $model['id'];
+            $bill_detail['number_member'] = $request->member_2;
+            $bill_detail['service_id'] = json_encode($request->service_id2);
+            $bill_detail['combo_id'] = json_encode($request->combo_id2);
+            $bill_detail['staff_id'] = $request->staff_2;
+            $bill_detail->save();
+            for ($i = 0; $i < count($request->combo_id2); $i++) {
+                $many = new BillCombo();
+                $many['bill_id'] = $model['id'];
+                $many['combo_id'] = $request->combo_id2[$i];
+                $many->save();
+            }
+            for ($i = 0; $i < count($request->service_id2); $i++) {
+                $many = new BillService();
+                $many['bill_id'] = $model['id'];
+                $many['service_id'] = $request->service_id2[$i];
+                $many->save();
+            }
+            $many = new BillStaff();
+            $many['bill_id'] = $model['id'];
+            $many['staff_id'] = $request->staff_2;
+            $many->save();
+        }
+        if ($request->member_3) {
+            $bill_detail = new BillMember();
+            $bill_detail['bill_id'] = $model['id'];
+            $bill_detail['number_member'] = $request->member_3;
+            $bill_detail['service_id'] = json_encode($request->service_id3);
+            $bill_detail['combo_id'] = json_encode($request->combo_id3);
+            $bill_detail['staff_id'] = $request->staff_3;
+            $bill_detail->save();
+            for ($i = 0; $i < count($request->combo_id3); $i++) {
+                $many = new BillCombo();
+                $many['bill_id'] = $model['id'];
+                $many['combo_id'] = $request->combo_id3[$i];
+                $many->save();
+            }
+            for ($i = 0; $i < count($request->service_id3); $i++) {
+                $many = new BillService();
+                $many['bill_id'] = $model['id'];
+                $many['service_id'] = $request->service_id3[$i];
+                $many->save();
+            }
+            $many = new BillStaff();
+            $many['bill_id'] = $model['id'];
+            $many['staff_id'] = $request->staff_3;
+            $many->save();
+        }
+
         $bill = Bill::find($model['id']);
         $bill->load('staff', 'service', 'combo');
         $user = User::find($request->user_id);
 
         $notifi_to_admin = User::role('Admin')->get();
-        Notification::send($notifi_to_admin,new BillAdminNotification($user,$bill['date_work']));
-        Notification::send($user,new BillClientNotification($bill));
-        
+        Notification::send($notifi_to_admin, new BillAdminNotification($user, $bill['date_work']));
+        Notification::send($user, new BillClientNotification($bill));
+
         Mail::to($user['email'])->queue(new BillMail(
             $bill,
             $bill['staff'],
