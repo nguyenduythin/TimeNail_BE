@@ -679,7 +679,6 @@
                         $(form)[0].reset();
                         $('#editUserModal').modal("hide");
                         table.ajax.reload();
-                        toastr.success(data.msg)
                     }
                 },
                 error: function(error) {
