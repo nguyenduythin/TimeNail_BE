@@ -56,9 +56,10 @@ class NotificationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        return response()->json(auth()->user()->unreadNotifications);
+        $user = User::find($id);
+        return response()->json($user->unreadNotifications);
     }
 
     /**

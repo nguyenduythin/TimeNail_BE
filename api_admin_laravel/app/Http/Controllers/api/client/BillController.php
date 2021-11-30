@@ -29,9 +29,9 @@ class BillController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $user = User::find(Auth::user()->id);
+        $user = User::find($id);
         if ($user->getRoleNames()->first() == 'Member') {
             $all_bill = Bill::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
             return response()->json($all_bill);

@@ -81,7 +81,7 @@ Route::prefix('client')->group(function () {
     });
 
     //notification
-    Route::get('all-notification', [NotificationController::class, 'show']);
+    Route::get('all-notification/{id}', [NotificationController::class, 'show']);
 
     //combo
     Route::prefix('combo')->group(function () {
@@ -114,7 +114,7 @@ Route::prefix('client')->group(function () {
     });
     //bill
     Route::prefix('bill')->group(function () {
-        Route::get('/', [ClientBillController::class, 'index']);
+        Route::get('/{id}', [ClientBillController::class, 'index']);
         Route::post('/', [ClientBillController::class, 'store']);
     });
     //contact

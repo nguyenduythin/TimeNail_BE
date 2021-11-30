@@ -621,6 +621,9 @@
                 processData: false,
                 dataType: 'json',
                 contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 success: function(data) {
                     if (data.code == 0) {
                         $.each(data.error, function(prefix, val) {
