@@ -29,7 +29,7 @@ class FeedbackController extends Controller
     {
         $request->validate(['number_star'=>'numeric|min:1|max:5']);
         $model = new Feedback();
-        $model['user_id'] = Auth::user()->id;
+        $model['user_id'] = $request->id;
         $model->fill($request->all());
         $query = $model->save();
         if (!$query) {
