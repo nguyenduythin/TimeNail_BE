@@ -18,9 +18,11 @@ class loginController extends Controller
         }
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $token = auth()->user()->createToken('timeNail')->plainTextToken;
+            $users =  auth()->user();
+            $users->avatar =   asset('storage/' .$users->avatar);
             return response()->json([
                 'success' => 'Đăng nhập thành công!',
-                'user' => auth()->user(), 'roles' => Auth::user()->roles[0]->name, 'token' => $token
+                'user' => $users, 'roles' => Auth::user()->roles[0]->name, 'token' => $token
             ], 200);
         }
         return response()->json(['error' => 'Ooops! something went wrong!']);

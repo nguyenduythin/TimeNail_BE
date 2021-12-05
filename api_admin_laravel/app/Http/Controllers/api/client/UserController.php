@@ -62,7 +62,7 @@ class UserController extends Controller
             ], [
                 'full_name' => $request->full_name,
                 'email' => $request->email,
-                'avatar' => $request->avatar,
+                'avatar' =>  asset('storage/' . $request->avatar),
                 'password' => Hash::make($request->full_name . '@' . $request->google_id)
             ]);
             $saveUser->syncRoles("Member");
