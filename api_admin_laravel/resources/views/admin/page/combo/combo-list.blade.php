@@ -558,6 +558,7 @@
 
         //detail
         $('body').on('click', '#detailUser', function() {
+            $('#detailUserForm')[0].reset();
             var user_id = $(this).data("id");
             $.get('<?= route("combo.list.api") ?>' + "/show/" + user_id, function(data) {
                 data.model.services.map(function(x) {
