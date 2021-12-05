@@ -64,32 +64,10 @@
                                             <input type="file" id="modalEditUserFirstName full_name" name="image" class="form-control" accept="image/*" />
                                         </div>
                                         <div class="col-12">
-                                            <label class="form-label" for="modalEditUserFirstName">Danh Mục Dịch Vụ</label>
+                                            <label class="form-label" for="modalEditUserFirstName">Dịch Vụ Có Trong Combo</label>
+                                            <select name="service_id[]" class="select2 form-select select2-hidden-accessible" multiple="" id="default-select-multi3" data-select2-id="default-select-multi3">
 
-                                            <h4 class="mt-2 pt-50">Dịch Vụ Có Trong Combo</h4>
-                                            <!-- Permission table -->
-                                            <div class="table-responsive">
-                                                <table class="table table-flush-spacing">
-                                                    <tbody id="service-list">
-                                                        <!-- nút chọn all sau này sửa js xong thì để lại -->
-                                                        <!-- <tr>
-                                                                <td class="text-nowrap fw-bolder">
-                                                                    Administrator Access
-                                                                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="Allows a full access to the system">
-                                                                        <i data-feather="info"></i>
-                                                                    </span>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" id="selectAll" />
-                                                                        <label class="form-check-label" for="selectAll"> Select All </label>
-                                                                    </div>
-                                                                </td>
-                                                            </tr> -->
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <!-- Permission table -->
+                                            </select>
                                         </div>
                                         <div class="col-12 col-md-6 ">
                                             <label class="form-label" for="modalEditUserCountry">Mô Tả</label>
@@ -166,16 +144,10 @@
                         <input type="text" disabled data-type="currency" id="modalEditUserFirstName full_name" name="total_time_work" class="form-control" />
                     </div>
                     <div class="col-12">
-                        <h4 class="mt-2 pt-50">Dịch Vụ Có Trong Combo</h4>
-                        <!-- Permission table -->
-                        <div class="table-responsive">
-                            <table class="table table-flush-spacing">
-                                <tbody id="service-list1">
+                        <label class="form-label" for="modalEditUserFirstName">Dịch Vụ Có Trong Combo</label>
+                        <select name="service_id[]" disabled class="select2 form-select select2-hidden-accessible" multiple="" id="default-select-multi1" data-select2-id="default-select-multi1">
 
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Permission table -->
+                        </select>
                     </div>
                     <div class="col-12 col-md-6 ">
                         <label class="form-label" for="modalEditUserCountry">Mô Tả</label>
@@ -234,30 +206,10 @@
                         <input type="text" data-type="currency" id="modalEditUserFirstName full_name" name="total_price" class="form-control" />
                     </div>
                     <div class="col-12">
-                        <h4 class="mt-2 pt-50">Dịch Vụ Có Trong Combo</h4>
-                        <!-- Permission table -->
-                        <div class="table-responsive">
-                            <table class="table table-flush-spacing">
-                                <tbody id="service-list2">
-                                    <!-- nút chọn all sau này sửa js xong thì để lại -->
-                                    <!-- <tr>
-                                                                <td class="text-nowrap fw-bolder">
-                                                                    Administrator Access
-                                                                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="Allows a full access to the system">
-                                                                        <i data-feather="info"></i>
-                                                                    </span>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" id="selectAll" />
-                                                                        <label class="form-check-label" for="selectAll"> Select All </label>
-                                                                    </div>
-                                                                </td>
-                                                            </tr> -->
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Permission table -->
+                        <label class="form-label" for="modalEditUserFirstName">Dịch Vụ Có Trong Combo</label>
+                        <select name="service_id[]" class="select2 form-select select2-hidden-accessible" multiple="" id="default-select-multi2" data-select2-id="default-select-multi2">
+
+                        </select>
                     </div>
                     <div class="col-12 col-md-6 ">
                         <label class="form-label" for="modalEditUserCountry">Mô Tả</label>
@@ -289,8 +241,8 @@
     // liệt kê cate cho thẻ select category service
     $.get('<?= route("service.list.api") ?>', function(data) {
         data.service.map(function(x) {
-            document.getElementById('service-list').insertAdjacentHTML('beforeend',
-                '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="service_id[]" value="' + x.id + '" type="checkbox" id="dbManagementRead" /></div></div></td></tr>'
+            document.getElementById('default-select-multi3').insertAdjacentHTML('beforeend',
+                '<option value="' + x.id + '" id="' + x.id + '">' + x.name_service + '</option>'
             );
         })
     })
@@ -533,32 +485,32 @@
                 var s = a.valid();
                 var form = this;
                 if (s) {
-                $.ajax({
-                    type: "POST",
-                    url: $(form).attr('action'),
-                    data: new FormData(form),
-                    processData: false,
-                    dataType: 'json',
-                    contentType: false,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(data) {
-                        if (data.code == 0) {
-                            $.each(data.error, function(prefix, val) {
-                                $(form).find('span' + prefix + '_error').text(val[0]);
-                            });
-                        } else {
-                            $(form)[0].reset();
-                            $('#modals-slide-in').modal("hide");
-                            table.ajax.reload();
-                            toastr.success(data.msg)
+                    $.ajax({
+                        type: "POST",
+                        url: $(form).attr('action'),
+                        data: new FormData(form),
+                        processData: false,
+                        dataType: 'json',
+                        contentType: false,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(data) {
+                            if (data.code == 0) {
+                                $.each(data.error, function(prefix, val) {
+                                    $(form).find('span' + prefix + '_error').text(val[0]);
+                                });
+                            } else {
+                                $(form)[0].reset();
+                                $('#modals-slide-in').modal("hide");
+                                table.ajax.reload();
+                                toastr.success(data.msg)
+                            }
+                        },
+                        error: function(error) {
+                            console.log("Thêm không thành công", error);
                         }
-                    },
-                    error: function(error) {
-                        console.log("Thêm không thành công", error);
-                    }
-                })                    
+                    })
                 }
             }))
 
@@ -576,30 +528,30 @@
                     cancelButton: "btn btn-outline-danger ms-1",
                 },
                 buttonsStyling: !1,
-                }).then(function (t) {
-                    if (t.value) {
-                        $.ajax({
-                            type:"DELETE",
-                            url: "{{ route('combo.list.api') }}" + "/" + user_id,
-                            headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                        success: function(){
+            }).then(function(t) {
+                if (t.value) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('combo.list.api') }}" + "/" + user_id,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function() {
                             table.ajax.reload();
                             toastr.success("Xóa Thành Công");
                         },
-                        error:function () {
+                        error: function() {
                             toastr.error("Xóa không Thành Công");
                         }
                     })
-                    } 
-                });
+                }
+            });
         });
         //list service for detail
         $.get('<?= route("service.list.api") ?>', function(data) {
             data.service.map(function(x) {
-                document.getElementById('service-list1').insertAdjacentHTML('beforeend',
-                    '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="service_id[]" disabled value="' + x.id + '" type="checkbox" id="' + x.id + '" /></div></div></td></tr>'
+                document.getElementById('default-select-multi1').insertAdjacentHTML('beforeend',
+                    '<option value="' + x.id + '" id="' + x.id + '">' + x.name_service + '</option>'
                 );
             })
         })
@@ -609,7 +561,8 @@
             var user_id = $(this).data("id");
             $.get('<?= route("combo.list.api") ?>' + "/show/" + user_id, function(data) {
                 data.model.services.map(function(x) {
-                    $("#service-list1").find("#" + x.id, "input").prop('checked', true);
+                    $("#default-select-multi1").find("#" + x.id, "option").prop('selected', true);
+                    $("#default-select-multi1").trigger('change');
                 })
                 var form = $('#detailUserForm');
                 $("#account-upload-img").attr("src", data.model.image ? "/storage/" + data.model.image :
@@ -625,8 +578,8 @@
         //list service for edit
         $.get('<?= route("service.list.api") ?>', function(data) {
             data.service.map(function(x) {
-                document.getElementById('service-list2').insertAdjacentHTML('beforeend',
-                    '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="service_id[]" value="' + x.id + '" type="checkbox" id="' + x.id + '" /></div></div></td></tr>'
+                document.getElementById('default-select-multi2').insertAdjacentHTML('beforeend',
+                    '<option value="' + x.id + '" id="' + x.id + '">' + x.name_service + '</option>'
                 );
             })
         })
@@ -640,7 +593,8 @@
                 data.ser.map(function(x) {
                     data.model.services.map(function(y) {
                         if (y.id == x.id) {
-                            $("#service-list2").find("#" + y.id, "input").prop('checked', true);
+                            $("#default-select-multi2").find("#" + y.id, "option").prop('selected', true);
+                            $("#default-select-multi2").trigger('change');
                         }
                     })
                 })
