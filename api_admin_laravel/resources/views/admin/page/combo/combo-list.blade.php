@@ -616,6 +616,7 @@
                         }),
                         n.readAsDataURL(uploadedAvatar[0]);
                     }),
+                    
                     accountReset.on("click", function () {
                         uploadedAvatar.attr("src", data.model.image ? "/storage/"+ data.model.image
                         : "{{ asset('admin/images/portrait/small/avatar-none.png') }}" );
