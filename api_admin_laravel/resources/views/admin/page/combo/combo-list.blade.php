@@ -579,9 +579,8 @@
         //list service for edit
         $.get('<?= route("service.list.api") ?>', function(data) {
             data.service.map(function(x) {
-                document.getElementById('default-select-multi2').insertAdjacentHTML('beforeend',
-                    '<option value="' + x.id + '" id="' + x.id + '">' + x.name_service + '</option>'
-                );
+                var newOption = new Option(x.name_service, x.id, false, false);
+                $('#default-select-multi2').append(newOption).trigger('change');
             })
         })
 
@@ -590,15 +589,20 @@
             $('#editComboForm')[0].reset();
             // mai làm tiếp phần list service
             var user_id = $(this).data("id");
+            // handle edit service with select2
             $.get('<?= route("combo.list.api") ?>' + "/show/" + user_id, function(data) {
-                data.ser.map(function(x) {
-                    data.model.services.map(function(y) {
-                        if (y.id == x.id) {
-                            $("#default-select-multi2").find("#" + y.id, "option").prop('selected', true);
-                            $("#default-select-multi2").trigger('change');
-                        }
+                var getServeiceMatchs = [];
+                    data.ser.map((x) => 
+                    {
+                        data.model.services.map((y) =>  
+                        {
+                            if (y.id === x.id) {
+                                getServeiceMatchs.push(y.id);
+                            }
+                        })
                     })
-                })
+                $("#default-select-multi2").val(getServeiceMatchs).trigger('change');
+
                 $("#account-upload-img1").attr("src", data.model.image ? "/storage/" + data.model.image :
                     "{{ asset('admin/images/portrait/small/avatar-none.png') }}");
                 var form = $('#editComboForm');
@@ -630,7 +634,6 @@
                             $(form).find('span' + prefix + '_error').text(val[0]);
                         });
                     } else {
-                        console.log('fomr', data);
                         $(form)[0].reset();
                         $('#editUserModal').modal("hide");
                         table.ajax.reload();
