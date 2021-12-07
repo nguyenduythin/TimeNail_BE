@@ -62,12 +62,12 @@ class UserController extends Controller
             ], [
                 'full_name' => $request->full_name,
                 'email' => $request->email,
-                'avatar' => $request->avatar,
+                'avatar' =>  asset('storage/' . $request->avatar),
                 'password' => Hash::make($request->full_name . '@' . $request->google_id)
             ]);
             $saveUser->syncRoles("Member");
             $saveUser = User::where('email', $request['email'])->first();
-            return response()->json(['code' => 1, 'msg' => 'Thêm mới thành công !']);
+            return response()->json(['code' => 1, 'msg' => 'Thêm mới thành công !' , 'user' => $saveUser]);
         } else {
             $saveUser = User::where('email',  $request['email'])->update([
                 'google_id' => $request->google_id,

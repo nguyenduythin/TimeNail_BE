@@ -174,6 +174,14 @@
                         <input type="text" name="phone" class="form-control active" minlength="10" maxlength="10" required />
                     </div>
                     <div class="col-12">
+                        <label class="form-label" for="default-select-multi">Default Test</label>
+                        <div class="mb-1">
+                          <select class="select2 form-select" multiple="multiple" id="select-mutiple">
+                       
+                          </select>
+                        </div>
+                      </div>
+                    <div class="col-12">
                         <h4 class="mt-2 pt-50">Combo Có Trong Hóa Đơn</h4>
                         <!-- Permission table -->
                         <div class="table-responsive">
@@ -185,6 +193,7 @@
                         </div>
                         <!-- Permission table -->
                     </div>
+                    
                     <div class="col-12">
                         <h4 class="mt-2 pt-50">Dịch Vụ Có Trong Hóa Đơn</h4>
                         <!-- Permission table -->
@@ -197,6 +206,8 @@
                         </div>
                         <!-- Permission table -->
                     </div>
+                   
+
                     <div class="col-12">
                         <h4 class="mt-2 pt-50">Nhân Viên Thực Hiện</h4>
                         <!-- Permission table -->
@@ -512,6 +523,8 @@
                 $('#service-list4').append(
                     '<tr><td class="text-nowrap fw-bolder">' + x.name_combo + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" disabled name="combo_id[]" value="' + x.id + '" type="checkbox" id="' + x.id + '" /></div></div></td></tr>'
                 );
+            $('#select-mutiple').append('<option value="'+x.id+'" id="'+x.id+'">'+x.name_combo+'</option>');
+
             })
         })
         $.get('<?= route("service.list.api") ?>', function(data) {
@@ -594,6 +607,8 @@
             $.get('<?= route("bill.list.api") ?>' + "/show/" + user_id, function(data) {
                 data.combo.map(function(x) {
                     $("#service-list1").find("#" + x.id, "input").prop('checked', true);
+                    $("#select-mutiple").find("#" + x.id, "option").prop('selected',true);
+                    $('#select-mutiple').trigger('change');
                 });
                 data.service.map(function(x) {
                     $("#service-list2").find("#" + x.id, "input").prop('checked', true);
