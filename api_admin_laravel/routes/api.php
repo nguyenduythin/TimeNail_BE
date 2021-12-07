@@ -37,6 +37,10 @@ use App\Http\Controllers\api\client\LoginWithGoogleController;
 use App\Http\Controllers\api\client\NewPasswordController;
 use App\Http\Controllers\api\client\StaffController as ClientStaffController;
 use App\Http\Controllers\api\client\UserController as ClientUserController;
+use App\Models\BillMember;
+use App\Models\Combo;
+use App\Models\Service;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +59,38 @@ Route::prefix('login')->group(function () {
     Route::get('/google/redirect', [LoginWithGoogleController::class, 'loginWithGoogle'])->name('google.login.api');
     Route::get('/google/callback/', [LoginWithGoogleController::class, 'callbackFromGoogle']);
 });
+// Route::get('/ok', function () {
+//     $model = BillMember::where('bill_id', 7)->orderBy('number_member')->get();
+//     $nguoi1 = [];
+//     $nguoi2 = [];
+//     $nguoi3 = [];
+//     foreach ($model as $c) {
+//         $check = null;$check2 = null;
+//         if ($c->service_id != 'null') {
+//             $check = Service::whereIn('id', json_decode($c->service_id))->get();
+//         }
+//         if ($c->combo_id != 'null') {
+//             $check2 = Combo::whereIn('id', json_decode($c->combo_id))->get();
+//         }
+//         $check3 = User::find($c->staff_id);
+//         if ($c->number_member == 1) {
+//             $nguoi1['service'] = $check;
+//             $nguoi1['combo'] = $check2;
+//             $nguoi1['staff'] = $check3;
+//         }
+//         if ($c->number_member == 2) {
+//             $nguoi2['service'] = $check;
+//             $nguoi2['combo'] = $check2;
+//             $nguoi2['staff'] = $check3;
+//         }
+//         if ($c->number_member == 3) {
+//             $nguoi3['service'] = $check;
+//             $nguoi3['combo'] = $check2;
+//             $nguoi3['staff'] = $check3;
+//         }
+//     }
+//     return response()->json(['nguoi1' => $nguoi1, 'nguoi2' => $nguoi2, 'nguoi3' => $nguoi3]);
+// });
 
 // password reset
 Route::post('forgot-password', [NewPasswordController::class, 'forgotPassword']);

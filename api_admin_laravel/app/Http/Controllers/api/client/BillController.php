@@ -88,22 +88,22 @@ class BillController extends Controller
             $bill_detail['combo_id'] = json_encode($request->combo_id1);
             $bill_detail['staff_id'] = $request->staff_1;
             $bill_detail->save();
-            for ($i = 0; $i < count($request->combo_id1); $i++) {
-                $many = new BillCombo();
-                $many['bill_id'] = $model['id'];
-                $many['combo_id'] = $request->combo_id1[$i];
-                $many->save();
-            }
-            for ($i = 0; $i < count($request->service_id1); $i++) {
-                $many = new BillService();
-                $many['bill_id'] = $model['id'];
-                $many['service_id'] = $request->service_id1[$i];
-                $many->save();
-            }
-            $many = new BillStaff();
-            $many['bill_id'] = $model['id'];
-            $many['staff_id'] = $request->staff_1;
-            $many->save();
+            // for ($i = 0; $i < count($request->combo_id1); $i++) {
+            //     $many = new BillCombo();
+            //     $many['bill_id'] = $model['id'];
+            //     $many['combo_id'] = $request->combo_id1[$i];
+            //     $many->save();
+            // }
+            // for ($i = 0; $i < count($request->service_id1); $i++) {
+            //     $many = new BillService();
+            //     $many['bill_id'] = $model['id'];
+            //     $many['service_id'] = $request->service_id1[$i];
+            //     $many->save();
+            // }
+            // $many = new BillStaff();
+            // $many['bill_id'] = $model['id'];
+            // $many['staff_id'] = $request->staff_1;
+            // $many->save();
         }
         if ($request->member_2) {
             $bill_detail = new BillMember();
@@ -113,22 +113,22 @@ class BillController extends Controller
             $bill_detail['combo_id'] = json_encode($request->combo_id2);
             $bill_detail['staff_id'] = $request->staff_2;
             $bill_detail->save();
-            for ($i = 0; $i < count($request->combo_id2); $i++) {
-                $many = new BillCombo();
-                $many['bill_id'] = $model['id'];
-                $many['combo_id'] = $request->combo_id2[$i];
-                $many->save();
-            }
-            for ($i = 0; $i < count($request->service_id2); $i++) {
-                $many = new BillService();
-                $many['bill_id'] = $model['id'];
-                $many['service_id'] = $request->service_id2[$i];
-                $many->save();
-            }
-            $many = new BillStaff();
-            $many['bill_id'] = $model['id'];
-            $many['staff_id'] = $request->staff_2;
-            $many->save();
+            // for ($i = 0; $i < count($request->combo_id2); $i++) {
+            //     $many = new BillCombo();
+            //     $many['bill_id'] = $model['id'];
+            //     $many['combo_id'] = $request->combo_id2[$i];
+            //     $many->save();
+            // }
+            // for ($i = 0; $i < count($request->service_id2); $i++) {
+            //     $many = new BillService();
+            //     $many['bill_id'] = $model['id'];
+            //     $many['service_id'] = $request->service_id2[$i];
+            //     $many->save();
+            // }
+            // $many = new BillStaff();
+            // $many['bill_id'] = $model['id'];
+            // $many['staff_id'] = $request->staff_2;
+            // $many->save();
         }
         if ($request->member_3) {
             $bill_detail = new BillMember();
@@ -138,22 +138,22 @@ class BillController extends Controller
             $bill_detail['combo_id'] = json_encode($request->combo_id3);
             $bill_detail['staff_id'] = $request->staff_3;
             $bill_detail->save();
-            for ($i = 0; $i < count($request->combo_id3); $i++) {
-                $many = new BillCombo();
-                $many['bill_id'] = $model['id'];
-                $many['combo_id'] = $request->combo_id3[$i];
-                $many->save();
-            }
-            for ($i = 0; $i < count($request->service_id3); $i++) {
-                $many = new BillService();
-                $many['bill_id'] = $model['id'];
-                $many['service_id'] = $request->service_id3[$i];
-                $many->save();
-            }
-            $many = new BillStaff();
-            $many['bill_id'] = $model['id'];
-            $many['staff_id'] = $request->staff_3;
-            $many->save();
+            // for ($i = 0; $i < count($request->combo_id3); $i++) {
+            //     $many = new BillCombo();
+            //     $many['bill_id'] = $model['id'];
+            //     $many['combo_id'] = $request->combo_id3[$i];
+            //     $many->save();
+            // }
+            // for ($i = 0; $i < count($request->service_id3); $i++) {
+            //     $many = new BillService();
+            //     $many['bill_id'] = $model['id'];
+            //     $many['service_id'] = $request->service_id3[$i];
+            //     $many->save();
+            // }
+            // $many = new BillStaff();
+            // $many['bill_id'] = $model['id'];
+            // $many['staff_id'] = $request->staff_3;
+            // $many->save();
         }
 
         $bill = Bill::find($model['id']);
@@ -188,7 +188,42 @@ class BillController extends Controller
      */
     public function show($id)
     {
-        //
+        $bill = Bill::find($id);
+        $detail_bill = BillMember::where('bill_id', $id)->orderBy('number_member')->get();
+        $nguoi1 = [];
+        $nguoi2 = [];
+        $nguoi3 = [];
+        foreach ($detail_bill as $c) {
+            $service = null;
+            $combo = null;
+            $staff = null;
+            if ($c->service_id != 'null') {
+                $service = Service::whereIn('id', json_decode($c->service_id))->get();
+            }
+            if ($c->combo_id != 'null') {
+                $combo = Combo::whereIn('id', json_decode($c->combo_id))->get();
+            }
+            $staff = User::find($c->staff_id);
+            if ($c->number_member == 1) {
+                $nguoi1['service'] = $service;
+                $nguoi1['combo'] = $combo;
+                $nguoi1['staff'] = $staff;
+            }
+            if ($c->number_member == 2) {
+                $nguoi2['service'] = $service;
+                $nguoi2['combo'] = $combo;
+                $nguoi2['staff'] = $staff;
+            }
+            if ($c->number_member == 3) {
+                $nguoi3['service'] = $service;
+                $nguoi3['combo'] = $combo;
+                $nguoi3['staff'] = $staff;
+            }
+        }
+        return response()->json([
+            'bill' => $bill, 'nguoi1' => $nguoi1,
+            'nguoi2' => $nguoi2, 'nguoi3' => $nguoi3
+        ]);
     }
 
     /**
