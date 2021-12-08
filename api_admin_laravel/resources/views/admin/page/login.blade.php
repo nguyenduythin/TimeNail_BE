@@ -108,6 +108,7 @@ $(function () {
         processData: false,
         dataType:'json',
         contentType: false,
+        async: false,
         success: function(data){
             if (data.error) {
                 toastr.error(data.error)
