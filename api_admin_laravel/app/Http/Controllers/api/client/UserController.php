@@ -41,6 +41,7 @@ class UserController extends Controller
         }
         $query =  $user->save();
         $user['avatar'] = asset('storage/' . $user['avatar']);
+        $user['role'] = $user->getRoleNames()->first();
         if (!$query) {
             return response()->json(['code' => 0, 'msg' => 'Sửa không thành công !']);
         } else {
