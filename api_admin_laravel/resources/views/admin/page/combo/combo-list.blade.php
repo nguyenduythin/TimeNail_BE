@@ -492,6 +492,8 @@
                         processData: false,
                         dataType: 'json',
                         contentType: false,
+                        async: false,
+
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
@@ -644,6 +646,7 @@
                 data: new FormData(form),
                 processData: false,
                 dataType: 'json',
+        async: false,
                 contentType: false,
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
