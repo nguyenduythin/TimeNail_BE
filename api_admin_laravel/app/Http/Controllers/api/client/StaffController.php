@@ -18,15 +18,14 @@ class StaffController extends Controller
     public function index()
     {
         $user = User::find(Auth::user()->id);
-        $user['avatar'] = asset('storage/'.$user['avatar']);
-        if($user->getRoleNames()->first()=='Staff'){
+        $user['avatar'] = asset('storage/' . $user['avatar']);
+        if ($user->getRoleNames()->first() == 'Staff') {
             return response()->json($user);
-            
-        }else{
-            return response()->json(['error' =>'Không phải là staff']);
+        } else {
+            return response()->json(['error' => 'Không phải là staff']);
         }
     }
-     /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -53,11 +52,13 @@ class StaffController extends Controller
         }
         $query =  $user->save();
         $user['avatar'] = asset('storage/' . $user['avatar']);
-        $user->getRoleNames()->first();
         if (!$query) {
             return response()->json(['code' => 0, 'msg' => 'Sửa không thành công !']);
         } else {
-            return response()->json(['msg' => 'Sửa thành công !','user'=>$user]);
+            return response()->json([
+                'msg' => 'Sửa thành công !',
+                'user' => $user, 'roles' => $user->getRoleNames()->first()
+            ]);
         }
     }
 
@@ -82,18 +83,16 @@ class StaffController extends Controller
     public function password(Request $request)
     {
         $user = User::find($request->id);
-        if(empty($request->password) || !Hash::check($request->password, $user->password)){
+        if (empty($request->password) || !Hash::check($request->password, $user->password)) {
             return response()->json(['error' => 'Mật khẩu cũ không chính xác!']);
-        }elseif(empty($request->new_password)||empty($request->re_password)){
+        } elseif (empty($request->new_password) || empty($request->re_password)) {
             return response()->json(['error' => 'Chưa nhập mật khẩu mới!']);
-        }
-        else{
-            if($request->new_password == $request->re_password){
+        } else {
+            if ($request->new_password == $request->re_password) {
                 $user['password'] = Hash::make($request->re_password);
                 $user->save();
                 return response()->json(['success' => 'Đổi mật khẩu thành công!']);
-            }
-            else{
+            } else {
                 return response()->json(['error' => 'Mật khẩu mới không trùng nhau!']);
             }
         }

@@ -41,11 +41,13 @@ class UserController extends Controller
         }
         $query =  $user->save();
         $user['avatar'] = asset('storage/' . $user['avatar']);
-        $user['role'] = $user->getRoleNames()->first();
         if (!$query) {
             return response()->json(['code' => 0, 'msg' => 'Sửa không thành công !']);
         } else {
-            return response()->json(['msg' => 'Sửa thành công !','user'=>$user]);
+            return response()->json([
+                'msg' => 'Sửa thành công !',
+                'user' => $user, 'roles' => $user->getRoleNames()->first()
+            ]);
         }
     }
 
@@ -69,14 +71,16 @@ class UserController extends Controller
             ]);
             $saveUser->syncRoles("Member");
             $saveUser = User::where('email', $request['email'])->first();
-            return response()->json(['code' => 1, 'msg' => 'Thêm mới thành công !' , 'user' => $saveUser]);
+            return response()->json(['code' => 1, 'msg' => 'Thêm mới thành công !', 'user' => $saveUser]);
         } else {
             $saveUser = User::where('email',  $request['email'])->update([
                 'google_id' => $request->google_id,
             ]);
             $saveUser = User::where('email', $request['email'])->first();
-            return response()->json(['code' => 2, 'msg' => 'Đăng nhập thành Công !', 
-            'user' => $saveUser]);
+            return response()->json([
+                'code' => 2, 'msg' => 'Đăng nhập thành Công !',
+                'user' => $saveUser
+            ]);
         };
     }
 
