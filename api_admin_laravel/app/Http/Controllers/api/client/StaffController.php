@@ -52,10 +52,12 @@ class StaffController extends Controller
             $user->avatar = $request->file('avatar')->storeAs('/images/avatar_users', uniqid() . '-' . $request->avatar->getClientOriginalName());
         }
         $query =  $user->save();
+        $user['avatar'] = asset('storage/' . $user['avatar']);
+        $user->getRoleNames()->first();
         if (!$query) {
             return response()->json(['code' => 0, 'msg' => 'Sửa không thành công !']);
         } else {
-            return response()->json(['code' => 1, 'msg' => 'Sửa thành công !']);
+            return response()->json(['msg' => 'Sửa thành công !','user'=>$user]);
         }
     }
 
