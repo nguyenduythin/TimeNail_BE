@@ -90,40 +90,40 @@
                         <input disabled type="text" name="status_bill" class="form-control" />
                     </div>
                     <div class="col-12">
-                        <h4 class="mt-2 pt-50">Combo Có Trong Hóa Đơn</h4>
-                        <!-- Permission table -->
-                        <div class="table-responsive">
-                            <table class="table table-flush-spacing">
-                                <tbody id="service-list4">
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Permission table -->
+                        <h4 class="mt-2 pt-50">Khách 1</h4>
+                        <label class="form-label">Dịch Vụ</label>
+                        <select disabled class="select2 form-select select2-hidden-accessible" multiple="" id="default-select-multi11" data-select2-id="default-select-multi2">
+                        </select>
+                        <label class="form-label">Combo</label>
+                        <select disabled class="select2 form-select select2-hidden-accessible" multiple="" id="default-select-multi12" data-select2-id="default-select-multi2">
+                        </select>
+                        <label class="form-label" for="">Nhân Viên Phục Vụ</label>
+                        <select disabled class="select form-select" id="staff_detail_1">
+                        </select>
                     </div>
-                    <div class="col-12">
-                        <h4 class="mt-2 pt-50">Dịch Vụ Có Trong Hóa Đơn</h4>
-                        <!-- Permission table -->
-                        <div class="table-responsive">
-                            <table class="table table-flush-spacing">
-                                <tbody id="service-list5">
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Permission table -->
+                    <div class="col-12" id="guest2">
+                        <h4 class="mt-2 pt-50">Khách 2</h4>
+                        <label class="form-label">Dịch Vụ</label>
+                        <select disabled class="select2 form-select select2-hidden-accessible" multiple="" id="default-select-multi13" data-select2-id="default-select-multi2">
+                        </select>
+                        <label class="form-label">Combo</label>
+                        <select disabled class="select2 form-select select2-hidden-accessible" multiple="" id="default-select-multi14" data-select2-id="default-select-multi2">
+                        </select>
+                        <label class="form-label" for="">Nhân Viên Phục Vụ</label>
+                        <select disabled class="select form-select" id="staff_detail_2">
+                        </select>
                     </div>
-                    <div class="col-12">
-                        <h4 class="mt-2 pt-50">Nhân Viên Thực Hiện</h4>
-                        <!-- Permission table -->
-                        <div class="table-responsive">
-                            <table class="table table-flush-spacing">
-                                <tbody id="service-list6">
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Permission table -->
+                    <div class="col-12" id="guest3">
+                        <h4 class="mt-2 pt-50">Khách 3</h4>
+                        <label class="form-label">Dịch Vụ</label>
+                        <select disabled class="select2 form-select select2-hidden-accessible" multiple="" id="default-select-multi15" data-select2-id="default-select-multi2">
+                        </select>
+                        <label class="form-label">Combo</label>
+                        <select disabled class="select2 form-select select2-hidden-accessible" multiple="" id="default-select-multi16" data-select2-id="default-select-multi2">
+                        </select>
+                        <label class="form-label" for="">Nhân Viên Phục Vụ</label>
+                        <select disabled class="select form-select" id="staff_detail_3">
+                        </select>
                     </div>
                     <div class="col-12 ">
                         <label class="form-label" for="modalEditUserCountry">Ghi Chú Hóa Đơn</label>
@@ -174,51 +174,43 @@
                         <input type="text" name="phone" class="form-control active" minlength="10" maxlength="10" required />
                     </div>
                     <div class="col-12">
-                        <label class="form-label" for="default-select-multi">Default Test</label>
-                        <div class="mb-1">
-                          <select class="select2 form-select" multiple="multiple" id="select-mutiple">
-                       
-                          </select>
-                        </div>
-                      </div>
-                    <div class="col-12">
-                        <h4 class="mt-2 pt-50">Combo Có Trong Hóa Đơn</h4>
-                        <!-- Permission table -->
-                        <div class="table-responsive">
-                            <table class="table table-flush-spacing">
-                                <tbody id="service-list1">
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Permission table -->
+                        <h4 class="mt-2 pt-50">Khách 1</h4>
+                        <input type="hidden" name="member_1" value="1">
+                        <label class="form-label">Dịch Vụ</label>
+                        <select name="service_id1[]" class="select2 form-select select2-hidden-accessible" multiple="" id="default-select-multi1" data-select2-id="default-select-multi2">
+                        </select>
+                        <label class="form-label">Combo</label>
+                        <select name="combo_id1[]" class="select2 form-select select2-hidden-accessible" multiple="" id="default-select-multi2" data-select2-id="default-select-multi2">
+                        </select>
+                        <label class="form-label" for="">Nhân Viên Phục Vụ</label>
+                        <select class="select form-select" name="staff_1" id="staff_edit_1">
+                        </select>
                     </div>
-                    
                     <div class="col-12">
-                        <h4 class="mt-2 pt-50">Dịch Vụ Có Trong Hóa Đơn</h4>
-                        <!-- Permission table -->
-                        <div class="table-responsive">
-                            <table class="table table-flush-spacing">
-                                <tbody id="service-list2">
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Permission table -->
+                        <h4 class="mt-2 pt-50">Khách 2</h4>
+                        <input type="hidden" name="member_2" value="2">
+                        <label class="form-label">Dịch Vụ</label>
+                        <select name="service_id2[]" class="select2 form-select select2-hidden-accessible" multiple="" id="default-select-multi3" data-select2-id="default-select-multi2">
+                        </select>
+                        <label class="form-label">Combo</label>
+                        <select name="combo_id2[]" class="select2 form-select select2-hidden-accessible" multiple="" id="default-select-multi4" data-select2-id="default-select-multi2">
+                        </select>
+                        <label class="form-label" for="">Nhân Viên Phục Vụ</label>
+                        <select class="select form-select" name="staff_2" id="staff_edit_2">
+                        </select>
                     </div>
-                   
-
                     <div class="col-12">
-                        <h4 class="mt-2 pt-50">Nhân Viên Thực Hiện</h4>
-                        <!-- Permission table -->
-                        <div class="table-responsive">
-                            <table class="table table-flush-spacing">
-                                <tbody id="service-list3">
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Permission table -->
+                        <h4 class="mt-2 pt-50">Khách 3</h4>
+                        <input type="hidden" name="member_3" value="3">
+                        <label class="form-label">Dịch Vụ</label>
+                        <select name="service_id3[]" class="select2 form-select select2-hidden-accessible" multiple="" id="default-select-multi5" data-select2-id="default-select-multi2">
+                        </select>
+                        <label class="form-label">Combo</label>
+                        <select name="combo_id3[]" class="select2 form-select select2-hidden-accessible" multiple="" id="default-select-multi6" data-select2-id="default-select-multi2">
+                        </select>
+                        <label class="form-label" for="">Nhân Viên Phục Vụ</label>
+                        <select class="select form-select" name="staff_3" id="staff_edit_3">
+                        </select>
                     </div>
                     <div class="col-12 ">
                         <label class="form-label" for="modalEditUserCountry">Ghi Chú Hóa Đơn</label>
@@ -274,8 +266,7 @@
                     data: "status_bill"
                 },
             ],
-            columnDefs: [
-                {
+            columnDefs: [{
                     "width": "12%",
                     "targets": 6
                 },
@@ -518,85 +509,204 @@
             });
 
         });
-        $.get('<?= route("combo.list.api") ?>', function(data) {
-            data.map(function(x) {
-                $('#service-list4').append(
-                    '<tr><td class="text-nowrap fw-bolder">' + x.name_combo + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" disabled name="combo_id[]" value="' + x.id + '" type="checkbox" id="' + x.id + '" /></div></div></td></tr>'
-                );
-            $('#select-mutiple').append('<option value="'+x.id+'" id="'+x.id+'">'+x.name_combo+'</option>');
-
-            })
-        })
         $.get('<?= route("service.list.api") ?>', function(data) {
             data.service.map(function(x) {
-                $('#service-list5').append(
-                    '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" disabled name="service_id[]" value="' + x.id + '" type="checkbox" id="' + x.id + '" /></div></div></td></tr>'
-                );
+                var newOption = new Option(x.name_service, x.id, false, false);
+                $('#default-select-multi11').append(newOption).trigger('change');
+            })
+            data.service.map(function(x) {
+                var newOption = new Option(x.name_service, x.id, false, false);
+                $('#default-select-multi13').append(newOption).trigger('change');
+            })
+            data.service.map(function(x) {
+                var newOption = new Option(x.name_service, x.id, false, false);
+                $('#default-select-multi15').append(newOption).trigger('change');
             })
         })
-        $.get('<?= route("bill-staff.list.api") ?>', function(data) {
+        $.get('<?= route("combo.list.api") ?>', function(data) {
             data.map(function(x) {
-                $('#service-list6').append(
-                    '<tr><td class="text-nowrap fw-bolder">' + x.full_name + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" disabled name="staff_id[]" value="' + x.id + '" type="checkbox" id="' + x.id + '" /></div></div></td></tr>'
+                var newOption = new Option(x.name_combo, x.id, false, false);
+                $('#default-select-multi12').append(newOption).trigger('change');
+            })
+            data.map(function(x) {
+                var newOption = new Option(x.name_combo, x.id, false, false);
+                $('#default-select-multi14').append(newOption).trigger('change');
+            })
+            data.map(function(x) {
+                var newOption = new Option(x.name_combo, x.id, false, false);
+                $('#default-select-multi16').append(newOption).trigger('change');
+            })
+        })
+        $.get('<?= route("staff.list.api") ?>', function(data) {
+            data.user.map(function(x) {
+                $('#staff_detail_1').append(
+                    '<option id="' + x.id + '" value="' + x.id + '">' + x.full_name + '</option>'
+                );
+            })
+            data.user.map(function(x) {
+                $('#staff_detail_2').append(
+                    '<option id="' + x.id + '" value="' + x.id + '">' + x.full_name + '</option>'
+                );
+            })
+            data.user.map(function(x) {
+                $('#staff_detail_3').append(
+                    '<option id="' + x.id + '" value="' + x.id + '">' + x.full_name + '</option>'
                 );
             })
         })
         //detail
         $('body').on('click', '#detailUser', function() {
+            $('#detailBillForm')[0].reset();
             var user_id = $(this).data("id");
             $.get('<?= route("bill.list.api") ?>' + "/show/" + user_id, function(data) {
-                data.combo.map(function(x) {
-                    $("#service-list4").find("#" + x.id, "input").prop('checked', true);
-                });
-                data.service.map(function(x) {
-                    $("#service-list5").find("#" + x.id, "input").prop('checked', true);
-                });
-                data.staff.map(function(x) {
-                    $("#service-list6").find("#" + x.id, "input").prop('checked', true);
-                });
+                var combo1 = [];
+                var service1 = [];
+                var combo2 = [];
+                var service2 = [];
+                var combo3 = [];
+                var service3 = [];
+                data.combo.map((x) => {
+                    if(data.nguoi1.combo != null){
+                        data.nguoi1.combo.map((y) => {
+                            if (y.id === x.id) {
+                                combo1.push(y.id);
+                            }
+                        })
+                    }
+                })
+                data.service.map((x) => {
+                    if(data.nguoi1.service != null){
+                        data.nguoi1.service.map((y) => {
+                            if (y.id === x.id) {
+                                service1.push(y.id);
+                            }
+                        })
+                    }
+                })
+                if (data.nguoi2 != null) {
+                    if(data.nguoi2.combo != null){
+                        data.combo.map((x) => {
+                            data.nguoi2.combo.map((y) => {
+                                if (y.id === x.id) {
+                                    combo2.push(y.id);
+                                }
+                            })
+                        })
+                    }
+                    if(data.nguoi2.service != null){
+                        data.service.map((x) => {
+                            data.nguoi2.service.map((y) => {
+                                if (y.id === x.id) {
+                                    service2.push(y.id);
+                                }
+                            })
+                        })
+                    }
+                }
+                if (data.nguoi3 != null) {
+                    if(data.nguoi3.combo != null){
+                        data.combo.map((x) => {
+                            data.nguoi3.combo.map((y) => {
+                                if (y.id === x.id) {
+                                    combo3.push(y.id);
+                                }
+                            })
+                        })
+                    }
+                    if(data.nguoi3.service != null){
+                        data.service.map((x) => {
+                            data.nguoi3.service.map((y) => {
+                                if (y.id === x.id) {
+                                    service3.push(y.id);
+                                }
+                            })
+                        })
+                    }
+                }
+                $("#default-select-multi11").val(service1).trigger('change');
+                $("#default-select-multi12").val(combo1).trigger('change');
+                $("#staff_detail_1").find("#" + data.nguoi1.staff.id, "option").prop('selected', true);
+                $("#default-select-multi13").val(service2).trigger('change');
+                $("#default-select-multi14").val(combo2).trigger('change');
+                if (!data.nguoi2) {
+                    // $('#guest2').prop('hidden',true);
+                }else{
+                    $("#staff_detail_2").find("#" + data.nguoi2.staff.id, "option").prop('selected', true);
+                }
+                $("#default-select-multi15").val(service3).trigger('change');
+                $("#default-select-multi16").val(combo3).trigger('change');
+                if (!data.nguoi3) {
+                    // $('#guest3').prop('hidden',true);
+                }else{
+                    $("#staff_detail_3").find("#" + data.nguoi3.staff.id, "option").prop('selected', true);
+                }
                 var form = $('#detailBillForm');
-                form.find('input[name="full_name"]').val(data.user.full_name);
-                form.find('input[name="total_time_execution"]').val(data.total_time_execution);
-                form.find('input[name="date_work"]').val(data.date_work);
-                form.find('input[name="time_work"]').val(data.time_work);
-                form.find('input[name="phone"]').val(data.phone);
-                form.find('input[name="total_bill"]').val(data.total_bill.toLocaleString() + '₫');
-                if (data.status_bill == 1) {
+                form.find('input[name="full_name"]').val(data.bill.user.full_name);
+                form.find('input[name="total_time_execution"]').val(data.bill.total_time_execution);
+                form.find('input[name="date_work"]').val(data.bill.date_work);
+                form.find('input[name="time_work"]').val(data.bill.time_work);
+                form.find('input[name="phone"]').val(data.bill.phone);
+                form.find('input[name="total_bill"]').val(data.bill.total_bill.toLocaleString() + '₫');
+                if (data.bill.status_bill == 1) {
                     form.find('input[name="status_bill"]').val('Chờ xác nhận');
                 }
-                if (data.status_bill == 2) {
+                if (data.bill.status_bill == 2) {
                     form.find('input[name="status_bill"]').val('Xác nhận thành công');
                 }
-                if (data.status_bill == 3) {
+                if (data.bill.status_bill == 3) {
                     form.find('input[name="status_bill"]').val('Đang làm');
                 }
-                if (data.status_bill == 4) {
+                if (data.bill.status_bill == 4) {
                     form.find('input[name="status_bill"]').val('Hoàn thành');
                 }
-                if (data.status_bill == 5) {
+                if (data.bill.status_bill == 5) {
                     form.find('input[name="status_bill"]').val('Hủy');
                 }
-                form.find('#note_bill').val(data.note_bill);
+                form.find('#note_bill').val(data.bill.note_bill);
             }, 'json')
         });
-        $.get('<?= route("combo.list.api") ?>', function(data) {
-            data.map(function(x) {
-                $('#service-list1').append(
-                    '<tr><td class="text-nowrap fw-bolder">' + x.name_combo + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="combo_id[]" value="' + x.id + '" type="checkbox" id="' + x.id + '" /></div></div></td></tr>'
-                );
-            })
-        })
         $.get('<?= route("service.list.api") ?>', function(data) {
             data.service.map(function(x) {
-                $('#service-list2').append(
-                    '<tr><td class="text-nowrap fw-bolder">' + x.name_service + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="service_id[]" value="' + x.id + '" type="checkbox" id="' + x.id + '" /></div></div></td></tr>'
-                );
+                var newOption = new Option(x.name_service, x.id, false, false);
+                $('#default-select-multi1').append(newOption).trigger('change');
+            })
+            data.service.map(function(x) {
+                var newOption = new Option(x.name_service, x.id, false, false);
+                $('#default-select-multi3').append(newOption).trigger('change');
+            })
+            data.service.map(function(x) {
+                var newOption = new Option(x.name_service, x.id, false, false);
+                $('#default-select-multi5').append(newOption).trigger('change');
             })
         })
-        $.get('<?= route("bill-staff.list.api") ?>', function(data) {
+        $.get('<?= route("combo.list.api") ?>', function(data) {
             data.map(function(x) {
-                $('#service-list3').append(
-                    '<tr><td class="text-nowrap fw-bolder">' + x.full_name + '</td><td> <div class="d-flex"><div class="form-check me-3 me-lg-5"> <input class="form-check-input" name="staff_id[]" value="' + x.id + '" type="checkbox" id="' + x.id + '" /></div></div></td></tr>'
+                var newOption = new Option(x.name_combo, x.id, false, false);
+                $('#default-select-multi2').append(newOption).trigger('change');
+            })
+            data.map(function(x) {
+                var newOption = new Option(x.name_combo, x.id, false, false);
+                $('#default-select-multi4').append(newOption).trigger('change');
+            })
+            data.map(function(x) {
+                var newOption = new Option(x.name_combo, x.id, false, false);
+                $('#default-select-multi6').append(newOption).trigger('change');
+            })
+        })
+        $.get('<?= route("staff.list.api") ?>', function(data) {
+            data.user.map(function(x) {
+                $('#staff_edit_1').append(
+                    '<option id="' + x.id + '" value="' + x.id + '">' + x.full_name + '</option>'
+                );
+            })
+            data.user.map(function(x) {
+                $('#staff_edit_2').append(
+                    '<option id="' + x.id + '" value="' + x.id + '">' + x.full_name + '</option>'
+                );
+            })
+            data.user.map(function(x) {
+                $('#staff_edit_3').append(
+                    '<option id="' + x.id + '" value="' + x.id + '">' + x.full_name + '</option>'
                 );
             })
         })
@@ -604,25 +714,96 @@
         $('body').on('click', '#editUser', function() {
             $('#editBillForm')[0].reset();
             var user_id = $(this).data("id");
-            $.get('<?= route("bill.list.api") ?>' + "/show/" + user_id, function(data) {
-                data.combo.map(function(x) {
-                    $("#service-list1").find("#" + x.id, "input").prop('checked', true);
-                    $("#select-mutiple").find("#" + x.id, "option").prop('selected',true);
-                    $('#select-mutiple').trigger('change');
-                });
-                data.service.map(function(x) {
-                    $("#service-list2").find("#" + x.id, "input").prop('checked', true);
-                });
-                data.staff.map(function(x) {
-                    $("#service-list3").find("#" + x.id, "input").prop('checked', true);
-                });
+            $.get('<?= route("bill.list.api") ?>' + "/show/" + user_id, function(data) {console.log(data)
+                var combo1 = [];
+                var service1 = [];
+                var combo2 = [];
+                var service2 = [];
+                var combo3 = [];
+                var service3 = [];
+                data.combo.map((x) => {
+                    if(data.nguoi1.combo != null){
+                        data.nguoi1.combo.map((y) => {
+                            if (y.id === x.id) {
+                                combo1.push(y.id);
+                            }
+                        })
+                    }
+                })
+                data.service.map((x) => {
+                    if(data.nguoi1.service != null){
+                        data.nguoi1.service.map((y) => {
+                            if (y.id === x.id) {
+                                service1.push(y.id);
+                            }
+                        })
+                    }
+                })
+                if (data.nguoi2 != null) {
+                    if(data.nguoi2.combo != null){
+                        data.combo.map((x) => {
+                            data.nguoi2.combo.map((y) => {
+                                if (y.id === x.id) {
+                                    combo2.push(y.id);
+                                }
+                            })
+                        })
+                    }
+                    if(data.nguoi2.service != null){
+                        data.service.map((x) => {
+                            data.nguoi2.service.map((y) => {
+                                if (y.id === x.id) {
+                                    service2.push(y.id);
+                                }
+                            })
+                        })
+                    }
+                }
+                if (data.nguoi3 != null) {
+                    if(data.nguoi3.combo != null){
+                        data.combo.map((x) => {
+                            data.nguoi3.combo.map((y) => {
+                                if (y.id === x.id) {
+                                    combo3.push(y.id);
+                                }
+                            })
+                        })
+                    }
+                    if(data.nguoi3.service != null){
+                        data.service.map((x) => {
+                            data.nguoi3.service.map((y) => {
+                                if (y.id === x.id) {
+                                    service3.push(y.id);
+                                }
+                            })
+                        })
+                    }
+                }
+                $("#default-select-multi1").val(service1).trigger('change');
+                $("#default-select-multi2").val(combo1).trigger('change');
+                $("#staff_edit_1").find("#" + data.nguoi1.staff.id, "option").attr('selected', true);
+                $("#default-select-multi3").val(service2).trigger('change');
+                $("#default-select-multi4").val(combo2).trigger('change');
+                if (!data.nguoi2) {
+
+                }else{
+                    $("#staff_edit_2").find("#" + data.nguoi2.staff.id, "option").attr('selected', true);
+                }
+                $("#default-select-multi5").val(service3).trigger('change');
+                $("#default-select-multi6").val(combo3).trigger('change');
+                if (!data.nguoi3) {
+
+                }else{
+                    $("#staff_edit_3").find("#" + data.nguoi3.staff.id, "option").attr('selected', true);
+                }
+
                 var form = $('#editBillForm');
-                $("#select2-basic").find("#" + data.status_bill, "option").attr('selected', true);
-                form.find('input[name="id"]').val(data.id);
-                form.find('input[name="date_work"]').val(data.date_work);
-                form.find('input[name="time_work"]').val(data.time_work);
-                form.find('input[name="phone"]').val(data.phone);
-                form.find('#note_bill').val(data.note_bill);
+                $("#select2-basic").find("#" + data.bill.status_bill, "option").prop('selected', true);
+                form.find('input[name="id"]').val(data.bill.id);
+                form.find('input[name="date_work"]').val(data.bill.date_work);
+                form.find('input[name="time_work"]').val(data.bill.time_work);
+                form.find('input[name="phone"]').val(data.bill.phone);
+                form.find('#note_bill').val(data.bill.note_bill);
             }, 'json')
         });
         // submit edit in db

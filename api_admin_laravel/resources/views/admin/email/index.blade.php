@@ -105,6 +105,40 @@
     </style>
 
 </head>
+@php
+    $bill = App\Models\Bill::find(1);
+    $bill->load('user');
+    $detail_bill = App\Models\BillMember::where('bill_id', 1)->orderBy('number_member')->get();
+    foreach ($detail_bill as $c) {
+        if($c->number_member == 1){
+            if ($c->service_id != 'null') {
+                $service1 = App\Models\Service::whereIn('id', json_decode($c->service_id))->get();
+            }
+            if ($c->combo_id != 'null') {
+                $combo1 = App\Models\Combo::whereIn('id', json_decode($c->combo_id))->get();
+            }
+            $staff1 = App\Models\User::find($c->staff_id);
+        }
+        if($c->number_member == 2){
+            if ($c->service_id != 'null') {
+                $service2 = App\Models\Service::whereIn('id', json_decode($c->service_id))->get();
+            }
+            if ($c->combo_id != 'null') {
+                $combo2 = App\Models\Combo::whereIn('id', json_decode($c->combo_id))->get();
+            }
+            $staff2 = App\Models\User::find($c->staff_id);
+        }
+        if($c->number_member == 3){
+            if ($c->service_id != 'null') {
+                $service3 = App\Models\Service::whereIn('id', json_decode($c->service_id))->get();
+            }
+            if ($c->combo_id != 'null') {
+                $combo3 = App\Models\Combo::whereIn('id', json_decode($c->combo_id))->get();
+            }
+            $staff3 = App\Models\User::find($c->staff_id);
+        }
+    }
+@endphp
 
 <body style="background-color: #D2C7BA;">
 
@@ -153,7 +187,7 @@
         <![endif]-->
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                     <tr>
-                        <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #d4dadf;">
+                        <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: Arial, sans-serif; border-top: 3px solid #d4dadf;">
                             <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">Cảm ơn bạn đã đặt lịch !</h1>
                         </td>
                     </tr>
@@ -179,7 +213,7 @@
 
                     <!-- start copy -->
                     <tr>
-                        <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
+                        <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;">
                             <p style="margin: 0;">Đây là chi tiết tổng hóa đơn của bạn. Nếu có thắc mắc gì về hóa đơn của mình, hãy liên hệ với chúng tôi</a>.</p>
                         </td>
                     </tr>
@@ -187,67 +221,118 @@
 
                     <!-- start receipt table -->
                     <tr>
-                        <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
+                        <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;">
                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                 <tr>
-                                    <td align="left" bgcolor="#D2C7BA" width="75%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>Mã Hóa Đơn</strong></td>
-                                    <td align="left" bgcolor="#D2C7BA" width="25%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>{{$bill['code_bill']}}</strong></td>
+                                    <td align="left" bgcolor="#D2C7BA" width="75%" style="padding: 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>Mã Hóa Đơn</strong></td>
+                                    <td align="left" bgcolor="#D2C7BA" width="25%" style="padding: 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>{{$bill->code_bill}}</strong></td>
                                 </tr>
                                 <tr>
-                                    <td align="left" width="75%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>Tên Khách Hàng</strong></td>
-                                    <td align="left" width="25%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>{{$name}}</strong></td>
+                                    <td align="left" width="75%" style="padding: 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>Tên Khách Hàng</strong></td>
+                                    <td align="left" width="25%" style="padding: 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>{{$bill->user->full_name}}</strong></td>
                                 </tr>
                                 <tr>
-                                    <td align="left" width="75%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>Ngày Đặt</strong></td>
-                                    <td align="left" width="25%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>{{$date}}</strong></td>
+                                    <td align="left" width="75%" style="padding: 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>Ngày Đặt</strong></td>
+                                    <td align="left" width="25%" style="padding: 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>{{$bill->date_work}}</strong></td>
                                 </tr>
                                 <tr>
-                                    <td align="left" width="75%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>Số Người</strong></td>
-                                    <td align="left" width="25%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>{{$people}}</strong></td>
+                                    <td align="left" width="75%" style="padding: 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>Thời Gian</strong></td>
+                                    <td align="left" width="25%" style="padding: 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>{{$bill->time_work}}</strong></td>
                                 </tr>
                                 @php $tong = 0; @endphp
-                                @if(count($combo)>0)
-                                <th align="left" width="75%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">Combo</th>
-                                @foreach($bill['combo'] as $c)
+                                @if(isset($combo1) || isset($service1))
+                                <th align="left" width="75%" style="padding: 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;">Khách 1</th>
+                                @if(isset($combo1))
+                                @foreach($combo1 as $c)
                                 @php $tong += $c->total_price; @endphp
                                 <tr>
-                                    <td align="left" width="75%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">{{$c->name_combo}}</td>
-                                    <td align="left" width="25%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">{{number_format($c->total_price)}}₫</td>
+                                    <td align="left" width="75%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong> Combo : </strong>{{$c->name_combo}}</td>
+                                    <td align="left" width="25%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;">{{number_format($c->total_price)}}₫</td>
                                 </tr>
                                 @endforeach
                                 @endif
-                                @if(count($service)>0)
-                                <th align="left" width="75%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">Dịch Vụ</th>
-                                @foreach($bill['service'] as $c)
+                                @if(isset($service1))
+                                @foreach($service1 as $c)
                                 @php $tong += $c->price; @endphp
                                 <tr>
-                                    <td align="left" width="75%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">{{$c->name_service}}</td>
-                                    <td align="left" width="25%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">{{number_format($c->price)}}₫</td>
-                                </tr>
-                                @endforeach
-                                <th align="left" width="75%" style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">Nhân Viên</th>
-                                @foreach($bill['staff'] as $c)
-                                <tr>
-                                    <td align="left" width="75%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">Tên Nhân Viên</td>
-                                    <td align="left" width="25%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">{{$c->full_name}}</td>
+                                    <td align="left" width="75%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong> Dịch Vụ : </strong>{{$c->name_service}}</td>
+                                    <td align="left" width="25%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;">{{number_format($c->price)}}₫</td>
                                 </tr>
                                 @endforeach
                                 @endif
-                                @if($bill['code_discount'] != '')
+                                <tr>
+                                    <td align="left" width="75%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>Nhân Viên Phục Vụ</strong></td>
+                                    <td align="left" width="25%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;">{{$staff1->full_name}}</td>
+                                </tr>
+                                @endif
+                                
+                                @if(isset($combo2) || isset($service2))
+                                <th align="left" width="75%" style="padding: 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;">Khách 2</th>
+                                @if(isset($combo2))
+                                @foreach($combo2 as $c)
+                                @php $tong += $c->total_price; @endphp
+                                <tr>
+                                    <td align="left" width="75%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong> Combo : </strong>{{$c->name_combo}}</td>
+                                    <td align="left" width="25%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;">{{number_format($c->total_price)}}₫</td>
+                                </tr>
+                                @endforeach
+                                @endif
+                                @if(isset($service2))
+                                @foreach($service2 as $c)
+                                @php $tong += $c->price; @endphp
+                                <tr>
+                                    <td align="left" width="75%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong> Dịch Vụ : </strong>{{$c->name_service}}</td>
+                                    <td align="left" width="25%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;">{{number_format($c->price)}}₫</td>
+                                </tr>
+                                @endforeach
+                                @endif
+                                <tr>
+                                    <td align="left" width="75%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>Nhân Viên Phục Vụ</strong></td>
+                                    <td align="left" width="25%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;">{{$staff2->full_name}}</td>
+                                </tr>
+                                @endif
+
+                                @if(isset($combo3) || isset($service3))
+                                <th align="left" width="75%" style="padding: 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;">Khách 3</th>
+                                @if(isset($combo3))
+                                @foreach($combo3 as $c)
+                                @php $tong += $c->total_price; @endphp
+                                <tr>
+                                    <td align="left" width="75%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong> Combo : </strong>{{$c->name_combo}}</td>
+                                    <td align="left" width="25%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;">{{number_format($c->total_price)}}₫</td>
+                                </tr>
+                                @endforeach
+                                @endif
+                                @if(isset($service3))
+                                @foreach($service3 as $c)
+                                @php $tong += $c->price; @endphp
+                                <tr>
+                                    <td align="left" width="75%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong> Dịch Vụ : </strong>{{$c->name_service}}</td>
+                                    <td align="left" width="25%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;">{{number_format($c->price)}}₫</td>
+                                </tr>
+                                @endforeach
+                                @endif
+                                <tr>
+                                    <td align="left" width="75%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;"><strong>Nhân Viên Phục Vụ</strong></td>
+                                    <td align="left" width="25%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;">{{$staff3->full_name}}</td>
+                                </tr>
+                                @endif
+                                
+                                @if($bill->code_discount != '')
                                 @php
-                                    $discount = \App\Models\Discount::where('code_discount',$bill['code_discount'])->first();
+                                $discount = \App\Models\Discount::where('code_discount',$bill['code_discount'])->first();
                                 @endphp
                                 <tr>
-                                    <td align="left" width="75%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">Giảm Giá</td>
-                                    <td align="left" width="25%" style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">{{number_format($tong/100*$discount['percent'])}}₫</td>
+                                    <td align="left" width="75%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 2px dashed #D2C7BA; border-bottom: 4px dashed #D2C7BA;">Giảm Giá</td>
+                                    <td align="left" width="25%" style="padding: 6px 12px;font-family: Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 2px dashed #D2C7BA; border-bottom: 4px dashed #D2C7BA;">{{number_format($tong/100*$discount['percent'])}}₫</td>
                                 </tr>
                                 @endif
                                 <tr>
-                                    <td align="left" width="75%" style="padding: 12px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 2px dashed #D2C7BA; border-bottom: 2px dashed #D2C7BA;"><strong>Tổng Tiền</strong></td>
+                                    <td align="left" width="75%" style="padding: 12px; font-family: Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 4px dashed #D2C7BA; border-bottom: 4px dashed #D2C7BA;"><strong>Tổng Tiền</strong></td>
                                     @if(isset($discount))
-                                    <td align="left" width="25%" style="padding: 12px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 2px dashed #D2C7BA; border-bottom: 2px dashed #D2C7BA;"><strong>{{number_format($tong-($tong/100*$discount['percent']))}}₫</strong></td>
+                                    <td align="left" width="25%" style="padding: 12px; font-family: Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 2px dashed #D2C7BA; border-bottom: 4px dashed #D2C7BA;"><strong>{{number_format($tong-($tong/100*$discount['percent']))}}₫</strong></td>
                                     @else
-                                    <td align="left" width="25%" style="padding: 12px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 2px dashed #D2C7BA; border-bottom: 2px dashed #D2C7BA;"><strong>{{number_format($tong)}}₫</strong></td>
+                                    <td align="left" width="25%" style="padding: 12px; font-family: Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 4px dashed #D2C7BA; border-bottom: 4px dashed #D2C7BA;"><strong>{{number_format($tong)}}₫</strong></td>
                                     @endif
                                 </tr>
                             </table>
@@ -284,7 +369,7 @@
                             <div style="display: inline-block; width: 100%; max-width: 50%; min-width: 240px; vertical-align: top;">
                                 <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 300px;">
                                     <tr>
-                                        <td align="left" valign="top" style="padding-bottom: 36px; padding-left: 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
+                                        <td align="left" valign="top" style="padding-bottom: 36px; padding-left: 36px; font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;">
                                             <p><strong>Địa Chỉ Cửa Hàng</strong></p>
                                             <p>66 Hồ Tùng Mậu<br>Mai Dịch<br>Cầu Giấy, Hà Nội</p>
                                         </td>
@@ -298,8 +383,8 @@
                             <div style="display: inline-block; width: 100%; max-width: 50%; min-width: 240px; vertical-align: top;">
                                 <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 300px;">
                                     <tr>
-                                        <td align="left" valign="top" style="padding-bottom: 36px; padding-left: 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-                                            
+                                        <td align="left" valign="top" style="padding-bottom: 36px; padding-left: 36px; font-family: Arial, sans-serif; font-size: 16px; line-height: 24px;">
+
                                         </td>
                                     </tr>
                                 </table>
@@ -333,7 +418,7 @@
 
                     <!-- start permission -->
                     <tr>
-                        <td align="center" bgcolor="#D2C7BA" style="padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;">
+                        <td align="center" bgcolor="#D2C7BA" style="padding: 12px 24px; font-family: Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;">
                             <p style="margin: 0;">Đây là email tự động được gửi sau khi bạn đặt lịch. Vui lòng không trả lời email này</p>
                         </td>
                     </tr>
@@ -341,9 +426,9 @@
 
                     <!-- start unsubscribe -->
                     <tr>
-                        <td align="center" bgcolor="#D2C7BA" style="padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;">
+                        <td align="center" bgcolor="#D2C7BA" style="padding: 12px 24px; font-family: Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;">
                             <p style="margin: 0;">Thông Tin Liên Hệ</p>
-                            <p style="margin: 0;">Email: timenailteam@gmail.com -- SĐT: 0988 674 367</p>
+                            <p style="margin: 0;">Email: timenailteam@gmail.com -- SDT: 0988 674 367</p>
                         </td>
                     </tr>
                     <!-- end unsubscribe -->

@@ -80,7 +80,7 @@ class BillController extends Controller
         $model['total_bill'] = $request->total_bill;
         $query = $model->save();
 
-        if ($request->member_1) {
+        if ($request->service_id1 || $request->combo_id1) {
             $bill_detail = new BillMember();
             $bill_detail['bill_id'] = $model['id'];
             $bill_detail['number_member'] = $request->member_1;
@@ -88,24 +88,8 @@ class BillController extends Controller
             $bill_detail['combo_id'] = json_encode($request->combo_id1);
             $bill_detail['staff_id'] = $request->staff_1;
             $bill_detail->save();
-            // for ($i = 0; $i < count($request->combo_id1); $i++) {
-            //     $many = new BillCombo();
-            //     $many['bill_id'] = $model['id'];
-            //     $many['combo_id'] = $request->combo_id1[$i];
-            //     $many->save();
-            // }
-            // for ($i = 0; $i < count($request->service_id1); $i++) {
-            //     $many = new BillService();
-            //     $many['bill_id'] = $model['id'];
-            //     $many['service_id'] = $request->service_id1[$i];
-            //     $many->save();
-            // }
-            // $many = new BillStaff();
-            // $many['bill_id'] = $model['id'];
-            // $many['staff_id'] = $request->staff_1;
-            // $many->save();
         }
-        if ($request->member_2) {
+        if ($request->service_id2 || $request->combo_id2) {
             $bill_detail = new BillMember();
             $bill_detail['bill_id'] = $model['id'];
             $bill_detail['number_member'] = $request->member_2;
@@ -113,24 +97,8 @@ class BillController extends Controller
             $bill_detail['combo_id'] = json_encode($request->combo_id2);
             $bill_detail['staff_id'] = $request->staff_2;
             $bill_detail->save();
-            // for ($i = 0; $i < count($request->combo_id2); $i++) {
-            //     $many = new BillCombo();
-            //     $many['bill_id'] = $model['id'];
-            //     $many['combo_id'] = $request->combo_id2[$i];
-            //     $many->save();
-            // }
-            // for ($i = 0; $i < count($request->service_id2); $i++) {
-            //     $many = new BillService();
-            //     $many['bill_id'] = $model['id'];
-            //     $many['service_id'] = $request->service_id2[$i];
-            //     $many->save();
-            // }
-            // $many = new BillStaff();
-            // $many['bill_id'] = $model['id'];
-            // $many['staff_id'] = $request->staff_2;
-            // $many->save();
         }
-        if ($request->member_3) {
+        if ($request->service_id3 || $request->combo_id3) {
             $bill_detail = new BillMember();
             $bill_detail['bill_id'] = $model['id'];
             $bill_detail['number_member'] = $request->member_3;
@@ -138,41 +106,16 @@ class BillController extends Controller
             $bill_detail['combo_id'] = json_encode($request->combo_id3);
             $bill_detail['staff_id'] = $request->staff_3;
             $bill_detail->save();
-            // for ($i = 0; $i < count($request->combo_id3); $i++) {
-            //     $many = new BillCombo();
-            //     $many['bill_id'] = $model['id'];
-            //     $many['combo_id'] = $request->combo_id3[$i];
-            //     $many->save();
-            // }
-            // for ($i = 0; $i < count($request->service_id3); $i++) {
-            //     $many = new BillService();
-            //     $many['bill_id'] = $model['id'];
-            //     $many['service_id'] = $request->service_id3[$i];
-            //     $many->save();
-            // }
-            // $many = new BillStaff();
-            // $many['bill_id'] = $model['id'];
-            // $many['staff_id'] = $request->staff_3;
-            // $many->save();
         }
 
         $bill = Bill::find($model['id']);
-        $bill->load('staff', 'service', 'combo');
         $user = User::find($request->user_id);
 
         $notifi_to_admin = User::role('Admin')->get();
         Notification::send($notifi_to_admin, new BillAdminNotification($user, $bill['date_work']));
         Notification::send($user, new BillClientNotification($bill));
 
-        Mail::to($user['email'])->queue(new BillMail(
-            $bill,
-            $bill['staff'],
-            $bill['combo'],
-            $bill['service'],
-            $bill['date_work'],
-            $user['full_name'],
-            $bill['total_people'],
-        ));
+        Mail::to($user['email'])->queue(new BillMail($model['id']));
         if (!$query) {
             return response()->json(['code' => 0, 'msg' => 'Đặt lịch không thành công !']);
         } else {
@@ -190,9 +133,9 @@ class BillController extends Controller
     {
         $bill = Bill::find($id);
         $detail_bill = BillMember::where('bill_id', $id)->orderBy('number_member')->get();
-        $nguoi1 = [];
-        $nguoi2 = [];
-        $nguoi3 = [];
+        $nguoi1 = null;
+        $nguoi2 = null;
+        $nguoi3 = null;
         foreach ($detail_bill as $c) {
             $service = null;
             $combo = null;

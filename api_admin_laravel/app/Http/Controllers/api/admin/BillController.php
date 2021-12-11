@@ -4,13 +4,10 @@ namespace App\Http\Controllers\api\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Bill;
-use App\Models\BillCombo;
-use App\Models\BillService;
-use App\Models\BillStaff;
+use App\Models\BillMember;
 use App\Models\Combo;
 use App\Models\Service;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BillController extends Controller
@@ -24,7 +21,7 @@ class BillController extends Controller
     {
         //
         $model = Bill::all();
-        $model->load('user','staff');
+        $model->load('user');
         return response()->json($model);
     }
 
@@ -48,10 +45,45 @@ class BillController extends Controller
     public function show($id)
     {
         //
-        $model = Bill::find($id);
-        $model['time_work'] = Carbon::create($model['time_work'])->format('H:i');
-        $model->load('service','user','staff','combo');
-        return response()->json($model);
+        $bill = Bill::find($id);
+        $bill->load('user');
+        $detail_bill = BillMember::where('bill_id', $id)->orderBy('number_member')->get();
+        $nguoi1 = null;
+        $nguoi2 = null;
+        $nguoi3 = null;
+        foreach ($detail_bill as $c) {
+            $service = null;
+            $combo = null;
+            $staff = null;
+            if ($c->service_id != 'null') {
+                $service = Service::whereIn('id', json_decode($c->service_id))->get();
+            }
+            if ($c->combo_id != 'null') {
+                $combo = Combo::whereIn('id', json_decode($c->combo_id))->get();
+            }
+            $staff = User::find($c->staff_id);
+            if ($c->number_member == 1) {
+                $nguoi1['service'] = $service;
+                $nguoi1['combo'] = $combo;
+                $nguoi1['staff'] = $staff;
+            }
+            if ($c->number_member == 2) {
+                $nguoi2['service'] = $service;
+                $nguoi2['combo'] = $combo;
+                $nguoi2['staff'] = $staff;
+            }
+            if ($c->number_member == 3) {
+                $nguoi3['service'] = $service;
+                $nguoi3['combo'] = $combo;
+                $nguoi3['staff'] = $staff;
+            }
+        }
+        $combo = Combo::all();
+        $service = Service::all();
+        return response()->json([
+            'bill' => $bill, 'nguoi1' => $nguoi1,
+            'nguoi2' => $nguoi2, 'nguoi3' => $nguoi3, 'combo' => $combo, 'service' => $service
+        ]);
     }
 
     /**
@@ -70,35 +102,93 @@ class BillController extends Controller
         $model['note_bill'] = $request->note_bill;
         $model['phone'] = $request->phone;
 
-        BillCombo::where('bill_id',$request->id)->delete();
-        BillService::where('bill_id',$request->id)->delete();
-        BillStaff::where('bill_id',$request->id)->delete();
+        BillMember::where('bill_id',$request->id)->delete();
+        if ($request->service_id1 || $request->combo_id1) {
+            $bill_detail = new BillMember();
+            $bill_detail['bill_id'] = $request->id;
+            $bill_detail['number_member'] = $request->member_1;
+            $bill_detail['service_id'] = json_encode($request->service_id1);
+            $bill_detail['combo_id'] = json_encode($request->combo_id1);
+            $bill_detail['staff_id'] = $request->staff_1;
+            $bill_detail->save();
+            if($request->combo_id1){
+                $combo1 = Combo::whereIn('id',$request->combo_id1)->get();
+            }
+            if($request->service_id1){
+                $service1 = Service::whereIn('id',$request->service_id1)->get();
+            }
+        }
+        if ($request->service_id2 || $request->combo_id2) {
+            $bill_detail = new BillMember();
+            $bill_detail['bill_id'] = $request->id;
+            $bill_detail['number_member'] = $request->member_2;
+            $bill_detail['service_id'] = json_encode($request->service_id2);
+            $bill_detail['combo_id'] = json_encode($request->combo_id2);
+            $bill_detail['staff_id'] = $request->staff_2;
+            $bill_detail->save();
+            if($request->combo_id2){
+                $combo2 = Combo::whereIn('id',$request->combo_id2)->get();
+            }
+            if($request->service_id2){
+                $service2 = Service::whereIn('id',$request->service_id2)->get();
+            }
+        }
+        if ($request->service_id3 || $request->combo_id3) {
+            $bill_detail = new BillMember();
+            $bill_detail['bill_id'] = $request->id;
+            $bill_detail['number_member'] = $request->member_3;
+            $bill_detail['service_id'] = json_encode($request->service_id3);
+            $bill_detail['combo_id'] = json_encode($request->combo_id3);
+            $bill_detail['staff_id'] = $request->staff_3;
+            $bill_detail->save();
+            if($request->combo_id3){
+                $combo3 = Combo::whereIn('id',$request->combo_id3)->get();
+            }
+            if($request->service_id3){
+                $service3 = Service::whereIn('id',$request->service_id3)->get();
+            }
+        }
+
         $totalTime = 0;
         $totalBill = 0;
-        for($i=0;$i<count($request->combo_id);$i++){
-            $many = new BillCombo();
-            $many['bill_id'] = $request->id;
-            $many['combo_id'] = $request->combo_id[$i];
-            $time = Combo::find($request->combo_id[$i]);
-            $totalTime += $time['total_time_work'];
-            $totalBill += $time['total_price'];
-            $many->save();
+
+        if(isset($service1)){
+            foreach($service1 as $c){
+                $totalTime += $c->total_time_work;
+                $totalBill += $c->price;
+            }
         }
-        for($i=0;$i<count($request->service_id);$i++){
-            $many = new BillService();
-            $many['bill_id'] = $request->id;
-            $many['service_id'] = $request->service_id[$i];
-            $time = Service::find($request->service_id[$i]);
-            $totalTime += $time['total_time_work'];
-            $totalBill += $time['price'];
-            $many->save();
+        if(isset($service2)){
+            foreach($service2 as $c){
+                $totalTime += $c->total_time_work;
+                $totalBill += $c->price;
+            }
         }
-        for($i=0;$i<count($request->staff_id);$i++){
-            $many = new BillStaff();
-            $many['bill_id'] = $request->id;
-            $many['staff_id'] = $request->staff_id[$i];
-            $many->save();
+        if(isset($service3)){
+            foreach($service3 as $c){
+                $totalTime += $c->total_time_work;
+                $totalBill += $c->price;
+            }
         }
+        if(isset($combo1)){
+            foreach($combo1 as $c){
+                $totalTime += $c->total_time_work;
+                $totalBill += $c->total_price;
+            }
+        }
+        if(isset($combo2)){
+            foreach($combo2 as $c){
+                $totalTime += $c->total_time_work;
+                $totalBill += $c->total_price;
+            }
+        }
+        if(isset($combo3)){
+            foreach($combo3 as $c){
+                $totalTime += $c->total_time_work;
+                $totalBill += $c->total_price;
+            }
+        }
+        
         $model['total_time_execution'] = $totalTime;
         $model['total_bill'] = $totalBill;
         $query = $model->save();
