@@ -628,16 +628,19 @@
                 $("#staff_detail_1").find("#" + data.nguoi1.staff.id, "option").prop('selected', true);
                 $("#default-select-multi13").val(service2).trigger('change');
                 $("#default-select-multi14").val(combo2).trigger('change');
+                console.log(data);
                 if (!data.nguoi2) {
-                    // $('#guest2').prop('hidden',true);
+                     $('#guest2').prop('hidden',true);
                 }else{
+                    $('#guest2').prop('hidden',false);
                     $("#staff_detail_2").find("#" + data.nguoi2.staff.id, "option").prop('selected', true);
                 }
                 $("#default-select-multi15").val(service3).trigger('change');
                 $("#default-select-multi16").val(combo3).trigger('change');
                 if (!data.nguoi3) {
-                    // $('#guest3').prop('hidden',true);
+                    $('#guest3').prop('hidden',true);
                 }else{
+                    $('#guest3').prop('hidden',false);
                     $("#staff_detail_3").find("#" + data.nguoi3.staff.id, "option").prop('selected', true);
                 }
                 var form = $('#detailBillForm');
