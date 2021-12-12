@@ -128,6 +128,7 @@ Route::prefix('client')->group(function () {
     });
     //feedback
     Route::prefix('feedback')->group(function () {
+        Route::get('/',[ClientFeedbackController::class,'index']);
         Route::post('/', [ClientFeedbackController::class, 'store']);
     });
     //setting

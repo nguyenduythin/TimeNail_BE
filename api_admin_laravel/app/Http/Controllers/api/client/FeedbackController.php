@@ -16,7 +16,12 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        //
+        $model = Feedback::all();
+        $model->load('user');
+        foreach($model as $c){
+            $c['avatar'] = asset('storage/'.$c->user->avatar);
+        }
+        return response()->json($model);
     }
 
     /**
