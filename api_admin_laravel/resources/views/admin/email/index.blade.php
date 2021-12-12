@@ -106,9 +106,9 @@
 
 </head>
 @php
-    $bill = App\Models\Bill::find(1);
+    $bill = App\Models\Bill::find($id);
     $bill->load('user');
-    $detail_bill = App\Models\BillMember::where('bill_id', 1)->orderBy('number_member')->get();
+    $detail_bill = App\Models\BillMember::where('bill_id', $id)->orderBy('number_member')->get();
     foreach ($detail_bill as $c) {
         if($c->number_member == 1){
             if ($c->service_id != 'null') {
