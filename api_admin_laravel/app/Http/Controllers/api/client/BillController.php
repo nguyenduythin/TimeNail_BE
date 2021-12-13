@@ -36,7 +36,7 @@ class BillController extends Controller
             $all_bill = Bill::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
             return response()->json($all_bill);
         } else {
-            $get_bill_id = DB::table('bill_staff')->where('staff_id', $user->id)->pluck('bill_id');
+            $get_bill_id = DB::table('bill_member')->where('staff_id', $user->id)->pluck('bill_id');
             $bill_today = DB::table('bills')->whereIn('id', $get_bill_id)
                 ->where('date_work', '=', now()->format('Y-m-d'))->get();
             $bill_future = DB::table('bills')->whereIn('id', $get_bill_id)
