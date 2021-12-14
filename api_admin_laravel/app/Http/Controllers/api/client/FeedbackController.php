@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bill;
 use App\Models\Feedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +38,9 @@ class FeedbackController extends Controller
         $model['user_id'] = $request->id;
         $model->fill($request->all());
         $query = $model->save();
+        $bill_check_feedback = Bill::find($request->bill_id);
+        $bill_check_feedback->check_fb = now();
+        $bill_check_feedback->save();
         if (!$query) {
             return response()->json(['code' => 0, 'msg' => 'Thêm mới không thành công !']);
         } else {
