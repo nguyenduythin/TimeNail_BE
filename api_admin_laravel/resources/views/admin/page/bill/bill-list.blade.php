@@ -21,8 +21,8 @@
                                 <tr>
 
                                     <th>Khách Hàng</th>
-                                    <th>Tổng Thời Gian</th>
                                     <th>Ngày Đặt</th>
+                                    <th>Giờ Đặt</th>
                                     <th>Tổng Hóa Đơn</th>
                                     <th>Số Điện thoại</th>
                                     <th>Trạng Thái</th>
@@ -66,8 +66,8 @@
                         <input disabled type="text" name="full_name" class="form-control" />
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="">Tổng Thời Gian (phút)</label>
-                        <input disabled type="number" name="total_time_execution" class="form-control" />
+                        <label class="form-label" for="">Tổng Tiền</label>
+                        <input disabled type="text" name="total_bill" class="form-control" />
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="">Ngày Đặt</label>
@@ -78,16 +78,12 @@
                         <input disabled type="text" name="time_work" class="form-control flatpickr-time text-start flatpickr-input active">
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="">Số điện thoại</label>
-                        <input disabled type="text" name="phone" class="form-control" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="">Tổng Tiền</label>
-                        <input disabled type="text" name="total_bill" class="form-control" />
-                    </div>
-                    <div class="col-12 col-md-6">
                         <label class="form-label" for="">Trạng Thái</label>
                         <input disabled type="text" name="status_bill" class="form-control" />
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="">Số điện thoại</label>
+                        <input disabled type="text" name="phone" class="form-control" />
                     </div>
                     <div class="col-12">
                         <h4 class="mt-2 pt-50">Khách 1</h4>
@@ -251,10 +247,10 @@
                     data: "user_id"
                 },
                 {
-                    data: "total_time_execution"
+                    data: "date_work"
                 },
                 {
-                    data: "date_work"
+                    data: "time_work"
                 },
                 {
                     data: "total_bill"
@@ -318,21 +314,6 @@
                     },
                 },
                 {
-                    targets: 1,
-                    responsivePriority: 2,
-                    render: function(e, t, a, s) {
-                        var n = Math.floor(a.total_time_execution / 60);
-                        var b = a.total_time_execution % 60;
-                        if (b > 0 && n > 0) {
-                            return n + ' giờ ' + b + ' phút';
-                        } else if (n < 1) {
-                            return a.total_time_execution + ' phút';
-                        } else {
-                            return n + ' giờ';
-                        }
-                    },
-                },
-                {
                     targets: 5,
                     render: function(e, t, a, s) {
                         var n = a.status_bill;
@@ -392,7 +373,7 @@
                 },
             ],
             order: [
-                [2, "desc"]
+                [1, "desc"]
             ],
             dom: '<"d-flex justify-content-between align-items-center header-actions mx-2 row mt-75"<"col-sm-12 col-lg-4 d-flex justify-content-center justify-content-lg-start" l><"col-sm-12 col-lg-8 ps-xl-75 ps-0"<"dt-action-buttons d-flex align-items-center justify-content-center justify-content-lg-end flex-lg-nowrap flex-wrap"<"me-1"f>B>>>t<"d-flex justify-content-between mx-2 row mb-1"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
             language: {
@@ -645,7 +626,6 @@
                 }
                 var form = $('#detailBillForm');
                 form.find('input[name="full_name"]').val(data.bill.user.full_name);
-                form.find('input[name="total_time_execution"]').val(data.bill.total_time_execution);
                 form.find('input[name="date_work"]').val(data.bill.date_work);
                 form.find('input[name="time_work"]').val(data.bill.time_work);
                 form.find('input[name="phone"]').val(data.bill.phone);

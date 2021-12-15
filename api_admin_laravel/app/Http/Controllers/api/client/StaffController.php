@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\api\client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bill;
+use App\Models\BillMember;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +38,15 @@ class StaffController extends Controller
         $staff->load('roles');
         return response()->json($staff);
     }
+
+
+    public function un_available_staff($date,$time){
+        $bill_id = Bill::where('date_work',$date)->where('time_work',$time)->pluck('id');
+        $staff_id = BillMember::whereIn('bill_id',$bill_id)->pluck('staff_id');
+        $unique_staff_id = array_unique($staff_id->all()); 
+        return response()->json($unique_staff_id);
+    }
+
 
     /**
      * Store a newly created resource in storage.

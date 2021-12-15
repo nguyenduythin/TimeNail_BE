@@ -76,7 +76,6 @@ class BillController extends Controller
                 return response()->json(['error' => 'Đã hết mã giảm giá']);
             }
         }
-        $model['total_time_execution'] = $request->total_time_execution;
         $model['total_bill'] = $request->total_bill;
         $query = $model->save();
 

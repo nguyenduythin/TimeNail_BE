@@ -149,47 +149,39 @@ class BillController extends Controller
             }
         }
 
-        $totalTime = 0;
         $totalBill = 0;
 
         if(isset($service1)){
             foreach($service1 as $c){
-                $totalTime += $c->total_time_work;
                 $totalBill += $c->price;
             }
         }
         if(isset($service2)){
             foreach($service2 as $c){
-                $totalTime += $c->total_time_work;
                 $totalBill += $c->price;
             }
         }
         if(isset($service3)){
             foreach($service3 as $c){
-                $totalTime += $c->total_time_work;
                 $totalBill += $c->price;
             }
         }
         if(isset($combo1)){
             foreach($combo1 as $c){
-                $totalTime += $c->total_time_work;
                 $totalBill += $c->total_price;
             }
         }
         if(isset($combo2)){
             foreach($combo2 as $c){
-                $totalTime += $c->total_time_work;
                 $totalBill += $c->total_price;
             }
         }
         if(isset($combo3)){
             foreach($combo3 as $c){
-                $totalTime += $c->total_time_work;
                 $totalBill += $c->total_price;
             }
         }
         
-        $model['total_time_execution'] = $totalTime;
         $model['total_bill'] = $totalBill;
         $query = $model->save();
         if (!$query) {
