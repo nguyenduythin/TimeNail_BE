@@ -38,6 +38,16 @@ class NotificationController extends Controller
         $user->unreadNotifications->markAsRead();
         return response()->noContent();
     }
+    public function readClient($user_id,$id){
+        $user = User::find($user_id);
+        $user->unreadNotifications->find($id)->markAsRead();
+        return response()->noContent();
+    }
+    public function readAllClient($id){
+        $user = User::find($id);
+        $user->unreadNotifications->markAsRead();
+        return response()->noContent();
+    }
 
     /**
      * Store a newly created resource in storage.

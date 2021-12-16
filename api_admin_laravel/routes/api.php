@@ -146,6 +146,8 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout.admin');
 //read notification 
 Route::get('read-all-notifi', [NotificationController::class, 'readAll'])->name('read-all');
 Route::get('read-all-notifi/{id}', [NotificationController::class, 'read'])->name('read');
+Route::get('read-client-notifi/{user}/{id}', [NotificationController::class, 'readClient']);
+Route::get('read-client-all-notifi/{id}', [NotificationController::class, 'readAllClient']);
 
 
 
