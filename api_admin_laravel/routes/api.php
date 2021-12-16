@@ -78,7 +78,7 @@ Route::prefix('client')->group(function () {
     });
 
     Route::get('/list-staff', [ClientStaffController::class, 'getAll']);
-    Route::get('/unavailable/{date}/{time}', [ClientStaffController::class, 'un_available_staff']);
+    Route::post('/unavailable', [ClientStaffController::class, 'un_available_staff']);
     Route::prefix('staff-info')->group(function () {
         Route::get('/', [ClientStaffController::class, 'index']);
         Route::post('/info', [ClientStaffController::class, 'info']);

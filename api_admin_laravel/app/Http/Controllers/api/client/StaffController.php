@@ -40,8 +40,8 @@ class StaffController extends Controller
     }
 
 
-    public function un_available_staff($date,$time){
-        $bill_id = Bill::where('date_work',$date)->where('time_work',$time)->pluck('id');
+    public function un_available_staff(Request $request){
+        $bill_id = Bill::where('date_work',$request->date)->where('time_work',$request->time)->pluck('id');
         $staff_id = BillMember::whereIn('bill_id',$bill_id)->pluck('staff_id');
         $unique_staff_id = array_unique($staff_id->all()); 
         return response()->json($unique_staff_id);
