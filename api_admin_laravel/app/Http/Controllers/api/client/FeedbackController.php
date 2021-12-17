@@ -56,7 +56,8 @@ class FeedbackController extends Controller
      */
     public function show($id)
     {
-        //
+        $feedback = Feedback::where('user_id',$id)->get();
+        return response()->json($feedback);
     }
 
     /**
