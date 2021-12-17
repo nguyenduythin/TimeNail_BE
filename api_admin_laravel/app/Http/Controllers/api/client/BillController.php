@@ -180,6 +180,13 @@ class BillController extends Controller
         //
     }
 
+    public function cancel($id){
+        $bill = Bill::find($id);
+        $bill->status_bill = 5;
+        $bill->save();
+        return response()->json($bill);
+    }
+
     /**
      * Remove the specified resource from storage.
      *

@@ -35,6 +35,7 @@ use App\Http\Controllers\api\client\SettingController as ClientSettingController
 use App\Http\Controllers\api\client\loginController as ClientLoginController;
 use App\Http\Controllers\api\client\LoginWithGoogleController;
 use App\Http\Controllers\api\client\NewPasswordController;
+use App\Http\Controllers\api\client\SlideController;
 use App\Http\Controllers\api\client\StaffController as ClientStaffController;
 use App\Http\Controllers\api\client\UserController as ClientUserController;
 use App\Models\BillMember;
@@ -122,6 +123,7 @@ Route::prefix('client')->group(function () {
         Route::get('/{id}', [ClientBillController::class, 'index']);
         Route::get('/show/{id}', [ClientBillController::class, 'show']);
         Route::post('/', [ClientBillController::class, 'store']);
+        Route::get('/cancel/{id}', [ClientBillController::class, 'cancel']);
     });
     //contact
     Route::prefix('contact')->group(function () {
@@ -137,6 +139,10 @@ Route::prefix('client')->group(function () {
     Route::prefix('setting')->group(function () {
         Route::get('/', [ClientSettingController::class, 'index']);
         Route::get('/show/{id}', [ClientSettingController::class, 'show']);
+    });
+    //slide
+    Route::prefix('slide')->group(function () {
+        Route::get('/', [SlideController::class, 'index']);
     });
 });
 
