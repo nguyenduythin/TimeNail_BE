@@ -44,11 +44,11 @@ class GalleryCategoryController extends Controller
     public function show($id)
     {
         $model = Gallery::where('cate_gl_id',$id)->get();
+        $cate = GalleryCategory::find($id);
         foreach($model as $c){
             $c['url'] = asset('storage/'.$c['url']);
-            $c->load('cate_gallery');
         }
-        return response()->json($model);
+        return response()->json(['tittle'=>$cate->title,'gallery'=>$model]);
     }
 
     /**
