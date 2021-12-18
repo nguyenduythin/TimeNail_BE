@@ -57,6 +57,10 @@ class FeedbackController extends Controller
     public function show($id)
     {
         $feedback = Feedback::where('user_id',$id)->get();
+        $feedback->load('user');
+        foreach($feedback as $c){
+            $c['avatar'] = asset('storage/'.$c->user->avatar);
+        }
         return response()->json($feedback);
     }
 
