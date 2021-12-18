@@ -35,6 +35,9 @@ class StaffController extends Controller
     public function getAll()
     {
         $staff = User::role('Staff')->get();
+        foreach($staff as $c){
+            $c->avatar = asset('storage/' . $c->avatar);
+        }
         $staff->load('roles');
         return response()->json($staff);
     }
