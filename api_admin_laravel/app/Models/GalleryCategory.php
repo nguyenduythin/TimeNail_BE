@@ -16,4 +16,7 @@ class GalleryCategory extends Model
     public function gallery(){
         return $this->hasMany(Gallery::class,'cate_gl_id');
     }
+    public function cate_gallery(){
+        return $this->belongsTo(Gallery::class,'cate_gl_id');
+    }
 }

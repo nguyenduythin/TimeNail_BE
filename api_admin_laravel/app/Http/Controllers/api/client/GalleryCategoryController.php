@@ -19,6 +19,7 @@ class GalleryCategoryController extends Controller
         $model = GalleryCategory::all();
         foreach($model as $c){
             $c['avatar'] = asset('storage/'.$c['avatar']);
+            $c->load('gallery');
         }
         return response()->json($model);
     }
@@ -45,6 +46,7 @@ class GalleryCategoryController extends Controller
         $model = Gallery::where('cate_gl_id',$id)->get();
         foreach($model as $c){
             $c['url'] = asset('storage/'.$c['url']);
+            $c->load('cate_gallery');
         }
         return response()->json($model);
     }
