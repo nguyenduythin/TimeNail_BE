@@ -17,7 +17,7 @@
               <div class="col-lg-6 col-md-6 col-6">
                 <div class="card">
                   <div class="card-body pb-50">
-                    <h6>Hóa đơn</h6>
+                    <h6>Tổng giá hóa đơn</h6>
                     <h2 class="fw-bolder mb-1" id="total_bill"></h2>
                     <div id="statistics-order-chart"></div>
                   </div>
@@ -29,7 +29,7 @@
               <div class="col-lg-6  col-md-6 col-6">
                 <div class="card card-tiny-line-stats">
                   <div class="card-body pb-50">
-                    <h6>Lơi nhuận</h6>
+                    <h6>Tổng số hóa đơn</h6>
                     <h2 class="fw-bolder mb-1" id="avg_bill"></h2>
                     <div id="statistics-profit-chart"></div>
                   </div>
@@ -335,7 +335,7 @@ url = url.replace(':end', end);
 
         $('#success_bill').html(data.success_bill);
         $('#total_bill').html(nFormatter(data.bill , 1));
-        $('#avg_bill').html(nFormatter(data.avg_bill , 1));
+        $('#avg_bill').html(data.avg_bill );
 
  g = document.querySelector("#statistics-profit-chart");
         c = "#f3f3f3",

@@ -43,7 +43,7 @@ class DashboardController extends Controller
         $comboCount = Combo::count();
         $staff = User::role('Staff')->count();
         $bill = Bill::sum('total_bill');
-        $avg_bill = Bill::avg('total_bill');
+        $avg_bill = Bill::count();
         $doing_bil = Bill::where('status_bill', 3)->count();
         $success_bill = Bill::where('status_bill', 4)->count();
         // $total_bill = Bill::pluck('total_bill');

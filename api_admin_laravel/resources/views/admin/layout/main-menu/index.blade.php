@@ -18,7 +18,7 @@
       <div class="shadow-bottom"></div>
       <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                  <li class=" nav-item"><a class="d-flex align-items-center" href="index.html"><i
+                  <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
                                     data-feather="home"></i><span class="menu-title text-truncate"
                                     data-i18n="Dashboards">Trang chính</span><span
                                     class="badge badge-light-warning rounded-pill ms-auto me-1">1</span></a>
