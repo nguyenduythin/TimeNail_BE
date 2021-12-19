@@ -383,6 +383,7 @@
                     data: new FormData(form),
                     processData: false,
                     dataType: 'json',
+                    async: false,
                     contentType: false,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -486,10 +487,24 @@
                 form.find('#note').val(data.note);
             }, 'json')
         });
+        // validate
+        $('#editUserForm').validate({
+                errorClass: "error",
+                rules: {
+                    "name_cate_service": {
+                        required: !0
+                    },
+                    "image": {
+                        required: !0
+                    },
+                },
+            });
         // submit edit in db
         $('#editUserForm').on('submit', function(e) {
             e.preventDefault();
             var form = this;
+            var s =   $('#editUserForm').valid();
+            if (s) {
             $.ajax({
                 type: "POST",
                 url: $(form).attr('action'),
@@ -516,7 +531,8 @@
                 error: function(error) {
                     console.log("Sửa mới không thành công", error);
                 }
-            })
+            
+            })}
         });
 
     });

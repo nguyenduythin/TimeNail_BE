@@ -44,7 +44,8 @@ class loginController extends Controller
             $user->fill($request->all());
             $user->syncRoles("Member");
             $user->fill([
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
+                'avatar' => 'avatar-none.png'
             ]);
             $query =  $user->save();
             if (!$query) {

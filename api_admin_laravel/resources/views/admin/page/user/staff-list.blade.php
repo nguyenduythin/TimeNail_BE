@@ -207,11 +207,6 @@
 
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditTaxID">Mật khẩu</label>
-                        <input type="password" id="modalEditTaxID " name="password"
-                            class="form-control modal-edit-tax-id" placeholder="password" />
-                    </div>
-                    <div class="col-12 col-md-6">
                         <label class="form-label" for="modalEditUserPhone">Số điện thoại</label>
                         <input type="text" id="modalEditUserPhone phone" name="phone"
                             class="form-control phone-number-mask" placeholder="+1 (609) 933-44-22"
@@ -246,7 +241,7 @@
                         <label class="form-label" for="modalEditUserCountry">Địa chỉ</label>
                         <textarea class="form-control" name="address" id="address" cols="30" rows="1"></textarea>
                     </div>
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-12">
                         <label class="form-label" for="modalEditUserCountry">Mô tả</label>
                         <textarea class="form-control" name="description_staff" id="description_staff" cols="30"
                             rows="1"></textarea>
@@ -660,7 +655,6 @@ $('body').on('click' ,'#editUser' , function(){
     form.find('input[name="phone"]').val(data.phone);
     form.find('input[name="date_birth"]').val(data.date_birth);   
     form.find('input[name="experience_staff"]').val(data.experience_staff); 
-    form.find('input[name="password"]').val(data.password); 
     form.find('#description_staff').val(data.description_staff); 
     form.find('#address').val(data.address); 
     if (data.gender == 1) {
@@ -687,6 +681,7 @@ $('#editUserForm').on('submit', function(e){
         data: new FormData(form),
         processData: false,
         dataType:'json',
+        async:false,
         contentType: false,
         headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

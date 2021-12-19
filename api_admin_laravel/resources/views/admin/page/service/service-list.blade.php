@@ -422,9 +422,6 @@
                         min: 1,
                         digits: true
                     },
-                    "short_description": {
-                        required: !0
-                    },
                 },
             }),
             a.on("submit", function(e) {
@@ -541,9 +538,29 @@
             })
         });
         // submit edit in db
+        $('#editUserForm').validate({
+                errorClass: "error",
+                rules: {
+                    "name_service": {
+                        required: !0 ,
+                    },
+                    "price": {
+                        required: !0,
+                        min: 1,
+                        digits: true
+                    },
+                    "total_time_work": {
+                        required: !0,
+                        min: 1,
+                        digits: true
+                    },
+                },
+            }),
         $('#editUserForm').on('submit', function(e) {
             e.preventDefault();
             var form = this;
+            var s  = $('#editUserForm').valid();
+            if (s) {
             $.ajax({
                 type: "POST",
                 url: $(form).attr('action'),
@@ -561,7 +578,6 @@
                             $(form).find('span' + prefix + '_error').text(val[0]);
                         });
                     } else {
-                        console.log('fomr', data);
                         $(form)[0].reset();
                         $('#editUserModal').modal("hide");
                         table.ajax.reload();
@@ -571,7 +587,7 @@
                 error: function(error) {
                     console.log("Sửa mới không thành công", error);
                 }
-            })
+            }) }
         });
 
     });

@@ -86,13 +86,7 @@
                                 feather.icons["more-vertical"].toSvg({
                                     class: "font-small-4",
                                 }) +
-                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="' +
-                                r +
-                                '" id="editFeedback" data-id="'+a.id+'" class="dropdown-item">' +
-                                feather.icons["edit"].toSvg({
-                                    class: "font-small-4 me-50",
-                                }) +
-                                'Edit</a><a href="#" id="deleteFeedback" data-id="'+a.id+'" class="dropdown-item delete-record">' +
+                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="#" id="deleteFeedback" data-id="'+a.id+'" class="dropdown-item delete-record">' +
                                 feather.icons["trash-2"].toSvg({
                                     class: "font-small-4 me-50",
                                 }) +

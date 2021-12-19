@@ -18,7 +18,7 @@ class UserController extends Controller
     public function index()
     {
         $user = User::find(Auth::user()->id);
-        $user['avatar'] = asset('storage/' . $user['avatar']);
+        $user['avatar'] =  $user['avatar'];
         if ($user->getRoleNames()->first() == 'Member') {
             return response()->json($user);
         } else {
@@ -66,7 +66,7 @@ class UserController extends Controller
             ], [
                 'full_name' => $request->full_name,
                 'email' => $request->email,
-                'avatar' =>  asset('storage/' . $request->avatar),
+                'avatar' =>  $request->avatar,
                 'password' => Hash::make($request->full_name . '@' . $request->google_id)
             ]);
             $saveUser->syncRoles("Member");

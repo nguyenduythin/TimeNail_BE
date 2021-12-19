@@ -697,8 +697,9 @@ a.length && (a.validate({
             }),
             a.on("submit", function (e) {
                 e.preventDefault();
-                var s = a.valid();
+                
                 var form = this;
+                var s = a.valid();
             if (s) {
             $.ajax({
                     type:"POST",
@@ -770,6 +771,7 @@ $.get('<?= route("user.list.api") ?>', function(dataR) {
     })
 // get detail edit
 $('body').on('click' ,'#editUser' , function(){
+    $('#editUserForm')[0].reset();
     var user_id = $(this).data("id");
     $.get('<?= route("user.list.api") ?>'+"/show/"+user_id , function (data) {
     var accountUploadImg = $("#account-upload-img"),
@@ -800,9 +802,12 @@ $('body').on('click' ,'#editUser' , function(){
     form.find('input[name="date_birth"]').val(data.date_birth);   
     form.find('input[name="password"]').val(data.password); 
     form.find('#address').val(data.address); 
-    if (data.gender == 1) {
+    if (data.gender === 1) {
         $('#gender1').attr('checked',true);
-    }else{
+        $("#gender2").removeAttr("checked");
+
+    }else if (data.gender === 2){
+        $("#gender1").removeAttr("checked");
         $('#gender2').attr('checked',true);
     }
         $.get('<?= route("user.list.api") ?>', function(dataR) {
@@ -816,10 +821,24 @@ $('body').on('click' ,'#editUser' , function(){
     })
 
 });
+// validation
+
+$('#editUserForm').validate({
+    errorClass: "error",
+    rules: {
+        "full_name": { required: !0 },
+        "email": { required: !0 , email: true },
+        "phone": { required: !0 },
+        "address": { required: !0 },
+        "avatar": { required: !0 },
+    },
+});
 // submit edit in db
 $('#editUserForm').on('submit', function(e){
     e.preventDefault();
     var form = this;
+    var s = $('#editUserForm').valid();
+        if (s) {
     $.ajax({
         type:"POST",
         url:$(form).attr('action'),
@@ -845,7 +864,8 @@ $('#editUserForm').on('submit', function(e){
         error:function (error) {
             console.log("Sửa mới không thành công",error);
         }
-    })
+    });}
+
 });
 
 });

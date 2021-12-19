@@ -179,7 +179,7 @@
                     <h1 class="mb-1">Cập nhật combo</h1>
                     <p>Cập nhật chi tiết combo !</p>
                 </div>
-                <form id="editComboForm" action="{{route('combo.update.api')}}" method="POST" class="row gy-1 pt-75 add-new-user" enctype="multipart/form-data">
+                <form id="editComboForm" method="POST" class="row gy-1 pt-75 add-new-user" enctype="multipart/form-data">
                     @csrf
                     <input type="text" name="id" hidden>
                     <div class="d-flex center">
@@ -642,25 +642,19 @@
             var form = this;
             $.ajax({
                 type: "POST",
-                url: $(form).attr('action'),
+                url: "{{route('combo.update.api')}}",
                 data: new FormData(form),
                 processData: false,
                 dataType: 'json',
-        async: false,
+                async: false,
                 contentType: false,
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(data) {
-                    if (data.code == 0) {
-                        $.each(data.error, function(prefix, val) {
-                            $(form).find('span' + prefix + '_error').text(val[0]);
-                        });
-                    } else {
                         $(form)[0].reset();
                         $('#editUserModal').modal("hide");
                         table.ajax.reload();
-                    }
                 },
                 error: function(error) {
                     console.log("Sửa mới không thành công", error);

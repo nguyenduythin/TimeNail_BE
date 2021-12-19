@@ -336,7 +336,7 @@
         a.length && (a.validate({
             errorClass: "error",
             rules: {
-                "name_tag": { required: !0 },
+                "name_cate_blog": { required: !0 },
                 "note": { required: !0 },
                 "image": { required: !0 },
             },
@@ -351,6 +351,7 @@
                 data: new FormData(form),
                 processData: false,
                 dataType:'json',
+                async: false,
                 contentType: false,
                 headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

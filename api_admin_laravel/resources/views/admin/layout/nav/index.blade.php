@@ -59,7 +59,7 @@
             <a class="d-flex remove-all" href="{{route('read',$c->id)}}">
               <div class="list-item d-flex align-items-start">
                 <div class="me-1">
-                  <div class="avatar"><img src="{{ asset('storage/'.$member->avatar)}}" alt="" width="32" height="32"></div>
+                  <div class="avatar"><img src="{{ isset($member->avatar) ? asset('storage/'.$member->avatar) : "" }}" alt="" width="32" height="32"></div>
                 </div>
                 <div class="list-item-body flex-grow-1">
                   <p class="media-heading"><span class="fw-bolder">{{json_decode($c)->data->name}} </span></p><small class="notification-text"> {{json_decode($c)->data->date}}.</small>
