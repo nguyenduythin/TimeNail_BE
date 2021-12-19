@@ -160,7 +160,7 @@
                         <select class="select form-select" name="status_bill" id="select2-basic">
                             <option id="1" value="1">Chờ xác nhận</option>
                             <option id="2" value="2">Xác nhận thành công</option>
-                            <option id="3" value="3">Đang làm</option>
+                            {{-- <option id="3" value="3">Đang làm</option> --}}
                             <option id="4" value="4">Hoàn thành</option>
                             <option id="5" value="5">Hủy</option>
                         </select>
