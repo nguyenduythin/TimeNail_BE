@@ -418,22 +418,21 @@
                         title: "Actions",
                         orderable: !1,
                         render: function (e, t, a, s) {
-                            // var deleteUser = 'oki'
-                            // console.log('addđ' ,a.roles[0].name === 'Admin' ,   );
-                            return (
-                                '<div class="btn-group"><a class="btn btn-sm dropdown-toggle hide-arrow" data-bs-toggle="dropdown">' +
+                             console.log('addđ' , );
+                            return (`<div class="btn-group"><a class="btn btn-sm dropdown-toggle hide-arrow" data-bs-toggle="dropdown">${
                                 feather.icons["more-vertical"].toSvg({
                                     class: "font-small-4",
-                                }) +
-                                '</a><div class="dropdown-menu dropdown-menu-end"><a href="#" id="editUser" data-id="'+a.id+'"  data-bs-toggle="modal" data-bs-target="#editUserModal" class="dropdown-item">' +
+                                })}</a><div class="dropdown-menu dropdown-menu-end"><a href="#" id="editUser" data-id="${a.id}"  data-bs-toggle="modal" data-bs-target="#editUserModal" class="dropdown-item">${
                                 feather.icons["edit"].toSvg({
                                     class: "font-small-4 me-50",
-                                }) +
-                                'Edit</a> <a href="#" id="deleteUser" data-id="'+a.id+'" class="dropdown-item delete-record">' +
+                                })}Edit</a>
+                            ${(a.roles[0].name !== 'Admin') ? (
+                                 `<a href="#" id="deleteUser" data-id="${a.id}" class="dropdown-item delete-record">${
                                 feather.icons["trash-2"].toSvg({
                                     class: "font-small-4 me-50",
-                                }) +
-                                "Delete </a></div></div></div>"
+                                })}Delete </a>` ) : ""
+                            }
+                            </div></div></div>`
                             );
 
                         },
@@ -463,7 +462,7 @@
                                         class: "font-small-4 me-50",
                                     }) + "Print",
                                 className: "dropdown-item",
-                           exportOptions: { columns: [0,1, 2, 3,4 ] },
+                           exportOptions: { columns: [0,1, 2, 3 ] },
                             },
                             {
                                 extend: "csv",
@@ -472,7 +471,7 @@
                                         class: "font-small-4 me-50",
                                     }) + "Csv",
                                 className: "dropdown-item",
-                            exportOptions: { columns: [0,1, 2, 3,4 ] },
+                            exportOptions: { columns: [0,1, 2, 3 ] },
                             },
                             {
                                 extend: "excel",
@@ -481,7 +480,7 @@
                                         class: "font-small-4 me-50",
                                     }) + "Excel",
                                 className: "dropdown-item",
-                               exportOptions: { columns: [0,1, 2, 3,4 ] },
+                               exportOptions: { columns: [0,1, 2, 3 ] },
                             },
                             {
                                 extend: "pdf",
@@ -490,7 +489,7 @@
                                         class: "font-small-4 me-50",
                                     }) + "Pdf",
                                 className: "dropdown-item",
-                             exportOptions: { columns: [0,1, 2, 3,4 ] },
+                             exportOptions: { columns: [0,1, 2, 3 ] },
                             },
                             {
                                 extend: "copy",
@@ -499,7 +498,7 @@
                                         class: "font-small-4 me-50",
                                     }) + "Copy",
                                 className: "dropdown-item",
-                                exportOptions: { columns: [0,1, 2, 3 ,4] },
+                                exportOptions: { columns: [0,1, 2, 3 ] },
                             },
                         ],
                         init: function (e, t, a) {
