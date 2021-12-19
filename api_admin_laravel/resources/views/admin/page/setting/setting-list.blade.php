@@ -24,7 +24,7 @@
                                     <th>Email</th>
                                     <th>Số điện thoại</th>
                                     <th>Tên người quản lý</th>
-                                    <th>Tiêu đề sâu sắc</th>
+                                    <th>Tên cửa hàng</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
