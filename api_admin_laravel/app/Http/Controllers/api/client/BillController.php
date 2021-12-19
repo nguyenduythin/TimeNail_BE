@@ -15,6 +15,7 @@ use App\Models\Service;
 use App\Models\User;
 use App\Notifications\BillAdminNotification;
 use App\Notifications\BillClientNotification;
+use App\Notifications\BillStaffNotification;
 use Illuminate\Http\Request;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\Auth;
@@ -79,6 +80,8 @@ class BillController extends Controller
         $model['total_bill'] = $request->total_bill;
         $query = $model->save();
 
+        $staff_id_notifi = [];//get all staff id
+
         if ($request->service_id1 || $request->combo_id1) {
             $bill_detail = new BillMember();
             $bill_detail['bill_id'] = $model['id'];
@@ -87,6 +90,7 @@ class BillController extends Controller
             $bill_detail['combo_id'] = json_encode($request->combo_id1);
             $bill_detail['staff_id'] = $request->staff_1;
             $bill_detail->save();
+            array_push($staff_id_notifi,$request->staff_1);
         }
         if ($request->service_id2 || $request->combo_id2) {
             $bill_detail = new BillMember();
@@ -96,6 +100,7 @@ class BillController extends Controller
             $bill_detail['combo_id'] = json_encode($request->combo_id2);
             $bill_detail['staff_id'] = $request->staff_2;
             $bill_detail->save();
+            array_push($staff_id_notifi,$request->staff_2);
         }
         if ($request->service_id3 || $request->combo_id3) {
             $bill_detail = new BillMember();
@@ -105,12 +110,14 @@ class BillController extends Controller
             $bill_detail['combo_id'] = json_encode($request->combo_id3);
             $bill_detail['staff_id'] = $request->staff_3;
             $bill_detail->save();
+            array_push($staff_id_notifi,$request->staff_3);
         }
 
         $bill = Bill::find($model['id']);
         $user = User::find($request->user_id);
-
+        $staff_notifi = User::whereIn('id',$staff_id_notifi)->get();//staff
         $notifi_to_admin = User::role('Admin')->get();
+        Notification::send($staff_notifi, new BillStaffNotification($bill));//staff
         Notification::send($notifi_to_admin, new BillAdminNotification($user, $bill['date_work']));
         Notification::send($user, new BillClientNotification($bill));
 
