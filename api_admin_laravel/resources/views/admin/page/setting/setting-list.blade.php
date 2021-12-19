@@ -160,7 +160,7 @@
                     </div>
 
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditManage">Địa chỉ</label>
+                        <label class="form-label" for="modalEditManage">Tên Người quản lý</label>
                         <input type="text" id="modalEditManage name_manage" name="name_manage"
                             class="form-control modal-edit-tax-id" placeholder="name_manage" />
                     </div>
