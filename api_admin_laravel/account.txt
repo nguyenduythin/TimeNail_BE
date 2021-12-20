@@ -1,0 +1,47 @@
+account staff
+----------------------
+lan@gmail.com /// chọn hộ
+my@gmail.com
+thuy@gmail.com
+linh@gmail.com
+ly@gmail.com
+huyenlt@gmail.com
+
+Member
+---------------
+vo@gmail.com
+vy@gmail.com
+
+
+Admin
+------------
+admin@gmail.com => 123
+admin2@gmail.com => Timenail123456
+
+
+
+password: 
+Timenail123456
+
+
+
+idStaffDefault = 198
+
+
+
+đặt trước mấy nhân viên để test demo check trùng lịch làm
+
+User - TimeNail
+
+chạy 3 câu lệnh  : 
++ npm start => run
++ php artisan serve
++ php artisan queue:work
+
+Huy : I (giới thiệu)
+VIỆT anh : II (khảo sát hệ thống)
+Hùng : III (Phân tích hệ thống)
+Thắng : IV (thiết kế hệ thống)
+Thuận : V (Cơ sở dữ liệu)
+Thìn : VI.1 (kết luận)
+vy Quân : VI.2 (kết luận)
